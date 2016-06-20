@@ -28,7 +28,7 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 Route::group(['namespace' => 'TestingSystem', 'middleware' => 'testing_system', 'prefix' => 'testing_system_api'], function () {
-
+    //testing api code...
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
