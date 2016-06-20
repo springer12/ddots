@@ -13,8 +13,6 @@ class CreateContestsProblemsTable extends Migration
     public function up()
     {
         Schema::create('contests_problems', function (Blueprint $table) {
-            $table->increments('id');
-
             $table->unsignedInteger('problem_id');
             $table->foreign('problem_id')
                 ->references('id')->on('problems')
@@ -27,6 +25,7 @@ class CreateContestsProblemsTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
+            $table->unique(['problem_id', 'contest_id']);
             $table->timestamps();
         });
     }
