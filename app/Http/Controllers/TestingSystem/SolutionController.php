@@ -9,5 +9,5 @@ use App\Http\Controllers\Controller;
 
 class SolutionController extends Controller
 {
-    
+     
 }

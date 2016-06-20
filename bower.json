@@ -1,0 +1,9 @@
+{
+  "name": "dots",
+  "private": true,
+  "devDependencies": {
+    "bootstrap": "^3.3.6"
+  },
+  "dependencies": {
+  }
+}

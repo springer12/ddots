@@ -17,14 +17,14 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::auth();
 
-    Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_ADMIN, 'prefix' => 'frontend', 'as' => 'frontend::'], function () {
-        //admin dashboard...
+    Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_ADMIN, 'prefix' => 'backend', 'as' => 'backend::'], function () {
+        Route::get('/', 'Admin\DashboardController@index');
+        Route::get('/testing-servers', 'Admin\TestingServersController@index');
     });
-    Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'prefix' => 'backend', 'as' => 'backend::'], function () {
+
+    Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'prefix' => 'frontend', 'as' => 'frontend::'], function () {
         //user dashboard...
-
     });
-
 });
 
 Route::group(['namespace' => 'TestingSystem', 'middleware' => 'testing_system', 'prefix' => 'testing_system_api'], function () {
