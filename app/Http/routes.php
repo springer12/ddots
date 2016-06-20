@@ -17,10 +17,11 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::auth();
 
-    Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'prefix' => 'frontend', 'as' => 'frontend::'], function () {
-
+    Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_ADMIN, 'prefix' => 'frontend', 'as' => 'frontend::'], function () {
+        //admin dashboard...
     });
-    Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_ADMIN, 'prefix' => 'backend', 'as' => 'backend::'], function () {
+    Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'prefix' => 'backend', 'as' => 'backend::'], function () {
+        //user dashboard...
 
     });
 
