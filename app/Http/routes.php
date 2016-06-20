@@ -11,24 +11,25 @@
 |
 */
 
+Route::group(['middleware' => 'web'], function () {
+    Route::get('/home', 'HomeController@index');
+    Route::get('/', 'HomeController@index');
+
+    Route::auth();
+
+    Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'prefix' => 'frontend', 'as' => 'frontend::'], function () {
+
+    });
+    Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_ADMIN, 'prefix' => 'backend', 'as' => 'backend::'], function () {
+
+    });
+
+});
 
 Route::group(['namespace' => 'TestingSystem', 'middleware' => 'testing_system', 'prefix' => 'testing_system_api'], function () {
-    
-});
-
-Route::group(['middleware' => 'web'], function () {
-
 
 });
 
-Route::group(['middleware' => 'api'], function () {
-
+Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
+    //future
 });
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::auth();
-
-Route::get('/home', 'HomeController@index');
