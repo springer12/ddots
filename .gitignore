@@ -5,3 +5,8 @@ Homestead.yaml
 Homestead.json
 .env
 .idea
+/_ide_helper.php
+resources/vendor
+resources/views/vendor
+public/backend-bundle
+public/frontend-bundle
