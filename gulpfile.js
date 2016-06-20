@@ -18,6 +18,12 @@ var path = require('path'),
       "css": vendorPath('bootstrap/dist/css/bootstrap.css'),
       "js": vendorPath('bootstrap/dist/js/bootstrap.js')
   },
+
+// gentelella
+  gentelella = {
+      "css": vendorPath('gentelella/build/css/custom.css'),
+      "js": vendorPath('gentelella/build/js/custom.js')
+  },
 /*
  * Apps resources
  */
@@ -29,8 +35,8 @@ var path = require('path'),
       },
       "backend": {
           "fonts": [Bootstrap.fonts, appPath('backend', 'fonts')],
-          "css": [Bootstrap.css, appPath('backend', 'css')],
-          "js": [jQuery, Bootstrap.js, appPath('backend', 'js')]
+          "css": [Bootstrap.css, /*gentelella.css,*/ appPath('backend', 'css')],
+          "js": [jQuery, Bootstrap.js, /*gentelella.js,*/ appPath('backend', 'js')]
       }
   },
   outputExtPrefix = elixir.config.production ? '.min' : '';

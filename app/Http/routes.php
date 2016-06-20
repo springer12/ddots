@@ -12,18 +12,22 @@
 */
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('/home', 'HomeController@index');
-    Route::get('/', 'HomeController@index');
 
     Route::auth();
 
+    Route::group(['middleware' => 'admin_redirect'], function () {
+        Route::get('/home', 'HomeController@index');
+        Route::get('/', 'HomeController@index');
+
+    });
+
     Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_ADMIN, 'prefix' => 'backend', 'as' => 'backend::'], function () {
-        Route::get('/', 'Admin\DashboardController@index');
+        Route::get('/', ['uses' => 'Admin\DashboardController@index', 'as' => 'dashboard']);
         Route::get('/testing-servers', 'Admin\TestingServersController@index');
     });
 
-    Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'prefix' => 'frontend', 'as' => 'frontend::'], function () {
-        //user dashboard...
+    Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'as' => 'frontend::'], function () {
+        //user func...
     });
 });
 
