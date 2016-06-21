@@ -58,6 +58,9 @@
                             </div>
                         </div>
                     </form>
+                    <a href="{{ route('social::redirect', ['provider' => 'facebook']) }}" class="btn btn-lg btn-primary btn-block">Facebook</a>
+                    <a href="{{ route('social::redirect', ['provider' => 'google']) }}" class="btn btn-lg btn-primary btn-block">Google</a>
+                    <a href="{{ route('social::redirect', ['provider' => 'vkontakte']) }}" class="btn btn-lg btn-primary btn-block">VKontakte</a>
                 </div>
             </div>
         </div>

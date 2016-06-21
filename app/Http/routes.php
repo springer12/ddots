@@ -15,6 +15,12 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::auth();
 
+    Route::group(['middleware' => 'social_provider','prefix' => 'social', 'as' => 'social::'], function() {
+
+        Route::get('/redirect/{provider}',   ['as' =>  'redirect',   'uses' => 'Auth\SocialController@redirectToProvider']);
+        Route::get('/handle/{provider}',     ['as' =>  'handle',     'uses' => 'Auth\SocialController@handleProviderCallback']);
+    });
+
     Route::group(['middleware' => 'admin_redirect'], function () {
         Route::get('/home', 'HomeController@index');
         Route::get('/', 'HomeController@index');
