@@ -31,6 +31,9 @@ class SocialController extends Controller
      */
     public function handleProviderCallback(Request $request , $provider)
     {
+        if($request->error) {
+            return redirect('/register');
+        }
         $user = SocialAccount::createOrGetUser(Socialite::driver($provider), $provider);
         Auth::login($user);
         return redirect('/');
