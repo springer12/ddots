@@ -9,6 +9,9 @@
 
                 <div class="panel-body">
                     You are logged in!
+                    @if($nickname)
+                        nickname: {{$nickname}}
+                    @endif
                 </div>
             </div>
         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -14,6 +15,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user();
+        $nickname = '';
+        if($user) {
+            $nickname = $user->nickname;
+        }
+        return view('home')->with(['nickname' => $nickname]);
     }
 }

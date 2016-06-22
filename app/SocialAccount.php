@@ -20,17 +20,24 @@ class SocialAccount extends Model
         if($account) {
             return $account->user;
         } else {
-
             $account = new SocialAccount([
                 'provider_user_id' => $providerUser->getId(),
                 'provider' => $providerName,
             ]);
-            $user = User::whereEmail($providerUser->getEmail())->first();
+            $email = $providerUser->getEmail();
+            if($email) {
+                $role = User::ROLE_USER;
+                $user = User::whereEmail($email)->first();
+            } else {
+                $role = User::ROLE_LOW_USER;
+                $user = null;
+            }
             if(!$user) {
                 $user = User::create([
-                    'email' => $providerUser->getEmail(),
-                    'name'  => $providerUser->getName(),
-                    'role'  => User::ROLE_USER,
+                    'name'     => $providerUser->getName(),
+                    'nickname' => str_slug($providerUser->getName(), '_') . '_' . base_convert(time() - env('START_OF_TIME', 1466603612),10,36),
+                    'email'    => $email,
+                    'role'     => $role,
                 ]);
             }
             $account->user()->associate($user);
