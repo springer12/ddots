@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Solution extends Model
 {
 
-    const STATE_NEW = 'new';
+    const STATE_NEW      = 'new';
     const STATE_RECEIVED = 'received';
     const STATE_REJECTED = 'rejected';
     const STATE_RESERVED = 'reserved';
-    const STATE_TESTED = 'tested';
+    const STATE_TESTED   = 'tested';
 
     /*
      * разбиваем дату создания на год, месяц, день
@@ -38,6 +38,16 @@ class Solution extends Model
         return $query->where('state', self::STATE_NEW)
             ->orderBy('created_at', 'asc')
             ->firstOrFail();
+    }
+
+    public static function getStates() {
+        return [
+            self::STATE_NEW,
+            self::STATE_RECEIVED,
+            self::STATE_REJECTED,
+            self::STATE_RESERVED,
+            self::STATE_TESTED,
+        ];
     }
 
 }

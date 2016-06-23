@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class SolutionController extends Controller
 {
@@ -29,13 +30,19 @@ class SolutionController extends Controller
     }
 
     public function update(Request $request, $id) {
-        return ' ';
+        $this->validate($request, [
+            'state' => 'required|in:' . implode(',', Solution::getStates())
+        ]);
 
+        $solution = Solution::where('id', $id)->firstOrFail();
+        $solution->state = $request->get('state');
+        $solution->save();
+        //@todo test this
+        return Response::make();
     }
 
     public function store_report(Request $request, $id) {
-        return ' ';
-
+        //@todo: add implementation
     }
 
 }
