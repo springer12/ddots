@@ -37,8 +37,20 @@ Route::group(['middleware' => 'web'], function () {
     });
 });
 
-Route::group(['namespace' => 'TestingSystem', 'middleware' => 'testing_system', 'prefix' => 'testing_system_api'], function () {
-    //testing api code...
+Route::group(['namespace' => 'TestingSystem', 'middleware' => 'testing_system', 'prefix' => 'testing-system-api'], function () {
+    Route::get('/', function() {
+        echo 'Schema will be there';
+    });
+    //Route::post('login');
+    //Route::post('logout');
+    Route::group(['prefix' => 'solutions', /*'middleware' => 'auth:api'*/], function () {
+        Route::get('{id}',             'SolutionController@show')->where('id', '[0-9]+');
+        Route::get('{id}/source-code', 'SolutionController@show_source_code')->where('id', '[0-9]+');
+        Route::get('latest-new',       'SolutionController@latest_new');
+        Route::patch('{id}',           'SolutionController@update')->where('id', '[0-9]+');
+        Route::post('{id}/report',     'SolutionController@store_report')->where('id', '[0-9]+');
+
+    });
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
