@@ -15,7 +15,7 @@ class RegexServiceProvider extends ServiceProvider
     public function boot()
     {
         Validator::extend('english_alpha_dash', function($attribute, $value){
-            return preg_match('/^[A-z_-]$/', $value);
+            return preg_match('/^[0-9A-z_-]+$/', $value);
         });
 
         Validator::extend('any_lang_name', function($attribute, $value){
