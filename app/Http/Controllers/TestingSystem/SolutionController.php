@@ -4,9 +4,9 @@ namespace App\Http\Controllers\TestingSystem;
 
 use App\Solution;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class SolutionController extends Controller
 {
@@ -24,9 +24,8 @@ class SolutionController extends Controller
         return $solution;
     }
 
-    public function show_source_code(Request $request) {
-        return ' ';
-
+    public function show_source_code(Request $request, $id) {
+        return Storage::get(Solution::where('id', $id)->firstOrFail()->sourceCodePath());
     }
 
     public function update(Request $request, $id) {
