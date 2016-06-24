@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use Carbon\Carbon;
+
 class User extends Authenticatable
 {
 
@@ -46,13 +48,13 @@ class User extends Authenticatable
         return $this;
     }
 
+    public function hasRole($roles) {
+        if(is_array($roles)) {
+            return array_search($this->role, $roles) !== false;
+        } else {
+            return $this->role == $roles;
+        }
 
-    public function hasRole($role) {
-        return $this->role == $role;
-    }
-
-    public function hasOneOfRoles(array $roles) {
-        return array_search($this->role, $roles) !== false;
     }
 
     public function touchLastLogin() {
@@ -61,9 +63,24 @@ class User extends Authenticatable
     }
 
     public function upgrade() {
-        if($this->role == User::ROLE_LOW_USER) {
+        if($this->hasRole(User::ROLE_LOW_USER)) {
             $this->role = User::ROLE_USER;
             $this->save();
         }
+    }
+    public function programmingLanguage() {
+        return $this->BelongsTo(ProgrammingLanguage::class, 'programming_language');
+    }
+
+    public function getAge() {
+        return Carbon::parse($this->date_of_birth)->diff(Carbon::now())->format('%y');
+    }
+
+    public function getDateOfBirth() {
+        return Carbon::parse($this->date_of_birth)->format('d-m-Y');
+    }
+
+    public function getRegistrationDate() {
+        return Carbon::parse($this->created_at)->format('d-m-y');
     }
 }

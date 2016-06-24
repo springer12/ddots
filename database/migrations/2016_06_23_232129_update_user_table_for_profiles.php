@@ -13,12 +13,12 @@ class UpdateUserTableForProfiles extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('age')->nullable()->after('email');
-            $table->string('place_of_study', 255)->nullable()->after('age');
+            $table->date('date_of_birth')->nullable()->after('email');
+            $table->string('place_of_study', 255)->nullable()->after('date_of_birth');
             $table->string('profession', 255)->nullable()->after('place_of_study');
             $table->timestamp('last_login')->after('updated_at');
-            $table->bigInteger('primary_language')->nullable()->after('profession');
-            $table->string('vk_link', 255)->nullable()->after('primary_language');
+            $table->bigInteger('programming_language')->nullable()->after('profession');
+            $table->string('vk_link', 255)->nullable()->after('programming_language');
             $table->string('fb_link', 255)->nullable()->after('vk_link');
         });
     }
@@ -30,6 +30,14 @@ class UpdateUserTableForProfiles extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('age');
+            $table->dropColumn('place_of_study');
+            $table->dropColumn('profession');
+            $table->dropColumn('last_login');
+            $table->dropColumn('programming_language');
+            $table->dropColumn('vk_link');
+            $table->dropColumn('fb_link');
+        });
     }
 }

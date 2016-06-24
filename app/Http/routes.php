@@ -15,9 +15,14 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::auth();
 
+    Route::group(['prefix' => 'user', 'as' => 'user::'], function(){
+        Route::get('/edit', ['as' => 'edit', 'uses' => 'UserController@edit']);
+        Route::patch('/edit', 'UserController@saveEdit');
+        Route::get('/{id?}',['as' => 'profile', 'uses' => 'UserController@index']);
+        Route::get('/upgrade','UserController@upgrade');
 
-    Route::get('/user/{id}','UserController@index');
-    Route::get('/user/{id}/upgrade','UserController@upgrade');
+    });
+
 
     Route::group(['middleware' => 'social_provider','prefix' => 'social', 'as' => 'social::'], function() {
 
