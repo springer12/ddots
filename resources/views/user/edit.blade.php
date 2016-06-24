@@ -75,8 +75,27 @@
                                     </div>
                                 </div>
                             @endif
-                            <div>
-                                <span>primary programming language: </span><span>{{ $user->programmingLanguage->name }}</span>
+
+                            <div class="form-group">
+                                <label for="programming_language" class="col-md-4 control-label">primary programming
+                                    language</label>
+
+                                <div class="col-md-6">
+                                    <button data-language-selector-button class="btn btn-primary dropdown-toggle" type="button"
+                                            data-toggle="dropdown">{{ $user->programmingLanguage->name }}</button>
+                                    <ul class="dropdown-menu">
+                                        @foreach($langs as $lang)
+                                            <li role="presentation"><a data-language-selector data-id="{{ $lang->id }}">{{ $lang->name }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                    <input type="hidden" name="programming_language"
+                                           value="{{ $user->programmingLanguage->id }}"/>
+                                    @if ($errors->has('programming_language'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('programming_language') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                             </div>
 
                             <div class="form-group{{ $errors->has('vk_link') ? ' has-error' : '' }}">

@@ -43,12 +43,14 @@ class UserController extends Controller
             'date_of_birth' => 'date',
             'profession' => 'max:255|alpha_dash',
             'place_of_study' => 'max:255|alpha_dash',
+            'programming_language' => 'exists:programming_languages,id',
             'vk_link' => 'url_domain:vk.com,new.vk.com,www.vk.com,www.new.vk.com',
             'fb_link' => 'url_domain:facebook.com,www.facebook.com',
         ]);
         $user->nickname = $request->nickname;
         $user->date_of_birth = Carbon::parse($request->date_of_birth);
         $user->profession = $request->profession;
+        $user->programming_language = $request->programming_language;
         $user->place_of_study = $request->place_of_study;
         $user->vk_link = $request->vk_link;
         $user->fb_link = $request->fb_link;
