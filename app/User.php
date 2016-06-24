@@ -54,4 +54,16 @@ class User extends Authenticatable
     public function hasOneOfRoles(array $roles) {
         return array_search($this->role, $roles) !== false;
     }
+
+    public function touchLastLogin() {
+        $this->last_login = $this->freshTimestamp();
+        $this->save();
+    }
+
+    public function upgrade() {
+        if($this->role == User::ROLE_LOW_USER) {
+            $this->role = User::ROLE_USER;
+            $this->save();
+        }
+    }
 }

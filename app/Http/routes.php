@@ -15,6 +15,10 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::auth();
 
+
+    Route::get('/user/{id}','UserController@index');
+    Route::get('/user/{id}/upgrade','UserController@upgrade');
+
     Route::group(['middleware' => 'social_provider','prefix' => 'social', 'as' => 'social::'], function() {
 
         Route::get('/redirect/{provider}',   ['as' =>  'redirect',   'uses' => 'Auth\SocialController@redirectToProvider']);
