@@ -21,7 +21,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::patch('/upgrade','UserController@upgrade');
         Route::get('/edit', ['as' => 'edit', 'uses' => 'UserController@edit']);
         Route::patch('/edit', 'UserController@saveEdit');
-        Route::get('/{id?}',['as' => 'profile', 'uses' => 'UserController@index']);
+        Route::get('/{id}',['as' => 'profile', 'uses' => 'UserController@index']);
 
     });
 

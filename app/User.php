@@ -27,7 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'nickname', 'email', 'password', 'role'
+        'name', 'nickname', 'email', 'password', 'role', 'date_of_birth', 'profession', 'programming_language', 'place_of_study', 'vk_link', 'fb_link',
     ];
 
     /**
@@ -76,14 +76,18 @@ class User extends Authenticatable
     }
 
     public function getAge() {
-        return Carbon::parse($this->date_of_birth)->diff(Carbon::now())->format('%y');
+        if($this->date_of_birth != null) {
+            return Carbon::parse($this->date_of_birth)->diff(Carbon::now())->format('%y');
+        } else {
+            return null;
+        }
     }
 
     public function getDateOfBirth() {
         if($this->date_of_birth) {
             return Carbon::parse($this->date_of_birth)->format('d-m-Y');
         } else {
-            return "";
+            return '';
         }
     }
 

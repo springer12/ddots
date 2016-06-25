@@ -24,7 +24,7 @@ class RegexServiceProvider extends ServiceProvider
 
         Validator::extend('url_domain', function($attribute, $value, $parameters){
             $parsedUrl = parse_url($value);
-            if($parsedUrl && $parsedUrl['host']) {
+            if($parsedUrl && isset($parsedUrl['host'])) {
                 return in_array($parsedUrl['host'], $parameters);
             } else {
                 return false;
