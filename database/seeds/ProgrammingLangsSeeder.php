@@ -11,12 +11,10 @@ class ProgrammingLangsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('programming_languages')->insert([
-            ['name' => 'c'],
-            ['name' => 'c++'],
-            ['name' => 'c#'],
-            ['name' => 'java'],
-            ['name' => 'assembly'],
-        ]);
+        \App\ProgrammingLanguage::create(['name' => 'c']);
+        \App\ProgrammingLanguage::create(['name' => 'c++']);
+        \App\ProgrammingLanguage::create(['name' => 'c#']);
+        \App\ProgrammingLanguage::create(['name' => 'java']);
+        \App\ProgrammingLanguage::create(['name' => 'assembly']);
     }
 }

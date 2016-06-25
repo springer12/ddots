@@ -23,7 +23,13 @@ class RegexServiceProvider extends ServiceProvider
         });
 
         Validator::extend('url_domain', function($attribute, $value, $parameters){
-            return in_array(parse_url($value)['host'],$parameters);
+            $parsedUrl = parse_url($value);
+            if($parsedUrl && $parsedUrl['host']) {
+                return in_array($parsedUrl['host'], $parameters);
+            } else {
+                return false;
+            }
+
         });
     }
 
