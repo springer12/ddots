@@ -38,7 +38,7 @@ class UserController extends Controller
         $user->upgrade();
         $user->email_verification_code = null;
         $user->save();
-        return redirect(action('UserController@index'));
+        return redirect(route('user::profile', ['id' => $user->id]));
     }
 
     public function edit(Request $request)
@@ -56,6 +56,6 @@ class UserController extends Controller
         $user->fill($request->except('date_of_birth'));
         $user->date_of_birth = $request->date_of_birth ? Carbon::parse($request->date_of_birth) : null;
         $user->save();
-        return redirect(route('user::profile'));
+        return redirect(route('user::profile', ['id' => $user->id]));
     }
 }
