@@ -15,6 +15,18 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::auth();
 
+    Route::get('verify/{code}', 'UserController@verify');
+
+    Route::group(['middleware' => 'profile_access', 'prefix' => 'user', 'as' => 'user::'], function(){
+        Route::post('/add-teacher', 'UserController@addTeacher');
+        Route::patch('/upgrade','UserController@upgrade');
+        Route::get('/edit', ['as' => 'edit', 'uses' => 'UserController@edit']);
+        Route::patch('/edit', 'UserController@saveEdit');
+        Route::get('/{id}',['as' => 'profile', 'uses' => 'UserController@index']);
+
+    });
+
+
     Route::group(['middleware' => 'social_provider','prefix' => 'social', 'as' => 'social::'], function() {
 
         Route::get('/redirect/{provider}',   ['as' =>  'redirect',   'uses' => 'Auth\SocialController@redirectToProvider']);

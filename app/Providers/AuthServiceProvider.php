@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->define('access-role-routes', function ($user, $roles) {
             $roles = is_array($roles) ? $roles : array_slice(func_get_args(), 1);
-            return $user->hasOneOfRoles($roles);
+            return $user->hasRole($roles);
         });
 
     }

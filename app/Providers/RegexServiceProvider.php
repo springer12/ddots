@@ -21,6 +21,16 @@ class RegexServiceProvider extends ServiceProvider
         Validator::extend('any_lang_name', function($attribute, $value){
             return preg_match('/^[\pL- ]+$/u', $value);
         });
+
+        Validator::extend('url_domain', function($attribute, $value, $parameters){
+            $parsedUrl = parse_url($value);
+            if($parsedUrl && isset($parsedUrl['host'])) {
+                return in_array($parsedUrl['host'], $parameters);
+            } else {
+                return false;
+            }
+
+        });
     }
 
     /**

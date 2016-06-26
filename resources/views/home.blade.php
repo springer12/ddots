@@ -8,7 +8,7 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in!
+                    You may or may not be logged in!
                     @if($nickname)
                         nickname: {{$nickname}}
                     @endif
