@@ -24,7 +24,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
                             <label for="nickname" class="col-md-4 control-label">Nickname</label>
 
                             <div class="col-md-6">

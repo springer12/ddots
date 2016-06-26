@@ -81,6 +81,13 @@ return [
     'url'                  => 'The :attribute format is invalid.',
 
     /*
+     * Custom validation lines
+     */
+
+    'any_lang_name'      => 'The :attribute may only contain letters, spaces and dashes.',
+    'english_alpha_dash' => 'The :attribute may only contain english letters, numbers, underscores and dashes',
+
+    /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
     |--------------------------------------------------------------------------
