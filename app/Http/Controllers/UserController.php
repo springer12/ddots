@@ -21,14 +21,13 @@ class UserController extends Controller
 
     public function upgrade(Request $request)
     {
-        $user = Auth::user();
-        $rules = $user->getValidationRules();
-        $rules['email'] = 'required|email|unique:users,email,' . $user->id;
+        $rules = Auth::user()->getValidationRules();
+        $rules['email'] = 'required|email|unique:users,email,' . Auth::user()->id;
         $this->validate($request, $rules);
-        $user->fill($request->except('date_of_birth'));
-        $user->date_of_birth = $request->date_of_birth ? Carbon::parse($request->date_of_birth) : null;
-        $user->sendVerificationMail();
-        $user->save();
+        Auth::user()->fill($request->except('date_of_birth'));
+        Auth::user()->date_of_birth = $request->date_of_birth ? Carbon::parse($request->date_of_birth) : null;
+        Auth::user()->sendVerificationMail();
+        Auth::user()->save();
         return redirect(action('UserController@index'));
     }
 
@@ -48,15 +47,15 @@ class UserController extends Controller
 
     public function saveEdit(Request $request)
     {
-        $user = Auth::user();
-        $this->validate($request, $user->getValidationRules());
+
+        $this->validate($request, Auth::user()->getValidationRules());
         if(Input::hasFile('avatar_file')) {
-            $user->setAvatar();
+            Auth::user()->setAvatar();
         }
-        $user->fill($request->except('date_of_birth'));
-        $user->date_of_birth = $request->date_of_birth ? Carbon::parse($request->date_of_birth) : null;
-        $user->save();
-        return redirect(route('user::profile', ['id' => $user->id]));
+        Auth::user()->fill($request->except('date_of_birth'));
+        Auth::user()->date_of_birth = $request->date_of_birth ? Carbon::parse($request->date_of_birth) : null;
+        Auth::user()->save();
+        return redirect(route('user::profile', ['id' => Auth::user()->id]));
     }
 
     public function addTeacher(Request $request) {
