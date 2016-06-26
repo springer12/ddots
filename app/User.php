@@ -86,9 +86,8 @@ class User extends Authenticatable
     public function getDateOfBirth() {
         if($this->date_of_birth) {
             return Carbon::parse($this->date_of_birth)->format('d-m-Y');
-        } else {
-            return '';
         }
+        return '';
     }
 
     public function getRegistrationDate() {
@@ -136,4 +135,21 @@ class User extends Authenticatable
         });
     }
 
+    public function students() {
+        return $this->belongsToMany(User::class, 'teacher_student_relation', 'teacher_id', 'student_id');
+    }
+
+    public function teachers() {
+        return $this->belongsToMany(User::class, 'teacher_student_relation', 'student_id', 'teacher_id');
+    }
+
+    public function isTeacherOf($id) {
+        $students = $this->students;
+        foreach($students as $student) {
+            if($student->id == $id) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

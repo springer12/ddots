@@ -18,6 +18,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('verify/{code}', 'UserController@verify');
 
     Route::group(['middleware' => 'profile_access', 'prefix' => 'user', 'as' => 'user::'], function(){
+        Route::post('/add-teacher', 'UserController@addTeacher');
         Route::patch('/upgrade','UserController@upgrade');
         Route::get('/edit', ['as' => 'edit', 'uses' => 'UserController@edit']);
         Route::patch('/edit', 'UserController@saveEdit');

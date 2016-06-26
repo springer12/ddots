@@ -17,14 +17,17 @@ class ProfileAccess
      */
     public function handle($request, Closure $next)
     {
-        if( ($request->id
-         && (User::findOrFail($request->id)->hasRole(User::ROLE_TEACHER) //view profile page - id required
-         || Auth::user()->id == $request->id))
-         // $request->id is a student of Auth::user()->id
-         || (!$request->id //view own edit/upgrade page - id not required
-         && Auth::check())
+        if(  ($request->id
+          && (User::findOrFail($request->id)->hasRole(User::ROLE_TEACHER) //view profile page - id required
+             || Auth::user()->id == $request->id)
+             || Auth::user()->isTeacherOf($request->id)
+             || Auth::user()->hasRole(User::ROLE_ADMIN))
+          || (!$request->id //view own edit/upgrade page - id not required
+             && Auth::check())
         ) {
             return $next($request);
+        } else {
+            return abort(404);
         }
     }
 }

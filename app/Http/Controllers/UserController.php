@@ -58,4 +58,12 @@ class UserController extends Controller
         $user->save();
         return redirect(route('user::profile', ['id' => $user->id]));
     }
+
+    public function addTeacher(Request $request) {
+        $this->validate($request, ['id' => 'exists:users']);
+        $teacher = User::where('id',$request->id)->where('role', User::ROLE_TEACHER)->firstOrFail();
+        Auth::user()->teachers()->attach($teacher);
+        return redirect(route('user::profile', ['id' => Auth::user()->id]));
+    }
+
 }
