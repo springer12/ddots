@@ -72,8 +72,8 @@ Route::group(['namespace' => 'TestingSystem', 'prefix' => 'testing-system-api'],
         Route::get('{id}/source-code', 'SolutionController@show_source_code')->where('id', '[0-9]+');
         Route::get('latest-new',       'SolutionController@latest_new');
         Route::post('{id}/report',     'SolutionController@store_report')->where('id', '[0-9]+');
-
     });
+    Route::resource('/programming_languages', 'ProgrammingLanguagesController');
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
