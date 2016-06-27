@@ -45,6 +45,11 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+
+        'testing_servers_api' => [
+            'driver' => 'token',
+            'provider' => 'testing_servers',
+        ]
     ],
 
     /*
@@ -68,6 +73,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        'testing_servers' => [
+            'driver' => 'eloquent',
+            'model' => App\TestingServer::class,
         ],
 
         // 'users' => [

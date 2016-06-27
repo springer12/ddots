@@ -1,0 +1,7 @@
+(
+    function ($, window, document) {
+        $(document).ready(function () {
+            $("div.flash-message").delay(3000).slideUp(300);
+        });
+    }
+)(jQuery, window, document);

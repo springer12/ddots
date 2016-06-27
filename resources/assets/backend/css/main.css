@@ -1,0 +1,22 @@
+/*fixs start*/
+@media (min-width: 768px) {
+    footer {
+         margin-left: 0px;
+    }
+}
+
+.x_panel {
+    overflow: auto;
+}
+
+/*fixs end*/
+
+.wrap-text {
+    word-break: break-all;
+}
+.custom-pager {
+    text-align: center;
+}
+.flash-message {
+    margin-top: 60px;
+}

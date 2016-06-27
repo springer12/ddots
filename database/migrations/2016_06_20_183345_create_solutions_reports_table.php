@@ -12,7 +12,7 @@ class CreateSolutionsReportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('solutions_reports', function (Blueprint $table) {
+        Schema::create('solution_reports', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->enum('status', [
                 'CE',
@@ -49,6 +49,6 @@ class CreateSolutionsReportsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('solutions_reports');
+        Schema::drop('solution_reports');
     }
 }

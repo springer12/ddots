@@ -107,6 +107,7 @@ class User extends Authenticatable
             'fb_link' => 'url_domain:facebook.com,www.facebook.com'
         ];
     }
+    
     public function setAvatar($name = 'avatar_file'){
         if(Input::file($name)->isValid()) {
             if($this->avatar) {

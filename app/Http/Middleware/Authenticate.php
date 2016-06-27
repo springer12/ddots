@@ -18,6 +18,10 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        if($guard == 'testing_servers_api' && Auth::guard($guard)->guest()) {
+            return response('Unauthorized.', 401);
+        }
+        
         if (Auth::guard($guard)->guest()) {
             return $this->handleUnauthorizedRequest($request);
         }

@@ -18,7 +18,7 @@ class CreateSolutionsTable extends Migration
             $table->enum('status',       ['CE', 'FF', 'NC', 'CC', 'CT', 'UE'])->nullable();
             $table->enum('testing_mode', ['full', 'first_fail', 'one']);
             $table->string('message')->nullable();
-            
+
             $table->unsignedInteger('problem_id');
             $table->foreign('problem_id')
                 ->references('id')->on('problems')
@@ -37,7 +37,7 @@ class CreateSolutionsTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             
-            $table->unsignedInteger('testing_server_id');
+            $table->unsignedInteger('testing_server_id')->nullable();
             $table->foreign('testing_server_id')
                 ->references('id')->on('testing_servers')
                 ->onDelete('cascade')

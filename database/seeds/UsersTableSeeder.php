@@ -13,10 +13,10 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name'  => 'root',
-            'email' => 'ag45root@gmail.com',
+            'nickname' => 'root',
+            'email'    => 'ag45root@gmail.com',
             'password' => 'geRayay8',
-            'role' => User::ROLE_ADMIN,
+            'role'     => User::ROLE_ADMIN,
         ])->save();
     }
 }

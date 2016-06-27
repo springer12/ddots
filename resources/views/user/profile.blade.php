@@ -55,7 +55,7 @@
                             @endforeach
                         @endif
                         @if(\Illuminate\Support\Facades\Auth::user()->id == $user->id)
-                            <a href="{{ route('user::edit') }}" class="btn btn-lg btn-primary btn-block">
+                            <a href="{{ route('frontend::user::edit') }}" class="btn btn-lg btn-primary btn-block">
                                 @if($user->hasRole(\App\User::ROLE_LOW_USER))
                                     Upgrade
                                 @else
