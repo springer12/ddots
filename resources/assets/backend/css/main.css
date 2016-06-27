@@ -1,0 +1,16 @@
+/*fixs start*/
+@media (min-width: 768px) {
+    footer {
+         margin-left: 0px;
+    }
+}
+
+.x_panel {
+    overflow: scroll;
+}
+
+/*fixs end*/
+
+.wrap-text {
+    word-break: break-all;
+}

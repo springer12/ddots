@@ -35,11 +35,11 @@
                             @foreach($servers as $server)
                                 <tr>
                                     <td>{{ $server->id }}</td>
-                                    <td>{{ $server->name }}</td>
+                                    <td class="wrap-text">{{ $server->name }}</td>
                                     <td>{{ $server->created_at }}</td>
                                     <td>{{ $server->updated_at }}</td>
                                     <td>{{ $server->deleted_at }}</td>
-                                    <td>{{ $server->api_token }}</td>
+                                    <td class="wrap-text">{{ $server->api_token }}</td>
                                     <td>
                                         <a title="Edit" href="{{ action('Backend\TestingServersController@edit',['id'=> $server->id]) }}"><span class="glyphicon glyphicon-pencil"></span></a>
                                         @if (!$server->deleted_at)

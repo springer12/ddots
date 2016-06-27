@@ -66,9 +66,10 @@ elixir(function(mix) {
     if (appName) {
         buildApp(mix, appName);
     } else {
-        for (var app in apps) if (apps.hasOwnProperty(app)) {
-            buildApp(mix, app);
-        }
+        for (var app in apps)
+            if (apps.hasOwnProperty(app)) {
+                buildApp(mix, app);
+            }
     }
 });
 
