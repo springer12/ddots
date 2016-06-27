@@ -5,60 +5,94 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>DOTS</title>
 
     <link href="{{ asset('backend-bundle/css/bundle' . (config('app.assets.minified', false) ? '.min' : '') . '.css') }}" rel='stylesheet' type='text/css'>
 
 </head>
-<body id="app-layout">
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="{{ action('Backend\DashboardController@index') }}" class="site_title"><i class="fa fa-paw"></i> <span>DOTS ROOT</span></a>
+                </div>
 
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+                <div class="clearfix"></div>
 
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
-                </a>
-            </div>
+                <!-- menu profile quick info -->
+                <div class="profile">
+                    <div class="profile_pic">
+                        <img src="{{ Auth::user()->getAvatar() }}" alt="..." class="img-circle profile_img">
+                    </div>
+                    <div class="profile_info">
+                        <span>Welcome,</span>
+                        <h2>{{ Auth::user()->name }}</h2>
+                    </div>
+                </div>
+                <!-- /menu profile quick info -->
 
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/backend/testing-servers') }}">Testing servers</a></li>
-                </ul>
+                <br>
 
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section active">
+                        <h3>General</h3>
+                        <ul class="nav side-menu" style="">
+                            <li class="active"><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu" style="display: block;">
+                                    <li class="current-page"><a href="{{ action('Backend\DashboardController@index') }}">Dashboard</a></li>
+                                    <li class="current-page"><a href="{{ action('Backend\TestingServersController@index') }}">Testing servers</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /sidebar menu -->
 
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
             </div>
         </div>
-    </nav>
 
-    @yield('content')
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <nav class="" role="navigation">
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
 
-    <script src="{{ asset('backend-bundle/js/bundle' . (config('app.assets.minified', false) ? '.min' : '') . '.js') }}"></script>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <img src="{{ Auth::user()->getAvatar() }}" alt="">{{ Auth::user()->name }}
+                                <span class=" fa fa-angle-down"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+    </div>
+    <!-- /page content -->
+    <div class="right_col" role="main">
+        @yield('content')
+    </div>
+    <footer>
+        <div class="pull-right"></div>
+        <div class="clearfix"></div>
+    </footer>
+</div>
+
+
+</body>
+
+{{--@yield('content')--}}
+
+<script src="{{ asset('backend-bundle/js/bundle' . (config('app.assets.minified', false) ? '.min' : '') . '.js') }}"></script>
 </body>
 </html>

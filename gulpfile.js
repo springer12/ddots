@@ -1,45 +1,53 @@
 var path = require('path'),
-  fs = require('fs'),
-  gUtil = require('gulp-util'),
-  elixir = require('laravel-elixir'),
-  resourcesFolder = 'resources',
-  appName = gUtil.env.app && fs.statSync(appPath(gUtil.env.app)).isDirectory() ? gUtil.env.app : null,
+    fs = require('fs'),
+    gUtil = require('gulp-util'),
+    elixir = require('laravel-elixir'),
+    resourcesFolder = 'resources',
+    appName = gUtil.env.app && fs.statSync(appPath(gUtil.env.app)).isDirectory() ? gUtil.env.app : null,
 /*
  * Vendor resources
  */
 
 
 // jQuery
-  jQuery = vendorPath('jquery/dist/jquery.js'),
+    jQuery = vendorPath('jquery/dist/jquery.js'),
 
 // Bootstrap
-  Bootstrap = {
-      "fonts": vendorPath('bootstrap/dist/fonts', true),
-      "css": vendorPath('bootstrap/dist/css/bootstrap.css'),
-      "js": vendorPath('bootstrap/dist/js/bootstrap.js')
-  },
+    Bootstrap = {
+        "fonts": vendorPath('bootstrap/dist/fonts', true),
+        "css": vendorPath('bootstrap/dist/css/bootstrap.css'),
+        "js": vendorPath('bootstrap/dist/js/bootstrap.js')
+    },
 
 // gentelella
-  gentelella = {
-      "css": vendorPath('gentelella/build/css/custom.css'),
-      "js": vendorPath('gentelella/build/js/custom.js')
-  },
+    gentelella = {
+        "css": vendorPath('gentelella/build/css/custom.css'),
+        "js": vendorPath('gentelella/build/js/custom.js')
+    },
+
+//font-awesome
+    fontawesome = {
+        "fonts": vendorPath('font-awesome/fonts', true),
+        "css": vendorPath('font-awesome/css/font-awesome.css'),
+    },
+
+
 /*
  * Apps resources
  */
-  apps = {
-      "frontend": {
-          "fonts": [Bootstrap.fonts, appPath('frontend', 'fonts')],
-          "css": [Bootstrap.css, appPath('frontend', 'css')],
-          "js": [jQuery, Bootstrap.js, appPath('frontend', 'js')]
-      },
-      "backend": {
-          "fonts": [Bootstrap.fonts, appPath('backend', 'fonts')],
-          "css": [Bootstrap.css, /*gentelella.css,*/ appPath('backend', 'css')],
-          "js": [jQuery, Bootstrap.js, /*gentelella.js,*/ appPath('backend', 'js')]
-      }
-  },
-  outputExtPrefix = elixir.config.production ? '.min' : '';
+    apps = {
+        "frontend": {
+            "fonts": [Bootstrap.fonts, appPath('frontend', 'fonts')],
+            "css": [Bootstrap.css, appPath('frontend', 'css')],
+            "js": [jQuery, Bootstrap.js, appPath('frontend', 'js')]
+        },
+        "backend": {
+            "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('backend', 'fonts')],
+            "css": [Bootstrap.css, fontawesome.css, gentelella.css, appPath('backend', 'css')],
+            "js": [jQuery, Bootstrap.js, gentelella.js, appPath('backend', 'js')]
+        }
+    },
+    outputExtPrefix = elixir.config.production ? '.min' : '';
 
 /*
  |--------------------------------------------------------------------------

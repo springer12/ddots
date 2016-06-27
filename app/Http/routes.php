@@ -27,7 +27,7 @@ Route::group(['middleware' => 'web'], function () {
     });
 
 
-    Route::group(['middleware' => 'social_provider','prefix' => 'social', 'as' => 'social::'], function() {
+    Route::group(['middleware' => 'social_provider', 'prefix' => 'social', 'as' => 'social::'], function() {
 
         Route::get('/redirect/{provider}',   ['as' =>  'redirect',   'uses' => 'Auth\SocialController@redirectToProvider']);
         Route::get('/handle/{provider}',     ['as' =>  'handle',     'uses' => 'Auth\SocialController@handleProviderCallback']);
@@ -40,8 +40,21 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_ADMIN, 'prefix' => 'backend', 'as' => 'backend::'], function () {
-        Route::get('/', ['uses' => 'Admin\DashboardController@index', 'as' => 'dashboard']);
-        Route::get('/testing-servers', 'Admin\TestingServersController@index');
+        Route::get('/', ['uses' => 'Backend\DashboardController@index', 'as' => 'dashboard']);
+
+        Route::group(['prefix' => 'testing-servers', 'as' => 'testing_servers::'], function () {
+            Route::get('/', ['uses' => 'Backend\TestingServersController@index', 'as' => 'list']);
+
+            Route::get('add', ['uses' => 'Backend\TestingServersController@showForm', 'as' => 'add']);
+            Route::post('add', 'Backend\TestingServersController@edit');
+
+            Route::get('edit/{id}', ['uses' => 'Backend\TestingServersController@showForm', 'as' => 'edit']);
+            Route::post('edit/{id}', 'Backend\TestingServersController@edit');
+
+            Route::get('delete/{id}', 'Backend\TestingServersController@delete');
+            Route::get('restore/{id}', 'Backend\TestingServersController@restore');
+        });
+
     });
 
     Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'as' => 'frontend::'], function () {
