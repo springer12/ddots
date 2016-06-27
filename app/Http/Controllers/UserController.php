@@ -21,14 +21,16 @@ class UserController extends Controller
 
     public function upgrade(Request $request)
     {
-        $rules = Auth::user()->getValidationRules();
-        $rules['email'] = 'required|email|unique:users,email,' . Auth::user()->id;
+        $rules = array_merge(Auth::user()->getValidationRules(), [
+            'email' => 'required|email|unique:users,email,' . Auth::user()->id
+        ]);
         $this->validate($request, $rules);
+
         Auth::user()->fill($request->except('date_of_birth'));
-        Auth::user()->date_of_birth = $request->date_of_birth ? Carbon::parse($request->date_of_birth) : null;
+        Auth::user()->date_of_birth = !$request->date_of_birth ?: Carbon::parse($request->date_of_birth);
         Auth::user()->sendVerificationMail();
         Auth::user()->save();
-        return redirect(action('UserController@index'));
+        return redirect(action('UserController@index', ['id' => Auth::user()->id]));
     }
 
     public function verify(Request $request, $code)
@@ -37,7 +39,7 @@ class UserController extends Controller
         $user->upgrade();
         $user->email_verification_code = null;
         $user->save();
-        return redirect(route('user::profile', ['id' => $user->id]));
+        return redirect(route('frontend::user::profile', ['id' => $user->id]));
     }
 
     public function edit(Request $request)
@@ -55,14 +57,14 @@ class UserController extends Controller
         Auth::user()->fill($request->except('date_of_birth'));
         Auth::user()->date_of_birth = $request->date_of_birth ? Carbon::parse($request->date_of_birth) : null;
         Auth::user()->save();
-        return redirect(route('user::profile', ['id' => Auth::user()->id]));
+        return redirect(route('frontend::user::profile', ['id' => Auth::user()->id]));
     }
 
     public function addTeacher(Request $request) {
         $this->validate($request, ['id' => 'exists:users']);
         $teacher = User::where('id',$request->id)->where('role', User::ROLE_TEACHER)->firstOrFail();
         Auth::user()->teachers()->attach($teacher);
-        return redirect(route('user::profile', ['id' => Auth::user()->id]));
+        return redirect(route('frontend::user::profile', ['id' => Auth::user()->id]));
     }
 
 }
