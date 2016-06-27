@@ -6,7 +6,7 @@
 }
 
 .x_panel {
-    overflow: scroll;
+    overflow: auto;
 }
 
 /*fixs end*/
@@ -16,4 +16,7 @@
 }
 .custom-pager {
     text-align: center;
+}
+.flash-message {
+    margin-top: 60px;
 }

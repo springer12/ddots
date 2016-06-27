@@ -80,6 +80,7 @@
     </div>
     <!-- /page content -->
     <div class="right_col" role="main">
+        @include('helpers.flash')
         @yield('content')
     </div>
     <footer>
