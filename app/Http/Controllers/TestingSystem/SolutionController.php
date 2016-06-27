@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\TestingSystem;
 
 use App\Solution;
+use App\SolutionReport;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -22,6 +23,7 @@ class SolutionController extends Controller
         $solution = Solution::select('problem_id', 'programming_language_id', 'testing_mode')
             ->where('id', $id)
             ->firstOrFail();
+
         return $solution;
     }
 
@@ -37,12 +39,38 @@ class SolutionController extends Controller
         $solution = Solution::where('id', $id)->firstOrFail();
         $solution->state = $request->get('state');
         $solution->save();
-        //@todo test this
+        
         return Response::make();
     }
 
     public function store_report(Request $request, $id) {
-        //@todo: add implementation
+        $this->validate($request, [
+            'status'                 => 'required|in:' . implode(',', Solution::getStatuses()),
+            'message'                => 'string|max:255',
+            'tests.*.status'         => 'required|in:' . implode(',', SolutionReport::getStatuses()),
+            'tests.*.execution_time' => 'required|numeric',
+            'tests.*.memory_peak'    => 'required|numeric',
+        ]);
+
+        $solution_reports = $request->get('tests');
+        $reports = [];
+
+        foreach ($solution_reports as $report) {
+            $reports[] = new SolutionReport([
+                'status'         => $report['status'],
+                'execution_time' => $report['execution_time'],
+                'memory_peak'    => $report['memory_peak'],
+            ]);
+        }
+
+        $solution = Solution::where('id', $id)->firstOrFail();
+
+        $solution->status  = $request->get('status');
+        $solution->message = $request->get('message');
+        $solution->reports()->saveMany($reports);
+        $solution->save();
+
+        return Response::make();
     }
 
 }

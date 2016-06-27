@@ -14,6 +14,18 @@ class Solution extends Model
     const STATE_RESERVED = 'reserved';
     const STATE_TESTED   = 'tested';
 
+    const STATUS_CE = 'CE';
+    const STATUS_FF = 'FF';
+    const STATUS_NC = 'NC';
+    const STATUS_CC = 'CC';
+    const STATUS_CT = 'CT';
+    const STATUS_UE = 'UE';
+
+    public function reports() {
+        return $this->hasMany('App\SolutionReport');
+    }
+
+
     /*
      * разбиваем дату создания на год, месяц, день
      *
@@ -47,6 +59,17 @@ class Solution extends Model
             self::STATE_REJECTED,
             self::STATE_RESERVED,
             self::STATE_TESTED,
+        ];
+    }
+
+    public static function getStatuses() {
+        return [
+            self::STATUS_CE,
+            self::STATUS_FF,
+            self::STATUS_NC,
+            self::STATUS_CC,
+            self::STATUS_CT,
+            self::STATUS_UE,
         ];
     }
 
