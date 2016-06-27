@@ -55,7 +55,7 @@ Route::group(['namespace' => 'TestingSystem', 'middleware' => 'testing_system', 
     });
     //Route::post('login');
     //Route::post('logout');
-    Route::group(['prefix' => 'solutions', /*'middleware' => 'auth:api'*/], function () {
+    Route::group(['prefix' => 'solutions', 'middleware' => 'auth:testing_servers_api'], function () {
         Route::get('{id}',             'SolutionController@show')->where('id', '[0-9]+');
         Route::patch('{id}',           'SolutionController@update')->where('id', '[0-9]+');
         Route::get('{id}/source-code', 'SolutionController@show_source_code')->where('id', '[0-9]+');

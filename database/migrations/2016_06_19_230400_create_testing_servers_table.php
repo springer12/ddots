@@ -15,7 +15,7 @@ class CreateTestingServersTable extends Migration
         Schema::create('testing_servers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('auth_key');
+            $table->string('api_token');
             $table->softDeletes();
             $table->timestamps();
         });

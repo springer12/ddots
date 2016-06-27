@@ -57,5 +57,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'social_provider' => \App\Http\Middleware\SocialProvider::class,
         'profile_access' => \App\Http\Middleware\ProfileAccess::class,
+        'testing_system' => \App\Http\Middleware\TestingSystem::class,
     ];
 }
