@@ -62,12 +62,10 @@ Route::group(['middleware' => 'web'], function () {
     });
 });
 
-Route::group(['namespace' => 'TestingSystem', 'middleware' => 'testing_system', 'prefix' => 'testing-system-api'], function () {
+Route::group(['namespace' => 'TestingSystem', 'prefix' => 'testing-system-api'], function () {
     Route::get('/', function() {
         echo 'Schema will be there';
     });
-    //Route::post('login');
-    //Route::post('logout');
     Route::group(['prefix' => 'solutions', 'middleware' => 'auth:testing_servers_api'], function () {
         Route::get('{id}',             'SolutionController@show')->where('id', '[0-9]+');
         Route::patch('{id}',           'SolutionController@update')->where('id', '[0-9]+');
