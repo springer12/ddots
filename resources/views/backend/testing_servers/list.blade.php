@@ -52,7 +52,9 @@
                             @endforeach
                             </tbody>
                         </table>
-
+                        <div class="custom-pager">
+                            {{ $servers->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
