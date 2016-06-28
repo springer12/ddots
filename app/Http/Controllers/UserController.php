@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
 
 class UserController extends Controller
@@ -25,9 +24,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . Auth::user()->id
         ]);
         $this->validate($request, $rules);
-
-        Auth::user()->fill($request->except('date_of_birth'));
-        Auth::user()->date_of_birth = !$request->date_of_birth ?: Carbon::parse($request->date_of_birth);
+        Auth::user()->fill($request->all());
         Auth::user()->sendVerificationMail();
         Auth::user()->save();
         return redirect(action('UserController@index', ['id' => Auth::user()->id]));
@@ -51,11 +48,10 @@ class UserController extends Controller
     {
 
         $this->validate($request, Auth::user()->getValidationRules());
-        if(Input::hasFile('avatar_file')) {
-            Auth::user()->setAvatar();
+        if(Input::hasFile('avatar')) {
+            Auth::user()->setAvatar('avatar');
         }
-        Auth::user()->fill($request->except('date_of_birth'));
-        Auth::user()->date_of_birth = $request->date_of_birth ? Carbon::parse($request->date_of_birth) : null;
+        Auth::user()->fill($request->all());
         Auth::user()->save();
         return redirect(route('frontend::user::profile', ['id' => Auth::user()->id]));
     }

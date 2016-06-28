@@ -83,11 +83,15 @@ class User extends Authenticatable
         }
     }
 
-    public function getDateOfBirth() {
-        if($this->date_of_birth) {
-            return Carbon::parse($this->date_of_birth)->format('d-m-Y');
+    public function getDateOfBirthAttribute($dob) {
+        if($dob) {
+            return Carbon::parse($dob)->format('d-m-Y');
         }
         return '';
+    }
+
+    public function setDateOfBirthAttribute($value) {
+            $this->attributes['date_of_birth'] = !$value?:Carbon::parse($value);
     }
 
     public function getRegistrationDate() {
@@ -97,7 +101,7 @@ class User extends Authenticatable
     public function getValidationRules() {
         return [
             'name'     => 'required|max:255|any_lang_name',
-            'avatar_file' => 'mimes:jpeg,png,bmp',
+            'avatar' => 'mimes:jpeg,png,bmp',
             'nickname' => 'required|max:255|english_alpha_dash|unique:users,nickname,' . $this->id,
             'date_of_birth' => 'date',
             'profession' => 'max:255|alpha_dash',
@@ -108,7 +112,7 @@ class User extends Authenticatable
         ];
     }
     
-    public function setAvatar($name = 'avatar_file'){
+    public function setAvatar($name){
         if(Input::file($name)->isValid()) {
             if($this->avatar) {
                 File::delete('userdata/avatars/' . $this->avatar);
@@ -118,9 +122,9 @@ class User extends Authenticatable
         }
     }
 
-    public function getAvatar() {
-        if($this->avatar) {
-            return url('userdata/avatars/' . $this->avatar);
+    public function getAvatarAttribute($avatar) {
+        if($avatar) {
+            return url('userdata/avatars/' . $avatar);
         } else {
             return url('userdata/avatars/default.jpg');
         }

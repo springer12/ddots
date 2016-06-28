@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         {{-- @if(!$user->hasRole(\App\User::ROLE_LOW_USER)) --}}
-                        <div><img width="100" height="100" src="{{ $user->getAvatar() }}" alt="avatar"></div>
+                        <div><img width="100" height="100" src="{{ $user->avatar }}" alt="avatar"></div>
                         {{-- @endif --}}
                         <div><span>nick: </span><span>{{ $user->nickname }}</span></div>
                         <div><span>name: </span><span>{{ $user->name }}</span></div>

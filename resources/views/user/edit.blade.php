@@ -35,8 +35,8 @@
                                 </div>
                             </div>
                             @if(!$user->hasRole(\App\User::ROLE_LOW_USER))
-                                <div><img width="100" height="100" src="{{ $user->getAvatar() }}" alt="avatar"></div>
-                                <input type="file" name="avatar_file" id="avatar_file">
+                                <div><img width="100" height="100" src="{{ $user->avatar }}" alt="avatar"></div>
+                                <input type="file" name="avatar" id="avatar">
                             @endif
                             <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
                                 <label for="nickname" class="col-md-4 control-label">Nickname</label>
@@ -58,7 +58,7 @@
 
                                 <div class="col-md-6">
                                     <input id="date_of_birth" class="form-control" name="date_of_birth"
-                                           value="{{ old('date_of_birth')?old('date_of_birth'):$user->getDateOfBirth() }}">
+                                           value="{{ old('date_of_birth')?old('date_of_birth'):$user->date_of_birth }}">
                                     @if ($errors->has('date_of_birth'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('date_of_birth') }}</strong>
