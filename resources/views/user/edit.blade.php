@@ -57,7 +57,7 @@
                                 <label for="date_of_birth" class="col-md-4 control-label">birthday</label>
 
                                 <div class="col-md-6">
-                                    <input id="date_of_birth" class="form-control" name="date_of_birth"
+                                    <input data-datepicker id="date_of_birth" class="form-control" name="date_of_birth"
                                            value="{{ old('date_of_birth')?old('date_of_birth'):$user->date_of_birth }}">
                                     @if ($errors->has('date_of_birth'))
                                         <span class="help-block">
@@ -66,7 +66,6 @@
                                     @endif
                                 </div>
                             </div>
-
                             <div class="form-group{{ $errors->has('profession') ? ' has-error' : '' }}">
                                 <label for="profession" class="col-md-4 control-label">profession</label>
 

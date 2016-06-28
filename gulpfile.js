@@ -31,6 +31,11 @@ var path = require('path'),
         "css": vendorPath('font-awesome/css/font-awesome.css'),
     },
 
+// bootstrap-datepicker
+    bootstrap_datepicker = {
+        "css": vendorPath('bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css'),
+        "js": vendorPath('bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')
+    },
 
 /*
  * Apps resources
@@ -38,8 +43,8 @@ var path = require('path'),
     apps = {
         "frontend": {
             "fonts": [Bootstrap.fonts, appPath('frontend', 'fonts')],
-            "css": [Bootstrap.css, appPath('frontend', 'css')],
-            "js": [jQuery, Bootstrap.js, appPath('frontend', 'js')]
+            "css": [Bootstrap.css, bootstrap_datepicker.css, appPath('frontend', 'css')],
+            "js": [jQuery, Bootstrap.js, bootstrap_datepicker.js, appPath('frontend', 'js')]
         },
         "backend": {
             "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('backend', 'fonts')],
