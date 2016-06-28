@@ -35,8 +35,8 @@
                                 </div>
                             </div>
                             @if(!$user->hasRole(\App\User::ROLE_LOW_USER))
-                                <div><img width="100" height="100" src="{{ $user->getAvatar() }}" alt="avatar"></div>
-                                <input type="file" name="avatar_file" id="avatar_file">
+                                <div><img width="100" height="100" src="{{ $user->avatar }}" alt="avatar"></div>
+                                <input type="file" name="avatar" id="avatar">
                             @endif
                             <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
                                 <label for="nickname" class="col-md-4 control-label">Nickname</label>
@@ -57,8 +57,8 @@
                                 <label for="date_of_birth" class="col-md-4 control-label">birthday</label>
 
                                 <div class="col-md-6">
-                                    <input id="date_of_birth" class="form-control" name="date_of_birth"
-                                           value="{{ old('date_of_birth')?old('date_of_birth'):$user->getDateOfBirth() }}">
+                                    <input data-datepicker id="date_of_birth" class="form-control" name="date_of_birth"
+                                           value="{{ old('date_of_birth')?old('date_of_birth'):$user->date_of_birth }}">
                                     @if ($errors->has('date_of_birth'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('date_of_birth') }}</strong>
@@ -66,7 +66,6 @@
                                     @endif
                                 </div>
                             </div>
-
                             <div class="form-group{{ $errors->has('profession') ? ' has-error' : '' }}">
                                 <label for="profession" class="col-md-4 control-label">profession</label>
 
@@ -163,7 +162,7 @@
 
                             @if($user->hasRole(\App\User::ROLE_LOW_USER))
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                    You will be senr a verification email.
+                                    You will be sent a verification email.
                                     <label for="fb_link" class="col-md-4 control-label">email</label>
 
                                     <div class="col-md-6">

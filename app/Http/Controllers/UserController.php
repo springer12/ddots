@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\ActivationRepository;
 use App\ProgrammingLanguage;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
+use App\ActivationService;
 
 class UserController extends Controller
 {
@@ -21,25 +22,16 @@ class UserController extends Controller
 
     public function upgrade(Request $request)
     {
+        $activationService = new ActivationService(new ActivationRepository());
         $rules = array_merge(Auth::user()->getValidationRules(), [
             'email' => 'required|email|unique:users,email,' . Auth::user()->id
         ]);
         $this->validate($request, $rules);
-
-        Auth::user()->fill($request->except('date_of_birth'));
-        Auth::user()->date_of_birth = !$request->date_of_birth ?: Carbon::parse($request->date_of_birth);
-        Auth::user()->sendVerificationMail();
+        Auth::user()->fill($request->all());
+        $activationService->sendActivationMail(Auth::user());
         Auth::user()->save();
+        \Session::flash('alert-success', 'An verification email has been sent');
         return redirect(action('UserController@index', ['id' => Auth::user()->id]));
-    }
-
-    public function verify(Request $request, $code)
-    {
-        $user = User::where('email_verification_code', $code)->firstOrFail();
-        $user->upgrade();
-        $user->email_verification_code = null;
-        $user->save();
-        return redirect(route('frontend::user::profile', ['id' => $user->id]));
     }
 
     public function edit(Request $request)
@@ -51,11 +43,10 @@ class UserController extends Controller
     {
 
         $this->validate($request, Auth::user()->getValidationRules());
-        if(Input::hasFile('avatar_file')) {
-            Auth::user()->setAvatar();
+        if(Input::hasFile('avatar')) {
+            Auth::user()->setAvatar('avatar');
         }
-        Auth::user()->fill($request->except('date_of_birth'));
-        Auth::user()->date_of_birth = $request->date_of_birth ? Carbon::parse($request->date_of_birth) : null;
+        Auth::user()->fill($request->all());
         Auth::user()->save();
         return redirect(route('frontend::user::profile', ['id' => Auth::user()->id]));
     }
@@ -66,5 +57,14 @@ class UserController extends Controller
         Auth::user()->teachers()->attach($teacher);
         return redirect(route('frontend::user::profile', ['id' => Auth::user()->id]));
     }
-
+    public function verify(Request $request, $token)
+    {
+        $activationService = new ActivationService(new ActivationRepository());
+        if ($user = $activationService->activateUser($token)) {
+            auth()->login($user);
+            \Session::flash('alert-success', 'Email verified!');
+            return redirect(route('frontend::user::profile', ['id' => $user->id]));
+        }
+        abort(404);
+    }
 }
