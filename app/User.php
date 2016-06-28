@@ -130,16 +130,6 @@ class User extends Authenticatable
         }
     }
 
-    public function sendVerificationMail() {
-        $email = $this->email;
-        $name = $this->name;
-        $this->email_verification_code = uniqid();
-        Mail::send('auth.emails.verify_email',['code' => $this->email_verification_code], function($m) use ($email, $name) {
-            $m->from('tttdima6@gmail.com', 'Dots');
-            $m->to($email, $name)->subject('Verify your email address!');
-        });
-    }
-
     public function students() {
         return $this->belongsToMany(User::class, 'teacher_student_relation', 'teacher_id', 'student_id');
     }

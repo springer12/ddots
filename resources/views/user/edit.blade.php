@@ -162,7 +162,7 @@
 
                             @if($user->hasRole(\App\User::ROLE_LOW_USER))
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                    You will be senr a verification email.
+                                    You will be sent a verification email.
                                     <label for="fb_link" class="col-md-4 control-label">email</label>
 
                                     <div class="col-md-6">
