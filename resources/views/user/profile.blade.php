@@ -35,7 +35,7 @@
                         @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->fb_link)
                             <div><span>fb: </span><a href="{{$user->fb_link}}">FB</a></div>
                         @endif
-                        @if(\Illuminate\Support\Facades\Auth::user()->id == $user->id && $user->hasRole(\App\User::ROLE_USER))
+                        @if(\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->id == $user->id && $user->hasRole(\App\User::ROLE_USER))
                             <form method="post" action="{{ action('UserController@addTeacher') }}">
                                 {{ csrf_field() }}
                                 <input type="text" name="id"/>
@@ -54,7 +54,7 @@
                                 <a href="{{ action('UserController@index', ['id' => $student->id]) }}">{{ $student->name }}</a>
                             @endforeach
                         @endif
-                        @if(\Illuminate\Support\Facades\Auth::user()->id == $user->id)
+                        @if(\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->id == $user->id)
                             <a href="{{ route('frontend::user::edit') }}" class="btn btn-lg btn-primary btn-block">
                                 @if($user->hasRole(\App\User::ROLE_LOW_USER))
                                     Upgrade

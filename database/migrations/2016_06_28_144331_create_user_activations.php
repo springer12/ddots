@@ -13,7 +13,7 @@ class CreateUserActivations extends Migration
     public function up()
     {
         Schema::create('user_activations', function (Blueprint $table) {
-            $table->bigInteger('user_id');
+            $table->integer('user_id')->unique();
             $table->string('token');
             $table->timestamp('created_at');
         });

@@ -37,6 +37,7 @@ Route::group(['middleware' => 'web'], function () {
 
     });
 
+    Route::get('/teachers', 'TeacherListController@index');
     Route::auth();
     Route::get('verify/{code}', 'UserController@verify');
     Route::group(['middleware' => 'social_provider', 'prefix' => 'social', 'as' => 'social::'], function() {
@@ -48,10 +49,10 @@ Route::group(['middleware' => 'web'], function () {
         Route::group(['middleware' => 'profile_access', 'prefix' => 'user', 'as' => 'user::'], function(){
 
             Route::post('/add-teacher', 'UserController@addTeacher');
-            Route::patch('/upgrade','UserController@upgrade');
+            Route::post('/upgrade','UserController@upgrade');
             Route::get('/edit', ['as' => 'edit', 'uses' => 'UserController@edit']);
-            Route::patch('/edit', 'UserController@saveEdit');
-            Route::get('/{id}',['as' => 'profile', 'uses' => 'UserController@index']);
+            Route::post('/edit', 'UserController@saveEdit');
+            Route::get('/{id}',['as' => 'profile', 'uses' => 'UserController@index'])->where('id', '[0-9]+');;
 
         });
     });

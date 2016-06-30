@@ -14,7 +14,7 @@ class UpdateUsersTableAddNicknames extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             DB::statement('ALTER TABLE users MODIFY email VARCHAR(255)');
-            $table->string('nickname', 255)->unique()->after('name');
+            $table->string('nickname', 255)->unique();
         });
     }
 

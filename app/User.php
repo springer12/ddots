@@ -78,8 +78,6 @@ class User extends Authenticatable
     public function getAge() {
         if($this->date_of_birth != null) {
             return Carbon::parse($this->date_of_birth)->diff(Carbon::now())->format('%y');
-        } else {
-            return null;
         }
     }
 
@@ -113,12 +111,12 @@ class User extends Authenticatable
     }
     
     public function setAvatar($name){
-        if(Input::file($name)->isValid()) {
+        if($name->isValid()) {
             if($this->avatar) {
                 File::delete('userdata/avatars/' . $this->avatar);
             }
-            $this->avatar = uniqid() . '.' . Input::file($name)->getClientOriginalExtension();
-            Input::file($name)->move('userdata/avatars/', $this->avatar);
+            $this->avatar = uniqid() . '.' . $name->getClientOriginalExtension();
+            $name->move('userdata/avatars/', $this->avatar);
         }
     }
 
@@ -131,11 +129,11 @@ class User extends Authenticatable
     }
 
     public function students() {
-        return $this->belongsToMany(User::class, 'teacher_student_relation', 'teacher_id', 'student_id');
+        return $this->belongsToMany(User::class, 'teacher_student', 'teacher_id', 'student_id')->withPivot('confirmed');
     }
 
     public function teachers() {
-        return $this->belongsToMany(User::class, 'teacher_student_relation', 'student_id', 'teacher_id');
+        return $this->belongsToMany(User::class, 'teacher_student', 'student_id', 'teacher_id')->withPivot('confirmed');
     }
 
     public function isTeacherOf($id) {
@@ -146,5 +144,12 @@ class User extends Authenticatable
             }
         }
         return false;
+    }
+    public function scopeTeacher($query) {
+        return $query->where('role', self::ROLE_TEACHER);
+    }
+
+    public function scopeUser($query) {
+        return $query->where('role', self::ROLE_USER);
     }
 }
