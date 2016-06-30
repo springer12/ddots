@@ -16,7 +16,7 @@ class HomeController extends Controller
     public function index()
     {
         $nickname = '';
-        if(Auth::user()) {
+        if(Auth::check()) {
             $nickname = Auth::user()->nickname;
         }
         return view('home')->with(['nickname' => $nickname]);
