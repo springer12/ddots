@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -19,7 +19,7 @@ class User extends Authenticatable
     const ROLE_EDITOR   = 'editor';
     const ROLE_HR       = 'hr';
 
-
+    const ATTEMPTS_PER_MONTH = 3;
 
     /**
      * The attributes that are mass assignable.
@@ -109,14 +109,14 @@ class User extends Authenticatable
             'fb_link' => 'url_domain:facebook.com,www.facebook.com'
         ];
     }
-    
-    public function setAvatar($name){
-        if($name->isValid()) {
+
+    public function setAvatar($name) {
+        if(Input::file($name)->isValid()) {
             if($this->avatar) {
                 File::delete('userdata/avatars/' . $this->avatar);
             }
-            $this->avatar = uniqid() . '.' . $name->getClientOriginalExtension();
-            $name->move('userdata/avatars/', $this->avatar);
+            $this->avatar = uniqid() . '.' . Input::file($name)->getClientOriginalExtension();
+            Input::file($name)->move('userdata/avatars/', $this->avatar);
         }
     }
 
@@ -129,11 +129,11 @@ class User extends Authenticatable
     }
 
     public function students() {
-        return $this->belongsToMany(User::class, 'teacher_student', 'teacher_id', 'student_id')->withPivot('confirmed');
+        return $this->belongsToMany(User::class, 'teacher_student', 'teacher_id', 'student_id')->withPivot('confirmed', 'created_at')->withTimestamps();
     }
 
     public function teachers() {
-        return $this->belongsToMany(User::class, 'teacher_student', 'student_id', 'teacher_id')->withPivot('confirmed');
+        return $this->belongsToMany(User::class, 'teacher_student', 'student_id', 'teacher_id')->withPivot('confirmed', 'created_at')->withTimestamps();
     }
 
     public function isTeacherOf($id) {
@@ -145,11 +145,48 @@ class User extends Authenticatable
         }
         return false;
     }
+
     public function scopeTeacher($query) {
         return $query->where('role', self::ROLE_TEACHER);
     }
 
     public function scopeUser($query) {
         return $query->where('role', self::ROLE_USER);
+    }
+
+    public function allowedToRequestTeacher() {
+        return $this->getRemainingRequests() > 0;
+    }
+
+    public function getRemainingRequests() {
+        return self::ATTEMPTS_PER_MONTH - DB::table('teacher_student')
+            ->where('student_id', $this->id)
+            ->where('confirmed', 0)
+            ->where('teacher_student.created_at', '>', Carbon::now()->subMonth())
+            ->count();
+    }
+
+    public function getConfirmedTeachersQuery() {
+        return $this->whereIn('id', function ($query) {
+            $query->select('teacher_id')
+                ->from('teacher_student')
+                ->where('student_id', $this->id)
+                ->where('confirmed', '=', true);
+        })->teacher()->groupBy('id');
+    }
+
+    public function getUnrelatedOrUnconfirmedTeachersQuery() {
+        return $this->teacher()->whereNotIn('id', function ($query) {
+            $query->select('teacher_id')
+                ->from('teacher_student')
+                ->where('student_id', $this->id)
+                ->where('confirmed', '=', true);
+        })->groupBy('id');
+    }
+
+    public function markRelated($teachers) {
+        foreach($teachers as $teacher) {
+            $teacher['relation_exists'] = $teacher->students()->get()->contains('id', $this->id);
+        }
     }
 }

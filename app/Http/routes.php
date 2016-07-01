@@ -46,9 +46,11 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'as' => 'frontend::'], function () {
+        //@todo add to correct route group
+        Route::post('/add-teacher', ['as' => 'addTeacher', 'uses' => 'TeacherListAjaxController@addTeacher']);
         Route::group(['middleware' => 'profile_access', 'prefix' => 'user', 'as' => 'user::'], function(){
 
-            Route::post('/add-teacher', 'UserController@addTeacher');
+            //Route::post('/add-teacher', 'UserController@addTeacher');
             Route::post('/upgrade','UserController@upgrade');
             Route::get('/edit', ['as' => 'edit', 'uses' => 'UserController@edit']);
             Route::post('/edit', 'UserController@saveEdit');
