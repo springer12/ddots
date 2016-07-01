@@ -22,15 +22,25 @@ class UserController extends Controller
 
     public function upgrade(Request $request)
     {
-        $activationService = new ActivationService(new ActivationRepository());
         $rules = array_merge(Auth::user()->getValidationRules(), [
             'email' => 'required|email|unique:users,email,' . Auth::user()->id
         ]);
         $this->validate($request, $rules);
-        Auth::user()->fill($request->all());
+        Auth::user()->fill([
+            'name'                 => $request->get('name'),
+            'nickname'             => $request->get('nickname'),
+            'email'                => $request->get('email'),
+            'date_of_birth'        => $request->get('date_of_birth'),
+            'profession'           => $request->get('profession'),
+            'programming_language' => $request->get('programming_language'),
+            'place_of_study'       => $request->get('place_of_study'),
+            'vk_link'              => $request->get('vk_link'),
+            'fb_link'              => $request->get('name'),
+        ]);
+        $activationService = new ActivationService(new ActivationRepository());
         $activationService->sendActivationMail(Auth::user());
         Auth::user()->save();
-        \Session::flash('alert-success', 'An verification email has been sent');
+        \Session::flash('alert-success', 'A verification email has been sent');
         return redirect(action('UserController@index', ['id' => Auth::user()->id]));
     }
 
@@ -46,7 +56,16 @@ class UserController extends Controller
         if(Input::hasFile('avatar')) {
             Auth::user()->setAvatar('avatar');
         }
-        Auth::user()->fill($request->all());
+        Auth::user()->fill([
+            'name'                 => $request->get('name'),
+            'nickname'             => $request->get('nickname'),
+            'date_of_birth'        => $request->get('date_of_birth'),
+            'profession'           => $request->get('profession'),
+            'programming_language' => $request->get('programming_language'),
+            'place_of_study'       => $request->get('place_of_study'),
+            'vk_link'              => $request->get('vk_link'),
+            'fb_link'              => $request->get('name'),
+        ]);
         Auth::user()->save();
         return redirect(route('frontend::user::profile', ['id' => Auth::user()->id]));
     }
