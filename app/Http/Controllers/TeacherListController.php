@@ -17,25 +17,30 @@ class TeacherListController extends Controller
         $myTeachers = null;
         $allTeachers = User::teacher();
         if(Auth::check() && Auth::user()->hasRole(User::ROLE_USER)) {
-            $myTeachers = Auth::user()
-                ->teachers()
-                ->orderBy('name', 'asc')->get();
-
-            foreach($myTeachers as $k=>$teacher) {
-                if(!$teacher->pivot->confirmed) {
-                    unset($myTeachers[$k]);
-                }
-            }
-            $allTeachers = $allTeachers->whereNotIn('teacher_id', $myTeachers->map(function ($item) {
-                return $item->id;
-            }))
-                ->leftJoin('teacher_student', 'teacher_id', '=', 'id');
+            $myTeachers = Auth::user()->whereIn('id', function ($query) {
+                $query->select('teacher_id')
+                    ->from('teacher_student')
+                    ->where('student_id', Auth::user()->id)
+                    ->where('confirmed', '=', true);
+            })->teacher()->groupBy('id')
+                ->orderBy('name', 'asc')
+                ->get();
+            $allTeachers = $allTeachers->whereNotIn('id', function ($query) {
+                $query->select('teacher_id')
+                    ->from('teacher_student')
+                    ->where('student_id', Auth::user()->id)
+                    ->where('confirmed', '=', true);
+            })->groupBy('id');
         }
 
         $allTeachers = $allTeachers->orderBy('name', 'asc')
-            ->groupBy('id')
-            ->paginate(1);
-       // dd(DB::getQueryLog());
+            ->paginate(10);
+        if(Auth::check()) {
+            foreach($allTeachers as $teacher) {
+                $teacher['relation_exists'] = $teacher->students()->get()->contains(Auth::user()->id);
+            }
+        }
+
         return view('teacher_list.index')->with(['allTeachers' => $allTeachers, 'myTeachers' => $myTeachers]);
     }
 }
