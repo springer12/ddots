@@ -18,7 +18,6 @@
                               @endif
                                       " enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            {{ method_field('PATCH') }}
 
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <label for="name" class="col-md-4 control-label">full name</label>
