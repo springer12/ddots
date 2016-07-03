@@ -24,6 +24,10 @@ class TeacherListController extends Controller
             $allTeachers = User::teacher()->orderBy('name', 'asc')->paginate(10);
         }
 
-        return view('teacher_list.index')->with(['allTeachers' => $allTeachers, 'myTeachers' => $myTeachers, 'allowedRequests' => $allowedRequests]);
+        return view('teacher_list.index')->with([
+            'allTeachers'     => $allTeachers,
+            'myTeachers'      => $myTeachers,
+            'allowedRequests' => $allowedRequests
+        ]);
     }
 }

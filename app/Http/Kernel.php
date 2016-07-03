@@ -48,14 +48,14 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'admin_redirect' => \App\Http\Middleware\AdminRedirect::class,
-        'access' => \App\Http\Middleware\Access::class,
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'admin_redirect'  => \App\Http\Middleware\AdminRedirect::class,
+        'access'          => \App\Http\Middleware\Access::class,
+        'auth'            => \App\Http\Middleware\Authenticate::class,
+        'auth.basic'      => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'can'             => \Illuminate\Foundation\Http\Middleware\Authorize::class,
+        'guest'           => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'throttle'        => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'social_provider' => \App\Http\Middleware\SocialProvider::class,
-        'profile_access' => \App\Http\Middleware\ProfileAccess::class,
+        'profile_access'  => \App\Http\Middleware\ProfileAccess::class,
     ];
 }
