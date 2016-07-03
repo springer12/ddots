@@ -18,14 +18,13 @@
                     }).success(function(result) {
                         if(result > -1) {
                             button.hide();
-                            button.next().removeClass('display-none');
+                            $('#teacher_' + button.data('teacher-id') + '.btn-success').show();
                             if(result == 0) {
-                                window.alert('no more');
+                                window.alert('no more'); //@todo: alert???!!! only modal bootstrap dialogs
                                 $('[data-teacher-id]').off('click');
                                 $('[data-teacher-id]').prop('disabled', true);
                             }
                         }
-
                     });
                 });
             }

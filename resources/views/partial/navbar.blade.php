@@ -15,7 +15,7 @@
     @else
         <li {!! Request::is('logout') ? 'class="active"' : '' !!}>
             <a href="{{ url('/logout') }}">
-                <i class="ti-angle-double-left"></i>
+                <i class="ti-angle-double-down"></i>
                 <p>Logout</p>
             </a>
         </li>

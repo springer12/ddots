@@ -1860,7 +1860,6 @@ textarea.form-control {
 .card-user .author {
   text-align: center;
   text-transform: none;
-  margin-top: -65px;
 }
 .card-user .author .title {
   color: #403D39;
@@ -1869,8 +1868,8 @@ textarea.form-control {
   color: #ccc5b9;
 }
 .card-user .avatar {
-  width: 100px;
-  height: 100px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   position: relative;
   margin-bottom: 15px;
