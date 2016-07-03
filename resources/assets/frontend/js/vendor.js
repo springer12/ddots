@@ -56,7 +56,7 @@
 
                     // add the content from the sidebar to the right menu
                     content_buff = $sidebar.find('.nav').html();
-                    ul_content = ul_content + '<li class="divider"></li>'+ content_buff;
+                    ul_content = content_buff + '<li class="divider"></li>' + ul_content;
 
                     ul_content = '<ul class="nav navbar-nav">' + ul_content + '</ul>';
 
