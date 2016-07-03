@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="container">
-        @if(!$myTeachers->isEmpty())
+        @if($myTeachers && !$myTeachers->isEmpty())
             <h2>My teachers</h2>
             @foreach($myTeachers as $teacher)
                 <div class="col-lg-4 col-md-5">
