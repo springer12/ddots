@@ -42,7 +42,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::group(['middleware' => 'admin_redirect', 'domain' => App\Subdomain::currentSubdomainName() . '.' . config('app.domain')], function () {
 
         Route::get('/', 'HomeController@index');
-        Route::get('/teachers', 'TeacherListController@index');
+        Route::get('/teachers', 'TeacherController@index');
 
         Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'as' => 'frontend::'], function () {
             //@todo add to correct route group

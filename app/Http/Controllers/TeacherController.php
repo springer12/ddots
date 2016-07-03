@@ -9,7 +9,7 @@ use App\User;
 use Auth;
 
 
-class TeacherListController extends Controller
+class TeacherController extends Controller
 {
     public function index(Request $request)
     {
@@ -24,7 +24,7 @@ class TeacherListController extends Controller
             $allTeachers = User::teacher()->orderBy('name', 'asc')->paginate(10);
         }
 
-        return view('teacher_list.index')->with([
+        return view('teachers.list')->with([
             'allTeachers'     => $allTeachers,
             'myTeachers'      => $myTeachers,
             'allowedRequests' => $allowedRequests
