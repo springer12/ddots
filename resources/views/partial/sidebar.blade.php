@@ -8,7 +8,7 @@
 
     <li {!! Request::is('teachers') ? 'class="active"' : '' !!}>
         <a href="{{ url('/teachers') }}">
-            <i class="ti-home"></i>
+            <i class="ti-search"></i>
             <p>Teachers</p>
         </a>
     </li>
@@ -16,7 +16,7 @@
     @if (Auth::check())
         <li {!! Request::is('user/' . Auth::user()->id) ? 'class="active"' : '' !!}>
             <a href="{{ route('frontend::user::profile', ['id' => Auth::user()->id]) }}">
-                <i class="ti-home"></i>
+                <i class="ti-user"></i>
                 <p>Profile</p>
             </a>
         </li>
