@@ -18,4 +18,16 @@ class Subdomain extends Model
         }
         return $subdomain->name;
     }
+
+    public static function currentSubdomain() {
+        return self::current()->firstOrFail();
+    }
+
+    public function scopeCurrent($query) {
+        return $query->where('name', explode('.', \Request::getHost())[0]);
+    }
+
+    public function logo() {
+        return "";
+    }
 }

@@ -1,3 +1,6 @@
-.display-none{
+.display-none {
     display: none;
+}
+.align-center {
+    text-align: center;
 }
