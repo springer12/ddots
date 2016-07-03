@@ -33,9 +33,15 @@ var path = require('path'),
 
 // bootstrap-datepicker
     bootstrap_datepicker = {
-        "css": vendorPath('bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css'),
-        "js": vendorPath('bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')
+        "css": vendorPath('bootstrap-datepicker/dist/css/bootstrap-datepickercss.css'),
+        "js": vendorPath('bootstrap-datepicker/dist/js/bootstrap-datepicker.js')
     },
+
+// bootstrap-checkbox
+    bootstrap_checkbox = {
+        "js": vendorPath('bootstrap-checkbox/dist/js/bootstrap-checkbox.js')
+    },
+
 
 /*
  * Apps resources
@@ -44,7 +50,7 @@ var path = require('path'),
         "frontend": {
             "fonts": [Bootstrap.fonts, appPath('frontend', 'fonts')],
             "css": [Bootstrap.css, bootstrap_datepicker.css, appPath('frontend', 'css')],
-            "js": [jQuery, Bootstrap.js, bootstrap_datepicker.js, appPath('frontend', 'js')]
+            "js": [jQuery, Bootstrap.js, bootstrap_datepicker.js, bootstrap_checkbox.js, appPath('frontend', 'js')]
         },
         "backend": {
             "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('backend', 'fonts')],
