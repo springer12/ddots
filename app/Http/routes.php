@@ -45,15 +45,16 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/teachers', 'TeacherController@index');
 
         Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'as' => 'frontend::'], function () {
-            //@todo add to correct route group
-            Route::post('/add-teacher', ['as' => 'addTeacher', 'uses' => 'TeacherListAjaxController@addTeacher']);
-            Route::group(['middleware' => 'profile_access', 'prefix' => 'user', 'as' => 'user::'], function(){
+            Route::group(['middleware' => 'ajax', 'as' => 'ajax::'], function(){
+                Route::get('/add-teacher/{id}', ['as' => 'addTeacher', 'uses' => 'Ajax\TeacherController@addTeacher'])->where('id', '[0-9]+');
+            });
 
+            Route::group(['middleware' => 'profile_access', 'prefix' => 'user', 'as' => 'user::'], function(){
                 Route::post('/add-teacher', 'UserController@addTeacher');
                 Route::post('/upgrade','UserController@upgrade');
                 Route::get('/edit', ['as' => 'edit', 'uses' => 'UserController@edit']);
                 Route::post('/edit', 'UserController@saveEdit');
-                Route::get('/{id}',['as' => 'profile', 'uses' => 'UserController@index'])->where('id', '[0-9]+');;
+                Route::get('/{id}',['as' => 'profile', 'uses' => 'UserController@index'])->where('id', '[0-9]+');
 
             });
         });
