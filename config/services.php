@@ -38,18 +38,18 @@ return [
     'google' => [
         'client_id'     => env('GOOGLE_ID'),
         'client_secret' => env('GOOGLE_SECRET'),
-        'redirect'      => env('GOOGLE_REDIRECT')
+        'redirect'      => url(env('GOOGLE_REDIRECT')),
     ],
 
     'facebook' => [
         'client_id'     => env('FACEBOOK_ID'),
         'client_secret' => env('FACEBOOK_SECRET'),
-        'redirect'      => env('FACEBOOK_REDIRECT')
+        'redirect'      => url(env('FACEBOOK_REDIRECT')),
     ],
 
     'vkontakte' => [
         'client_id' => env('VKONTAKTE_ID'),
         'client_secret' => env('VKONTAKTE_SECRET'),
-        'redirect' => env('VKONTAKTE_REDIRECT'),
+        'redirect' => url(env('VKONTAKTE_REDIRECT')),
     ],
 ];
