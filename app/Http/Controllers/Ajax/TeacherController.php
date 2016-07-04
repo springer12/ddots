@@ -24,6 +24,6 @@ class TeacherController extends Controller
         } else {
             $response['error'] = true;
         }
-        return response()->json($response);
+        return $response;
     }
 }
