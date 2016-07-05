@@ -44,12 +44,12 @@ return [
     'facebook' => [
         'client_id'     => env('FACEBOOK_ID'),
         'client_secret' => env('FACEBOOK_SECRET'),
-        'redirect'      => (env('FACEBOOK_REDIRECT')),
+        'redirect'      => env('FACEBOOK_REDIRECT'),
     ],
 
     'vkontakte' => [
         'client_id' => env('VKONTAKTE_ID'),
         'client_secret' => env('VKONTAKTE_SECRET'),
-        'redirect' => (env('VKONTAKTE_REDIRECT')),
+        'redirect' => env('VKONTAKTE_REDIRECT'),
     ],
 ];
