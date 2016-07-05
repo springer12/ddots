@@ -26,41 +26,44 @@
                                 @endif
                             </div>
                         </div>
-                        @if($showPasswordFields)
-                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Password <span
-                                            class="required">*</span></label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="password" name="password" value="{{ old('password') }}" required="required"
-                                           class="form-control col-md-7 col-xs-12">
-                                    @if ($errors->has('password'))
-                                        <span class="help-block">
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Password{!! !$passwordRequired?'':' <span
+                                            class="required">*</span>' !!}</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="password" name="password" value="{{ old('password') }}"
+                                       {!! !$passwordRequired?:'required="required"' !!}
+                                       class="form-control col-md-7 col-xs-12">
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                                    @endif
-                                </div>
+                                @endif
                             </div>
+                        </div>
 
-                            <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password_confirmation">Confirm
-                                    password <span class="required">*</span></label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="password" name="password_confirmation"
-                                           value="{{ old('password_confirmation') }}" required="required"
-                                           class="form-control col-md-7 col-xs-12">
-                                    @if ($errors->has('password_confirmation'))
-                                        <span class="help-block">
+                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password_confirmation">Confirm
+                                password{!! !$passwordRequired?'':' <span
+                                            class="required">*</span>' !!}</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="password" name="password_confirmation"
+                                       value="{{ old('password_confirmation') }}"
+                                       {!! !$passwordRequired?:'required="required"' !!}
+                                       class="form-control col-md-7 col-xs-12">
+                                @if ($errors->has('password_confirmation'))
+                                    <span class="help-block">
                                         <strong>{{ $errors->first('password_confirmation') }}</strong>
                                     </span>
-                                    @endif
-                                </div>
+                                @endif
                             </div>
-                        @endif
+                        </div>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">E-mail</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">E-mail <span
+                                        class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="email" value="{{ old('email') ?: $user->email }}"
+                                       required="required"
                                        class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -155,8 +158,8 @@
                                     @endforeach
                                 </ul>
                                 <input type="hidden" name="programming_language"
-                                       value="@if($user->programmingLanguage)
-                                       {{ $user->programmingLanguage->id }}
+                                       @if($user->programmingLanguage)
+                                       value="{{ $user->programmingLanguage->id }}
                                        @endif
                                                "/>
                                 @if ($errors->has('programming_language'))

@@ -99,7 +99,7 @@ class User extends Authenticatable
 
     public function setDateOfBirthAttribute($value)
     {
-        $this->attributes['date_of_birth'] = !$value ?: Carbon::parse($value);
+        $this->attributes['date_of_birth'] = trim($value) ?: Carbon::parse($value);
     }
 
     public function getRegistrationDate()
@@ -107,16 +107,12 @@ class User extends Authenticatable
         return Carbon::parse($this->created_at)->format('d-m-y');
     }
 
-    public function getValidationRules()
-    {
-        return array_merge(self::getStaticValidationRules(), ['nickname' => 'required|max:255|english_alpha_dash|unique:users,nickname,' . $this->id]);
-    }
 
-    public static function getStaticValidationRules() {
+    public static function getValidationRules()
+    {
         return [
             'name' => 'required|max:255|any_lang_name',
             'avatar' => 'mimes:jpeg,png,bmp',
-            
             'date_of_birth' => 'date',
             'profession' => 'max:255|alpha_dash',
             'place_of_study' => 'max:255|alpha_dash',
@@ -125,7 +121,7 @@ class User extends Authenticatable
             'fb_link' => 'url_domain:facebook.com,www.facebook.com'
         ];
     }
-    
+
     public function setAvatar($name)
     {
         if (Input::file($name)->isValid()) {
@@ -225,5 +221,10 @@ class User extends Authenticatable
         ];
 
         return ($list ? implode(",", $columns) : $columns);
+    }
+
+    public function setProgrammingLanguageAttribute($value)
+    {
+        $this->attributes['programming_language'] = !trim($value)?:trim($value);
     }
 }
