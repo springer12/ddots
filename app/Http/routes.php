@@ -36,6 +36,19 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('restore/{id}', 'Backend\TestingServersController@restore');
         });
 
+        Route::group(['prefix' => 'users', 'as' => 'users::'], function () {
+            Route::get('/', ['uses' => 'Backend\UsersController@index', 'as' => 'list']);
+
+            Route::get('add', ['uses' => 'Backend\UsersController@showForm', 'as' => 'add']);
+            Route::post('add', 'Backend\UsersController@edit');
+
+            Route::get('edit/{id}', ['uses' => 'Backend\UsersController@showForm', 'as' => 'edit']);
+            Route::post('edit/{id}', 'Backend\UsersController@edit');
+
+            Route::get('delete/{id}', 'Backend\UsersController@delete');
+            Route::get('restore/{id}', 'Backend\UsersController@restore');
+        });
+
     });
 
     /*  subdomain func  */
