@@ -11,7 +11,7 @@
                 </div>
                 <div class="x_content">
                     <br>
-                    <form method="post" class="form-horizontal form-label-left">
+                    <form method="post" class="form-horizontal form-label-left" enctype="multipart/form-data">
                         {!! csrf_field() !!}
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
@@ -25,6 +25,10 @@
                                     </span>
                                 @endif
                             </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">
+                            <div><img width="100" height="100" src="{{ $user->avatar }}" alt="avatar"></div>
+                            <input type="file" name="avatar" id="avatar">
                         </div>
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Password{!! !$passwordRequired?'':' <span
@@ -78,8 +82,11 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="role">Role <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" name="role" value="{{ old('role') ?: $user->role }}"
-                                       required="required" class="form-control col-md-7 col-xs-12">
+                                <select name="role" required="required" class="form-control col-md-7 col-xs-12">
+                                    @foreach(App\User::SETTABLE_ROLES as $role => $name)
+                                        <option value="{{ $role }}" {{ !$user->hasRole($role)?:'selected' }}>{{ $name }}</option>
+                                    @endforeach
+                                </select>
                                 @if ($errors->has('role'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('role') }}</strong>

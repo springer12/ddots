@@ -7,7 +7,7 @@
                 <a class="btn btn-primary" href="{{ route('backend::users::add') }}" role="button">Add User</a>
             </div>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @include('helpers.grid-search', ['action' => action('Backend\UsersController@index')])
+                @include('helpers.grid-search', ['action' => action('Backend\UserController@index')])
             </div>
         </div>
 
@@ -35,7 +35,6 @@
                                 <th>@include('helpers.grid-header', ['name' => 'Created Date', 'order' => 'created_at'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Updated Date', 'order' => 'updated_at'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Deleted Date', 'order' => 'deleted_at'])</th>
-                                <th>Token</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -57,18 +56,18 @@
                                     <td>{{ $user->deleted_at }}</td>
                                     <td>
                                         <a title="Edit"
-                                           href="{{ action('Backend\UsersController@edit',['id'=> $user->id]) }}"><span
+                                           href="{{ action('Backend\UserController@edit',['id'=> $user->id]) }}"><span
                                                     class="glyphicon glyphicon-pencil"></span></a>
                                         @if (!$user->deleted_at)
                                             <a title="Delete" href="" data-toggle="confirmation"
                                                data-message="Are you sure you want to delete this user from the system?"
-                                               data-btn-ok-href="{{ action('Backend\UsersController@delete', ['id'=> $user->id]) }}"
+                                               data-btn-ok-href="{{ action('Backend\UserController@delete', ['id'=> $user->id]) }}"
                                                data-btn-ok-label="Delete"><span
                                                         class="glyphicon glyphicon-trash"></span></a>
                                         @else
                                             <a title="Restore" href="" data-toggle="confirmation"
                                                data-message="Are you sure you want to restore this user?"
-                                               data-btn-ok-href="{{ action('Backend\UsersController@restore', ['id'=> $user->id]) }}"
+                                               data-btn-ok-href="{{ action('Backend\UserController@restore', ['id'=> $user->id]) }}"
                                                data-btn-ok-label="Restore"><span
                                                         class="glyphicon glyphicon-repeat"></span></a>
                                         @endif
