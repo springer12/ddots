@@ -22,6 +22,7 @@ class User extends Authenticatable
 
     const ATTEMPTS_PER_MONTH = 3;
 
+    const SETTABLE_ROLES = [self::ROLE_LOW_USER => 'Low user', self::ROLE_USER => 'User', self::ROLE_TEACHER => 'Teacher', self::ROLE_EDITOR => 'Editor', self::ROLE_HR => 'HR'];
     /**
      * The attributes that are mass assignable.
      *
@@ -99,7 +100,7 @@ class User extends Authenticatable
 
     public function setDateOfBirthAttribute($value)
     {
-        $this->attributes['date_of_birth'] = trim($value) ?: Carbon::parse($value);
+        $this->attributes['date_of_birth'] = !trim($value) ?null: Carbon::parse($value);
     }
 
     public function getRegistrationDate()
@@ -113,6 +114,7 @@ class User extends Authenticatable
         return [
             'name' => 'required|max:255|any_lang_name',
             'avatar' => 'mimes:jpeg,png,bmp',
+            'role' => 'in:' . implode(',', array_keys(self::SETTABLE_ROLES)),
             'date_of_birth' => 'date',
             'profession' => 'max:255|alpha_dash',
             'place_of_study' => 'max:255|alpha_dash',
@@ -124,6 +126,7 @@ class User extends Authenticatable
 
     public function setAvatar($name)
     {
+        
         if (Input::file($name)->isValid()) {
             if ($this->avatar) {
                 File::delete('userdata/avatars/' . $this->avatar);

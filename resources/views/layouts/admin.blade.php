@@ -44,7 +44,7 @@
                                 <ul class="nav child_menu" style="display: block;">
                                     <li class="current-page"><a href="{{ action('Backend\DashboardController@index') }}">Dashboard</a></li>
                                     <li class="current-page"><a href="{{ action('Backend\TestingServersController@index') }}">Testing servers</a></li>
-                                    <li class="current-page"><a href="{{ action('Backend\UsersController@index') }}">Users</a></li>
+                                    <li class="current-page"><a href="{{ action('Backend\UserController@index') }}">Users</a></li>
                                 </ul>
                             </li>
                         </ul>

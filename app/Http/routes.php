@@ -37,16 +37,16 @@ Route::group(['middleware' => 'web'], function () {
         });
 
         Route::group(['prefix' => 'users', 'as' => 'users::'], function () {
-            Route::get('/', ['uses' => 'Backend\UsersController@index', 'as' => 'list']);
+            Route::get('/', ['uses' => 'Backend\UserController@index', 'as' => 'list']);
 
-            Route::get('add', ['uses' => 'Backend\UsersController@showForm', 'as' => 'add']);
-            Route::post('add', 'Backend\UsersController@edit');
+            Route::get('add', ['uses' => 'Backend\UserController@showForm', 'as' => 'add']);
+            Route::post('add', 'Backend\UserController@edit');
 
-            Route::get('edit/{id}', ['uses' => 'Backend\UsersController@showForm', 'as' => 'edit']);
-            Route::post('edit/{id}', 'Backend\UsersController@edit');
+            Route::get('edit/{id}', ['uses' => 'Backend\UserController@showForm', 'as' => 'edit']);
+            Route::post('edit/{id}', 'Backend\UserController@edit');
 
-            Route::get('delete/{id}', 'Backend\UsersController@delete');
-            Route::get('restore/{id}', 'Backend\UsersController@restore');
+            Route::get('delete/{id}', 'Backend\UserController@delete');
+            Route::get('restore/{id}', 'Backend\UserController@restore');
         });
 
     });

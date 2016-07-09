@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
+use Illuminate\Support\Facades\Input;
 use App\ProgrammingLanguage;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     public function index(Request $request)
     {
@@ -127,8 +128,14 @@ class UsersController extends Controller
         if ($id) {
             $user->fill($fillData);
         } else {
-           $user = User::create($fillData);
+            $user = User::create($fillData);
         }
+
+        if (Input::hasFile('avatar')) {
+            $user->setAvatar('avatar');
+        }
+
+
         $user->save();
 
         \Session::flash('alert-success', 'The user was successfully saved');
@@ -168,7 +175,7 @@ class UsersController extends Controller
      */
     protected function findQuery()
     {
-        return User::withTrashed();
+        return User::withTrashed()->where('role', '<>', User::ROLE_ADMIN);
     }
 
     protected function findOrFail($id)
