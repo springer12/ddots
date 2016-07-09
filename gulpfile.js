@@ -53,9 +53,9 @@ var path = require('path'),
             "js": [jQuery, Bootstrap.js, bootstrap_datepicker.js, bootstrap_checkbox.js, appPath('frontend', 'js')]
         },
         "backend": {
-            "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('backend', 'fonts')],
+            "fonts": [Bootstrap.fonts, fontawesome.fonts, bootstrap_datepicker.css, appPath('backend', 'fonts')],
             "css": [Bootstrap.css, fontawesome.css, gentelella.css, appPath('backend', 'css')],
-            "js": [jQuery, Bootstrap.js, gentelella.js, appPath('backend', 'js')]
+            "js": [jQuery, Bootstrap.js, gentelella.js, bootstrap_datepicker.js, bootstrap_checkbox.js, appPath('backend', 'js')]
         }
     },
     outputExtPrefix = elixir.config.production ? '.min' : '';

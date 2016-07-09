@@ -23,19 +23,20 @@ class UserController extends Controller
     public function upgrade(Request $request)
     {
         $rules = array_merge(Auth::user()->getValidationRules(), [
-            'email' => 'required|email|unique:users,email,' . Auth::user()->id
+            'email' => 'required|email|unique:users,email,' . Auth::user()->id,
+            'nickname' => 'required|max:255|english_alpha_dash|unique:users,nickname,' . Auth::user()->id
         ]);
         $this->validate($request, $rules);
         Auth::user()->fill([
-            'name'                 => $request->get('name'),
-            'nickname'             => $request->get('nickname'),
-            'email'                => $request->get('email'),
-            'date_of_birth'        => $request->get('date_of_birth'),
-            'profession'           => $request->get('profession'),
+            'name' => $request->get('name'),
+            'nickname' => $request->get('nickname'),
+            'email' => $request->get('email'),
+            'date_of_birth' => $request->get('date_of_birth'),
+            'profession' => $request->get('profession'),
             'programming_language' => $request->get('programming_language'),
-            'place_of_study'       => $request->get('place_of_study'),
-            'vk_link'              => $request->get('vk_link'),
-            'fb_link'              => $request->get('name'),
+            'place_of_study' => $request->get('place_of_study'),
+            'vk_link' => $request->get('vk_link'),
+            'fb_link' => $request->get('fb_link'),
         ]);
         $activationService = new ActivationService(new ActivationRepository());
         $activationService->sendActivationMail(Auth::user());
@@ -51,31 +52,34 @@ class UserController extends Controller
 
     public function saveEdit(Request $request)
     {
+        $rules = array_merge(User::getValidationRules(), ['nickname' => 'required|max:255|english_alpha_dash|unique:users,nickname,' . Auth::user()->id]);
+        $this->validate($request, $rules);
 
-        $this->validate($request, Auth::user()->getValidationRules());
-        if(Input::hasFile('avatar')) {
+        if (Input::hasFile('avatar')) {
             Auth::user()->setAvatar('avatar');
         }
         Auth::user()->fill([
-            'name'                 => $request->get('name'),
-            'nickname'             => $request->get('nickname'),
-            'date_of_birth'        => $request->get('date_of_birth'),
-            'profession'           => $request->get('profession'),
+            'name' => $request->get('name'),
+            'nickname' => $request->get('nickname'),
+            'date_of_birth' => $request->get('date_of_birth'),
+            'profession' => $request->get('profession'),
             'programming_language' => $request->get('programming_language'),
-            'place_of_study'       => $request->get('place_of_study'),
-            'vk_link'              => $request->get('vk_link'),
-            'fb_link'              => $request->get('name'),
+            'place_of_study' => $request->get('place_of_study'),
+            'vk_link' => $request->get('vk_link'),
+            'fb_link' => $request->get('fb_link'),
         ]);
         Auth::user()->save();
         return redirect(route('frontend::user::profile', ['id' => Auth::user()->id]));
     }
 
-    public function addTeacher(Request $request) {
+    public function addTeacher(Request $request)
+    {
         $this->validate($request, ['id' => 'exists:users']);
-        $teacher = User::where('id',$request->id)->where('role', User::ROLE_TEACHER)->firstOrFail();
+        $teacher = User::where('id', $request->id)->where('role', User::ROLE_TEACHER)->firstOrFail();
         Auth::user()->teachers()->attach($teacher);
         return redirect(route('frontend::user::profile', ['id' => Auth::user()->id]));
     }
+
     public function verify(Request $request, $token)
     {
         $activationService = new ActivationService(new ActivationRepository());
