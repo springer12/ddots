@@ -39,6 +39,8 @@ class UpdateUserTableForProfiles extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('users_programming_language_foreign');
+
             $table->dropColumn('date_of_birth');
             $table->dropColumn('avatar');
             $table->dropColumn('place_of_study');
