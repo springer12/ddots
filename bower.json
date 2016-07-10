@@ -8,6 +8,7 @@
     "gentelella": "^1.3.0",
     "font-awesome": "fontawesome#^4.6.3",
     "bootstrap-datepicker": "^1.6.1",
-    "bootstrap-checkbox": "^1.4.0"
+    "bootstrap-checkbox": "^1.4.0",
+    "select2": "^4.0.3"
   }
 }
