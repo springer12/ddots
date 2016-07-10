@@ -86,8 +86,6 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::group(['prefix' => 'students', 'as' => 'students::'], function () {
                 Route::get('/', ['uses' => 'StudentController@index', 'as' => 'list']);
-                Route::get('/edit/{id}', ['as' => 'edit', 'uses' => 'StudentController@showForm'])->where('id', '[0-9]+');
-                Route::post('/edit/{id}', 'StudentController@edit')->where('id', '[0-9]+');
             });
         });
         
@@ -96,6 +94,7 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('/add-teacher/{id}', ['as' => 'addTeacher', 'uses' => 'Ajax\TeacherController@addTeacher'])->where('id', '[0-9]+');
                 Route::get('/confirm-student/{id}', ['as' => 'confirmStudent', 'uses' => 'Ajax\StudentController@confirm'])->where('id', '[0-9]+');
                 Route::get('/decline-student/{id}', ['as' => 'declineStudent', 'uses' => 'Ajax\StudentController@decline'])->where('id', '[0-9]+');
+                Route::get('/add-student-to-group', ['as' => 'addStudentToGroup', 'uses' => 'Ajax\StudentController@addToGroup']);
             });
         });
         Route::group(['middleware' => 'profile_access', 'prefix' => 'user', 'as' => 'frontend::user::'], function(){

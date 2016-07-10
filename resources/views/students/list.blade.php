@@ -45,15 +45,17 @@
                                                data-url="{{ route('frontend::ajax::declineStudent',['id' => $student->id]) }}"
                                                title="Decline"><span
                                                         class="glyphicon glyphicon-thumbs-down"></span></a>
-                                            <a data-edit-student-id="{{ $student->id }}" title="Edit"
-                                               style="display: none;"
-                                               href="{{ action('StudentController@edit',['id'=> $student->id]) }}"><span
-                                                        class="glyphicon glyphicon-pencil"></span></a>
-                                        @else
-                                            <a title="Edit"
-                                               href="{{ action('StudentController@edit',['id'=> $student->id]) }}"><span
-                                                        class="glyphicon glyphicon-pencil"></span></a>
                                         @endif
+                                        <a data-edit-student-id="{{ $student->id }}" title="Edit" data-toggle="dropdown"
+                                                {{ !$student->pivot->confirmed?:'style="display: none;"' }}><span
+                                                    class="glyphicon glyphicon-pencil"></span></a>
+                                        <ul class="dropdown-menu">
+                                            @foreach($groups->diff($student->groups) as $group)
+                                                <li role="presentation" data-add-student
+                                                    data-url="{{ route('frontend::ajax::addStudentToGroup',['student_id' => $student->id, 'group_id' => $group->id]) }}"><a>{{ $group->name }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
 
                                     </td>
                                 </tr>

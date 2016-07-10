@@ -31,5 +31,22 @@ class StudentController extends Controller
         }
         return $response;
     }
+
+    public function addToGroup(Request $request)
+    {
+        if (Auth::check() && Auth::user()->hasRole(User::ROLE_TEACHER)) {
+            $this->validate($request, [
+                'group_id' => 'required|exists:groups,id|unique:group_user,group_id,NULL,group_id,user_id,' . $request->get('student_id'),
+                'student_id' => 'required|exists:users,id'
+            ]);
+            $user = User::find($request->get('student_id'));
+            $user->groups()->attach($request->get('group_id'));
+            $user->save();
+            $response['error'] = false;
+        } else {
+            $response['error'] = true;
+        }
+        return $response;
+    }
 }
 

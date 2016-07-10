@@ -1,5 +1,5 @@
 (function ($, window, document) {
-    $('[data-confirm]').click(function (e) {
+    $('[data-confirm]').click(function () {
         var $this = $(this);
         $('[data-student-id=' + $this.data('student-id') + ']').prop('disabled', true);
         $.ajax($this.data('url')).success(function (response) {
@@ -10,7 +10,7 @@
         });
     });
 
-    $('[data-decline]').click(function (e) {
+    $('[data-decline]').click(function () {
         var $this = $(this);
         $('[data-student-id=' + $this.data('student-id') + ']').prop('disabled', true);
         $.ajax($this.data('url')).success(function (response) {
@@ -18,5 +18,17 @@
                 $('[data-student-row-id=' + $this.data('student-id') + ']').remove();
             }
         });
+    });
+
+    $('[data-add-student]').click(function () {
+        var $this = $(this);
+        $this.off('click');
+        $.ajax($this.data('url')).success(function (response) {
+            if (response.error === false) {
+                $this.hide();
+            }
+        }).fail(function (response) {
+            console.log(response);
+        })
     });
 })(jQuery, window, document);

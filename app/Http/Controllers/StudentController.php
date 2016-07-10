@@ -40,6 +40,7 @@ class StudentController extends Controller
 
         return view('students.list')->with([
             'students' => $students,
+            'groups' => Auth::user()->groups,
             'order_field' => $orderBy,
             'dir' => $orderDir,
             'page' => $page,
@@ -57,33 +58,12 @@ class StudentController extends Controller
      */
     public function showForm(Request $request, $id)
     {
-
-
         return view('students.form')->with([
             'student' => User::findOrFail($id),
             'groups' => Auth::user()->groups()->whereNotIn('id', function ($query) use ($id) {
                 $query->select('group_id')->from('group_user')->where('user_id', $id);
             })->get()
         ]);
-    }
-
-    /**
-     * Handle a add/edit request
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int|null $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request, $id)
-    {
-
-        $this->validate($request, ['group' => 'required|exists:groups,id|unique:group_user,group_id,NULL,group_id,user_id,' . $id]);
-        $user = User::findOrFail($id);
-        $user->groups()->attach($request->get('group'));
-        $user->save();
-        \Session::flash('alert-success', 'The student was successfully saved');
-        return redirect()->route('students::list');
     }
 
     /**
