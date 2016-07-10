@@ -230,4 +230,8 @@ class User extends Authenticatable
     {
         $this->attributes['programming_language'] = !trim($value)?:trim($value);
     }
+
+    public function groups(){
+        return $this->belongsToMany(Group::class, 'group_user', 'user_id')->withTimestamps();
+    }
 }

@@ -22,4 +22,20 @@
         </li>
     @endif
 
+    @if (Auth::check() && Auth::user()->hasRole(App\User::ROLE_TEACHER))
+        <li {!! Request::is('groups/') ? 'class="active"' : '' !!}>
+            <a href="{{ url('/groups') }}">
+                <i class="ti-user"></i>
+                <p>Groups</p>
+            </a>
+        </li>
+
+        <li {!! Request::is('students/') ? 'class="active"' : '' !!}>
+            <a href="{{ url('/students') }}">
+                <i class="ti-user"></i>
+                <p>Students</p>
+            </a>
+        </li>
+    @endif
+
 </ul>
