@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Volume extends Model
 {
     use SoftDeletes;
+
+    public $fillable = [
+        'name'
+    ];
 }

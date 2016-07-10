@@ -13,6 +13,10 @@ class Problem extends Model
 {
     use SoftDeletes;
 
+    public $fillable = [
+      'name'
+    ];
+
     /**
      * The columns that grid can be sorted.
      *
@@ -30,8 +34,15 @@ class Problem extends Model
 
 
     public function volumes() {
-        return $this->hasMany('Volume');
+        return $this->belongsToMany('App\Volume');
     }
 
+    /*
+     * @todo: make path creation more beauty
+     */
+    public function archivePath()
+    {
+        return 'problems/' . $this->id;
+    }
 
 }

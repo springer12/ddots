@@ -28,7 +28,7 @@
                         <div class="form-group{{ $errors->has('archive') ? ' has-error' : '' }}">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="archive">Archive <span class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="file" name="archive"  value="{{ old('archive') ?: $problem->archive }}" required="required" class="form-control col-md-7 col-xs-12">
+                                <input type="file" name="archive" value="{{ old('archive') ?: $problem->archive }}" required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('archive'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('archive') }}</strong>
@@ -38,11 +38,11 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('volumes') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Volumes</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Volumes <h2>Volume name must have atleast 1 non-numeric symbol!!!</h2></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="volumes" class="select_volume" class="form-control col-md-7 col-xs-12" multiple>
+                                <select name="volumes[]" class="select_volume" class="form-control col-md-7 col-xs-12" multiple>
                                     @foreach(\App\Volume::all() as $volume)
-                                        <option value="{{ $volume->id }}">{{ $volume->name }}</option>
+                                        <option value="{{ $volume->id }}" {{ old('volumes.' . $volume->id) ? old('volumes.' . $volume->id) : $problem->volumes()->find($volume->id) ? 'selected' : '' }}>{{ $volume->name }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('volumes'))

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Problem;
+use App\Volume;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -87,7 +88,9 @@ class ProblemController extends Controller
         $problem = (!$id ?: $this->findOrFail($id));
 
         $this->validate($request, [
-            'name'    => 'required|string|max:255', //@todo:to model
+            'name'      => 'required|string|max:255', //@todo:to model
+            'archive'   => 'required',
+            'volumes'   => 'array'
         ]);
 
 
@@ -98,7 +101,18 @@ class ProblemController extends Controller
         }
         $problem->save();
 
-        \Session::flash('alert-success', 'The server was successfully saved');
+        $new_volumes = [];
+        foreach ($request->get('volumes') as $key => $volume) {
+            if(!is_numeric($volume)) {
+                $new_volumes[] = Volume::create(['name' => $volume])->id;
+            } else {
+                $new_volumes[] = $volume;
+            }
+        }
+
+        $problem->volumes()->sync($new_volumes);
+
+        \Session::flash('alert-success', 'The problem was successfully saved');
         return redirect()->route('backend::problems::list');
     }
 
@@ -112,7 +126,7 @@ class ProblemController extends Controller
     public function delete($id) {
         $problem = $this->findOrFail($id);
         $problem->delete();
-        return redirect()->route('backend::problems::list')->with('alert-success', 'The server was successfully deleted');
+        return redirect()->route('backend::problems::list')->with('alert-success', 'The problem was successfully deleted');
     }
 
     /**
@@ -125,7 +139,7 @@ class ProblemController extends Controller
     public function restore($id) {
         $problem = $this->findOrFail($id);
         $problem->restore();
-        return redirect()->route('backend::problems::list')->with('alert-success', 'The server was successfully restored');
+        return redirect()->route('backend::problems::list')->with('alert-success', 'The problem was successfully restored');
     }
 
     /**
