@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class Problem
@@ -14,7 +16,7 @@ class Problem extends Model
     use SoftDeletes;
 
     public $fillable = [
-      'name'
+      'name', 'archive'
     ];
 
     /**
@@ -32,17 +34,19 @@ class Problem extends Model
         return ($list ? implode(",", $columns) : $columns);
     }
 
-
     public function volumes() {
         return $this->belongsToMany('App\Volume');
     }
 
-    /*
-     * @todo: make path creation more beauty
-     */
-    public function archivePath()
+    public function setArchive($name)
     {
-        return 'problems/' . $this->id;
+        if (Input::file($name)->isValid()) {
+            if ($this->archive) {
+                File::delete(storage_path('app/problems/' . $this->id) . $this->archive);
+            }
+            $this->archive = Input::file($name)->getClientOriginalName();
+            Input::file($name)->move(storage_path('app/problems/' . $this->id), $this->archive);
+        }
     }
 
 }

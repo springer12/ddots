@@ -89,7 +89,7 @@ class ProblemController extends Controller
 
         $this->validate($request, [
             'name'      => 'required|string|max:255', //@todo:to model
-            'archive'   => 'required',
+            'archive'   => 'mimetypes:application/x-gzip',
             'volumes'   => 'array'
         ]);
 
@@ -102,12 +102,18 @@ class ProblemController extends Controller
         $problem->save();
 
         $new_volumes = [];
-        foreach ($request->get('volumes') as $key => $volume) {
-            if(!is_numeric($volume)) {
-                $new_volumes[] = Volume::create(['name' => $volume])->id;
-            } else {
-                $new_volumes[] = $volume;
+        if($request->has('volumes')) {
+            foreach ($request->get('volumes') as $key => $volume) {
+                if (!is_numeric($volume)) {
+                    $new_volumes[] = Volume::create(['name' => $volume])->id;
+                } else {
+                    $new_volumes[] = $volume;
+                }
             }
+        }
+
+        if ($request->hasFile('archive')) {
+            $problem->setArchive('archive');
         }
 
         $problem->volumes()->sync($new_volumes);

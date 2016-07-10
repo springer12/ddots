@@ -11,7 +11,7 @@
                 </div>
                 <div class="x_content">
                     <br>
-                    <form method="post" class="form-horizontal form-label-left">
+                    <form method="post" class="form-horizontal form-label-left" enctype="multipart/form-data">
                         {!! csrf_field() !!}
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span></label>
@@ -26,9 +26,9 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('archive') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="archive">Archive <span class="required">*</span></label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="archive">Archive</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="file" name="archive" value="{{ old('archive') ?: $problem->archive }}" required="required" class="form-control col-md-7 col-xs-12">
+                                <input type="file" name="archive" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('archive'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('archive') }}</strong>
