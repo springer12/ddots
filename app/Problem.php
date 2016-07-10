@@ -28,4 +28,10 @@ class Problem extends Model
         return ($list ? implode(",", $columns) : $columns);
     }
 
+
+    public function volumes() {
+        return $this->hasMany('Volume');
+    }
+
+
 }

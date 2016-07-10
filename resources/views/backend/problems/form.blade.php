@@ -41,7 +41,9 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Volumes</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="volumes" class="select_volume" class="form-control col-md-7 col-xs-12" multiple>
-
+                                    @foreach(\App\Volume::all() as $volume)
+                                        <option value="{{ $volume->id }}">{{ $volume->name }}</option>
+                                    @endforeach
                                 </select>
                                 @if ($errors->has('volumes'))
                                     <span class="help-block">
