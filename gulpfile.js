@@ -33,13 +33,20 @@ var path = require('path'),
 
 // bootstrap-datepicker
     bootstrap_datepicker = {
-        "css": vendorPath('bootstrap-datepicker/dist/css/bootstrap-datepickercss.css'),
+        "css": vendorPath('bootstrap-datepicker/dist/css/bootstrap-datepicker.css'),
         "js": vendorPath('bootstrap-datepicker/dist/js/bootstrap-datepicker.js')
     },
 
 // bootstrap-checkbox
     bootstrap_checkbox = {
         "js": vendorPath('bootstrap-checkbox/dist/js/bootstrap-checkbox.js')
+    },
+
+
+// bootstrap-checkbox
+    select2 = {
+        "css": vendorPath('select2/dist/css/select2.css'),
+        "js": vendorPath('select2/dist/js/select2.js')
     },
 
 
@@ -54,8 +61,8 @@ var path = require('path'),
         },
         "backend": {
             "fonts": [Bootstrap.fonts, fontawesome.fonts, bootstrap_datepicker.css, appPath('backend', 'fonts')],
-            "css": [Bootstrap.css, fontawesome.css, gentelella.css, appPath('backend', 'css')],
-            "js": [jQuery, Bootstrap.js, gentelella.js, bootstrap_datepicker.js, bootstrap_checkbox.js, appPath('backend', 'js')]
+            "css": [Bootstrap.css, select2.css, fontawesome.css, gentelella.css, appPath('backend', 'css')],
+            "js": [jQuery, select2.js, Bootstrap.js, gentelella.js, bootstrap_datepicker.js, bootstrap_checkbox.js, appPath('backend', 'js')]
         }
     },
     outputExtPrefix = elixir.config.production ? '.min' : '';

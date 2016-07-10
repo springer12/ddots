@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\TestingServer;
+use App\Problem;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -21,7 +21,7 @@ class ProblemController extends Controller
         $page = $request->input('page');
         $query = $request->input('query', '');
 
-        if (!in_array($orderBy, TestingServer::sortable())) {
+        if (!in_array($orderBy, Problem::sortable())) {
             $orderBy = 'id';
         }
 
@@ -32,20 +32,20 @@ class ProblemController extends Controller
         \Session::put('orderBy', $orderBy);
         \Session::put('orderDir', $orderDir);
 
-        $testing_servers = $this->findQuery();
+        $problems = $this->findQuery();
 
         if ($query) {
-            $testing_servers = $testing_servers->where(function($query_s) use ($query) {
+            $problems = $problems->where(function($query_s) use ($query) {
                 $query_s->orwhere('id', 'like', "%$query%")
                     ->orwhere('name', 'like', "%$query%");
             });
         }
 
-        $testing_servers = $testing_servers->orderBy($orderBy, $orderDir)
+        $problems = $problems->orderBy($orderBy, $orderDir)
             ->paginate(10);
 
-        return view('backend.testing_servers.list')->with([
-            'servers'     => $testing_servers,
+        return view('backend.problems.list')->with([
+            'problems'    => $problems,
             'order_field' => $orderBy,
             'dir'         => $orderDir,
             'page'        => $page,
@@ -62,16 +62,16 @@ class ProblemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function showForm(Request $request, $id = null) {
-        $testing_server = ($id ? $this->findOrFail($id) : new TestingServer());
+        $problem = ($id ? $this->findOrFail($id) : new Problem());
         if ($id) {
-            $title = 'Edit Serever';
+            $title = 'Edit Problem';
         } else {
-            $title = 'Create Server';
+            $title = 'Create Problem';
         }
 
-        return view('backend.testing_servers.form')->with([
-            'server' => $testing_server,
-            'title'  => $title
+        return view('backend.problems.form')->with([
+            'problem' => $problem,
+            'title'   => $title
         ]);
     }
 
@@ -84,7 +84,7 @@ class ProblemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, $id = null) {
-        $testing_server = (!$id ?: $this->findOrFail($id));
+        $problem = (!$id ?: $this->findOrFail($id));
 
         $this->validate($request, [
             'name'    => 'required|string|max:255', //@todo:to model
@@ -92,15 +92,14 @@ class ProblemController extends Controller
 
 
         if ($id) {
-            $testing_server->fill(['name' => $request->get('name')]);
+            $problem->fill(['name' => $request->get('name')]);
         } else {
-            $testing_server = new TestingServer(['name' => $request->get('name')]);
-            $testing_server->api_token = TestingServer::generateApiToken();
+            $problem = new Problem(['name' => $request->get('name')]);
         }
-        $testing_server->save();
+        $problem->save();
 
         \Session::flash('alert-success', 'The server was successfully saved');
-        return redirect()->route('backend::testing_servers::list');
+        return redirect()->route('backend::problems::list');
     }
 
     /**
@@ -111,9 +110,9 @@ class ProblemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function delete($id) {
-        $server = $this->findOrFail($id);
-        $server->delete();
-        return redirect()->route('backend::testing_servers::list')->with('alert-success', 'The server was successfully deleted');
+        $problem = $this->findOrFail($id);
+        $problem->delete();
+        return redirect()->route('backend::problems::list')->with('alert-success', 'The server was successfully deleted');
     }
 
     /**
@@ -124,16 +123,16 @@ class ProblemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function restore($id) {
-        $server = $this->findOrFail($id);
-        $server->restore();
-        return redirect()->route('backend::testing_servers::list')->with('alert-success', 'The server was successfully restored');
+        $problem = $this->findOrFail($id);
+        $problem->restore();
+        return redirect()->route('backend::problems::list')->with('alert-success', 'The server was successfully restored');
     }
 
     /**
      * @return \Illuminate\Database\Query\Builder
      */
     protected function findQuery() {
-        return TestingServer::withTrashed();
+        return Problem::withTrashed();
     }
 
     protected function findOrFail($id) {
