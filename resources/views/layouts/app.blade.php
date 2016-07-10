@@ -45,6 +45,7 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
+                    @include('helpers.flash')
                     @yield('content')
                 </div>
             </div>

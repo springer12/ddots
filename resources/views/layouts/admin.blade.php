@@ -44,7 +44,7 @@
                                 <ul class="nav child_menu" style="display: block;">
                                     <li class="{{ !Request::is(action('Backend\DashboardController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\DashboardController@index') }}">Dashboard</a></li>
                                     <li class="{{ !Request::is(action('Backend\TestingServersController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\TestingServersController@index') }}">Testing servers</a></li>
-                                    <li class="{{ !Request::is(action('Backend\UsersController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\UsersController@index') }}">Users</a></li>
+                                    <li class="{{ !Request::is(action('Backend\UserController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\UserController@index') }}">Users</a></li>
                                     <li class="{{ !Request::is(action('Backend\ProblemController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\ProblemController@index') }}">Problems</a></li>
                                 </ul>
                             </li>
