@@ -3,25 +3,26 @@
 @section('content')
 
     <div class="container">
-        @if($myTeachers && !$myTeachers->isEmpty())
-            <h2>My teachers</h2>
-            @foreach($myTeachers as $teacher)
-                <div class="col-lg-4 col-md-5">
-                    <div class="card card-user">
-                        <div class="content">
-                            <div class="author">
-                                <a href="{{ route('frontend::user::profile', ['id' => $teacher->id]) }}"><img
-                                            class="avatar border-white" src="{{ $teacher->avatar }}" alt="..."></a>
-                                <h4 class="title">
-                                    <a href="{{ route('frontend::user::profile', ['id' => $teacher->id]) }}">{{ $teacher->name }}</a>
-                                </h4>
+        <div class="row">
+            @if($myTeachers && !$myTeachers->isEmpty())
+                <h2>My teachers</h2>
+                @foreach($myTeachers as $teacher)
+                    <div class="col-lg-4 col-md-5">
+                        <div class="card card-user">
+                            <div class="content">
+                                <div class="author">
+                                    <a href="{{ route('frontend::user::profile', ['id' => $teacher->id]) }}"><img
+                                                class="avatar border-white" src="{{ $teacher->avatar }}" alt="..."></a>
+                                    <h4 class="title">
+                                        <a href="{{ route('frontend::user::profile', ['id' => $teacher->id]) }}">{{ $teacher->name }}</a>
+                                    </h4>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
-        @endif
-
+                @endforeach
+            @endif
+        </div>
         <h2>All teachers</h2>
         <div class="row" {{ $allowedRequests ?: 'data-requests-forbidden' }}>
             @foreach($allTeachers as $teacher)
