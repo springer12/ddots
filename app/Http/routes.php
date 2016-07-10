@@ -70,23 +70,25 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/', 'HomeController@index');
         Route::get('/teachers', 'TeacherController@index');
 
-        Route::group(['prefix' => 'groups', 'as' => 'groups::'], function () {
-            Route::get('/', ['uses' => 'GroupController@index', 'as' => 'list']);
+        Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_TEACHER, 'as' => 'teacherOnly::'], function() {
+            Route::group(['prefix' => 'groups', 'as' => 'groups::'], function () {
+                Route::get('/', ['uses' => 'GroupController@index', 'as' => 'list']);
 
-            Route::get('add', ['uses' => 'GroupController@showForm', 'as' => 'add']);
-            Route::post('add', 'GroupController@edit');
+                Route::get('add', ['uses' => 'GroupController@showForm', 'as' => 'add']);
+                Route::post('add', 'GroupController@edit');
 
-            Route::get('edit/{id}', ['uses' => 'GroupController@showForm', 'as' => 'edit']);
-            Route::post('edit/{id}', 'GroupController@edit')->where('id', '[0-9]+');
+                Route::get('edit/{id}', ['uses' => 'GroupController@showForm', 'as' => 'edit']);
+                Route::post('edit/{id}', 'GroupController@edit')->where('id', '[0-9]+');
 
-            Route::get('delete/{id}', 'GroupController@delete')->where('id', '[0-9]+');
-            Route::get('restore/{id}', 'GroupController@restore')->where('id', '[0-9]+');
-        });
+                Route::get('delete/{id}', 'GroupController@delete')->where('id', '[0-9]+');
+                Route::get('restore/{id}', 'GroupController@restore')->where('id', '[0-9]+');
+            });
 
-        Route::group(['prefix' => 'students', 'as' => 'students::'], function () {
-            Route::get('/', ['uses' => 'StudentController@index', 'as' => 'list']);
-            Route::get('/edit/{id}', ['as' => 'edit', 'uses' => 'StudentController@showForm'])->where('id', '[0-9]+');
-            Route::post('/edit/{id}', 'StudentController@edit')->where('id', '[0-9]+');
+            Route::group(['prefix' => 'students', 'as' => 'students::'], function () {
+                Route::get('/', ['uses' => 'StudentController@index', 'as' => 'list']);
+                Route::get('/edit/{id}', ['as' => 'edit', 'uses' => 'StudentController@showForm'])->where('id', '[0-9]+');
+                Route::post('/edit/{id}', 'StudentController@edit')->where('id', '[0-9]+');
+            });
         });
         
         Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'as' => 'frontend::'], function () {
@@ -95,14 +97,13 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('/confirm-student/{id}', ['as' => 'confirmStudent', 'uses' => 'Ajax\StudentController@confirm'])->where('id', '[0-9]+');
                 Route::get('/decline-student/{id}', ['as' => 'declineStudent', 'uses' => 'Ajax\StudentController@decline'])->where('id', '[0-9]+');
             });
-
-            Route::group(['middleware' => 'profile_access', 'prefix' => 'user', 'as' => 'user::'], function(){
-                Route::post('/add-teacher', 'UserController@addTeacher');
-                Route::post('/upgrade','UserController@upgrade');
-
-                Route::get('/{id}',['as' => 'profile', 'uses' => 'UserController@index'])->where('id', '[0-9]+');
-
-            });
+        });
+        Route::group(['middleware' => 'profile_access', 'prefix' => 'user', 'as' => 'frontend::user::'], function(){
+            Route::post('/add-teacher', 'UserController@addTeacher');
+            Route::post('/upgrade','UserController@upgrade');
+            Route::get('/edit',['as' => 'edit', 'uses' =>'UserController@edit']);
+            Route::post('/edit',['as' => 'edit', 'uses' =>'UserController@saveEdit']);
+            Route::get('/{id}',['as' => 'profile', 'uses' => 'UserController@index'])->where('id', '[0-9]+');
         });
     });
 

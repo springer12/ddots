@@ -11,19 +11,19 @@ class ProfileAccess
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if(  ($request->id
-          && (User::findOrFail($request->id)->hasRole(User::ROLE_TEACHER) //view profile page - id required
-             || Auth::user()->id == $request->id)
-             || Auth::user()->isTeacherOf($request->id)
-             || Auth::user()->hasRole(User::ROLE_ADMIN))
-          || (!$request->id //view own edit/upgrade page - id not required
-             && Auth::check())
+        if (($request->id
+                && (User::findOrFail($request->id)->hasRole(User::ROLE_TEACHER) //view profile page - id required
+                    || (Auth::check()
+                        && (Auth::user()->id == $request->id
+                            || Auth::user()->isTeacherOf($request->id)))))
+            || (!$request->id //view own edit/upgrade page - id not required
+                && Auth::check())
         ) {
             return $next($request);
         } else {

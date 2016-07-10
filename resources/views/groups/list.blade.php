@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-2 col-sm-2 col-xs-2">
-                <a class="btn btn-primary" href="{{ route('groups::add') }}" role="button">Add Group</a>
+                <a class="btn btn-primary" href="{{ route('teacherOnly::groups::add') }}" role="button">Add Group</a>
             </div>
         </div>
 

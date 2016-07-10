@@ -47,7 +47,7 @@
                                    href=""
                                    data-toggle="confirmation"
                                    data-message="Are you sure you want to leave the page? The changes won't be saved."
-                                   data-btn-ok-href="{{ route('groups::list') }}"
+                                   data-btn-ok-href="{{ route('teacherOnly::groups::list') }}"
                                    data-btn-ok-label="Leave the page">Cancel</a>
 
                                 <button type="submit" class="btn btn-success">Save</button>
