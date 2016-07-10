@@ -43,6 +43,11 @@ var path = require('path'),
     },
 
 
+// bootstrap-checkbox
+    select2 = {
+        "css": vendorPath('select2/dist/css/select2.css'),
+        "js": vendorPath('select2/dist/js/select2.js')
+    },
 /*
  * Apps resources
  */
@@ -53,9 +58,9 @@ var path = require('path'),
             "js": [jQuery, Bootstrap.js, bootstrap_datepicker.js, bootstrap_checkbox.js, appPath('frontend', 'js')]
         },
         "backend": {
-            "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('backend', 'fonts')],
-            "css": [Bootstrap.css, bootstrap_datepicker.css, fontawesome.css, gentelella.css, appPath('backend', 'css')],
-            "js": [jQuery, Bootstrap.js, gentelella.js, bootstrap_datepicker.js, bootstrap_checkbox.js, appPath('backend', 'js')]
+            "fonts": [Bootstrap.fonts, fontawesome.fonts, bootstrap_datepicker.css, appPath('backend', 'fonts')],
+            "css": [Bootstrap.css, select2.css, fontawesome.css, gentelella.css, appPath('backend', 'css')],
+            "js": [jQuery, select2.js, Bootstrap.js, gentelella.js, bootstrap_datepicker.js, bootstrap_checkbox.js, appPath('backend', 'js')]
         }
     },
     outputExtPrefix = elixir.config.production ? '.min' : '';
