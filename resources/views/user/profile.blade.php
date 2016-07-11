@@ -41,13 +41,7 @@
                                 <a href="{{ action('UserController@index', ['id' => $teacher->id]) }}">{{ $teacher->name }}</a>
                             @endforeach
                         @endif
-                        @if($user->hasRole(\App\User::ROLE_TEACHER) && $user->students)
-                            students:
-                            @foreach($user->students as $student)
-                                <a href="{{ action('UserController@index', ['id' => $student->id]) }}">{{ $student->name }}</a>
-                            @endforeach
-                        @endif
-                        @if(\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->id == $user->id)
+                        @if(Auth::check() && Auth::user()->id == $user->id)
                             <a href="{{ route('frontend::user::edit') }}" class="btn btn-lg btn-primary btn-block">
                                 @if($user->hasRole(\App\User::ROLE_LOW_USER))
                                     Upgrade
