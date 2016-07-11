@@ -102,6 +102,11 @@
                             </div>
                         </div>
 
+                        @foreach($programming_languages as $programming_language)
+                            <label for="programming_language">{{ $programming_language->name }}</label>
+                            <input type="checkbox" name="programming_language[]" value="{{ $programming_language->id }}" {{ !$contest->programming_languages->contains($programming_language->id)?:'checked' }}>
+                        @endforeach
+
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

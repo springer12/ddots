@@ -21,6 +21,8 @@ class ContestController extends Controller
         $page = $request->input('page');
         $query = $request->input('query', '');
 
+
+
         if (!in_array($orderBy, Contest::sortable())) {
             $orderBy = 'id';
         }
@@ -31,6 +33,7 @@ class ContestController extends Controller
 
         \Session::put('orderBy', $orderBy);
         \Session::put('orderDir', $orderDir);
+
 
 
         $contests = Contest::orderBy($orderBy, $orderDir)
@@ -71,7 +74,6 @@ class ContestController extends Controller
     public function edit(Request $request, $id = null)
     {
         $contest = (!$id ?: Contest::findOrFail($id));
-
         $fillData = [
             'name' => $request->get('name'),
             'description' => $request->get('description'),
@@ -89,6 +91,9 @@ class ContestController extends Controller
         } else {
             $contest = Contest::create($fillData);
         }
+
+        $contest->programming_languages()->detach();
+        $contest->programming_languages()->attach($request->get('programming_language'));
 
         $contest->save();
 
