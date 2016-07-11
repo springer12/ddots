@@ -113,7 +113,7 @@ class User extends Authenticatable
     {
         return [
             'name' => 'required|max:255|any_lang_name',
-            'avatar' => 'mimes:jpeg,png,bmp',
+            'avatar' => 'mimetypes:image/jpeg,image/bmp,image/png|max:1000',
             'role' => 'in:' . implode(',', array_keys(self::SETTABLE_ROLES)),
             'date_of_birth' => 'date',
             'profession' => 'max:255|alpha_dash',

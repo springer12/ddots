@@ -35,7 +35,13 @@
                             </div>
                             @if(!$user->hasRole(\App\User::ROLE_LOW_USER))
                                 <div><img width="100" height="100" src="{{ $user->avatar }}" alt="avatar"></div>
-                                <input type="file" name="avatar" id="avatar">
+                                <input type="file" name="avatar" id="avatar" accept="image/*">
+                                @if ($errors->has('avatar'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('avatar') }}</strong>
+                                    </span>
+                                @endif
+
                             @endif
                             <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
                                 <label for="nickname" class="col-md-4 control-label">Nickname</label>
