@@ -71,6 +71,17 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/teachers', 'TeacherController@index');
 
         Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_TEACHER, 'as' => 'teacherOnly::'], function() {
+
+            Route::group(['prefix' => 'contests', 'as' => 'contests::'], function(){
+               Route::get('/', ['uses' => 'ContestController@index', 'as' => 'list']);
+
+                Route::get('add', ['uses' => 'ContestController@showForm', 'as' => 'add']);
+                Route::post('add', 'ContestController@edit');
+
+                Route::get('edit/{id}', ['uses' => 'ContestController@showForm', 'as' => 'edit'])->where('id', '[0-9]+');
+                Route::post('edit/{id}', 'ContestController@edit')->where('id', '[0-9]+');
+            });
+
             Route::group(['prefix' => 'groups', 'as' => 'groups::'], function () {
                 Route::get('/', ['uses' => 'GroupController@index', 'as' => 'list']);
 
