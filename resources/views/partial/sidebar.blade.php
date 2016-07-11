@@ -36,6 +36,12 @@
                 <p>Students</p>
             </a>
         </li>
+        <li {!! Request::is('contests/') ? 'class="active"' : '' !!}>
+            <a href="{{ url('/contests') }}">
+                <i class="ti-user"></i>
+                <p>Contests</p>
+            </a>
+        </li>
     @endif
 
 </ul>
