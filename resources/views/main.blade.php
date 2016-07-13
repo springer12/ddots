@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-lg-3 col-sm-6">
                     <div class="dots-logo">
-                        <a href=""></a>
+                        <a href="http://dots.org.ua/dots/"></a>
                     </div>
                 </div>
                 <div class="col-lg-9 col-sm-6 dots-tagline">
