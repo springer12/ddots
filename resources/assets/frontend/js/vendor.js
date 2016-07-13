@@ -35,8 +35,11 @@
                     sidebar_active_color = $sidebar.data('active-color');
 
                     $logo = $sidebar.find('.logo').first();
-                    logo_content = $logo[0].outerHTML;
-
+                    if($logo.length) {
+                        logo_content = $logo[0].outerHTML;
+                    } else {
+                        logo_content = '';
+                    }
                     ul_content = '';
 
                     // set the bg color and active color from the default sidebar to the off canvas sidebar;
@@ -52,7 +55,7 @@
                     });
 
                     // add the content from the sidebar to the right menu
-                    content_buff = $sidebar.find('.nav').html();
+                    content_buff = $sidebar.find('.nav').html() ? $sidebar.find('.nav').html() : '';
                     ul_content = content_buff + '<li class="divider"></li>' + ul_content;
 
                     ul_content = '<ul class="nav navbar-nav">' + ul_content + '</ul>';
