@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-lg-3 col-sm-6">
                     <div class="dots-logo">
-                        <a href="#"></a>
+                        <a href=""></a>
                     </div>
                 </div>
                 <div class="col-lg-9 col-sm-6 dots-tagline">
@@ -57,19 +57,19 @@
                             <table class="table">
                                 <tbody>
                                 <tr>
-                                    <td class="dots-tb-cont-logo"><img src="{{ asset('frontend-bundle/media/subdomain_logo.png') }}" alt="sponsor-logo"/></td>
-                                    <td class="dots-tb-cont-name">Название</td>
-                                    <td class="dots-tb-cont-description">Описание</td>
+                                    <td class="dots-tb-cont-logo"><a href=""><img src="{{ asset('frontend-bundle/media/subdomain_logo.png') }}" alt="sponsor-logo"/></a></td>
+                                    <td class="dots-tb-cont-name"><a href="">ХНЕУ</a></td>
+                                    <td class="dots-tb-cont-description">Кафедра информационных систем, ХНЕУ</td>
                                 </tr>
                                 <tr>
-                                    <td class="dots-tb-cont-logo"><img src="{{ asset('frontend-bundle/media/subdomain_logo.png') }}" alt="sponsor-logo"/></td>
-                                    <td class="dots-tb-cont-name">Название</td>
-                                    <td class="dots-tb-cont-description">Описание</td>
+                                    <td class="dots-tb-cont-logo"><a href=""><img src="{{ asset('frontend-bundle/media/ag45.png') }}" alt="sponsor-logo"/></a></td>
+                                    <td class="dots-tb-cont-name"><a href="">АГ45</a></td>
+                                    <td class="dots-tb-cont-description">Харьковский УВК №45 "Академическая гимназия"</td>
                                 </tr>
                                 <tr>
-                                    <td class="dots-tb-cont-logo"><img src="{{ asset('frontend-bundle/media/subdomain_logo.png') }}" alt="sponsor-logo"/></td>
-                                    <td class="dots-tb-cont-name">Название</td>
-                                    <td class="dots-tb-cont-description">Описание</td>
+                                    <td class="dots-tb-cont-logo"><a href=""><img src="{{ asset('frontend-bundle/media/pml27.png') }}" alt="sponsor-logo"/></a></td>
+                                    <td class="dots-tb-cont-name"><a href="">Л27</a></td>
+                                    <td class="dots-tb-cont-description">Харьковский физико-математический лицей №27</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -90,19 +90,19 @@
                             <table class="table">
                                 <tbody>
                                 <tr>
-                                    <td class="dots-tb-cont-logo"><img src="{{ asset('frontend-bundle/media/sponsor1.png') }}" alt="sponsor-logo"/></td>
-                                    <td class="dots-tb-cont-name">Название</td>
-                                    <td class="dots-tb-cont-description">Описание</td>
+                                    <td class="dots-tb-cont-logo"><a href="http://www.insart.com/"><img src="{{ asset('frontend-bundle/media/insart_logo.png') }}" alt="sponsor-logo"/></a></td>
+                                    <td class="dots-tb-cont-name"><a href="http://www.insart.com/">INSART Ltd.</a></td>
+                                    <td class="dots-tb-cont-description">Software Engineering and R&D</td>
                                 </tr>
                                 <tr>
-                                    <td class="dots-tb-cont-logo"><img src="{{ asset('frontend-bundle/media/sponsor2.png') }}" alt="sponsor-logo"/></td>
-                                    <td class="dots-tb-cont-name">Название</td>
-                                    <td class="dots-tb-cont-description">Описание</td>
+                                    <td class="dots-tb-cont-logo"><a href="http://coderivium.com/"><img src="{{ asset('frontend-bundle/media/coderivium.png') }}" alt="sponsor-logo"/></a></td>
+                                    <td class="dots-tb-cont-name"><a href="http://coderivium.com/">Coderivium</a></td>
+                                    <td class="dots-tb-cont-description">Mobile App Design & Development Agency</td>
                                 </tr>
                                 <tr>
-                                    <td class="dots-tb-cont-logo"><img src="{{ asset('frontend-bundle/media/sponsor3.png') }}" alt="sponsor-logo"/></td>
-                                    <td class="dots-tb-cont-name">Название</td>
-                                    <td class="dots-tb-cont-description">Описание</td>
+                                    <td class="dots-tb-cont-logo"><a href="https://www.facebook.com/groups/763425083707475/"><img src="{{ asset('frontend-bundle/media/itcluster.png') }}" alt="sponsor-logo"/></a></td>
+                                    <td class="dots-tb-cont-name"><a href="https://www.facebook.com/groups/763425083707475/">Kharkiv IT cluster</a></td>
+                                    <td class="dots-tb-cont-description">Key goal of this group is to unite all the initiatves to promote and develop Kharkiv as a world class IT destination.</td>
                                 </tr>
                                 </tbody>
                             </table>
