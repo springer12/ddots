@@ -57,18 +57,18 @@
                             <table class="table">
                                 <tbody>
                                 <tr>
-                                    <td class="dots-tb-cont-logo"><a href=""><img src="{{ asset('frontend-bundle/media/subdomain_logo.png') }}" alt="sponsor-logo"/></a></td>
-                                    <td class="dots-tb-cont-name"><a href="">ХНЕУ</a></td>
+                                    <td class="dots-tb-cont-logo"><a href="http://hneu.dots.org.ua"><img src="{{ asset('frontend-bundle/media/subdomain_logo.png') }}" alt="sponsor-logo"/></a></td>
+                                    <td class="dots-tb-cont-name"><a href="http://hneu.dots.org.ua">ХНЕУ</a></td>
                                     <td class="dots-tb-cont-description">Кафедра информационных систем, ХНЕУ</td>
                                 </tr>
                                 <tr>
-                                    <td class="dots-tb-cont-logo"><a href=""><img src="{{ asset('frontend-bundle/media/ag45.png') }}" alt="sponsor-logo"/></a></td>
-                                    <td class="dots-tb-cont-name"><a href="">АГ45</a></td>
+                                    <td class="dots-tb-cont-logo"><a href="http://ag45.dots.org.ua"><img src="{{ asset('frontend-bundle/media/ag45.png') }}" alt="sponsor-logo"/></a></td>
+                                    <td class="dots-tb-cont-name"><a href="http://ag45.dots.org.ua">АГ45</a></td>
                                     <td class="dots-tb-cont-description">Харьковский УВК №45 "Академическая гимназия"</td>
                                 </tr>
                                 <tr>
-                                    <td class="dots-tb-cont-logo"><a href=""><img src="{{ asset('frontend-bundle/media/pml27.png') }}" alt="sponsor-logo"/></a></td>
-                                    <td class="dots-tb-cont-name"><a href="">Л27</a></td>
+                                    <td class="dots-tb-cont-logo"><a href="http://pml27.dots.org.ua"><img src="{{ asset('frontend-bundle/media/pml27.png') }}" alt="sponsor-logo"/></a></td>
+                                    <td class="dots-tb-cont-name"><a href="http://pml27.dots.org.ua">Л27</a></td>
                                     <td class="dots-tb-cont-description">Харьковский физико-математический лицей №27</td>
                                 </tr>
                                 </tbody>
