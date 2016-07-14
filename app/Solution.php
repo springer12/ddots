@@ -30,7 +30,7 @@ class Solution extends Model
      * разбиваем дату создания на год, месяц, день
      *
      * и сохраняем по такому пути solutions_source_code/год/месяц/день/id
-     * @todo: make path creation more beauty
+     * @todo: make path creation more beautiful
      */
     public function sourceCodePath()
     {
