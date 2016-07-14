@@ -52,13 +52,19 @@ class ContestController extends Controller
         $contest = ($id ? Contest::findOrFail($id) : new Contest());
         if ($id) {
             $title = 'Edit Contest';
+            $participants = $contest->users()->user()->get();
         } else {
             $title = 'Create Contest';
+            $participants = null;
         }
 
+        $students = Auth::user()->students()->get()->diff($participants);
+        
         return view('contests.form')->with([
             'contest' => $contest,
             'title' => $title,
+            'students' => $students,
+            'participants' => $participants,
             'programming_languages' => ProgrammingLanguage::orderBy('name', 'desc')->get()
         ]);
     }
@@ -93,8 +99,16 @@ class ContestController extends Controller
         }
 
         $contest->programming_languages()->detach();
-        $contest->programming_languages()->attach($request->get('programming_language'));
+        $contest->programming_languages()->attach($request->get('programming_languages'));
 
+
+
+        foreach(Auth::user()->students as $student) {
+            $contest->users()->detach($student->id);
+        }
+
+        $contest->users()->attach($request->get('participants'));
+        
         $contest->save();
 
         \Session::flash('alert-success', 'The contest was successfully saved');

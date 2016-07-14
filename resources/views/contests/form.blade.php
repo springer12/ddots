@@ -104,8 +104,35 @@
 
                         @foreach($programming_languages as $programming_language)
                             <label for="programming_language">{{ $programming_language->name }}</label>
-                            <input type="checkbox" name="programming_language[]" value="{{ $programming_language->id }}" {{ !$contest->programming_languages->contains($programming_language->id)?:'checked' }}>
+                            <input type="checkbox" name="programming_languages[]"
+                                   value="{{ $programming_language->id }}" {{ !$contest->programming_languages->contains($programming_language->id)?:'checked' }}>
                         @endforeach
+
+
+                        <div>
+                            <div>
+                                <h2>Participants</h2>
+                                <ul data-participants>
+                                    @foreach($participants as $participant)
+                                        <li>
+                                            <a data-participant data-student-id="{{ $participant->id }}">{{ $participant->name }}</a>
+                                            <input type="hidden" name="participants[]" value="{{ $participant->id }}" />
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <br/>
+
+                            <h2>Students</h2>
+                            <a data-toggle="dropdown">Add student</a>
+                            <ul class="dropdown-menu" data-students>
+                                @foreach($students as $student)
+                                    <li role="presentation">
+                                        <a data-student data-student-id="{{ $student->id }}">{{ $student->name }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
 
                         <div class="ln_solid"></div>
                         <div class="form-group">
