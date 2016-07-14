@@ -3343,7 +3343,7 @@ div.dots-sub-logo {
 div.dots-sub-logo > img {
   max-height: 128px;
   max-width: 128px;
-} 
+}
 div.dots-tagline h1 {
   margin: 0;
 }
@@ -3368,7 +3368,7 @@ div.dots-wrap-content h2 {
   padding: 15px 15px 10px 15px;
 }
 div.dots-wrap-content .dots-card {
-  padding: 15px 20px;  
+  padding: 15px 20px;
 }
 div.dots-wrap-content p.dots-card {
   text-align: center;
@@ -3464,7 +3464,6 @@ div.dots-wrap-content button.btn-wd {
   margin-right: 40px;
 }
 
-
 /* media */
 @media (max-width: 768px) {
   div.dots-logo {
@@ -3472,5 +3471,9 @@ div.dots-wrap-content button.btn-wd {
   }
   div.dots-domain-content {
     width: 100%;
+  }
+  td.dots-tb-cont-name,
+  td.dots-tb-cont-description {
+    display: none;
   }
 }
