@@ -14,9 +14,9 @@
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
     Route::get('verify/{code}', 'UserController@verify');
-    Route::group(['middleware' => 'social_provider', 'prefix' => 'social', 'as' => 'social::'], function() {
-        Route::get('/redirect/{provider}',   ['as' =>  'redirect',   'uses' => 'Auth\SocialController@redirectToProvider']);
-        Route::get('/handle/{provider}',     ['as' =>  'handle',     'uses' => 'Auth\SocialController@handleProviderCallback']);
+    Route::group(['middleware' => 'social_provider', 'prefix' => 'social', 'as' => 'social::'], function () {
+        Route::get('/redirect/{provider}', ['as' => 'redirect', 'uses' => 'Auth\SocialController@redirectToProvider']);
+        Route::get('/handle/{provider}', ['as' => 'handle', 'uses' => 'Auth\SocialController@handleProviderCallback']);
     });
 
     /* backend func */
@@ -70,11 +70,16 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/', 'HomeController@index');
         Route::get('/teachers', 'TeacherController@index');
 
-        Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_TEACHER, 'as' => 'teacherOnly::'], function() {
+        Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
+            Route::get('/', ['uses' => 'ContestController@index', 'as' => 'list']);
+            Route::get('/{id}', ['uses' => 'ContestController@single', 'as' => 'single'])->where('id', '[0-9]+');
+        });
 
-            Route::group(['prefix' => 'contests', 'as' => 'contests::'], function(){
-               Route::get('/', ['uses' => 'ContestController@index', 'as' => 'list']);
+        Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_TEACHER, 'as' => 'teacherOnly::'], function () {
 
+            Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
+                //Route::get('/', ['uses' => 'ContestController@index', 'as' => 'list']);
+                Route::get('/hide/{id}', ['uses' => 'ContestController@hide', 'as' => 'hide'])->where('id', '[0-9]+');
                 Route::get('add', ['uses' => 'ContestController@showForm', 'as' => 'add']);
                 Route::post('add', 'ContestController@edit');
 
@@ -99,21 +104,21 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('/', ['uses' => 'StudentController@index', 'as' => 'list']);
             });
         });
-        
+
         Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'as' => 'frontend::'], function () {
-            Route::group(['middleware' => 'ajax', 'as' => 'ajax::'], function(){
+            Route::group(['middleware' => 'ajax', 'as' => 'ajax::'], function () {
                 Route::get('/add-teacher/{id}', ['as' => 'addTeacher', 'uses' => 'Ajax\TeacherController@addTeacher'])->where('id', '[0-9]+');
                 Route::get('/confirm-student/{id}', ['as' => 'confirmStudent', 'uses' => 'Ajax\StudentController@confirm'])->where('id', '[0-9]+');
                 Route::get('/decline-student/{id}', ['as' => 'declineStudent', 'uses' => 'Ajax\StudentController@decline'])->where('id', '[0-9]+');
                 Route::get('/add-student-to-group', ['as' => 'addStudentToGroup', 'uses' => 'Ajax\StudentController@addToGroup']);
             });
         });
-        Route::group(['middleware' => 'profile_access', 'prefix' => 'user', 'as' => 'frontend::user::'], function(){
+        Route::group(['middleware' => 'profile_access', 'prefix' => 'user', 'as' => 'frontend::user::'], function () {
             Route::post('/add-teacher', 'UserController@addTeacher');
-            Route::post('/upgrade','UserController@upgrade');
-            Route::get('/edit',['as' => 'edit', 'uses' =>'UserController@edit']);
-            Route::post('/edit',['as' => 'edit', 'uses' =>'UserController@saveEdit']);
-            Route::get('/{id}',['as' => 'profile', 'uses' => 'UserController@index'])->where('id', '[0-9]+');
+            Route::post('/upgrade', 'UserController@upgrade');
+            Route::get('/edit', ['as' => 'edit', 'uses' => 'UserController@edit']);
+            Route::post('/edit', ['as' => 'edit', 'uses' => 'UserController@saveEdit']);
+            Route::get('/{id}', ['as' => 'profile', 'uses' => 'UserController@index'])->where('id', '[0-9]+');
         });
     });
 
@@ -124,19 +129,19 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/', 'MainHomeController@index');
         });
     });
-    
+
 });
 
 Route::group(['namespace' => 'TestingSystem', 'prefix' => 'testing-system-api'], function () {
-    Route::get('/', function() {
+    Route::get('/', function () {
         echo 'Schema will be there';
     });
     Route::group(['prefix' => 'solutions', 'middleware' => 'auth:testing_servers_api'], function () {
-        Route::get('{id}',             'SolutionController@show')->where('id', '[0-9]+');
-        Route::patch('{id}',           'SolutionController@update')->where('id', '[0-9]+');
+        Route::get('{id}', 'SolutionController@show')->where('id', '[0-9]+');
+        Route::patch('{id}', 'SolutionController@update')->where('id', '[0-9]+');
         Route::get('{id}/source-code', 'SolutionController@show_source_code')->where('id', '[0-9]+');
-        Route::get('latest-new',       'SolutionController@latest_new');
-        Route::post('{id}/report',     'SolutionController@store_report')->where('id', '[0-9]+');
+        Route::get('latest-new', 'SolutionController@latest_new');
+        Route::post('{id}/report', 'SolutionController@store_report')->where('id', '[0-9]+');
     });
     Route::resource('/programming_languages', 'ProgrammingLanguagesController');
 });

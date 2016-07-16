@@ -104,10 +104,9 @@
 
                         @foreach($programming_languages as $programming_language)
                             <label for="programming_language">{{ $programming_language->name }}</label>
-                            <input type="checkbox" name="programming_languages[]"
+                            <input id="programming_language" type="checkbox" name="programming_languages[]"
                                    value="{{ $programming_language->id }}" {{ !$contest->programming_languages->contains($programming_language->id)?:'checked' }}>
                         @endforeach
-
 
                         <div>
                             <div>
@@ -122,7 +121,6 @@
                                 </ul>
                             </div>
                             <br/>
-
                             <h2>Students</h2>
                             <a data-toggle="dropdown">Add student</a>
                             <ul class="dropdown-menu" data-students>
@@ -134,6 +132,12 @@
                             </ul>
                         </div>
 
+                        <label for="show_max">Show maximum points for problems</label>
+                        <input id="show_max" type="checkbox" name="show_max" {{ !$contest->show_max?:'checked' }}>
+
+                        <label for="labs">Is a labs contest</label>
+                        <input id="labs" type="checkbox" name="labs" {{ !$contest->labs?:'checked' }}>
+
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -141,7 +145,7 @@
                                    href=""
                                    data-toggle="confirmation"
                                    data-message="Are you sure you want to leave the page? The changes won't be saved."
-                                   data-btn-ok-href="{{ route('teacherOnly::contests::list') }}"
+                                   data-btn-ok-href="{{ route('contests::list') }}"
                                    data-btn-ok-label="Leave the page">Cancel</a>
 
                                 <button type="submit" class="btn btn-success">Save</button>
