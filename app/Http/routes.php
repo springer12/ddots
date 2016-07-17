@@ -73,12 +73,14 @@ Route::group(['middleware' => 'web'], function () {
         Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
             Route::get('/', ['uses' => 'ContestController@index', 'as' => 'list']);
             Route::get('/{id}', ['uses' => 'ContestController@single', 'as' => 'single'])->where('id', '[0-9]+');
+            Route::get('/{contest_id}/{problem_id}/', ['uses' => 'ProblemController@contestProblem', 'as' => 'problem'])->where('contest_id', '[0-9]+')->where('problem_id', '[0-9]+');
+            Route::get('/solutions/{id}/', ['uses' => 'SolutionController@contestSolution', 'as' => 'solution'])->where('id', '[0-9]+');
+            Route::get('/{id}/solutions/', ['uses' => 'SolutionController@contestSolutions', 'as' => 'solutions'])->where('id', '[0-9]+');
         });
 
         Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_TEACHER, 'as' => 'teacherOnly::'], function () {
 
             Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
-                //Route::get('/', ['uses' => 'ContestController@index', 'as' => 'list']);
                 Route::get('/hide/{id}', ['uses' => 'ContestController@hide', 'as' => 'hide'])->where('id', '[0-9]+');
                 Route::get('add', ['uses' => 'ContestController@showForm', 'as' => 'add']);
                 Route::post('add', 'ContestController@edit');

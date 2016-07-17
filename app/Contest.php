@@ -29,6 +29,7 @@ class Contest extends Model
             'start_date' => 'required|date_format:Y-m-d H:i:s',
             'end_date' => 'required|date_format:Y-m-d H:i:s',
             'programming_languages.*' => 'exists:programming_languages,id',
+            'problems.*' => 'exists:problems,id',
         ];
     }
 

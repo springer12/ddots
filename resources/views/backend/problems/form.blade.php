@@ -14,12 +14,45 @@
                     <form method="post" class="form-horizontal form-label-left" enctype="multipart/form-data">
                         {!! csrf_field() !!}
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span></label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
+                                        class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" name="name"  value="{{ old('name') ?: $problem->name }}" required="required" class="form-control col-md-7 col-xs-12">
+                                <input type="text" name="name" value="{{ old('name') ?: $problem->name }}"
+                                       required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Description <span
+                                        class="required">*</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <textarea name="description" required="required"
+                                          class="form-control col-md-7 col-xs-12">{{ old('description') ?: $problem->description }}</textarea>
+                                @if ($errors->has('description'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('description') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('difficulty') ? ' has-error' : '' }}">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="difficulty">Difficulty <span
+                                        class="required">*</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select name="difficulty" required="required" class="form-control col-md-7 col-xs-12">
+                                    @for($i = 0; $i <=5; $i++)
+                                        <option value="{{ $i }}" {{ !($problem->difficulty == $i)? : 'selected' }}>{{ $i }}</option>
+                                    @endfor
+                                </select>
+                                @if ($errors->has('difficulty'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('difficulty') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -38,9 +71,11 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('volumes') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Volumes <h2>Volume name must have atleast 1 non-numeric symbol!!!</h2></label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Volumes <h2>Volume
+                                    name must have atleast 1 non-numeric symbol!!!</h2></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="volumes[]" class="select_volume" class="form-control col-md-7 col-xs-12" multiple>
+                                <select name="volumes[]" class="select_volume" class="form-control col-md-7 col-xs-12"
+                                        multiple>
                                     @foreach(\App\Volume::all() as $volume)
                                         <option value="{{ $volume->id }}" {{ old('volumes.' . $volume->id) ? old('volumes.' . $volume->id) : $problem->volumes()->find($volume->id) ? 'selected' : '' }}>{{ $volume->name }}</option>
                                     @endforeach

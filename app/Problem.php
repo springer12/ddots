@@ -16,7 +16,7 @@ class Problem extends Model
     use SoftDeletes;
 
     public $fillable = [
-      'name', 'archive'
+        'name', 'description', 'difficulty', 'archive'
     ];
 
     /**
@@ -26,15 +26,28 @@ class Problem extends Model
      *
      * @return string|array
      */
-    public static function sortable($list = false) {
+    public static function sortable($list = false)
+    {
         $columns = [
-            'id', 'name', 'created_at', 'updated_at', 'deleted_at'
+            'id', 'name', 'created_at', 'updated_at', 'deleted_at', 'difficulty',
         ];
 
         return ($list ? implode(",", $columns) : $columns);
     }
 
-    public function volumes() {
+    public static function getValidationRules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:3000',
+            'difficulty' => 'required|integer|between:0,5',
+            'archive' => 'mimetypes:application/x-gzip',
+            'volumes' => 'array'
+        ];
+    }
+
+    public function volumes()
+    {
         return $this->belongsToMany('App\Volume');
     }
 

@@ -36,7 +36,7 @@ class ProblemController extends Controller
         $problems = $this->findQuery();
 
         if ($query) {
-            $problems = $problems->where(function($query_s) use ($query) {
+            $problems = $problems->where(function ($query_s) use ($query) {
                 $query_s->orwhere('id', 'like', "%$query%")
                     ->orwhere('name', 'like', "%$query%");
             });
@@ -46,11 +46,11 @@ class ProblemController extends Controller
             ->paginate(10);
 
         return view('backend.problems.list')->with([
-            'problems'    => $problems,
+            'problems' => $problems,
             'order_field' => $orderBy,
-            'dir'         => $orderDir,
-            'page'        => $page,
-            'query'       => $query
+            'dir' => $orderDir,
+            'page' => $page,
+            'query' => $query
         ]);
     }
 
@@ -58,11 +58,12 @@ class ProblemController extends Controller
      * Show the form.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int|null                 $id
+     * @param int|null $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function showForm(Request $request, $id = null) {
+    public function showForm(Request $request, $id = null)
+    {
         $problem = ($id ? $this->findOrFail($id) : new Problem());
         if ($id) {
             $title = 'Edit Problem';
@@ -72,7 +73,7 @@ class ProblemController extends Controller
 
         return view('backend.problems.form')->with([
             'problem' => $problem,
-            'title'   => $title
+            'title' => $title
         ]);
     }
 
@@ -80,29 +81,30 @@ class ProblemController extends Controller
      * Handle a add/edit request
      *
      * @param \Illuminate\Http\Request $request
-     * @param int|null                 $id
+     * @param int|null $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $id = null) {
+    public function edit(Request $request, $id = null)
+    {
         $problem = (!$id ?: $this->findOrFail($id));
 
-        $this->validate($request, [
-            'name'      => 'required|string|max:255', //@todo:to model
-            'archive'   => 'mimetypes:application/x-gzip',
-            'volumes'   => 'array'
-        ]);
+        $this->validate($request, Problem::getValidationRules());
 
-
+        $fillData = [
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+            'difficulty' => $request->get('difficulty'),
+        ];
         if ($id) {
-            $problem->fill(['name' => $request->get('name')]);
+            $problem->fill($fillData);
         } else {
-            $problem = new Problem(['name' => $request->get('name')]);
+            $problem = new Problem($fillData);
         }
         $problem->save();
 
         $new_volumes = [];
-        if($request->has('volumes')) {
+        if ($request->has('volumes')) {
             foreach ($request->get('volumes') as $key => $volume) {
                 if (!is_numeric($volume)) {
                     $new_volumes[] = Volume::create(['name' => $volume])->id;
@@ -125,11 +127,12 @@ class ProblemController extends Controller
     /**
      * Handle a delete request
      *
-     * @param int|null                 $id
+     * @param int|null $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function delete($id) {
+    public function delete($id)
+    {
         $problem = $this->findOrFail($id);
         $problem->delete();
         return redirect()->route('backend::problems::list')->with('alert-success', 'The problem was successfully deleted');
@@ -138,11 +141,12 @@ class ProblemController extends Controller
     /**
      * Handle a restore request
      *
-     * @param int|null                 $id
+     * @param int|null $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function restore($id) {
+    public function restore($id)
+    {
         $problem = $this->findOrFail($id);
         $problem->restore();
         return redirect()->route('backend::problems::list')->with('alert-success', 'The problem was successfully restored');
@@ -151,11 +155,13 @@ class ProblemController extends Controller
     /**
      * @return \Illuminate\Database\Query\Builder
      */
-    protected function findQuery() {
+    protected function findQuery()
+    {
         return Problem::withTrashed();
     }
 
-    protected function findOrFail($id) {
+    protected function findOrFail($id)
+    {
         return $this->findQuery()->findOrFail($id);
     }
 

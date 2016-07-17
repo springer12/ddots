@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contest;
+use App\Problem;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -39,11 +40,11 @@ class ContestController extends Controller
         if (Auth::check() && Auth::user()->hasRole(User::ROLE_TEACHER)) {
             $contests = $contests->where('user_id', Auth::user()->id);
         } elseif (Auth::check() && Auth::user()->hasRole(User::ROLE_USER)) {
-            $contests = $contests->whereHas('users', function($query){
+            $contests = $contests->whereHas('users', function ($query) {
                 $query->where('user_id', Auth::user()->id);
-            })->orWhere('labs', true);
+            })->where('is_active', true)->orWhere('labs', true);
         } elseif (!Auth::check() || Auth::user()->hasRole(User::ROLE_LOW_USER)) {
-            $contests = $contests->where('labs', true);
+            $contests = $contests->where('labs', true)->where('is_active', true);
         }
         $contests = $contests->paginate(10);
 
@@ -75,7 +76,8 @@ class ContestController extends Controller
                 'title' => $title,
                 'students' => $students,
                 'participants' => $participants,
-                'programming_languages' => ProgrammingLanguage::orderBy('name', 'desc')->get()
+                'programming_languages' => ProgrammingLanguage::orderBy('name', 'desc')->get(),
+                'problems' => Problem::orderBy('name', 'desc')->get()->diff($contest->problems),
             ]);
         }
         return redirect()->route('contests::list');
@@ -108,22 +110,17 @@ class ContestController extends Controller
             $this->validate($request, Contest::getValidationRules());
 
 
-
             if ($id) {
                 $contest->fill($fillData);
             } else {
                 $contest = Contest::create($fillData);
             }
 
-            $contest->programming_languages()->detach();
-            $contest->programming_languages()->attach($request->get('programming_languages'));
+            $contest->programming_languages()->sync($request->get('programming_languages'));
 
+            $contest->problems()->sync($request->get('problems') ? $request->get('problems') : []);
 
-            foreach (Auth::user()->students as $student) {
-                $contest->users()->detach($student->id);
-            }
-
-            $contest->users()->attach($request->get('participants'));
+            $contest->users()->sync($request->get('participants') ? $request->get('participants') : []);
 
             $contest->save();
 
@@ -143,7 +140,8 @@ class ContestController extends Controller
         return redirect()->route('contests::list');
     }
 
-    public function single(Request $request, $id) {
+    public function single(Request $request, $id)
+    {
         return View('contests.single')->with(['contest' => Contest::findOrFail($id)]);
     }
 }

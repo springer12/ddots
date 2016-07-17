@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
-                name:
+                Name:
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
                 {{ $contest->name }}
@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
-                description:
+                Description:
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
                 {{ $contest->description }}
@@ -22,7 +22,7 @@
 
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
-                start_date:
+                Start date:
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
                 {{ $contest->start_date }}
@@ -30,7 +30,7 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
-                end_date:
+                End date:
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
                 {{ $contest->end_date }}
@@ -38,7 +38,7 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
-                is_active:
+                Active:
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
                 {{ $contest->is_active }}
@@ -46,10 +46,18 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
-                is_standings_active:
+                Active standings:
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
                 {{ $contest->is_standings_active }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <a href="{{ route('contests::solutions',['id' => $contest->id]) }}">all solutions</a>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
             </div>
         </div>
 
@@ -62,10 +70,25 @@
         </ul>
 
         <h3>Problems</h3>
-        <ul>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>difficulty</th>
+                <th>points</th>
+            </tr>
+            </thead>
+            <tbody>
             @foreach($contest->problems as $problem)
-                <li>{{ $problem->name }}</li>
+                <tr>
+                    <td>{{$problem->id}}</td>
+                    <td><a href="{{ action('ProblemController@contestProblem',['contest_id' => $contest->id, 'problem_id' => $problem->id]) }}">{{$problem->name}}</a></td>
+                    <td>{{$problem->difficulty}}</td>
+                    <td>//</td>
+                </tr>
             @endforeach
-        </ul>
+            </tbody>
+        </table>
     </div>
 @endsection

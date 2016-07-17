@@ -132,6 +132,31 @@
                             </ul>
                         </div>
 
+
+                        <div>
+                            <div>
+                                <h2>Included problems</h2>
+                                <ul data-included-problems>
+                                    @foreach($contest->problems as $problem)
+                                        <li>
+                                            <a data-included-problem data-problem-id="{{ $problem->id }}">{{ $problem->name }}</a>
+                                            <input type="hidden" name="problems[]" value="{{ $problem->id }}" />
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <br/>
+                            <h2>All problems</h2>
+                            <a data-toggle="dropdown">Add problem</a>
+                            <ul class="dropdown-menu" data-unincluded-problems>
+                                @foreach($problems as $problem)
+                                    <li role="presentation">
+                                        <a data-unincluded-problem data-problem-id="{{ $problem->id }}">{{ $problem->name }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+
                         <label for="show_max">Show maximum points for problems</label>
                         <input id="show_max" type="checkbox" name="show_max" {{ !$contest->show_max?:'checked' }}>
 
