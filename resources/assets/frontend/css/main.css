@@ -3477,3 +3477,15 @@ div.dots-wrap-content button.btn-wd {
     display: none;
   }
 }
+
+@media (min-width: 1200px) {
+  .container {
+    width: 900px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 840px;
+  }
+}
