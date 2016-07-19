@@ -27,6 +27,7 @@
                                 <th>@include('helpers.grid-header', ['name' => 'Name',  'order' => 'name'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Start date', 'order' => 'start_date'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'End date', 'order' => 'end_date'])</th>
+                                <th>@include('helpers.grid-header', ['name' => 'Created at', 'order' => 'created_at'])</th>
                                 <th>Description</th>
                                 @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))
                                     <th>Actions</th>
@@ -43,9 +44,12 @@
                                         </td>
                                     @endif
 
-                                    <td class="wrap-text"><a href="{{ action('ContestController@single', ['id' => $contest->id]) }}">{{ $contest->name }}</a></td>
+                                    <td class="wrap-text"><a
+                                                href="{{ action('ContestController@single', ['id' => $contest->id]) }}">{{ $contest->name }}</a>
+                                    </td>
                                     <td>{{ $contest->start_date }}</td>
                                     <td>{{ $contest->end_date }}</td>
+                                    <td>{{ $contest->created_at }}</td>
                                     <td>{{ $contest->description }}</td>
                                     <td>
                                         @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))

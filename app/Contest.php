@@ -18,7 +18,7 @@ class Contest extends Model
     public static function sortable($list = false)
     {
         $columns = [
-            'id', 'name', 'start_date', 'end_date',
+            'id', 'name', 'start_date', 'end_date', 'created_at',
         ];
 
         return ($list ? implode(',', $columns) : $columns);

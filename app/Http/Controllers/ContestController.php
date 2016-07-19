@@ -15,7 +15,7 @@ class ContestController extends Controller
 {
     public function index(Request $request)
     {
-        $orderBySession = \Session::get('orderBy', 'updated_at');
+        $orderBySession = \Session::get('orderBy', 'created_at');
         $orderBy = $request->input('order', $orderBySession);
 
         $orderDirSession = \Session::get('orderDir', 'desc');
@@ -116,7 +116,7 @@ class ContestController extends Controller
                 $contest = Contest::create($fillData);
             }
 
-            $contest->programming_languages()->sync($request->get('programming_languages'));
+            $contest->programming_languages()->sync($request->get('programming_languages')?$request->get('programming_languages'): []);
 
             $contest->problems()->sync($request->get('problems') ? $request->get('problems') : []);
 
