@@ -89,12 +89,14 @@
                     </td>
                     <td>{{ $problem->difficulty }}</td>
                     <td>
-                        @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
-                            <a href="{{ route('frontend::contests::solution', ['id' => $problem->getContestDisplaySolution($contest)->id]) }}">
+                        @if($problem->getContestDisplaySolution($contest))
+                            @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+                                <a href="{{ route('frontend::contests::solution', ['id' => $problem->getContestDisplaySolution($contest)->id]) }}">
+                                    {{ $problem->getContestDisplaySolutionPoints($contest) }}
+                                </a>
+                            @else
                                 {{ $problem->getContestDisplaySolutionPoints($contest) }}
-                            </a>
-                        @else
-                            {{ $problem->getContestDisplaySolutionPoints($contest) }}
+                            @endif
                         @endif
                     </td>
                 </tr>
