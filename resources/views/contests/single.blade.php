@@ -89,7 +89,7 @@
                     </td>
                     <td>{{ $problem->difficulty }}</td>
                     <td>
-                        @if($problem->getContestDisplaySolution($contest))
+                        @if($problem->getContestDisplaySolution($contest)) {{-- @todo: refactor that shit--}}
                             @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
                                 <a href="{{ route('frontend::contests::solution', ['id' => $problem->getContestDisplaySolution($contest)->id]) }}">
                                     {{ $problem->getContestDisplaySolutionPoints($contest) }}

@@ -33,7 +33,9 @@
                 {{ $contest->show_max?'Best':'Latest' }} points:
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
+                @if($problem->getContestDisplaySolution($contest)) {{-- @todo: refactor that shit--}}
                 {{ $problem->getContestDisplaySolutionPoints($contest) }} / {{ $contest->getProblemMaxPoints($problem->id) }}
+                @endif
             </div>
         </div>
 
