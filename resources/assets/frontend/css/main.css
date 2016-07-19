@@ -3478,6 +3478,11 @@ div.dots-wrap-content button.btn-wd {
   }
 }
 
+div#editor {
+  width: 500px;
+  height: 500px;
+}
+
 @media (min-width: 1200px) {
   .container {
     width: 900px;

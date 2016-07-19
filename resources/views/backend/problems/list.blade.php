@@ -24,6 +24,7 @@
                             <tr>
                                 <th>@include('helpers.grid-header', ['name' => 'ID',           'order' => 'id'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Name',         'order' => 'name'])</th>
+                                <th>@include('helpers.grid-header', ['name' => 'Difficulty',   'order' => 'difficulty'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Created Date', 'order' => 'created_at'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Updated Date', 'order' => 'updated_at'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Deleted Date', 'order' => 'deleted_at'])</th>
@@ -35,6 +36,7 @@
                                 <tr>
                                     <td>{{ $problem->id }}</td>
                                     <td class="wrap-text">{{ $problem->name }}</td>
+                                    <td>{{ $problem->difficulty }}</td>
                                     <td>{{ $problem->created_at }}</td>
                                     <td>{{ $problem->updated_at }}</td>
                                     <td>{{ $problem->deleted_at }}</td>

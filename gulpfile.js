@@ -48,6 +48,13 @@ var path = require('path'),
         "css": vendorPath('select2/dist/css/select2.css'),
         "js": vendorPath('select2/dist/js/select2.js')
     },
+
+//ace-builds code editor
+    ace = {
+        "js": vendorPath('ace-builds/src-min-noconflict/ace.js'),
+        "js_theme_monokai": vendorPath('ace-builds/src-noconflict/theme-monokai.js'),
+        "js_mode_javascript": vendorPath('ace-builds/src-noconflict/mode-javascript.js')
+    },
 /*
  * Apps resources
  */
@@ -55,7 +62,7 @@ var path = require('path'),
         "frontend": {
             "fonts": [Bootstrap.fonts, appPath('frontend', 'fonts')],
             "css": [Bootstrap.css, bootstrap_datepicker.css, appPath('frontend', 'css')],
-            "js": [jQuery, Bootstrap.js, bootstrap_datepicker.js, bootstrap_checkbox.js, appPath('frontend', 'js')]
+            "js": [jQuery, Bootstrap.js, bootstrap_datepicker.js, bootstrap_checkbox.js, ace.js, ace.js_theme_monokai, ace.js_mode_javascript, appPath('frontend', 'js')]
         },
         "backend": {
             "fonts": [Bootstrap.fonts, fontawesome.fonts, bootstrap_datepicker.css, appPath('backend', 'fonts')],
