@@ -133,11 +133,11 @@ class Contest extends Model
         }
         uasort($users, function ($a, $b) {
             if ($a['points'] > $b['points']) {
-                return 1;
+                return -1;
             } elseif ($a['points'] == $b['points']) {
                 return 0;
             } else {
-                return -1;
+                return 1;
             }
         });
         return $users;
