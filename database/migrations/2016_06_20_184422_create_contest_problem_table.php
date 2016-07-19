@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContestsProblemsTable extends Migration
+class CreateContestProblemTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateContestsProblemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('contests_problems', function (Blueprint $table) {
+        Schema::create('contest_problem', function (Blueprint $table) {
             $table->unsignedInteger('problem_id');
             $table->foreign('problem_id')
                 ->references('id')->on('problems')
@@ -37,6 +37,6 @@ class CreateContestsProblemsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('contests_problems');
+        Schema::drop('contest_problem');
     }
 }

@@ -170,7 +170,7 @@
                                    href=""
                                    data-toggle="confirmation"
                                    data-message="Are you sure you want to leave the page? The changes won't be saved."
-                                   data-btn-ok-href="{{ route('contests::list') }}"
+                                   data-btn-ok-href="{{ route('frontend::contests::list') }}"
                                    data-btn-ok-label="Leave the page">Cancel</a>
 
                                 <button type="submit" class="btn btn-success">Save</button>

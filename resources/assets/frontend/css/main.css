@@ -3477,3 +3477,8 @@ div.dots-wrap-content button.btn-wd {
     display: none;
   }
 }
+
+div#editor {
+  width: 500px;
+  height: 500px;
+}

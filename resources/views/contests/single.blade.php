@@ -46,16 +46,17 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
-                Active standings:
+                @if($contest->is_standings_active )
+                    <a href="{{ route('frontend::contests::standings', ['id' => $contest->id]) }}">standings</a>
+                @endif
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-                {{ $contest->is_standings_active }}
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
-                <a href="{{ route('contests::solutions',['id' => $contest->id]) }}">all solutions</a>
+                <a href="{{ route('frontend::contests::solutions',['id' => $contest->id]) }}">all solutions</a>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
             </div>
@@ -73,19 +74,29 @@
         <table class="table">
             <thead>
             <tr>
-                <th>id</th>
-                <th>name</th>
-                <th>difficulty</th>
-                <th>points</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Difficulty</th>
+                <th>{{ $contest->show_max?'Best':'Latest' }} points</th>
             </tr>
             </thead>
             <tbody>
             @foreach($contest->problems as $problem)
                 <tr>
-                    <td>{{$problem->id}}</td>
-                    <td><a href="{{ action('ProblemController@contestProblem',['contest_id' => $contest->id, 'problem_id' => $problem->id]) }}">{{$problem->name}}</a></td>
-                    <td>{{$problem->difficulty}}</td>
-                    <td>//</td>
+                    <td>{{ $problem->id }}</td>
+                    <td>
+                        <a href="{{ action('ProblemController@contestProblem',['contest_id' => $contest->id, 'problem_id' => $problem->id]) }}">{{$problem->name}}</a>
+                    </td>
+                    <td>{{ $problem->difficulty }}</td>
+                    <td>
+                        @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+                            <a href="{{ route('frontend::contests::solution', ['id' => $problem->getContestDisplaySolution($contest)->id]) }}">
+                        @endif
+
+                        {{ $problem->getContestDisplaySolutionPoints($contest) }}</td>
+                    @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+                    </a>
+                    @endif
                 </tr>
             @endforeach
             </tbody>

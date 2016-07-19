@@ -37,13 +37,13 @@ class ContestController extends Controller
         \Session::put('orderDir', $orderDir);
 
         $contests = Contest::orderBy($orderBy, $orderDir);
-        if (Auth::check() && Auth::user()->hasRole(User::ROLE_TEACHER)) {
+        if (Auth::user()->hasRole(User::ROLE_TEACHER)) {
             $contests = $contests->where('user_id', Auth::user()->id);
-        } elseif (Auth::check() && Auth::user()->hasRole(User::ROLE_USER)) {
+        } elseif (Auth::user()->hasRole(User::ROLE_USER)) {
             $contests = $contests->whereHas('users', function ($query) {
                 $query->where('user_id', Auth::user()->id);
             })->where('is_active', true)->orWhere('labs', true);
-        } elseif (!Auth::check() || Auth::user()->hasRole(User::ROLE_LOW_USER)) {
+        } elseif (Auth::user()->hasRole(User::ROLE_LOW_USER)) {
             $contests = $contests->where('labs', true)->where('is_active', true);
         }
         $contests = $contests->paginate(10);
@@ -80,7 +80,7 @@ class ContestController extends Controller
                 'problems' => Problem::orderBy('name', 'desc')->get()->diff($contest->problems),
             ]);
         }
-        return redirect()->route('contests::list');
+        return redirect()->route('frontend::contests::list');
     }
 
     /**
@@ -126,7 +126,7 @@ class ContestController extends Controller
 
             \Session::flash('alert-success', 'The contest was successfully saved');
         }
-        return redirect()->route('contests::list');
+        return redirect()->route('frontend::contests::list');
     }
 
     public function hide(Request $request, $id)
@@ -137,11 +137,19 @@ class ContestController extends Controller
             $contest->hide();
             $contest->save();
         }
-        return redirect()->route('contests::list');
+        return redirect()->route('frontend::contests::list');
     }
 
     public function single(Request $request, $id)
     {
         return View('contests.single')->with(['contest' => Contest::findOrFail($id)]);
+    }
+
+    public function standings(Request $request, $id)
+    {
+        $contest = Contest::findOrFail($id);
+        $users = $contest->getUserData();
+        return View('contests.standings')->with(['contest' => $contest, 'users' => $users]);
+
     }
 }

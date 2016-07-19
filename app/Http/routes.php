@@ -70,14 +70,6 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/', 'HomeController@index');
         Route::get('/teachers', 'TeacherController@index');
 
-        Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
-            Route::get('/', ['uses' => 'ContestController@index', 'as' => 'list']);
-            Route::get('/{id}', ['uses' => 'ContestController@single', 'as' => 'single'])->where('id', '[0-9]+');
-            Route::get('/{contest_id}/{problem_id}/', ['uses' => 'ProblemController@contestProblem', 'as' => 'problem'])->where('contest_id', '[0-9]+')->where('problem_id', '[0-9]+');
-            Route::get('/solutions/{id}/', ['uses' => 'SolutionController@contestSolution', 'as' => 'solution'])->where('id', '[0-9]+');
-            Route::get('/{id}/solutions/', ['uses' => 'SolutionController@contestSolutions', 'as' => 'solutions'])->where('id', '[0-9]+');
-        });
-
         Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_TEACHER, 'as' => 'teacherOnly::'], function () {
 
             Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
@@ -113,6 +105,16 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('/confirm-student/{id}', ['as' => 'confirmStudent', 'uses' => 'Ajax\StudentController@confirm'])->where('id', '[0-9]+');
                 Route::get('/decline-student/{id}', ['as' => 'declineStudent', 'uses' => 'Ajax\StudentController@decline'])->where('id', '[0-9]+');
                 Route::get('/add-student-to-group', ['as' => 'addStudentToGroup', 'uses' => 'Ajax\StudentController@addToGroup']);
+            });
+
+            Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
+                Route::get('/', ['uses' => 'ContestController@index', 'as' => 'list']);
+                Route::get('/{id}', ['uses' => 'ContestController@single', 'as' => 'single'])->where('id', '[0-9]+');
+                Route::get('/{contest_id}/{problem_id}/', ['uses' => 'ProblemController@contestProblem', 'as' => 'problem'])->where('contest_id', '[0-9]+')->where('problem_id', '[0-9]+');
+                Route::post('/{contest_id}/{problem_id}/', ['uses' => 'SolutionController@submit'])->where('contest_id', '[0-9]+')->where('problem_id', '[0-9]+');
+                Route::get('/{id}/standings/', ['middleware' => 'contest_standings_access', 'uses' => 'ContestController@standings', 'as' => 'standings'])->where('id', '[0-9]+');
+                Route::get('/solutions/{id}/', ['uses' => 'SolutionController@contestSolution', 'as' => 'solution'])->where('id', '[0-9]+');
+                Route::get('/{id}/solutions/', ['uses' => 'SolutionController@contestSolutions', 'as' => 'solutions'])->where('id', '[0-9]+');
             });
         });
         Route::group(['middleware' => 'profile_access', 'prefix' => 'user', 'as' => 'frontend::user::'], function () {

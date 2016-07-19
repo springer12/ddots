@@ -24,16 +24,7 @@
                 Points:
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-                //
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                Source code:
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                //
+                {{ $solution->points }}
             </div>
         </div>
 
@@ -42,7 +33,7 @@
                 Result:
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-                //
+                {{ $solution->status }}
             </div>
         </div>
 
@@ -51,7 +42,7 @@
                 Max memory usage:
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-                {{ $solution->getMaxMemory() }}
+                {{ $solution->max_memory }}
             </div>
         </div>
 
@@ -60,7 +51,7 @@
                 Max time:
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-                {{ $solution->getMaxTime() }}
+                {{ $solution->max_time }}
             </div>
         </div>
 
@@ -73,7 +64,7 @@
             </div>
         </div>
 
-        @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER) && Auth::user()->isTeacherOf($solution->owner))
+        @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER) && Auth::user()->isTeacherOf($solution->owner->id))
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
                 Author:
@@ -83,12 +74,14 @@
             </div>
         </div>
         @endif
+
+        <div id="editor">{{ $solution->getCode() }}</div>
         <h3>Reports</h3>
         <div class="x_content">
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Points</th>
+                    <th>Points out of total</th>
                     <th>Execution time</th>
                     <th>Result</th>
                     <th>Peak memory usage</th>
@@ -96,7 +89,7 @@
                 </thead>
                 <tbody>
                 @foreach($solution->reports as $report)
-                    <td>//</td>
+                    <td>{{ $solution->successful_reports? $solution->points / $solution->successful_reports: '-' }}</td>
                     <td>{{ $report->execution_time }}</td>
                     <td>{{ $report->status }}</td>
                     <td>{{ $report->memory_peak }}</td>

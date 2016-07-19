@@ -30,21 +30,42 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
-                Points:
+                {{ $contest->show_max?'Best':'Latest' }} points:
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-                //
+                {{ $problem->getContestDisplaySolutionPoints($contest) }} / {{ $contest->getProblemMaxPoints($problem->id) }}
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
-                <a href="{{ route('contests::single', ['id' => $contest_id]) }}">Contest</a>
+                Contest
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
+                <a href="{{ route('frontend::contests::single', ['id' => $contest->id]) }}">{{ $contest->name }}</a>
             </div>
         </div>
-        {{-- @todo upload solution form --}}
+        <form data-submit-solution method="post" enctype="multipart/form-data">
+            {{ csrf_field() }}
+            <h3>Upload solution</h3>
+            <div id="editor"></div>
+            <div class="form-group{{ $errors->has('programming_language') ? ' has-error' : '' }}">
+                <select name="programming_language">
+                    <option value="" selected>Select a language</option>
+                    @foreach($contest->programming_languages as $language)
+                        <option value="{{ $language->id }}">{{ $language->name }}</option>
+                    @endforeach
+                </select>
+                @if ($errors->has('programming_language'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('programming_language') }}</strong>
+                    </span>
+                @endif
+            </div>
+            <input type="file" name="solution_code_file"/>
+            <input type="hidden" name="solution_code"/>
+            <input type="submit" value="Submit"/>
+        </form>
         <h3>Solutions</h3>
         <div class="x_content">
             <table class="table">
@@ -60,16 +81,19 @@
                 </thead>
                 <tbody>
                 @foreach($solutions as $solution)
-                    <td>{{ $solution->created_at }}</td>
-                    <td>//</td>
-                    @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))
-                        <td>
-                            @if(Auth::user()->isTeacherOf($solution->owner->id))
-                                <a href="{{ route('frontend::user::profile', ['id' => $solution->owner->id]) }}">{{ $solution->owner->name }}</a>
-                            @endif
+                    <tr>
+                        <td>{{ $solution->created_at }}</td>
+                        <td>{{ $solution->getPoints() }}</td>
+                        @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+                            <td>
+                                @if(Auth::user()->isTeacherOf($solution->owner->id))
+                                    <a href="{{ route('frontend::user::profile', ['id' => $solution->owner->id]) }}">{{ $solution->owner->name }}</a>
+                                @endif
+                            </td>
+                        @endif
+                        <td><a href="{{ route('frontend::contests::solution',['id' => $solution->id]) }}">Solution</a>
                         </td>
-                    @endif
-                    <td></td>
+                    </tr>
                 @endforeach
                 </tbody>
             </table>

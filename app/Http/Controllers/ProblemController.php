@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contest;
 use App\Problem;
 use App\Solution;
 use Illuminate\Http\Request;
@@ -16,6 +17,6 @@ class ProblemController extends Controller
         $solutions = Solution::whereHas('problem', function($query) use ($problem_id){
            $query->where('problem_id','=', $problem_id);
         })->join('contest_solution', 'solution_id', '=', 'id')->where('contest_id', $contest_id)->get();
-        return View('contests.problem')->with(['problem' => $problem, 'solutions' => $solutions, 'contest_id' => $contest_id]);
+        return View('contests.problem')->with(['problem' => $problem, 'solutions' => $solutions, 'contest' => Contest::findOrFail($contest_id)]);
     }
 }

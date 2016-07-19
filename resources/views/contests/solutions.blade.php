@@ -19,11 +19,11 @@
             <tr>
                 <td>{{ $solution->created_at }}</td>
                 <td>{{ $solution->status }}</td>
-                <td>points</td>
+                <td><a href="{{ route('frontend::contests::solution', ['id' => $solution->id]) }}">{{ $solution->getPoints() }}</a></td>
                 <td>
-                    <a href="{{ route('contests::problem', ['contest_id' => $solution->getContest()->id, 'problem_id' => $solution->problem->id]) }}">{{ $solution->problem->name }}</a>
+                    <a href="{{ route('frontend::contests::problem', ['contest_id' => $solution->getContest()->id, 'problem_id' => $solution->problem->id]) }}">{{ $solution->problem->name }}</a>
                 </td>
-                @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+                @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
                     <td>
                         @if(Auth::user()->isTeacherOf($solution->owner->id))
                             <a href="{{ route('frontend::user::profile', ['id' => $solution->owner->id]) }}">{{ $solution->owner->name }}</a>
