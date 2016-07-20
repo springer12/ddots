@@ -8,7 +8,12 @@
                 editor.getSession().setUseSoftTabs(true);
                 editor.getSession().setUseWrapMode(true);
                 editor.getSession().setMode("ace/mode/javascript");
+
+                $('[data-programming-languages]').change(function(){
+                    editor.getSession().setMode("ace/mode/" + $('[data-ace-mode]:selected').data('ace-mode'));
+                });
             }
+
             $('[data-submit-solution]').submit(function (e) {
                 var code = editor.getValue();
                 if(code.length) {

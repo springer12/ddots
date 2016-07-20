@@ -52,10 +52,10 @@
             <h3>Upload solution</h3>
             <div id="editor"></div>
             <div class="form-group{{ $errors->has('programming_language') ? ' has-error' : '' }}">
-                <select name="programming_language">
+                <select data-programming-languages name="programming_language">
                     <option value="" selected>Select a language</option>
                     @foreach($contest->programming_languages as $language)
-                        <option value="{{ $language->id }}">{{ $language->name }}</option>
+                        <option data-ace-mode="{{ $language->ace_mode }}" value="{{ $language->id }}">{{ $language->name }}</option>
                     @endforeach
                 </select>
                 @if ($errors->has('programming_language'))
