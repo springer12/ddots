@@ -33,6 +33,7 @@ class Contest extends Model
             'end_date' => 'required|date_format:Y-m-d H:i:s',
             'programming_languages.*' => 'exists:programming_languages,id',
             'problems.*' => 'exists:problems,id',
+            'problem_points.*' => 'required|integer|between:1,100',
         ];
     }
 

@@ -104,6 +104,7 @@
 
                         @foreach($programming_languages as $programming_language)
                             <label for="programming_language">{{ $programming_language->name }}</label>
+
                             <input id="programming_language" type="checkbox" name="programming_languages[]"
                                    value="{{ $programming_language->id }}" {{ !$contest->programming_languages->contains($programming_language->id)?:'checked' }}>
                         @endforeach
@@ -141,6 +142,7 @@
                                         <li>
                                             <a data-included-problem data-problem-id="{{ $problem->id }}">{{ $problem->name }}</a>
                                             <input type="hidden" name="problems[]" value="{{ $problem->id }}" />
+                                            <input type="number" name="problem_points[{{ $problem->id }}]" value="{{ $contest->getProblemMaxPoints($problem->id) }}"/>
                                         </li>
                                     @endforeach
                                 </ul>

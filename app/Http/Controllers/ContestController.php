@@ -94,6 +94,7 @@ class ContestController extends Controller
     public function edit(Request $request, $id = null)
     {
         $contest = (!$id ?: Contest::findOrFail($id));
+
         if ($id && $contest->currentUserAllowedEdit() || !$id) {
             $fillData = [
                 'name' => $request->get('name'),
@@ -116,9 +117,11 @@ class ContestController extends Controller
                 $contest = Contest::create($fillData);
             }
 
-            $contest->programming_languages()->sync($request->get('programming_languages')?$request->get('programming_languages'): []);
+            $contest->programming_languages()->sync($request->get('programming_languages') ? $request->get('programming_languages') : []);
 
-            $contest->problems()->sync($request->get('problems') ? $request->get('problems') : []);
+            $contest->problems()->sync($request->get('problems') ? array_combine($request->get('problems'), array_map(function ($a) {
+                return ['max_points' => $a];
+            }, $request->get('problem_points'))) : []);
 
             $contest->users()->sync($request->get('participants') ? $request->get('participants') : []);
 

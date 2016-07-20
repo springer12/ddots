@@ -65,8 +65,8 @@ var path = require('path'),
             "js": [jQuery, Bootstrap.js, bootstrap_datepicker.js, bootstrap_checkbox.js, ace.js, ace.js_theme_monokai, ace.js_mode_javascript, appPath('frontend', 'js')]
         },
         "backend": {
-            "fonts": [Bootstrap.fonts, fontawesome.fonts, bootstrap_datepicker.css, appPath('backend', 'fonts')],
-            "css": [Bootstrap.css, select2.css, fontawesome.css, gentelella.css, appPath('backend', 'css')],
+            "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('backend', 'fonts')],
+            "css": [Bootstrap.css, select2.css, fontawesome.css,bootstrap_datepicker.css, gentelella.css, appPath('backend', 'css')],
             "js": [jQuery, select2.js, Bootstrap.js, gentelella.js, bootstrap_datepicker.js, bootstrap_checkbox.js, appPath('backend', 'js')]
         }
     },

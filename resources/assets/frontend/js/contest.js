@@ -17,7 +17,7 @@
     });
     $('[data-unincluded-problems]').on('click', '[data-unincluded-problem]', function () {
         var $this = $(this);
-        $('[data-included-problems]').append('<li><a data-included-problem data-problem-id="' + $this.data('problem-id') + '">' + $this.text() + '</a><input type="hidden" name="problems[]" value="' + $this.data('problem-id') + '" /></li>');
+        $('[data-included-problems]').append('<li><a data-included-problem data-problem-id="' + $this.data('problem-id') + '">' + $this.text() + '</a><input type="hidden" name="problems[]" value="' + $this.data('problem-id') + '" /><input type="number" name="problem_points[' + $this.data('problem-id') + ']" value="0"/></li>');
         $this.parent().remove();
     });
 })(jQuery, window, document);
