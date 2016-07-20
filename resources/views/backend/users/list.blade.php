@@ -77,7 +77,7 @@
                             </tbody>
                         </table>
                         <div class="custom-pager">
-                            {{ $users->links() }}
+                            {{ $users->appends(\Illuminate\Support\Facades\Input::except('page'))->links() }}
                         </div>
                     </div>
                 </div>

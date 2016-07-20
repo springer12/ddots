@@ -53,7 +53,7 @@
                             </tbody>
                         </table>
                         <div class="custom-pager">
-                            {{ $servers->links() }}
+                            {{ $servers->appends(\Illuminate\Support\Facades\Input::except('page'))->links() }}
                         </div>
                     </div>
                 </div>
