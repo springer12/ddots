@@ -81,22 +81,22 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($contest->problems as $problem)
+            @foreach($problems as $id => $problem)
                 <tr>
-                    <td>{{ $problem->id }}</td>
+                    <td>{{ $id }}</td>
                     <td>
-                        <a href="{{ action('ProblemController@contestProblem',['contest_id' => $contest->id, 'problem_id' => $problem->id]) }}">{{$problem->name}}</a>
+                        <a href="{{ $problem['link'] }}">{{ $problem['name'] }}</a>
                     </td>
-                    <td>{{ $problem->difficulty }}</td>
+                    <td>{{ $problem['difficulty'] }}</td>
                     <td>
-                        @if($problem->getContestDisplaySolution($contest)) {{-- @todo: refactor that shit--}}
-                            @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
-                                <a href="{{ route('frontend::contests::solution', ['id' => $problem->getContestDisplaySolution($contest)->id]) }}">
-                                    {{ $problem->getContestDisplaySolutionPoints($contest) }}
-                                </a>
+                        @if($problem['points'])
+                            @if(isset($problem['solution_link']))
+                                <a href="{{ $problem['solution_link'] }}">{{ $problem['points'] }}</a>
                             @else
-                                {{ $problem->getContestDisplaySolutionPoints($contest) }}
+                                {{ $problem['points'] }}
                             @endif
+                        @else
+                            -
                         @endif
                     </td>
                 </tr>

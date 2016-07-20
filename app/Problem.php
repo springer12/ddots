@@ -98,11 +98,6 @@ class Problem extends Model
         return $solution;
     }
 
-    public function getContestDisplaySolutionPoints(Contest $contest) {
-        return $this->getContestDisplaySolution($contest)->success_percentage / 100 * $contest->getProblemMaxPoints($this->id);
-    }
-    
-
     public function getContestUserDisplaySolution(Contest $contest, $user_id) {
 
         $solution = $this->getContestSolutionQuery($contest->id)->where('user_id', $user_id);
@@ -113,5 +108,16 @@ class Problem extends Model
         }
 
         return $solution;
+    }
+    
+    public function getPointsString(Contest $contest) {
+        $display_solution = $this->getContestDisplaySolution($contest);
+        if($display_solution) {
+            $points_string = $display_solution->success_percentage / 100 * $contest->getProblemMaxPoints($this->id);
+        } else {
+            $points_string = '-';
+        }
+        $points_string .= ' / ' . $contest->getProblemMaxPoints($this->id);
+        return $points_string;
     }
 }

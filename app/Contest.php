@@ -142,4 +142,21 @@ class Contest extends Model
         });
         return $users;
     }
+
+    public function getProblemData(){
+        $problems = [];
+        foreach($this->problems as $problem) {
+            $problems[$problem->id]['name'] = $problem->name;
+            $problems[$problem->id]['link'] = route('frontend::contests::problem', ['contest_id' => $this->id, 'problem_id' => $problem->id]);
+            $solution = $problem->getContestDisplaySolution($this);
+            $problems[$problem->id]['difficulty'] = $problem->difficulty;
+            if($solution) {
+                if (Auth::user()->hasRole(User::ROLE_TEACHER) || Auth::user()->id == $solution->user_id) {
+                    $problems[$problem->id]['solution_link'] = route('frontend::contests::solution', ['id' => $solution->id]);
+                }
+                $problems[$problem->id]['points'] = $solution->success_percentage / 100 * $this->getProblemMaxPoints($problem->id);
+            }
+        }
+        return $problems;
+    }
 }
