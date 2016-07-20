@@ -24,7 +24,15 @@
                 Points:
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-                {{ $solution->points }}
+                @if($solution->owner->hasRole(\App\User::ROLE_TEACHER))
+                    @if($solution->success_percentage)
+                        {{ $solution->success_percentage }} %
+                    @else
+                        -
+                    @endif
+                @else
+                    {{ $solution->points }}
+                @endif
             </div>
         </div>
 
@@ -60,21 +68,24 @@
                 Problem:
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-                <a href="{{ route('frontend::contests::problem', ['contest_id' => $solution->getContest()->id, 'problem_id' => $solution->problem->id]) }}">{{ $solution->problem->name }}</a>
+                @if($solution->owner->hasRole(\App\User::ROLE_TEACHER))
+                    {{-- @todo link to problem not bound to contest --}}
+                @else
+                    <a href="{{ route('frontend::contests::problem', ['contest_id' => $solution->getContest()->id, 'problem_id' => $solution->problem->id]) }}">{{ $solution->problem->name }}</a>
+                @endif
             </div>
         </div>
 
-        @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER) && Auth::user()->isTeacherOf($solution->owner->id))
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                Author:
+        @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER) && Auth::user()->isTeacherOf($solution->owner->id))
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    Author:
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <a href="{{ route('frontend::user::profile', ['id' => $solution->owner->id]) }}">{{ $solution->owner->name }}</a>
+                </div>
             </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                <a href="{{ route('frontend::user::profile', ['id' => $solution->owner->id]) }}">{{ $solution->owner->name }}</a>
-            </div>
-        </div>
         @endif
-
         <div id="editor">{{ $solution->getCode() }}</div>
         <h3>Reports</h3>
         <div class="x_content">
