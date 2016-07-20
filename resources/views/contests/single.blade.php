@@ -89,7 +89,7 @@
                     </td>
                     <td>{{ $problem['difficulty'] }}</td>
                     <td>
-                        @if($problem['points'])
+                        @if(isset($problem['points']))
                             @if(isset($problem['solution_link']))
                                 <a href="{{ $problem['solution_link'] }}">{{ $problem['points'] }}</a>
                             @else
