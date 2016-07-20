@@ -100,7 +100,7 @@ class User extends Authenticatable
 
     public function setDateOfBirthAttribute($value)
     {
-        $this->attributes['date_of_birth'] = !trim($value) ?null: Carbon::parse($value);
+        $this->attributes['date_of_birth'] = !trim($value) ? null : Carbon::parse($value);
     }
 
     public function getRegistrationDate()
@@ -126,7 +126,7 @@ class User extends Authenticatable
 
     public function setAvatar($name)
     {
-        
+
         if (Input::file($name)->isValid()) {
             if ($this->avatar) {
                 File::delete('userdata/avatars/' . $this->avatar);
@@ -228,10 +228,11 @@ class User extends Authenticatable
 
     public function setProgrammingLanguageAttribute($value)
     {
-        $this->attributes['programming_language'] = !trim($value)?:trim($value);
+        $this->attributes['programming_language'] = !trim($value) ?null: trim($value);
     }
 
-    public function groups(){
+    public function groups()
+    {
         return $this->belongsToMany(Group::class, 'group_user', 'user_id')->withTimestamps();
     }
 }
