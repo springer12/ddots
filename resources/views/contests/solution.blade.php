@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('scripts')
+    <script src="{{ asset('ace-bundle/js/ace.js') }}"></script>
+@endsection
 @section('content')
     <div class="container">
         <div class="row">

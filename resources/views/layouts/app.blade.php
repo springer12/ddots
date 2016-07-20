@@ -53,6 +53,8 @@
         @include('partial.footer')
     </div>
 </div>
+
+@yield('scripts')
 <script src="{{ asset('frontend-bundle/js/bundle' . (config('app.assets.minified', false) ? '.min' : '') . '.js') }}"></script>
 </body>
 </html>
