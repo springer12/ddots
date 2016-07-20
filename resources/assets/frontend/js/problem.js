@@ -7,8 +7,13 @@
                 editor.getSession().setTabSize(4);
                 editor.getSession().setUseSoftTabs(true);
                 editor.getSession().setUseWrapMode(true);
-                editor.getSession().setMode("ace/mode/javascript");
+
+                $('[data-ace-mode]').select(function(){
+                    console.log('asd');
+                    editor.getSession().setMode("ace/mode/" + $(this).data('ace-mode'));
+                });
             }
+
             $('[data-submit-solution]').submit(function (e) {
                 var code = editor.getValue();
                 if(code.length) {

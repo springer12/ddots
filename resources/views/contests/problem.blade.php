@@ -55,7 +55,7 @@
                 <select name="programming_language">
                     <option value="" selected>Select a language</option>
                     @foreach($contest->programming_languages as $language)
-                        <option value="{{ $language->id }}">{{ $language->name }}</option>
+                        <option data-ace-mode="{{ $language->ace_mode }}" value="{{ $language->id }}">{{ $language->name }}</option>
                     @endforeach
                 </select>
                 @if ($errors->has('programming_language'))
