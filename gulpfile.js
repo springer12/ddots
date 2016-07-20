@@ -2,8 +2,9 @@ var path = require('path'),
     fs = require('fs'),
     gUtil = require('gulp-util'),
     elixir = require('laravel-elixir'),
+    args   = require('yargs').argv,
     resourcesFolder = 'resources',
-    appName = gUtil.env.app && fs.statSync(appPath(gUtil.env.app)).isDirectory() ? gUtil.env.app : null,
+    appName = args.appName ? args.appName : gUtil.env.app && fs.statSync(appPath(gUtil.env.app)).isDirectory() ? gUtil.env.app : null,
 /*
  * Vendor resources
  */
@@ -50,11 +51,7 @@ var path = require('path'),
     },
 
 //ace-builds code editor
-    ace = {
-        "js": vendorPath('ace-builds/src-min-noconflict/ace.js'),
-        "js_theme_monokai": vendorPath('ace-builds/src-noconflict/theme-monokai.js'),
-        "js_mode_javascript": vendorPath('ace-builds/src-noconflict/mode-javascript.js')
-    },
+    ace = vendorPath('ace-builds/src-min-noconflict', true),
 /*
  * Apps resources
  */
@@ -62,12 +59,15 @@ var path = require('path'),
         "frontend": {
             "fonts": [Bootstrap.fonts, appPath('frontend', 'fonts')],
             "css": [Bootstrap.css, bootstrap_datepicker.css, appPath('frontend', 'css')],
-            "js": [jQuery, Bootstrap.js, bootstrap_datepicker.js, bootstrap_checkbox.js, ace.js, ace.js_theme_monokai, ace.js_mode_javascript, appPath('frontend', 'js')]
+            "js": [jQuery, Bootstrap.js, bootstrap_datepicker.js, bootstrap_checkbox.js, appPath('frontend', 'js')]
         },
         "backend": {
             "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('backend', 'fonts')],
             "css": [Bootstrap.css, select2.css, fontawesome.css,bootstrap_datepicker.css, gentelella.css, appPath('backend', 'css')],
             "js": [jQuery, select2.js, Bootstrap.js, gentelella.js, bootstrap_datepicker.js, bootstrap_checkbox.js, appPath('backend', 'js')]
+        },
+        "ace": {
+            "js": [ace]
         }
     },
     outputExtPrefix = elixir.config.production ? '.min' : '';
@@ -140,10 +140,22 @@ function appJs(appName, out) {
     return apps[appName].js;
 }
 
+function appAce(appName, out) {
+    if (out) {
+        return path.join(publicPath(appName, 'js'), 'ace');
+    }
+
+    return apps[appName].js;
+}
+
 
 function buildApp(mix, appName) {
-    mix.copy(appFonts(appName), appFonts(appName, true));
-    mix.copy(appMedia(appName), appMedia(appName, true));
-    mix.styles(appCss(appName), appCss(appName, true), resourcesFolder);
-    mix.scripts(appJs(appName), appJs(appName, true), resourcesFolder);
+    if (appName == 'frontend' || appName == 'backend') {
+        mix.copy(appFonts(appName), appFonts(appName, true));
+        mix.copy(appMedia(appName), appMedia(appName, true));
+        mix.styles(appCss(appName), appCss(appName, true), resourcesFolder);
+        mix.scripts(appJs(appName), appJs(appName, true), resourcesFolder);
+    } else {
+        mix.copy(appAce(appName), appAce(appName, true));
+    }
 }
