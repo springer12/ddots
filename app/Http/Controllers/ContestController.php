@@ -60,16 +60,25 @@ class ContestController extends Controller
     public function showForm(Request $request, $id = null)
     {
         $contest = ($id ? Contest::findOrFail($id) : new Contest());
-        if ($id && $contest->currentUserAllowedEdit() || !$id) {
+        if ($contest->currentUserAllowedEdit()) {
+            $participants = collect();
+            $students = Auth::user()->students()->get();
             if ($id) {
                 $title = 'Edit Contest';
-                $participants = $contest->users()->user()->get();
+                if (old('participants')) {
+                    foreach ($students as $student) {
+                        if (in_array($student->id, old('participants'))) {
+                            $participants->push($student);
+                        }
+                    }
+                } else {
+                    $participants = $contest->users()->user()->get();
+                }
+                $students = $students->diff($participants);
             } else {
                 $title = 'Create Contest';
-                $participants = collect();
             }
 
-            $students = Auth::user()->students()->get()->diff($participants);
 
             return view('contests.form')->with([
                 'contest' => $contest,
@@ -108,7 +117,7 @@ class ContestController extends Controller
                 'labs' => $request->get('labs'),
             ];
 
-            $this->validate($request, Contest::getValidationRules());
+            $this->validate($request, Contest::getValidationRules(), ['programming_languages.required' => 'At least one language must be selected.']);
 
 
             if ($id) {
