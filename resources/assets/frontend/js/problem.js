@@ -2,11 +2,18 @@
     function($, window, document) {
         $(document).ready(function() {
             if($('#editor').length) {
+
                 var editor = ace.edit('editor');
-                editor.setTheme("ace/theme/monokai");
-                editor.getSession().setTabSize(4);
-                editor.getSession().setUseSoftTabs(true);
-                editor.getSession().setUseWrapMode(true);
+                editor.setOptions({
+                    enableBasicAutocompletion: true,
+                    enableLiveAutocompletion: true,
+                    showInvisibles: true,
+                    tabSize: 4,
+                    wrap: true,
+                    useSoftTabs: true,
+                    theme: "ace/theme/monokai"
+                });
+                
                 if($('[data-solution]').length) {
                     editor.getSession().setMode("ace/mode/" + $('[data-ace-mode]').data('ace-mode'));
                     editor.setReadOnly(true);

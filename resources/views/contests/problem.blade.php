@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('scripts')
     <script src="{{ asset('ace-bundle/js/ace/ace.js') }}"></script>
+    <script src="{{ asset('ace-bundle/js/ace/ext-language_tools.js') }}"></script>
 @endsection
 @section('content')
     <div class="container">

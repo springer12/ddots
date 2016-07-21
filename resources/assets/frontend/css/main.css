@@ -3494,3 +3494,7 @@ div.ace-editor {
     width: 840px;
   }
 }
+
+.ace_search_field,.ace_searchbtn {
+  color: initial;
+}
