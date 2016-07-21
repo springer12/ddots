@@ -62,7 +62,7 @@
                                 <label for="date_of_birth" class="col-md-4 control-label">birthday</label>
 
                                 <div class="col-md-6">
-                                    <input data-datepicker id="date_of_birth dropdown-toggle" class="form-control" name="date_of_birth"
+                                    <input data-datepicker id="date_of_birth" class="form-control" name="date_of_birth"
                                            value="{{ old('date_of_birth')?old('date_of_birth'):$user->date_of_birth }}">
                                     @if ($errors->has('date_of_birth'))
                                         <span class="help-block">
