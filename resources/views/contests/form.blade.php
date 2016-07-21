@@ -77,8 +77,13 @@
                                    for="is_active">Active</label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="checkbox" name="is_active"
-
-                                       class="form-control col-md-7 col-xs-12" {{ !$contest->is_active?:'checked' }}>
+                                       class="form-control col-md-7 col-xs-12"
+                                @if($errors->has())
+                                    {{ !old('is_active')?:'checked' }}
+                                        @else
+                                    {{ !$contest->is_active?:'checked' }}
+                                        @endif
+                                >
                                 @if ($errors->has('is_active'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('is_active') }}</strong>
@@ -93,7 +98,12 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="checkbox" name="is_standings_active"
 
-                                       class="form-control col-md-7 col-xs-12" {{ !$contest->is_standings_active?:'checked' }}>
+                                       class="form-control col-md-7 col-xs-12"
+                                @if($errors->has())
+                                    {{ !old('is_standings_active')?:'checked' }}
+                                        @else
+                                    {{ !$contest->is_standings_active?:'checked' }}
+                                        @endif>
                                 @if ($errors->has('is_standings_active'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('is_standings_active') }}</strong>
@@ -102,23 +112,47 @@
                             </div>
                         </div>
 
-                        @foreach($programming_languages as $programming_language)
-                            <label for="programming_language">{{ $programming_language->name }}</label>
+                        @if(old('programming_languages'))
+                            @foreach($programming_languages as $programming_language)
 
-                            <input id="programming_language" type="checkbox" name="programming_languages[]"
-                                   value="{{ $programming_language->id }}" {{ !$contest->programming_languages->contains($programming_language->id)?:'checked' }}>
-                        @endforeach
+                                <label for="programming_language">{{ $programming_language->name }}</label>
+                                <input id="programming_language" type="checkbox" name="programming_languages[]"
+                                       value="{{ $programming_language->id }}" {{ !in_array($programming_language->id, old('programming_languages'))?:'checked' }}>
+                            @endforeach
+                        @elseif($errors->has('programming_languages'))
+                            {{ $errors->first('programming_languages') }}
+                            @foreach($programming_languages as $programming_language)
+                                <label for="programming_language">{{ $programming_language->name }}</label>
+                                <input id="programming_language" type="checkbox" name="programming_languages[]"
+                                       value="{{ $programming_language->id }}">
+                            @endforeach
+                        @else
+                            @foreach($programming_languages as $programming_language)
+                                <label for="programming_language">{{ $programming_language->name }}</label>
+                                <input id="programming_language" type="checkbox" name="programming_languages[]"
+                                       value="{{ $programming_language->id }}" {{ !$contest->programming_languages->contains($programming_language->id)?:'checked' }}>
+                            @endforeach
+                        @endif
+
 
                         <div>
                             <div>
                                 <h2>Participants</h2>
                                 <ul data-participants>
-                                    @foreach($participants as $participant)
-                                        <li>
-                                            <a data-participant data-student-id="{{ $participant->id }}">{{ $participant->name }}</a>
-                                            <input type="hidden" name="participants[]" value="{{ $participant->id }}" />
-                                        </li>
-                                    @endforeach
+
+                                    @if(old('praticipants'))
+
+                                    @else
+                                        @foreach($participants as $participant)
+                                            <li>
+                                                <a data-participant
+                                                   data-student-id="{{ $participant->id }}">{{ $participant->name }}</a>
+                                                <input type="hidden" name="participants[]"
+                                                       value="{{ $participant->id }}"/>
+                                            </li>
+                                        @endforeach
+                                    @endif
+
                                 </ul>
                             </div>
                             <br/>
@@ -138,11 +172,13 @@
                             <div>
                                 <h2>Included problems</h2>
                                 <ul data-included-problems>
-                                    @foreach($contest->problems as $problem)
+                                    @foreach($included_problems as $problem)
                                         <li>
-                                            <a data-included-problem data-problem-id="{{ $problem->id }}">{{ $problem->name }}</a>
-                                            <input type="hidden" name="problems[]" value="{{ $problem->id }}" />
-                                            <input type="number" name="problem_points[{{ $problem->id }}]" value="{{ $contest->getProblemMaxPoints($problem->id) }}"/>
+                                            <a data-included-problem
+                                               data-problem-id="{{ $problem->id }}">{{ $problem->name }}</a>
+                                            <input type="hidden" name="problems[]" value="{{ $problem->id }}"/>
+                                            <input type="number" name="problem_points[{{ $problem->id }}]"
+                                                   value="{{ $contest->getProblemMaxPoints($problem->id) }}"/>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -151,9 +187,10 @@
                             <h2>All problems</h2>
                             <a data-toggle="dropdown">Add problem</a>
                             <ul class="dropdown-menu" data-unincluded-problems>
-                                @foreach($problems as $problem)
+                                @foreach($unincluded_problems as $problem)
                                     <li role="presentation">
-                                        <a data-unincluded-problem data-problem-id="{{ $problem->id }}">{{ $problem->name }}</a>
+                                        <a data-unincluded-problem
+                                           data-problem-id="{{ $problem->id }}">{{ $problem->name }}</a>
                                     </li>
                                 @endforeach
                             </ul>

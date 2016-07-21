@@ -3478,7 +3478,7 @@ div.dots-wrap-content button.btn-wd {
   }
 }
 
-div#editor {
+div.ace-editor {
   width: 500px;
   height: 500px;
 }
@@ -3493,4 +3493,8 @@ div#editor {
   .container {
     width: 840px;
   }
+}
+
+.ace_search_field,.ace_searchbtn {
+  color: initial;
 }
