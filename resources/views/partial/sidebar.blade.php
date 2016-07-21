@@ -37,12 +37,14 @@
             </a>
         </li>
     @endif
-    <li {!! Request::is('contests/') ? 'class="active"' : '' !!}>
-        <a href="{{ url('/contests') }}">
-            <i class="ti-user"></i>
-            <p>Contests</p>
-        </a>
-    </li>
+    @if(Auth::check())
+        <li {!! Request::is('contests/') ? 'class="active"' : '' !!}>
+            <a href="{{ url('/contests') }}">
+                <i class="ti-user"></i>
+                <p>Contests</p>
+            </a>
+        </li>
+    @endif
 
 
 </ul>
