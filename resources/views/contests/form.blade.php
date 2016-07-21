@@ -172,7 +172,7 @@
                             <div>
                                 <h2>Included problems</h2>
                                 <ul data-included-problems>
-                                    @foreach($contest->problems as $problem)
+                                    @foreach($included_problems as $problem)
                                         <li>
                                             <a data-included-problem
                                                data-problem-id="{{ $problem->id }}">{{ $problem->name }}</a>
@@ -187,7 +187,7 @@
                             <h2>All problems</h2>
                             <a data-toggle="dropdown">Add problem</a>
                             <ul class="dropdown-menu" data-unincluded-problems>
-                                @foreach($problems as $problem)
+                                @foreach($unincluded_problems as $problem)
                                     <li role="presentation">
                                         <a data-unincluded-problem
                                            data-problem-id="{{ $problem->id }}">{{ $problem->name }}</a>

@@ -7,6 +7,7 @@ use App\Problem;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests;
 use App\ProgrammingLanguage;
 use App\User;
@@ -61,23 +62,38 @@ class ContestController extends Controller
     {
         $contest = ($id ? Contest::findOrFail($id) : new Contest());
         if ($contest->currentUserAllowedEdit()) {
+
             $participants = collect();
             $students = Auth::user()->students()->get();
             if ($id) {
                 $title = 'Edit Contest';
-                if (old('participants')) {
+                if (Session::get('errors')) {
                     foreach ($students as $student) {
-                        if (in_array($student->id, old('participants'))) {
+                        if (in_array($student->id, (array)old('participants'))) {
                             $participants->push($student);
                         }
                     }
+
+                    $included_problems = collect();
+                    $problems = Problem::orderBy('name', 'desc')->get();
+
+                    foreach ($problems as $problem) {
+                        if (in_array($problem->id, (array)old('problems'))) {
+                            $included_problems->push($problem);
+                        }
+                    }
+                    $unincluded_problems = $problems->diff($included_problems);
+
                 } else {
                     $participants = $contest->users()->user()->get();
+                    $included_problems = $contest->problems;
+                    $unincluded_problems = Problem::orderBy('name', 'desc')->get()->diff($included_problems);
                 }
                 $students = $students->diff($participants);
             } else {
                 $title = 'Create Contest';
             }
+
 
 
             return view('contests.form')->with([
@@ -86,7 +102,8 @@ class ContestController extends Controller
                 'students' => $students,
                 'participants' => $participants,
                 'programming_languages' => ProgrammingLanguage::orderBy('name', 'desc')->get(),
-                'problems' => Problem::orderBy('name', 'desc')->get()->diff($contest->problems),
+                'included_problems' => $included_problems,
+                'unincluded_problems' => $unincluded_problems
             ]);
         }
         return redirect()->route('frontend::contests::list');
@@ -132,7 +149,7 @@ class ContestController extends Controller
                 return ['max_points' => $a];
             }, $request->get('problem_points'))) : []);
 
-            $contest->users()->sync($request->get('participants') ? $request->get('participants') : []);
+            $contest->users()->sync((array)$request->get('participants'));
 
             $contest->save();
 
