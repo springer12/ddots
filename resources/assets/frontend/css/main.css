@@ -3478,7 +3478,7 @@ div.dots-wrap-content button.btn-wd {
   }
 }
 
-div#editor {
+div.ace-editor {
   width: 500px;
   height: 500px;
 }

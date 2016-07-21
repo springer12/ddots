@@ -50,7 +50,7 @@
         <form data-submit-solution method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             <h3>Upload solution</h3>
-            <div id="editor"></div>
+            <div class="ace-editor" id="editor"></div>
             <div class="form-group{{ $errors->has('programming_language') ? ' has-error' : '' }}">
                 <select data-programming-languages name="programming_language">
                     <option value="" selected>Select a language</option>

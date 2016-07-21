@@ -7,7 +7,10 @@
                 editor.getSession().setTabSize(4);
                 editor.getSession().setUseSoftTabs(true);
                 editor.getSession().setUseWrapMode(true);
-                editor.getSession().setMode("ace/mode/javascript");
+                if($('[data-solution]').length) {
+                    editor.getSession().setMode("ace/mode/" + $('[data-ace-mode]').data('ace-mode'));
+                    editor.setReadOnly(true);
+                }
 
                 $('[data-programming-languages]').change(function(){
                     editor.getSession().setMode("ace/mode/" + $('[data-ace-mode]:selected').data('ace-mode'));

@@ -88,7 +88,7 @@
                 </div>
             </div>
         @endif
-        <div id="editor">{{ $solution->getCode() }}</div>
+        <div data-solution data-ace-mode="{{ $solution->programming_language->ace_mode }}" class="ace-editor" id="editor">{{ $solution->getCode() }}</div>
         <h3>Reports</h3>
         <div class="x_content">
             <table class="table">
