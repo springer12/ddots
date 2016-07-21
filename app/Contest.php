@@ -101,10 +101,7 @@ class Contest extends Model
 
     public function currentUserAllowedEdit()
     {
-        if (Auth::check() && Auth::user()->id == $this->owner->id) {
-            return true;
-        }
-        return false;
+        return Auth::user()->id == $this->owner->id;
     }
 
     public function getProblemMaxPoints($problem_id)

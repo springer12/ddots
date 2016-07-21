@@ -77,8 +77,8 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('add', ['uses' => 'ContestController@showForm', 'as' => 'add']);
                 Route::post('add', 'ContestController@edit');
 
-                Route::get('edit/{id}', ['uses' => 'ContestController@showForm', 'as' => 'edit'])->where('id', '[0-9]+');
-                Route::post('edit/{id}', 'ContestController@edit')->where('id', '[0-9]+');
+                Route::get('edit/{id}', ['middleware' => 'contest_edit_access', 'uses' => 'ContestController@showForm', 'as' => 'edit'])->where('id', '[0-9]+');
+                Route::post('edit/{id}', ['middleware' => 'contest_edit_access', 'uses' => 'ContestController@edit'])->where('id', '[0-9]+');
             });
 
             Route::group(['prefix' => 'groups', 'as' => 'groups::'], function () {

@@ -60,5 +60,6 @@ class Kernel extends HttpKernel
         'ajax' => \App\Http\Middleware\Ajax::class,
         'contest_standings_access' => \App\Http\Middleware\ContestStandingsAccess::class,
         'contest_solution_access' => \App\Http\Middleware\ContestStandingsAccess::class,
+        'contest_edit_access' => \App\Http\Middleware\ContestEditAccess::class,
     ];
 }
