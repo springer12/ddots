@@ -106,11 +106,15 @@ class Contest extends Model
 
     public function getProblemMaxPoints($problem_id)
     {
-        return DB::table('contest_problem')
+        $select = DB::table('contest_problem')
             ->select('max_points')
             ->where('problem_id', '=', $problem_id)
             ->where('contest_id', '=', $this->id)
-            ->first()->max_points;
+            ->first();
+        if($select) {
+            return $select->max_points;
+        }
+        return null;
     }
 
     public function getUserData()
