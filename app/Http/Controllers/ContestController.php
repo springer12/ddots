@@ -61,8 +61,6 @@ class ContestController extends Controller
     public function showForm(Request $request, $id = null)
     {
         $contest = ($id ? Contest::findOrFail($id) : new Contest());
-        if ($contest->currentUserAllowedEdit()) {
-
             $participants = collect();
             $students = Auth::user()->students()->get();
             if ($id) {
@@ -105,8 +103,6 @@ class ContestController extends Controller
                 'included_problems' => $included_problems,
                 'unincluded_problems' => $unincluded_problems
             ]);
-        }
-        return redirect()->route('frontend::contests::list');
     }
 
     /**
@@ -120,8 +116,6 @@ class ContestController extends Controller
     public function edit(Request $request, $id = null)
     {
         $contest = (!$id ?: Contest::findOrFail($id));
-
-        if ($id && $contest->currentUserAllowedEdit() || !$id) {
             $fillData = [
                 'name' => $request->get('name'),
                 'description' => $request->get('description'),
@@ -154,18 +148,14 @@ class ContestController extends Controller
             $contest->save();
 
             \Session::flash('alert-success', 'The contest was successfully saved');
-        }
-        return redirect()->route('frontend::contests::list');
     }
 
     public function hide(Request $request, $id)
     {
 
         $contest = Contest::findOrFail($id);
-        if ($contest->currentUserAllowedEdit()) {
             $contest->hide();
             $contest->save();
-        }
         return redirect()->route('frontend::contests::list');
     }
 
