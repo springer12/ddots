@@ -16,7 +16,7 @@ class SolutionController extends Controller
         $solution = Solution::oldestNew();
         $solution->state = Solution::STATE_RESERVED;
         $solution->save();
-        return $solution->id;
+        return ['id' => $solution->id];
     }
 
     public function show(Request $request, $id) {
