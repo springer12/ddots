@@ -28,7 +28,7 @@ class SolutionController extends Controller
     }
 
     public function show_source_code(Request $request, $id) {
-        return Storage::get(Solution::where('id', $id)->firstOrFail()->sourceCodePath());
+        return Storage::get(Solution::where('id', $id)->firstOrFail()->sourceCodeFilePath());
     }
 
     public function update(Request $request, $id) {

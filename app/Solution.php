@@ -94,7 +94,6 @@ class Solution extends Model
 
     public function sourceCodeFilePath()
     {
-
         return $this->sourceCodePath() . $this->id;
     }
 
