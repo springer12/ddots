@@ -65,4 +65,9 @@ class Sponsor extends Model
     {
         return $this->belongsToMany(Subdomain::class, 'sponsor_subdomain', 'sponsor_id', 'subdomain_id');
     }
+
+    public function scopeMain($query)
+    {
+        return $query->where('show_on_main', true);
+    }
 }
