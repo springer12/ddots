@@ -22,7 +22,7 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>@include('helpers.grid-header', ['name' => 'ID',           'order' => 'id'])</th>
+                                <th>@include('helpers.grid-header', ['name' => 'ID', 'order' => 'id'])</th>
                                 <th>Link</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Created Date', 'order' => 'created_at'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Updated Date', 'order' => 'updated_at'])</th>

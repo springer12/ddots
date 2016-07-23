@@ -53,8 +53,8 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Description <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <textarea type="text" name="description"
-                                          class="form-control col-md-7 col-xs-12">{{ old('description') ?: $sponsor->description }}</textarea>
+                                <textarea type="text" name="description" required="required"
+                                          class="form-control col-md-7 col-xs-12">{{ old('description') ?old('description'): $sponsor->description }}</textarea>
                                 @if ($errors->has('description'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('description') }}</strong>
@@ -71,15 +71,22 @@
                             {{ !$sponsor->show_on_main?:'checked' }}
                                 @endif
                         >
-
                         <div class="form-group{{ $errors->has('volumes') ? ' has-error' : '' }}">
+
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Subdomains</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="subdomains[]" data-select-subdomain
                                         class="form-control col-md-7 col-xs-12"
                                         multiple>
                                     @foreach(\App\Subdomain::all() as $subdomain)
-                                        <option value="{{ $subdomain->id }}" {{ old('subdomains.' . $subdomain->id) ? old('subdomains.' . $subdomain->id) : $sponsor->subdomains()->find($subdomain->id) ? 'selected' : '' }}>{{ $subdomain->name }}</option>
+                                        <option value="{{ $subdomain->id }}"
+                                        @if($errors->has())
+                                            {{ !in_array($subdomain->id, (array)old('subdomains'))?'':'selected' }}
+                                                @else
+                                            {{ $sponsor->subdomains()->find($subdomain->id) ? 'selected' : '' }}
+                                                @endif
+                                        >
+                                            {{ $subdomain->name }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('subdomains'))

@@ -77,7 +77,13 @@
                                 <select name="volumes[]" data-select-volume class="form-control col-md-7 col-xs-12"
                                         multiple>
                                     @foreach(\App\Volume::all() as $volume)
-                                        <option value="{{ $volume->id }}" {{ old('volumes.' . $volume->id) ? old('volumes.' . $volume->id) : $problem->volumes()->find($volume->id) ? 'selected' : '' }}>{{ $volume->name }}</option>
+                                        <option value="{{ $volume->id }}"
+                                        @if($errors->has())
+                                            {{ !in_array($volume->id, (array)old('volumes'))?:'selected' }}
+                                                @else
+                                            {{ !$problem->volumes()->find($volume->id) ?: 'selected'}}
+                                                @endif
+                                        >{{ $volume->name }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('volumes'))
