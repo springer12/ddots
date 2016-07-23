@@ -44,7 +44,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group{{ $errors->has('date_of_birth') ? ' has-error' : '' }}">
                                         <label for="date_of_birth">Birthday</label>
-                                        <input data-datepicker id="date_of_birth" type="text" class="form-control border-input" placeholder="Birthday" value="{{ old('date_of_birth') ? old('date_of_birth') : $user->date_of_birth }}">
+                                        <input data-datepicker id="date_of_birth" name="date_of_birth" type="text" class="form-control border-input" placeholder="Birthday" value="{{ old('date_of_birth') ? old('date_of_birth') : $user->date_of_birth }}">
 
                                         @if ($errors->has('date_of_birth'))
                                             <span class="help-block">
@@ -139,6 +139,7 @@
                                                 <strong>{{ $errors->first('email') }}</strong>
                                             </span>
                                             @endif
+
                                         </div>
                                     </div>
                                 </div>
