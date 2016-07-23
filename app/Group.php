@@ -24,7 +24,7 @@ class Group extends Model
             'id', 'name'
         ];
 
-        return ($list ? implode(",", $columns) : $columns);
+        return ($list ? implode(',', $columns) : $columns);
     }
     
     public function users(){
