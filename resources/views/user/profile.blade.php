@@ -24,16 +24,14 @@
                             </div>
                         </div>
                         @if(Auth::check() && Auth::user()->id == $user->id)
-                            <div class="row">
-                                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4">
-                                    <a href="{{ route('frontend::user::edit') }}" class="btn btn-lg btn-primary btn-block">
-                                        @if($user->hasRole(\App\User::ROLE_LOW_USER))
-                                            Upgrade
-                                        @else
-                                            Edit Profile
-                                        @endif
-                                    </a>
-                                </div>
+                            <div class="text-center">
+                                <a href="{{ route('frontend::user::edit') }}" class="btn btn-info btn-fill btn-wd">
+                                    @if($user->hasRole(\App\User::ROLE_LOW_USER))
+                                        Upgrade
+                                    @else
+                                        Update
+                                    @endif
+                                </a>
                             </div>
                         @endif
                     </div>
