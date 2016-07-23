@@ -20,45 +20,45 @@
 
             <!-- description -->
             @if(!Auth::check())
-            <div class="row">
-                <div class="col-lg-12 col-sm-12 dots-wrap-content">
-                    <h2>Login form</h2>
-                    <div class="dots-card">
-                        <form class="form-inline" role="form" method="POST" action="{{ url('/login') }}">
-                            {{ csrf_field() }}
-                            <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
-                                <label class="sr-only" for="exampleInputEmail2">Email</label>
-                                <input type="text" class="form-control border-input" id="exampleInputEmail2" placeholder="Enter email" name="nickname">
-                                @if ($errors->has('nickname'))
-                                    <span class="help-block">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 dots-wrap-content">
+                        <h2>Login form</h2>
+                        <div class="dots-card">
+                            <form class="form-inline" role="form" method="POST" action="{{ url('/login') }}">
+                                {{ csrf_field() }}
+                                <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
+                                    <label class="sr-only" for="exampleInputEmail2">Email</label>
+                                    <input type="text" class="form-control border-input" id="exampleInputEmail2" placeholder="Enter email" name="nickname">
+                                    @if ($errors->has('nickname'))
+                                        <span class="help-block">
                                         <strong>{{ $errors->first('nickname') }}</strong>
                                     </span>
-                                @endif
-                            </div>
-                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label class="sr-only" for="exampleInputPassword2">Password</label>
-                                <input type="password" class="form-control border-input" id="exampleInputPassword2" placeholder="Password" name="password">
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
+                                    @endif
+                                </div>
+                                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                    <label class="sr-only" for="exampleInputPassword2">Password</label>
+                                    <input type="password" class="form-control border-input" id="exampleInputPassword2" placeholder="Password" name="password">
+                                    @if ($errors->has('password'))
+                                        <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                                @endif
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-wd">Login</button>
-                            <div class="dots-social-enter">
-                                <span>Or login via:</span>
-                                <ul class="dots-social-icons">
-                                    <li><a href="{{ route('social::redirect', ['provider' => 'vkontakte']) }}"><i class="dots-vk-icons"></i></a></li>
-                                    <li><a href="{{ route('social::redirect', ['provider' => 'google']) }}"><i class="dots-google-icons"></i></a></li>
-                                    <li><a href="{{ route('social::redirect', ['provider' => 'facebook']) }}"><i class="dots-faceboock-icons"></i></a></li>
-                                </ul>
-                            </div>
-                        </form>
+                                    @endif
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-wd">Login</button>
+                                <div class="dots-social-enter">
+                                    <span>Or login via:</span>
+                                    <ul class="dots-social-icons">
+                                        <li><a href="{{ route('social::redirect', ['provider' => 'vkontakte']) }}"><i class="dots-vk-icons"></i></a></li>
+                                        <li><a href="{{ route('social::redirect', ['provider' => 'google']) }}"><i class="dots-google-icons"></i></a></li>
+                                        <li><a href="{{ route('social::redirect', ['provider' => 'facebook']) }}"><i class="dots-facebook-icons"></i></a></li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-@endif
-            <!-- news -->
+        @endif
+        <!-- news -->
             <div class="row">
                 <div class="col-lg-12 col-sm-12 dots-wrap-content">
                     <h2>News</h2>

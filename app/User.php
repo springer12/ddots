@@ -41,6 +41,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $dates = [
+        'created_at'
+    ];
+
     /**
      * Mutator to hash password
      *
