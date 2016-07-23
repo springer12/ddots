@@ -17,7 +17,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" name="name" value="{{ old('name') ?: $problem->name }}"
+                                <input type="text" name="name" value="{{ old('name') ?: $sponsor->name }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -27,12 +27,21 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
+                            @if($sponsor->image)
+                                <div><img width="100" height="100" src="{{ $sponsor->image }}" alt="image"></div>
+                            @endif
+                            <input type="file" name="image" id="image">
+                            {{ $errors->first('image') }}
+                        </div>
+
+
                         <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Description <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <textarea name="description" required="required"
-                                          class="form-control col-md-7 col-xs-12">{{ old('description') ?: $problem->description }}</textarea>
+                                <textarea type="text" name="description"
+                                          class="form-control col-md-7 col-xs-12">{{ old('description') ?: $sponsor->description }}</textarea>
                                 @if ($errors->has('description'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('description') }}</strong>
@@ -41,48 +50,28 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('difficulty') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="difficulty">Difficulty <span
-                                        class="required">*</span></label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="difficulty" required="required" class="form-control col-md-7 col-xs-12">
-                                    @for($i = 0; $i <=5; $i++)
-                                        <option value="{{ $i }}" {{ !($problem->difficulty == $i)? : 'selected' }}>{{ $i }}</option>
-                                    @endfor
-                                </select>
-                                @if ($errors->has('difficulty'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('difficulty') }}</strong>
-                                    </span>
+                        <label for="show_on_main">Show this sponsor on the main page</label>
+                        <input type="checkbox" name="show_on_main" id="show_on_main"
+                        @if($errors->has())
+                            {{ !old('show_on_main')?:'checked' }}
+                                @else
+                            {{ !$sponsor->show_on_main?:'checked' }}
                                 @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('archive') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="archive">Archive</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="file" name="archive" class="form-control col-md-7 col-xs-12">
-                                @if ($errors->has('archive'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('archive') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                        >
 
                         <div class="form-group{{ $errors->has('volumes') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Volumes <h2>Volume
-                                    name must have atleast 1 non-numeric symbol!!!</h2></label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Subdomains</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="volumes[]" data-select-volume class="form-control col-md-7 col-xs-12"
+                                <select name="subdomains[]" data-select-subdomain
+                                        class="form-control col-md-7 col-xs-12"
                                         multiple>
-                                    @foreach(\App\Volume::all() as $volume)
-                                        <option value="{{ $volume->id }}" {{ old('volumes.' . $volume->id) ? old('volumes.' . $volume->id) : $problem->volumes()->find($volume->id) ? 'selected' : '' }}>{{ $volume->name }}</option>
+                                    @foreach(\App\Subdomain::all() as $subdomain)
+                                        <option value="{{ $subdomain->id }}" {{ old('subdomains.' . $subdomain->id) ? old('subdomains.' . $subdomain->id) : $sponsor->subdomains()->find($subdomain->id) ? 'selected' : '' }}>{{ $subdomain->name }}</option>
                                     @endforeach
                                 </select>
-                                @if ($errors->has('volumes'))
+                                @if ($errors->has('subdomains'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('volumes') }}</strong>
+                                        <strong>{{ $errors->first('subdomains') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -95,7 +84,7 @@
                                    href=""
                                    data-toggle="confirmation"
                                    data-message="Are you sure you want to leave the page? The changes won't be saved."
-                                   data-btn-ok-href="{{ route('backend::problems::list') }}"
+                                   data-btn-ok-href="{{ route('backend::sponsors::list') }}"
                                    data-btn-ok-label="Leave the page">Cancel</a>
 
                                 <button type="submit" class="btn btn-success">Save</button>
