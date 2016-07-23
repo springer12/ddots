@@ -90,6 +90,7 @@ class SponsorController extends Controller
         $sponsor = !$id ?: $this->findOrFail($id);
         $fillData = [
             'name' => $request->get('name'),
+            'link' => $request->get('link'),
             'description' => $request->get('description'),
             'show_on_main' => $request->get('show_on_main'),
         ];

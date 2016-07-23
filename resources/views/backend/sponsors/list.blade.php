@@ -23,6 +23,7 @@
                             <thead>
                             <tr>
                                 <th>@include('helpers.grid-header', ['name' => 'ID',           'order' => 'id'])</th>
+                                <th>Link</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Created Date', 'order' => 'created_at'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Updated Date', 'order' => 'updated_at'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Deleted Date', 'order' => 'deleted_at'])</th>
@@ -33,6 +34,7 @@
                             @foreach($sponsors as $sponsor)
                                 <tr>
                                     <td>{{ $sponsor->name }}</td>
+                                    <td>{{ $sponsor->link }}</td>
                                     <td>{{ $sponsor->created_at }}</td>
                                     <td>{{ $sponsor->updated_at }}</td>
                                     <td>{{ $sponsor->deleted_at }}</td>

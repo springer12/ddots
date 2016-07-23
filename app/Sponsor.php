@@ -10,7 +10,7 @@ class Sponsor extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'show_on_main', 'image'];
+    protected $fillable = ['name', 'description', 'show_on_main', 'image', 'link'];
 
     public static function sortable($list = false)
     {
@@ -25,6 +25,7 @@ class Sponsor extends Model
         return [
             'name' => 'required|max:255',
             'description' => 'required|max:3000',
+            'link' => 'url|required|max:255',
             'subdomains.*' => 'exists:subdomains,id',
             'image' => 'mimetypes:image/jpeg,image/bmp,image/png|max:1000',
         ];

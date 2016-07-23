@@ -16,6 +16,7 @@ class CreateSponsorsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description', 3000);
+            $table->string('link');
             $table->string('image');
             $table->boolean('show_on_main')->default(false);
             $table->softDeletes();
