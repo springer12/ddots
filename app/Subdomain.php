@@ -28,6 +28,10 @@ class Subdomain extends Model
     }
 
     public function logo() {
-        return "";
+        return ""; //@todo add logo
+    }
+
+    public function sponsors(){
+        return $this->belongsToMany(Sponsor::class, 'sponsor_subdomain', 'subdomain_id', 'sponsor_id');
     }
 }
