@@ -82,21 +82,13 @@
                         <div class="content table-responsive table-full-width">
                             <table class="table">
                                 <tbody>
+                                @foreach($subdomain->sponsors as $sponsor)
                                 <tr>
-                                    <td class="dots-tb-cont-logo"><img src="media/sponsor1.png" alt="sponsor-logo" /></td>
-                                    <td class="dots-tb-cont-name">Название</td>
-                                    <td class="dots-tb-cont-description">Описание</td>
+                                    <td class="dots-tb-cont-logo"><img src="{{ $sponsor->image }}" alt="sponsor-logo" /></td>
+                                    <td class="dots-tb-cont-name">{{ $sponsor->name }}</td>
+                                    <td class="dots-tb-cont-description">{{ $sponsor->description }}</td>
                                 </tr>
-                                <tr>
-                                    <td class="dots-tb-cont-logo"><img src="media/sponsor2.png" alt="sponsor-logo" /></td>
-                                    <td class="dots-tb-cont-name">Название</td>
-                                    <td class="dots-tb-cont-description">Описание</td>
-                                </tr>
-                                <tr>
-                                    <td class="dots-tb-cont-logo"><img src="media/sponsor3.png" alt="sponsor-logo" /></td>
-                                    <td class="dots-tb-cont-name">Название</td>
-                                    <td class="dots-tb-cont-description">Описание</td>
-                                </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

@@ -223,7 +223,7 @@ class User extends Authenticatable
             'id', 'name', 'email', 'role', 'nickname', 'date_of_birth', 'place_of_study', 'programming_language', 'vk_link', 'fb_link', 'created_at', 'updated_at', 'deleted_at'
         ];
 
-        return ($list ? implode(",", $columns) : $columns);
+        return ($list ? implode(',', $columns) : $columns);
     }
 
     public function setProgrammingLanguageAttribute($value)

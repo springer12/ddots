@@ -29,7 +29,7 @@ class TestingServer extends Model
             'id', 'name', 'created_at', 'updated_at', 'deleted_at'
         ];
 
-        return ($list ? implode(",", $columns) : $columns);
+        return ($list ? implode(',', $columns) : $columns);
     }
 
     public static function generateApiToken() {
