@@ -84,8 +84,8 @@
                                 <tbody>
                                 @foreach($subdomain->sponsors as $sponsor)
                                 <tr>
-                                    <td class="dots-tb-cont-logo"><img src="{{ $sponsor->image }}" alt="sponsor-logo" /></td>
-                                    <td class="dots-tb-cont-name">{{ $sponsor->name }}</td>
+                                    <td class="dots-tb-cont-logo"><a href="{{ $sponsor->link }}"><img src="{{ $sponsor->image }}" alt="sponsor-logo" /></a></td>
+                                    <td class="dots-tb-cont-name"><a href="{{ $sponsor->link }}">{{ $sponsor->name }}</a></td>
                                     <td class="dots-tb-cont-description">{{ $sponsor->description }}</td>
                                 </tr>
                                     @endforeach
