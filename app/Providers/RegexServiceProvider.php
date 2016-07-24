@@ -22,6 +22,10 @@ class RegexServiceProvider extends ServiceProvider
             return preg_match('/^[\pL- ]+$/u', $value);
         });
 
+        Validator::extend('alpha_dash_spaces', function($attribute, $value){
+            return preg_match('/^[\pL0-9- ]+$/u', $value);
+        });
+
         Validator::extend('url_domain', function($attribute, $value, $parameters){
             $parsedUrl = parse_url($value);
             if($parsedUrl && isset($parsedUrl['host'])) {
