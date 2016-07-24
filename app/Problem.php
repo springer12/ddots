@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 /**
  * Class Problem
@@ -46,6 +47,15 @@ class Problem extends Model
         ];
     }
 
+    public function getFilePath()
+    {
+        $dir = storage_path('app/problems/' . $this->id . '/');
+        if (!File::exists($dir)) {
+            File::makeDirectory($dir, 0755, true);
+        }
+        return $dir;
+    }
+
     public function volumes()
     {
         return $this->belongsToMany('App\Volume');
@@ -59,12 +69,17 @@ class Problem extends Model
     public function setArchive($name)
     {
         if (Input::file($name)->isValid()) {
-            if ($this->archive) {
-                File::delete(storage_path('app/problems/' . $this->id) . $this->archive);
+            if ($this->attributes['archive']) {
+                File::delete($this->getFilePath() . $this->attributes['archive']);
             }
-            $this->archive = Input::file($name)->getClientOriginalName();
-            Input::file($name)->move(storage_path('app/problems/' . $this->id), $this->archive);
+            $this->attributes['archive'] = Input::file($name)->getClientOriginalName();
+            Input::file($name)->move($this->getFilePath(), $this->attributes['archive']);
         }
+    }
+
+    public function getArchiveAttribute($value)
+    {
+        return File::get($this->getFilePath() . $value);
     }
 
     private function getContestSolutionQuery($contest_id)
@@ -98,8 +113,8 @@ class Problem extends Model
         return $solution;
     }
 
-    public function getContestUserDisplaySolution(Contest $contest, $user_id) {
-
+    public function getContestUserDisplaySolution(Contest $contest, $user_id)
+    {
         $solution = $this->getContestSolutionQuery($contest->id)->where('user_id', $user_id);
         if ($contest->show_max) {
             $solution = $this->getMaxPointsSolution($solution);
@@ -109,10 +124,11 @@ class Problem extends Model
 
         return $solution;
     }
-    
-    public function getPointsString(Contest $contest) {
+
+    public function getPointsString(Contest $contest)
+    {
         $display_solution = $this->getContestDisplaySolution($contest);
-        if($display_solution) {
+        if ($display_solution) {
             $points_string = $display_solution->success_percentage / 100 * $contest->getProblemMaxPoints($this->id);
         } else {
             $points_string = '-';

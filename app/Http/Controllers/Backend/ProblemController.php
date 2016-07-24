@@ -101,7 +101,7 @@ class ProblemController extends Controller
         } else {
             $problem = new Problem($fillData);
         }
-        $problem->save();
+
 
         $new_volumes = [];
         if ($request->has('volumes')) {
@@ -119,7 +119,7 @@ class ProblemController extends Controller
         }
 
         $problem->volumes()->sync($new_volumes);
-
+        $problem->save();
         \Session::flash('alert-success', 'The problem was successfully saved');
         return redirect()->route('backend::problems::list');
     }
