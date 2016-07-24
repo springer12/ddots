@@ -119,7 +119,7 @@ class User extends Authenticatable
             'name' => 'required|max:255|any_lang_name',
             'avatar' => 'mimetypes:image/jpeg,image/bmp,image/png|max:1000',
             'role' => 'in:' . implode(',', array_keys(self::SETTABLE_ROLES)),
-            'date_of_birth' => 'date',
+            'date_of_birth' => 'date|after:1920-01-01|before:' . Carbon::now()->sub(new \DateInterval('P4Y')),
             'profession' => 'max:255|any_lang_name',
             'place_of_study' => 'max:255|any_lang_name',
             'programming_language' => 'exists:programming_languages,id',
