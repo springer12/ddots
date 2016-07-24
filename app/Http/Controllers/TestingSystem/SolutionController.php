@@ -7,9 +7,8 @@ use App\SolutionReport;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
-use PhpParser\Node\Scalar\MagicConst\File;
+use Illuminate\Support\Facades\File;
 
 class SolutionController extends Controller
 {
