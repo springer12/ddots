@@ -120,8 +120,8 @@ class User extends Authenticatable
             'avatar' => 'mimetypes:image/jpeg,image/bmp,image/png|max:1000',
             'role' => 'in:' . implode(',', array_keys(self::SETTABLE_ROLES)),
             'date_of_birth' => 'date',
-            'profession' => 'max:255|alpha_dash',
-            'place_of_study' => 'max:255|alpha_dash',
+            'profession' => 'max:255|any_lang_name',
+            'place_of_study' => 'max:255|any_lang_name',
             'programming_language' => 'exists:programming_languages,id',
             'vk_link' => 'url_domain:vk.com,new.vk.com,www.vk.com,www.new.vk.com',
             'fb_link' => 'url_domain:facebook.com,www.facebook.com'
