@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 
 class Solution extends Model
 {
@@ -86,6 +87,8 @@ class Solution extends Model
             $this->created_at->year . '/' .
             $this->created_at->month . '/' .
             $this->created_at->day . '/';
+        $dir = storage_path($dir);
+
         if (!File::exists($dir)) {
             File::makeDirectory($dir, 0755, true);
         }
