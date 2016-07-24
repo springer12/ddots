@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use PhpParser\Node\Scalar\MagicConst\File;
 
 class SolutionController extends Controller
 {
@@ -28,7 +29,7 @@ class SolutionController extends Controller
     }
 
     public function show_source_code(Request $request, $id) {
-        return Storage::get(Solution::where('id', $id)->firstOrFail()->sourceCodeFilePath());
+        return File::get(Solution::where('id', $id)->firstOrFail()->sourceCodeFilePath());
     }
 
     public function update(Request $request, $id) {
