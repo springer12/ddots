@@ -97,7 +97,7 @@ class User extends Authenticatable
     public function getDateOfBirthAttribute($dob)
     {
         if ($dob) {
-            return Carbon::parse($dob)->format('d-m-Y');
+            return Carbon::parse($dob)->format('Y-m-d');
         }
         return '';
     }

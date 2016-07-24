@@ -117,6 +117,7 @@
 
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input data-datepicker id="date_of_birth" class="form-control col-md-7 col-xs-12"
+                                       type="date"
                                        name="date_of_birth"
                                        value="{{ old('date_of_birth')?old('date_of_birth'):$user->date_of_birth }}">
                                 @if ($errors->has('date_of_birth'))

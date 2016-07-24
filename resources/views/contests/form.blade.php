@@ -46,7 +46,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="start_date">Start date<span
                                         class="required">*</span></label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" name="start_date" data-start-datepicker
+                                <input type="datetime" name="start_date" data-start-datepicker
                                        value="{{ old('start_date') ?: $contest->start_date }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('start_date'))
@@ -61,7 +61,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="end_date">End date<span
                                         class="required">*</span></label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" name="end_date" data-end-datepicker
+                                <input type="datetime" name="end_date" data-end-datepicker
                                        value="{{ old('end_date') ?: $contest->end_date }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('end_date'))
