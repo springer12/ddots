@@ -7,12 +7,12 @@
             <div class="row">
                 <div class="col-lg-3 col-sm-6">
                     <div class="dots-logo dots-sub-logo">
-                        <img src="media/subdomain_logo.png" alt="sub-logo" />
+                        <img src="{{ $subdomain->image }}" alt="sub-logo" />
                     </div>
                 </div>
                 <div class="col-lg-9 col-sm-6 dots-tagline">
                     <h1 class="title">
-                        <p>Академическая гимназия №45</p>
+                        <p>{{ $subdomain->fullname }}</p>
                         <p>Практикум по програмированию</p>
                     </h1>
                 </div>
