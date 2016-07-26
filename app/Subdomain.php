@@ -29,7 +29,7 @@ class Subdomain extends Model
             'name' => 'required|max:255|alpha_dash',
             'fullname' => 'required|max:255|alpha_dash_spaces',
             'title' => 'required|max:255|alpha_dash_spaces',
-            'description' => 'required|max:255|alpha_dash_spaces',
+            'description' => 'required|max:255',
             'image' => 'mimetypes:image/jpeg,image/bmp,image/png|max:1000',
         ];
     }

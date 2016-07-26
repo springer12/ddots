@@ -59,7 +59,8 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Description <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <textarea required="required" class="form-control col-md-7 col-xs-12" type="text" name="description" >{{ old('description') ?: $subdomain->description }}</textarea>
+                                <textarea required="required" class="form-control col-md-7 col-xs-12" type="text"
+                                          name="description">{{ old('description') ?: $subdomain->description }}</textarea>
                                 @if ($errors->has('description'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('description') }}</strong>
@@ -71,8 +72,12 @@
                         <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
                             <div><img width="100" height="100" src="{{ $subdomain->image }}" alt="image"></div>
                             <input type="file" name="image" id="image">
+                            @if($errors->has('image'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('image') }}</strong>
+                                    </span>
+                            @endif
                         </div>
-
 
 
                         <div class="ln_solid"></div>
