@@ -36,6 +36,19 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('restore/{id}', 'Backend\TestingServersController@restore');
         });
 
+        Route::group(['prefix' => 'subdomains', 'as' => 'subdomains::'], function () {
+            Route::get('/', ['uses' => 'Backend\SubdomainController@index', 'as' => 'list']);
+
+            Route::get('add', ['uses' => 'Backend\SubdomainController@showForm', 'as' => 'add']);
+            Route::post('add', 'Backend\SubdomainController@edit');
+
+            Route::get('edit/{id}', ['uses' => 'Backend\SubdomainController@showForm', 'as' => 'edit']);
+            Route::post('edit/{id}', 'Backend\SubdomainController@edit');
+
+            Route::get('delete/{id}', 'Backend\SubdomainController@delete');
+            Route::get('restore/{id}', 'Backend\SubdomainController@restore');
+        });
+
         Route::group(['prefix' => 'sponsors', 'as' => 'sponsors::'], function () {
             Route::get('/', ['uses' => 'Backend\SponsorController@index', 'as' => 'list']);
 
