@@ -15,7 +15,7 @@
         <div class="sidebar-wrapper">
             <div class="logo">
                 <a href="{{ action('HomeController@index') }}" class="simple-text">
-                    <img href="{{ App\Subdomain::currentSubdomain()->logo() }}" alt="logo">
+                    <img width="45%" src="{{ App\Subdomain::currentSubdomain()->image }}" alt="logo">
                 </a>
             </div>
             @include('partial.sidebar')

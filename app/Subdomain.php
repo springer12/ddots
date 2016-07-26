@@ -77,6 +77,10 @@ class Subdomain extends Model
         return null;
     }
 
+    public function getUrl(){
+        return 'http://' . $this->name . '.' . config('app.domain') . '/';
+    }
+
     public function sponsors(){
         return $this->belongsToMany(Sponsor::class, 'sponsor_subdomain', 'subdomain_id', 'sponsor_id');
     }

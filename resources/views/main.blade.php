@@ -65,29 +65,15 @@
                         <div class="content table-responsive table-full-width">
                             <table class="table">
                                 <tbody>
-                                <tr>
-                                    <td class="dots-tb-cont-logo"><a href="http://hneu.dots.org.ua"><img
-                                                    src="{{ asset('frontend-bundle/media/subdomain_logo.png') }}"
-                                                    alt="sponsor-logo"/></a></td>
-                                    <td class="dots-tb-cont-name"><a href="http://hneu.dots.org.ua">ХНЕУ</a></td>
-                                    <td class="dots-tb-cont-description">Кафедра информационных систем, ХНЕУ</td>
-                                </tr>
-                                <tr>
-                                    <td class="dots-tb-cont-logo"><a href="http://ag45.dots.org.ua"><img
-                                                    src="{{ asset('frontend-bundle/media/ag45.png') }}"
-                                                    alt="sponsor-logo"/></a></td>
-                                    <td class="dots-tb-cont-name"><a href="http://ag45.dots.org.ua">АГ45</a></td>
-                                    <td class="dots-tb-cont-description">Харьковский УВК №45 "Академическая гимназия"
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="dots-tb-cont-logo"><a href="http://pml27.dots.org.ua"><img
-                                                    src="{{ asset('frontend-bundle/media/pml27.png') }}"
-                                                    alt="sponsor-logo"/></a></td>
-                                    <td class="dots-tb-cont-name"><a href="http://pml27.dots.org.ua">Л27</a></td>
-                                    <td class="dots-tb-cont-description">Харьковский физико-математический лицей №27
-                                    </td>
-                                </tr>
+                                @foreach(\App\Subdomain::get() as $subdomain)
+                                    <tr>
+                                        <td class="dots-tb-cont-logo"><a href="{{ $subdomain->getUrl() }}"><img
+                                                        src="{{ $subdomain->image }}"
+                                                        alt="subdomain-logo"/></a></td>
+                                        <td class="dots-tb-cont-name"><a href="{{ $subdomain->getUrl() }}">{{ $subdomain->title }}</a></td>
+                                        <td class="dots-tb-cont-description">{{ $subdomain->description }}</td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
