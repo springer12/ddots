@@ -9,6 +9,13 @@
             $('[data-select-subdomain]').select2({
                 width: '100%'
             });
+            $('[data-role-select]').change(function () {
+                if($('[data-role-select] option[data-teacher-option]:selected').length){
+                    $('[data-subdomain-select]').show();
+                } else {
+                    $('[data-subdomain-select]').hide();
+                }
+            })
         });
     }
 )(jQuery, window, document);

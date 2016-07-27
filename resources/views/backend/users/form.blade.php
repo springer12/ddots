@@ -82,9 +82,10 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="role">Role <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="role" required="required" class="form-control col-md-7 col-xs-12">
+                                <select name="role" required="required" class="form-control col-md-7 col-xs-12"
+                                        data-role-select>
                                     @foreach(App\User::SETTABLE_ROLES as $role => $name)
-                                        <option value="{{ $role }}" {{ !$user->hasRole($role)?:'selected' }}>{{ $name }}</option>
+                                        <option value="{{ $role }}" {{ !$user->hasRole($role)?:'selected' }} {{ !($role == App\User::ROLE_TEACHER)?:'data-teacher-option' }}>{{ $name }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('role'))
@@ -109,7 +110,6 @@
                                 @endif
                             </div>
                         </div>
-
 
                         <div class="form-group{{ $errors->has('date_of_birth') ? ' has-error' : '' }}">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="date_of_birth">Date of
@@ -139,6 +139,27 @@
                                 @if ($errors->has('place_of_study'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('place_of_study') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+
+                        <div class="form-group{{ $errors->has('subdomain') ? ' has-error' : '' }}">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="role">Subdomain</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select data-subdomain-select name="subdomain" class="form-control col-md-7 col-xs-12"
+                                        style="display: {{ $user->hasRole(\App\User::ROLE_TEACHER)?'block':'none' }}">
+                                    @if($user->subdomains->isEmpty())
+                                        <option value="" selected>Select a subdomain</option>
+                                    @endif
+                                    @foreach(\App\Subdomain::get() as $subdomain)
+                                        <option value="{{ $subdomain->id }}" {{ !$user->subdomains->contains($subdomain->id)?:'selected' }}>{{ $subdomain->name }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('subdomain'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('subdomain') }}</strong>
                                     </span>
                                 @endif
                             </div>

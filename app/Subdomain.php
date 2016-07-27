@@ -23,6 +23,10 @@ class Subdomain extends Model
         return ($list ? implode(',', $columns) : $columns);
     }
 
+    public function users(){
+        return $this->belongsToMany(User::class, 'subdomain_user','subdomain_id', 'user_id');
+    }
+
     public static function getValidationRules()
     {
         return [

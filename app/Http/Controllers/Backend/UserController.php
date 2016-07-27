@@ -95,16 +95,16 @@ class UserController extends Controller
         $user = (!$id ?: $this->findOrFail($id));
 
         $fillData = [
-            'name'                 => $request->get('name'),
-            'nickname'             => $request->get('nickname'),
-            'email'                => $request->get('email'),
-            'role'                 => $request->get('role'),
-            'date_of_birth'        => $request->get('date_of_birth'),
-            'profession'           => $request->get('profession'),
+            'name' => $request->get('name'),
+            'nickname' => $request->get('nickname'),
+            'email' => $request->get('email'),
+            'role' => $request->get('role'),
+            'date_of_birth' => $request->get('date_of_birth'),
+            'profession' => $request->get('profession'),
             'programming_language' => $request->get('programming_language'),
-            'place_of_study'       => $request->get('place_of_study'),
-            'vk_link'              => $request->get('vk_link'),
-            'fb_link'              => $request->get('fb_link'),
+            'place_of_study' => $request->get('place_of_study'),
+            'vk_link' => $request->get('vk_link'),
+            'fb_link' => $request->get('fb_link'),
         ];
 
         if ($id) {
@@ -112,13 +112,13 @@ class UserController extends Controller
                 'email' => 'required|email|unique:users,email,' . $id,
                 'nickname' => 'required|max:255|english_alpha_dash|unique:users,nickname,' . $user->id]);
             if ($request->get('password') != '') {
-                $rules = array_merge($rules,['password' => 'required|min:6|confirmed']);
+                $rules = array_merge($rules, ['password' => 'required|min:6|confirmed']);
                 $fillData = array_merge($fillData, ['password' => $request->get('password')]);
             }
         } else {
             $rules = array_merge(User::getValidationRules(), [
                 'password' => 'required|min:6|confirmed',
-                'email'    => 'required|email|unique:users',
+                'email' => 'required|email|unique:users',
                 'nickname' => 'required|max:255|english_alpha_dash|unique:users,nickname,']);
             $fillData = array_merge($fillData, ['password' => $request->get('password')]);
         }
@@ -135,6 +135,9 @@ class UserController extends Controller
             $user->setAvatar('avatar');
         }
 
+        if ($user->hasRole(User::ROLE_TEACHER) && $request->get('subdomain')) {
+            $user->subdomains()->sync([$request->get('subdomain')]);
+        }
 
         $user->save();
 

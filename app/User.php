@@ -124,7 +124,8 @@ class User extends Authenticatable
             'place_of_study' => 'max:255|alpha_dash_spaces',
             'programming_language' => 'exists:programming_languages,id',
             'vk_link' => 'url_domain:vk.com,new.vk.com,www.vk.com,www.new.vk.com',
-            'fb_link' => 'url_domain:facebook.com,www.facebook.com'
+            'fb_link' => 'url_domain:facebook.com,www.facebook.com',
+            'subdomain' => 'exists:subdomains,id',
         ];
     }
 
@@ -157,6 +158,10 @@ class User extends Authenticatable
     public function teachers()
     {
         return $this->belongsToMany(User::class, 'teacher_student', 'student_id', 'teacher_id')->withPivot('confirmed', 'created_at')->withTimestamps();
+    }
+    
+    public function subdomains(){
+        return $this->belongsToMany(Subdomain::class, 'subdomain_user','user_id', 'subdomain_id');
     }
 
     public function isTeacherOf($id)
