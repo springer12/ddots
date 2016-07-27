@@ -159,9 +159,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'teacher_student', 'student_id', 'teacher_id')->withPivot('confirmed', 'created_at')->withTimestamps();
     }
-    
-    public function subdomains(){
-        return $this->belongsToMany(Subdomain::class, 'subdomain_user','user_id', 'subdomain_id');
+
+    public function subdomains()
+    {
+        return $this->belongsToMany(Subdomain::class, 'subdomain_user', 'user_id', 'subdomain_id');
     }
 
     public function isTeacherOf($id)
@@ -211,12 +212,14 @@ class User extends Authenticatable
 
     public function getUnrelatedOrUnconfirmedTeachersQuery()
     {
-        return $this->teacher()->whereNotIn('id', function ($query) {
-            $query->select('teacher_id')
-                ->from('teacher_student')
-                ->where('student_id', $this->id)
-                ->where('confirmed', '=', true);
-        })->groupBy('id');
+        return Subdomain::currentSubdomain()
+            ->users()->teacher()
+            ->whereNotIn('id', function ($query) {
+                $query->select('teacher_id')
+                    ->from('teacher_student')
+                    ->where('student_id', $this->id)
+                    ->where('confirmed', '=', true);
+            })->groupBy('id');
     }
 
     public function markRelated($teachers)
@@ -237,7 +240,7 @@ class User extends Authenticatable
 
     public function setProgrammingLanguageAttribute($value)
     {
-        $this->attributes['programming_language'] = !trim($value) ?null: trim($value);
+        $this->attributes['programming_language'] = !trim($value) ? null : trim($value);
     }
 
     public function groups()

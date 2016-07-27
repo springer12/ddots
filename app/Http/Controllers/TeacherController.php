@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Subdomain;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -21,7 +22,7 @@ class TeacherController extends Controller
             Auth::user()->markRelated($allTeachers);
             $allowedRequests = Auth::user()->allowedToRequestTeacher();
         } else {
-            $allTeachers = User::teacher()->orderBy('name', 'asc')->paginate(9);
+            $allTeachers = Subdomain::currentSubdomain()->users()->teacher()->orderBy('name', 'asc')->paginate(9);
         }
 
         return view('teachers.list')->with([
