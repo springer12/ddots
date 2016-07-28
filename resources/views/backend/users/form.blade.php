@@ -145,11 +145,11 @@
                         </div>
 
 
-                        <div class="form-group{{ $errors->has('subdomain') ? ' has-error' : '' }}">
+                        <div data-subdomain-select class="form-group{{ $errors->has('subdomain') ? ' has-error' : '' }}"
+                             style="display: {{ $user->hasRole(\App\User::ROLE_TEACHER)?'block':'none' }}">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="role">Subdomain</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select data-subdomain-select name="subdomain" class="form-control col-md-7 col-xs-12"
-                                        style="display: {{ $user->hasRole(\App\User::ROLE_TEACHER)?'block':'none' }}">
+                                <select name="subdomain" class="form-control col-md-7 col-xs-12">
                                     @if($user->subdomains->isEmpty())
                                         <option value="" selected>Select a subdomain</option>
                                     @endif
