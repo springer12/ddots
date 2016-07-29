@@ -51,6 +51,7 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
             Route::get('/', ['uses' => 'Backend\ContestController@index', 'as' => 'list']);
+            Route::get('/show/{id}', ['uses' => 'Backend\ContestController@show', 'as' => 'show'])->where('id', '[0-9]+');
             Route::get('/hide/{id}', ['uses' => 'Backend\ContestController@hide', 'as' => 'hide'])->where('id', '[0-9]+');
             Route::get('add', ['uses' => 'Backend\ContestController@showForm', 'as' => 'add']);
             Route::post('add', 'Backend\ContestController@edit');
@@ -109,6 +110,7 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
                 Route::get('/hide/{id}', ['uses' => 'ContestController@hide', 'as' => 'hide'])->where('id', '[0-9]+');
+                Route::get('/show/{id}', ['uses' => 'ContestController@show', 'as' => 'show'])->where('id', '[0-9]+');
                 Route::get('add', ['uses' => 'ContestController@showForm', 'as' => 'add']);
                 Route::post('add', 'ContestController@edit');
 

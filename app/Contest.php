@@ -99,6 +99,11 @@ class Contest extends Model
         $this->attributes['is_active'] = false;
     }
 
+    public function show()
+    {
+        $this->attributes['is_active'] = true;
+    }
+
     public function currentUserAllowedEdit()
     {
         return Auth::user()->id == $this->owner->id;

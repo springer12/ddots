@@ -59,7 +59,11 @@
                                             @if($contest->is_active == true)
                                                 <a title="Hide"
                                                    href="{{ action('ContestController@hide',['id'=> $contest->id]) }}"><span
-                                                            class="glyphicon glyphicon-pencil"></span></a>
+                                                            class="glyphicon glyphicon-ban-circle"></span></a>
+                                            @else
+                                                <a title="Show"
+                                                   href="{{ action('ContestController@show',['id'=> $contest->id]) }}"><span
+                                                            class="glyphicon glyphicon-repeat"></span></a>
                                             @endif
                                         @endif
                                     </td>

@@ -154,9 +154,16 @@ class ContestController extends Controller
 
     public function hide(Request $request, $id)
     {
-
         $contest = Contest::findOrFail($id);
         $contest->hide();
+        $contest->save();
+        return redirect()->route('frontend::contests::list');
+    }
+
+    public function show(Request $request, $id)
+    {
+        $contest = Contest::findOrFail($id);
+        $contest->show();
         $contest->save();
         return redirect()->route('frontend::contests::list');
     }

@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="container">
-            <div class="row">
-                <div class="col-md-2 col-sm-2 col-xs-2">
-                    <a class="btn btn-primary" href="{{ route('backend::contests::add') }}" role="button">Add
-                        Contest</a>
-                </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-2">
+                <a class="btn btn-primary" href="{{ route('backend::contests::add') }}" role="button">Add
+                    Contest</a>
             </div>
+        </div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -49,7 +49,11 @@
                                         @if($contest->is_active == true)
                                             <a title="Hide"
                                                href="{{ action('Backend\ContestController@hide',['id'=> $contest->id]) }}"><span
-                                                        class="glyphicon glyphicon-pencil"></span></a>
+                                                        class="glyphicon glyphicon-ban-circle"></span></a>
+                                        @else
+                                            <a title="Show"
+                                               href="{{ action('Backend\ContestController@show',['id'=> $contest->id]) }}"><span
+                                                        class="glyphicon glyphicon-repeat"></span></a>
                                         @endif
                                     </td>
                                 </tr>
