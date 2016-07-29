@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+        @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
             <div class="row">
                 <div class="col-md-2 col-sm-2 col-xs-2">
                     <a class="btn btn-primary" href="{{ route('teacherOnly::contests::add') }}" role="button">Add
@@ -21,15 +21,15 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                @if(!Auth::check() || Auth::user()->hasRole([\App\User::ROLE_USER, \App\User::ROLE_LOW_USER]))
-                                    <th>Author</th>
+                                @if(Auth::user()->hasRole([\App\User::ROLE_USER, \App\User::ROLE_LOW_USER]))
+                                    <th>@include('helpers.grid-header', ['name' => 'Author',  'order' => 'owner.name'])</th>
                                 @endif
                                 <th>@include('helpers.grid-header', ['name' => 'Name',  'order' => 'name'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Start date', 'order' => 'start_date'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'End date', 'order' => 'end_date'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Created at', 'order' => 'created_at'])</th>
                                 <th>Description</th>
-                                @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+                                @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
                                     <th>Actions</th>
                                 @endif
                             </tr>
@@ -38,7 +38,7 @@
 
                             @foreach($contests as $contest)
                                 <tr>
-                                    @if(!Auth::check() || Auth::user()->hasRole([\App\User::ROLE_USER, \App\User::ROLE_LOW_USER]))
+                                    @if(Auth::user()->hasRole([\App\User::ROLE_USER, \App\User::ROLE_LOW_USER]))
                                         <td>
                                             <a href="{{ route('frontend::user::profile', ['id' => $contest->owner->id]) }}">{{ $contest->owner->name }}</a>
                                         </td>
@@ -52,7 +52,7 @@
                                     <td>{{ $contest->created_at }}</td>
                                     <td>{{ $contest->description }}</td>
                                     <td>
-                                        @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+                                        @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
                                             <a title="Edit"
                                                href="{{ action('ContestController@edit',['id'=> $contest->id]) }}"><span
                                                         class="glyphicon glyphicon-pencil"></span></a>
