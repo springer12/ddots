@@ -21,6 +21,9 @@ Route::group(['middleware' => 'web'], function () {
 
     /* backend func */
     Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_ADMIN, 'prefix' => 'backend', 'as' => 'backend::'], function () {
+        Route::group(['middleware' => 'ajax', 'as' => 'ajax::'], function () {
+            Route::get('/search-students', ['as' => 'searchStudents', 'uses' => 'Ajax\StudentController@search']);
+        });
         Route::get('/', ['uses' => 'Backend\DashboardController@index', 'as' => 'dashboard']);
 
         Route::group(['prefix' => 'testing-servers', 'as' => 'testing_servers::'], function () {

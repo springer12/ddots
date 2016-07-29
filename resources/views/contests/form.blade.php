@@ -139,19 +139,14 @@
                             <div>
                                 <h2>Participants</h2>
                                 <ul data-participants>
-
-                                    @if(old('praticipants'))
-
-                                    @else
-                                        @foreach($participants as $participant)
-                                            <li>
-                                                <a data-participant
-                                                   data-student-id="{{ $participant->id }}">{{ $participant->name }}</a>
-                                                <input type="hidden" name="participants[]"
-                                                       value="{{ $participant->id }}"/>
-                                            </li>
-                                        @endforeach
-                                    @endif
+                                    @foreach($participants as $participant)
+                                        <li>
+                                            <a data-participant
+                                               data-student-id="{{ $participant->id }}">{{ $participant->name }}</a>
+                                            <input type="hidden" name="participants[]"
+                                                   value="{{ $participant->id }}"/>
+                                        </li>
+                                    @endforeach
 
                                 </ul>
                             </div>

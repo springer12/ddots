@@ -62,16 +62,11 @@ class ContestController extends Controller
     public function showForm(Request $request, $id = null)
     {
         $contest = ($id ? Contest::findOrFail($id) : new Contest());
-        $participants = collect();
-        $students = User::user()->get();
+
         if ($id) {
             $title = 'Edit Contest';
             if (Session::get('errors')) {
-                foreach ($students as $student) {
-                    if (in_array($student->id, (array)old('participants'))) {
-                        $participants->push($student);
-                    }
-                }
+                $participants = User::user()->whereIn('id', old('participants'))->get();
 
                 $included_problems = collect();
                 $problems = Problem::orderBy('name', 'desc')->get();
@@ -88,9 +83,9 @@ class ContestController extends Controller
                 $included_problems = $contest->problems;
                 $unincluded_problems = Problem::orderBy('name', 'desc')->get()->diff($included_problems);
             }
-            $students = $students->diff($participants);
         } else {
             $title = 'Create Contest';
+            $participants = collect();
             $unincluded_problems = Problem::orderBy('name', 'desc')->get();
             $included_problems = collect();
         }
@@ -99,7 +94,6 @@ class ContestController extends Controller
         return view('backend.contests.form')->with([
             'contest' => $contest,
             'title' => $title,
-            'students' => $students,
             'participants' => $participants,
             'programming_languages' => ProgrammingLanguage::orderBy('name', 'desc')->get(),
             'teachers' => User::teacher()->select(['id', 'name'])->get(),

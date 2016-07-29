@@ -138,61 +138,68 @@
                             </div>
                         </div>
 
+<div class="col-md-12 text-center"><h2>Programming languages</h2></div>
                         @if(old('programming_languages'))
                             @foreach($programming_languages as $programming_language)
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                           for="programming_language">{{ $programming_language->name }}</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
 
-                                <label for="programming_language">{{ $programming_language->name }}</label>
-                                <input id="programming_language" type="checkbox" name="programming_languages[]"
-                                       value="{{ $programming_language->id }}" {{ !in_array($programming_language->id, old('programming_languages'))?:'checked' }}>
+                                        <input id="programming_language" type="checkbox" name="programming_languages[]"
+                                               class="form-control col-md-7 col-xs-12"
+                                               value="{{ $programming_language->id }}" {{ !in_array($programming_language->id, old('programming_languages'))?:'checked' }}>
+                                    </div>
+                                </div>
                             @endforeach
                         @elseif($errors->has('programming_languages'))
                             {{ $errors->first('programming_languages') }}
                             @foreach($programming_languages as $programming_language)
-                                <label for="programming_language">{{ $programming_language->name }}</label>
-                                <input id="programming_language" type="checkbox" name="programming_languages[]"
-                                       value="{{ $programming_language->id }}">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                           for="programming_language">{{ $programming_language->name }}</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="programming_language" type="checkbox" name="programming_languages[]"
+                                               class="form-control col-md-7 col-xs-12"
+                                               value="{{ $programming_language->id }}">
+                                    </div>
+                                </div>
                             @endforeach
                         @else
                             @foreach($programming_languages as $programming_language)
-                                <label for="programming_language">{{ $programming_language->name }}</label>
-                                <input id="programming_language" type="checkbox" name="programming_languages[]"
-                                       value="{{ $programming_language->id }}" {{ !$contest->programming_languages->contains($programming_language->id)?:'checked' }}>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                           for="programming_language">{{ $programming_language->name }}</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                        <input id="programming_language" type="checkbox" name="programming_languages[]"
+                                               class="form-control col-md-7 col-xs-12"
+                                               value="{{ $programming_language->id }}" {{ !$contest->programming_languages->contains($programming_language->id)?:'checked' }}>
+                                    </div>
+                                </div>
                             @endforeach
                         @endif
 
 
-                        <div>
-                            <div>
-                                <h2>Participants</h2>
-                                <ul data-participants>
-
-                                    @if(old('praticipants'))
-
-                                    @else
-                                        @foreach($participants as $participant)
-                                            <li>
-                                                <a data-participant
-                                                   data-student-id="{{ $participant->id }}">{{ $participant->name }}</a>
-                                                <input type="hidden" name="participants[]"
-                                                       value="{{ $participant->id }}"/>
-                                            </li>
-                                        @endforeach
-                                    @endif
-
-                                </ul>
+                        <div class="form-group{{ $errors->has('participants') ? ' has-error' : '' }}">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                   for="participants">Participants</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select name="participants[]" data-select-participants data-student-search-url="{{ route('backend::ajax::searchStudents') }}"
+                                        class="form-control col-md-7 col-xs-12"
+                                        multiple>
+                                    @foreach($participants as $participant)
+                                        <option value="{{ $participant->id }}"
+                                                selected>{{ $participant->name }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('participants'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('participants') }}</strong>
+                                    </span>
+                                @endif
                             </div>
-                            <br/>
-                            <h2>Students</h2>
-                            <a data-toggle="dropdown">Add student</a>
-                            <ul class="dropdown-menu" data-students>
-                                @foreach($students as $student)
-                                    <li role="presentation">
-                                        <a data-student data-student-id="{{ $student->id }}">{{ $student->name }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
                         </div>
-
 
                         <div>
                             <div>
