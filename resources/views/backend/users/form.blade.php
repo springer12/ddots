@@ -27,8 +27,12 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="avatar">Avatar</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
                             <div><img width="100" height="100" src="{{ $user->avatar }}" alt="avatar"></div>
                             <input type="file" name="avatar" id="avatar">
+                            
+                            </div>
                         </div>
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Password{!! !$passwordRequired?'':' <span
