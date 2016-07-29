@@ -49,6 +49,15 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('restore/{id}', 'Backend\SubdomainController@restore');
         });
 
+        Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
+            Route::get('/', ['uses' => 'Backend\ContestController@index', 'as' => 'list']);
+            Route::get('/hide/{id}', ['uses' => 'Backend\ContestController@hide', 'as' => 'hide'])->where('id', '[0-9]+');
+            Route::get('add', ['uses' => 'Backend\ContestController@showForm', 'as' => 'add']);
+            Route::post('add', 'Backend\ContestController@edit');
+            Route::get('edit/{id}', ['uses' => 'Backend\ContestController@showForm', 'as' => 'edit'])->where('id', '[0-9]+');
+            Route::post('edit/{id}', ['uses' => 'Backend\ContestController@edit'])->where('id', '[0-9]+');
+        });
+
         Route::group(['prefix' => 'sponsors', 'as' => 'sponsors::'], function () {
             Route::get('/', ['uses' => 'Backend\SponsorController@index', 'as' => 'list']);
 
