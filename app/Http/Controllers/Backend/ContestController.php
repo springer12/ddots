@@ -63,7 +63,7 @@ class ContestController extends Controller
     {
         $contest = ($id ? Contest::findOrFail($id) : new Contest());
         $participants = collect();
-        $students = Auth::user()->students()->get();
+        $students = User::user()->get();
         if ($id) {
             $title = 'Edit Contest';
             if (Session::get('errors')) {
@@ -124,7 +124,7 @@ class ContestController extends Controller
             'description' => $request->get('description'),
             'start_date' => $request->get('start_date'),
             'end_date' => $request->get('end_date'),
-            'user_id' => Auth::user()->id,
+            'user_id' => $request->get('owner'),
             'is_active' => $request->get('is_active'),
             'is_standings_active' => $request->get('is_standings_active'),
             'show_max' => $request->get('show_max'),
@@ -145,8 +145,6 @@ class ContestController extends Controller
         $contest->problems()->sync($request->get('problems') ? array_combine($request->get('problems'), array_map(function ($a) {
             return ['max_points' => $a];
         }, $request->get('problem_points'))) : []);
-
-        $contest->user_id = $request->get('owner');
 
         $contest->users()->sync((array)$request->get('participants'));
 

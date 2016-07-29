@@ -27,8 +27,8 @@ class Contest extends Model
     public static function getValidationRules()
     {
         return [
-            'name' => 'required|alpha_dash',
-            'description' => 'required|alpha_dash',
+            'name' => 'required|max:255',
+            'description' => 'required|max:3000',
             'start_date' => 'required|date_format:Y-m-d H:i:s',
             'end_date' => 'required|date_format:Y-m-d H:i:s',
             'programming_languages' => 'required',

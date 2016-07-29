@@ -71,7 +71,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group{{ $errors->has('owner') ? ' has-error' : '' }}">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="owner">Owner <span
                                         class="required">*</span></label>
@@ -82,10 +82,9 @@
                                     @endif
                                     @foreach($teachers as $teacher)
                                         <option value="{{ $teacher->id }}"
-
                                         @if(old('owner'))
                                             {{ !(old('owner') == $teacher->id)?:'selected' }}
-                                                @else
+                                                @elseif($contest->owner)
                                             {{ !$contest->owner->id == $teacher->id?:'selected' }}
                                                 @endif
                                         >{{ $teacher->name }}</option>
@@ -224,10 +223,22 @@
                         </div>
 
                         <label for="show_max">Show maximum points for problems</label>
-                        <input id="show_max" type="checkbox" name="show_max" {{ !$contest->show_max?:'checked' }}>
+                        <input id="show_max" type="checkbox" name="show_max"
+                        @if($errors->has())
+                            {{ !old('show_max')?:'checked' }}
+                                @else
+                            {{ !$contest->show_max?:'checked' }}
+                                @endif
+                        >
 
                         <label for="labs">Is a labs contest</label>
-                        <input id="labs" type="checkbox" name="labs" {{ !$contest->labs?:'checked' }}>
+                        <input id="labs" type="checkbox" name="labs"
+                        @if($errors->has())
+                            {{ !old('labs')?:'checked' }}
+                                @else
+                            {{ !$contest->labs?:'checked' }}
+                                @endif
+                        >
 
                         <div class="ln_solid"></div>
                         <div class="form-group">
@@ -236,7 +247,7 @@
                                    href=""
                                    data-toggle="confirmation"
                                    data-message="Are you sure you want to leave the page? The changes won't be saved."
-                                   data-btn-ok-href="{{ route('frontend::contests::list') }}"
+                                   data-btn-ok-href="{{ route('backend::contests::list') }}"
                                    data-btn-ok-label="Leave the page">Cancel</a>
 
                                 <button type="submit" class="btn btn-success">Save</button>
