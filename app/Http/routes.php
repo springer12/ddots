@@ -180,6 +180,8 @@ Route::group(['namespace' => 'TestingSystem', 'prefix' => 'testing-system-api'],
     Route::get('/', function () {
         echo 'Schema will be there';
     });
+    Route::get('auth/', ['middleware' => 'auth:testing_servers_auth', 'uses' => 'TestingServerController@getToken']);
+    
     Route::group(['prefix' => 'problems', 'middleware' => 'auth:testing_servers_api'], function() {
         Route::get('{id}/tests-archive.tar.gz', 'ProblemController@getArchive');
     });

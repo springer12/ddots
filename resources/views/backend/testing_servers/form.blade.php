@@ -25,6 +25,50 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('login') ? ' has-error' : '' }}">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="login">Login <span class="required">*</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" name="login"  value="{{ old('login') ?: $server->login }}" required="required" class="form-control col-md-7 col-xs-12">
+                                @if ($errors->has('login'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('login') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Password{!! !$passwordRequired?'':' <span
+                                            class="required">*</span>' !!}</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="password" name="password" value="{{ old('password') }}"
+                                       {!! !$passwordRequired?:'required="required"' !!}
+                                       class="form-control col-md-7 col-xs-12">
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password_confirmation">Confirm
+                                password{!! !$passwordRequired?'':' <span
+                                            class="required">*</span>' !!}</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="password" name="password_confirmation"
+                                       value="{{ old('password_confirmation') }}"
+                                       {!! !$passwordRequired?:'required="required"' !!}
+                                       class="form-control col-md-7 col-xs-12">
+                                @if ($errors->has('password_confirmation'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

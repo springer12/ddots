@@ -35,7 +35,7 @@ class TestingServersController extends Controller
         $testing_servers = $this->findQuery();
 
         if ($query) {
-            $testing_servers = $testing_servers->where(function($query_s) use ($query) {
+            $testing_servers = $testing_servers->where(function ($query_s) use ($query) {
                 $query_s->orwhere('id', 'like', "%$query%")
                     ->orwhere('name', 'like', "%$query%");
             });
@@ -45,11 +45,11 @@ class TestingServersController extends Controller
             ->paginate(10);
 
         return view('backend.testing_servers.list')->with([
-            'servers'     => $testing_servers,
+            'servers' => $testing_servers,
             'order_field' => $orderBy,
-            'dir'         => $orderDir,
-            'page'        => $page,
-            'query'       => $query
+            'dir' => $orderDir,
+            'page' => $page,
+            'query' => $query
         ]);
     }
 
@@ -57,11 +57,12 @@ class TestingServersController extends Controller
      * Show the form.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int|null                 $id
+     * @param int|null $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function showForm(Request $request, $id = null) {
+    public function showForm(Request $request, $id = null)
+    {
         $testing_server = ($id ? $this->findOrFail($id) : new TestingServer());
         if ($id) {
             $title = 'Edit Serever';
@@ -71,7 +72,8 @@ class TestingServersController extends Controller
 
         return view('backend.testing_servers.form')->with([
             'server' => $testing_server,
-            'title'  => $title
+            'title' => $title,
+            'passwordRequired' => is_null($id),
         ]);
     }
 
@@ -79,23 +81,33 @@ class TestingServersController extends Controller
      * Handle a add/edit request
      *
      * @param \Illuminate\Http\Request $request
-     * @param int|null                 $id
+     * @param int|null $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $id = null) {
+    public function edit(Request $request, $id = null)
+    {
         $testing_server = (!$id ?: $this->findOrFail($id));
-
-        $this->validate($request, [
-            'name'    => 'required|string|max:255', //@todo:to model
-        ]);
+        $rules = TestingServer::getValidationRules();
+        $fillData = ['name' => $request->get('name'), 'login' => $request->get('login')];
+        if (!$id || $request->get('password') != '') {
+            $rules = array_merge($rules, ['password' => 'required|min:6|confirmed']);
+            $fillData = array_merge($fillData, ['password' => $request->get('password')]);
+        }
+        
+        if($id) {
+            $rules = array_merge($rules,['login' => 'required|string|max:255|alpha_dash|unique:testing_servers,login,' . $id]);
+        } else {
+            $rules = array_merge($rules,['login' => 'required|string|max:255|alpha_dash|unique:testing_servers,login,']);
+        }
+        
+        $this->validate($request, $rules);
 
 
         if ($id) {
-            $testing_server->fill(['name' => $request->get('name')]);
+            $testing_server->fill($fillData);
         } else {
-            $testing_server = new TestingServer(['name' => $request->get('name')]);
-            $testing_server->api_token = TestingServer::generateApiToken();
+            $testing_server = new TestingServer($fillData);
         }
         $testing_server->save();
 
@@ -106,11 +118,12 @@ class TestingServersController extends Controller
     /**
      * Handle a delete request
      *
-     * @param int|null                 $id
+     * @param int|null $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function delete($id) {
+    public function delete($id)
+    {
         $server = $this->findOrFail($id);
         $server->delete();
         return redirect()->route('backend::testing_servers::list')->with('alert-success', 'The server was successfully deleted');
@@ -119,11 +132,12 @@ class TestingServersController extends Controller
     /**
      * Handle a restore request
      *
-     * @param int|null                 $id
+     * @param int|null $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function restore($id) {
+    public function restore($id)
+    {
         $server = $this->findOrFail($id);
         $server->restore();
         return redirect()->route('backend::testing_servers::list')->with('alert-success', 'The server was successfully restored');
@@ -132,11 +146,13 @@ class TestingServersController extends Controller
     /**
      * @return \Illuminate\Database\Query\Builder
      */
-    protected function findQuery() {
+    protected function findQuery()
+    {
         return TestingServer::withTrashed();
     }
 
-    protected function findOrFail($id) {
+    protected function findOrFail($id)
+    {
         return $this->findQuery()->findOrFail($id);
     }
 

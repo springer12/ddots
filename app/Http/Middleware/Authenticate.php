@@ -21,6 +21,10 @@ class Authenticate
         if($guard == 'testing_servers_api' && Auth::guard($guard)->guest()) {
             return response('Unauthorized.', 401);
         }
+
+        if($guard == 'testing_servers_auth' && Auth::guard($guard)->once(['login' => $request->get('login'), 'password' => $request->get('password')])) {
+            return $next($request);
+        }
         
         if (Auth::guard($guard)->guest()) {
             return $this->handleUnauthorizedRequest($request);

@@ -49,6 +49,10 @@ return [
         'testing_servers_api' => [
             'driver' => 'token',
             'provider' => 'testing_servers',
+        ],
+        'testing_servers_auth' => [
+            'driver' => 'session',
+            'provider' => 'testing_servers',
         ]
     ],
 
