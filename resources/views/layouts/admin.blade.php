@@ -49,6 +49,7 @@
                                     <li class="{{ !Request::is(action('Backend\SponsorController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\SponsorController@index') }}">Sponsors</a></li>
                                     <li class="{{ !Request::is(action('Backend\SubdomainController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\SubdomainController@index') }}">Subdomains</a></li>
                                     <li class="{{ !Request::is(action('Backend\ContestController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\ContestController@index') }}">Contests</a></li>
+                                    <li class="{{ !Request::is(action('Backend\GroupController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\GroupController@index') }}">Groups</a></li>
                                 </ul>
                             </li>
                         </ul>

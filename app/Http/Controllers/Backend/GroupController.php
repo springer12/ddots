@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
+
 
 use App\Group;
 use Illuminate\Http\Request;
-use App\User;
 use App\Http\Requests;
-use Illuminate\Support\Facades\Auth;
+use App\User;
+use App\Http\Controllers\Controller;
 
 class GroupController extends Controller
 {
@@ -19,11 +20,12 @@ class GroupController extends Controller
         $orderDir = $request->input('dir', $orderDirSession);
 
         $page = $request->input('page');
+        $query = $request->input('query', '');
 
-
-        if (!in_array($orderBy, User::sortable())) {
+        if (!in_array($orderBy, Group::sortable())) {
             $orderBy = 'id';
         }
+
 
         if (!in_array($orderDir, ['asc', 'ASC', 'desc', 'DESC'])) {
             $orderDir = 'desc';
@@ -34,15 +36,35 @@ class GroupController extends Controller
 
         $groups = $this->findQuery();
 
-        $groups = $groups->orderBy($orderBy, $orderDir)
-            ->paginate(10);
+        if ($query) {
+            $groups = $groups->where(function ($query_s) use ($query) {
+                $query_s->orwhere('id', 'like', "%$query%")
+                    ->orwhere('name', 'like', "%$query%")
+                    ->orwhere('nickname', 'like', "%$query%")
+                    ->orwhere('email', 'like', "%$query%");
+            });
+        }
 
-        return view('groups.list')->with([
+/*            */
+        if($orderBy == 'owner') {
+            $groups = $groups->join('group_user', 'group_id', '=', 'groups.id')
+                ->join('users', 'user_id', '=', 'users.id')
+                ->where('role', User::ROLE_TEACHER)
+                ->groupBy('groups.id')
+                ->orderBy('users.name', $orderDir)
+                ->select('groups.*');
+        } else {
+            $groups = $groups->orderBy($orderBy, $orderDir);
+        }
+
+            $groups = $groups->paginate(10);
+
+        return view('backend.groups.list')->with([
             'groups' => $groups,
             'order_field' => $orderBy,
             'dir' => $orderDir,
             'page' => $page,
-
+            'query' => $query
         ]);
     }
 
@@ -62,13 +84,13 @@ class GroupController extends Controller
         } else {
             $title = 'Create Group';
         }
-
         $students = $group->getStudents();
 
-        return view('groups.form')->with([
+        return view('backend.groups.form')->with([
             'group' => $group,
+            'owner' => $group->getOwner(),
             'students' => $students,
-            'unincludedStudents' => $id?[]:Auth::user()->students->diff($students),
+            'unincludedStudents' => !$id?[]:$group->getOwner()->students->diff($students),
             'title' => $title,
         ]);
     }
@@ -90,7 +112,9 @@ class GroupController extends Controller
             'description' => $request->get('description'),
         ];
 
-        $rules = Group::getValidationRules();
+
+            $rules = Group::getValidationRules();
+
 
         $this->validate($request, $rules);
 
@@ -101,14 +125,15 @@ class GroupController extends Controller
         }
 
         $users = $request->get('students');
-        $users[] = Auth::user()->id;
+        $users[] = $request->get('owner');
 
         $group->users()->sync($users);
+        
 
         $group->save();
 
         \Session::flash('alert-success', 'The group was successfully saved');
-        return redirect()->route('teacherOnly::groups::list');
+        return redirect()->route('backend::groups::list');
     }
 
     /**
@@ -122,7 +147,7 @@ class GroupController extends Controller
     {
         $group = $this->findOrFail($id);
         $group->delete();
-        return redirect()->route('teacherOnly::groups::list')->with('alert-success', 'The group was successfully deleted');
+        return redirect()->route('backend::groups::list')->with('alert-success', 'The group was successfully deleted');
     }
 
     /**
@@ -136,7 +161,7 @@ class GroupController extends Controller
     {
         $group = $this->findOrFail($id);
         $group->restore();
-        return redirect()->route('teacherOnly::groups::list')->with('alert-success', 'The group was successfully restored');
+        return redirect()->route('backend::groups::list')->with('alert-success', 'The group was successfully restored');
     }
 
     /**
@@ -144,9 +169,7 @@ class GroupController extends Controller
      */
     protected function findQuery()
     {
-        return Group::withTrashed()->whereHas('users', function($query){
-            $query->where('user_id', Auth::user()->id);
-        });
+        return Group::withTrashed();
     }
 
     protected function findOrFail($id)

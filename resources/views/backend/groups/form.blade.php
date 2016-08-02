@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <div class="row">
@@ -11,7 +11,7 @@
                 </div>
                 <div class="x_content">
                     <br>
-                    <form method="post" class="form-horizontal form-label-left">
+                    <form method="post" class="form-horizontal form-label-left" enctype="multipart/form-data">
                         {!! csrf_field() !!}
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
@@ -28,12 +28,33 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Description</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                   for="description">Description</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <textarea class="form-control col-md-7 col-xs-12" name="description">{{ old('description') ?: $group->description }}</textarea>
+                                <textarea class="form-control col-md-7 col-xs-12"
+                                          name="description">{{ old('description') ?: $group->description }}</textarea>
                                 @if ($errors->has('description'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('description') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('owner') ? ' has-error' : '' }}">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                   for="participants">Owner</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select name="owner" data-select-owner
+                                        data-teacher-search-url="{{ route('backend::ajax::searchTeachers') }}"
+                                        class="form-control col-md-7 col-xs-12">
+                                    @if($owner)
+                                        <option value="{{ $owner->id }}" selected>{{ $owner->name }}</option>
+                                    @endif
+                                </select>
+                                @if ($errors->has('owner'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('owner') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -61,6 +82,7 @@
                                     </span>
                                 @endif
                             </div>
+                        </div>
 
                         <div class="ln_solid"></div>
                         <div class="form-group">
@@ -69,7 +91,7 @@
                                    href=""
                                    data-toggle="confirmation"
                                    data-message="Are you sure you want to leave the page? The changes won't be saved."
-                                   data-btn-ok-href="{{ route('teacherOnly::groups::list') }}"
+                                   data-btn-ok-href="{{ route('backend::groups::list') }}"
                                    data-btn-ok-label="Leave the page">Cancel</a>
 
                                 <button type="submit" class="btn btn-success">Save</button>
