@@ -30,8 +30,7 @@
                         <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Description</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" name="description" value="{{ old('description') ?: $group->description }}"
-                                       class="form-control col-md-7 col-xs-12">
+                                <textarea class="form-control col-md-7 col-xs-12" name="description">{{ old('description') ?: $group->description }}</textarea>
                                 @if ($errors->has('description'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('description') }}</strong>

@@ -21,6 +21,7 @@ class User extends Authenticatable
     const ROLE_HR = 'hr';
 
     const ATTEMPTS_PER_MONTH = 3;
+    const RESULTS_PER_PAGE = 10;
 
     const SETTABLE_ROLES = [self::ROLE_LOW_USER => 'Low user', self::ROLE_USER => 'User', self::ROLE_TEACHER => 'Teacher', self::ROLE_EDITOR => 'Editor', self::ROLE_HR => 'HR'];
     /**
@@ -246,5 +247,27 @@ class User extends Authenticatable
     public function groups()
     {
         return $this->belongsToMany(Group::class, 'group_user', 'user_id')->withTimestamps();
+    }
+
+    public static function search($term, $page, $searchTeachers, $teacher_id = null )
+    {
+        if ($searchTeachers) {
+            $users = User::teacher();
+        } else {
+            $users = User::user();
+        }
+        $users = $users->select(['id', 'name'])
+            ->where('name', 'LIKE', '%' . $term . '%');
+
+        if ($teacher_id) {
+            $users = $users->join('teacher_student', 'student_id', '=', 'users.id')
+                ->where('teacher_id', $teacher_id);
+        }
+
+        $count = $users->count();
+        $users = $users->skip(($page - 1) * self::RESULTS_PER_PAGE)
+            ->take(self::RESULTS_PER_PAGE)
+            ->get();
+        return ['results' => $users, 'total_count' => $count];
     }
 }

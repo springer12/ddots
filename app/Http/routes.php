@@ -22,7 +22,9 @@ Route::group(['middleware' => 'web'], function () {
     /* backend func */
     Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_ADMIN, 'prefix' => 'backend', 'as' => 'backend::'], function () {
         Route::group(['middleware' => 'ajax', 'as' => 'ajax::'], function () {
-            Route::get('/search-students', ['as' => 'searchStudents', 'uses' => 'Ajax\StudentController@search']);
+            Route::get('/search-students', ['as' => 'searchStudents', 'uses' => 'Ajax\UserController@searchStudents']);
+            Route::get('/get-students', ['as' => 'getStudents', 'uses' => 'Ajax\UserController@getStudents']);
+            Route::get('/search-teachers', ['as' => 'searchTeachers', 'uses' => 'Ajax\UserController@searchTeachers']);
         });
         Route::get('/', ['uses' => 'Backend\DashboardController@index', 'as' => 'dashboard']);
 
@@ -88,6 +90,19 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('restore/{id}', 'Backend\UserController@restore');
         });
 
+        Route::group(['prefix' => 'groups', 'as' => 'groups::'], function () {
+            Route::get('/', ['uses' => 'Backend\GroupController@index', 'as' => 'list']);
+
+            Route::get('add', ['uses' => 'Backend\GroupController@showForm', 'as' => 'add']);
+            Route::post('add', 'Backend\GroupController@edit');
+
+            Route::get('edit/{id}', ['uses' => 'Backend\GroupController@showForm', 'as' => 'edit']);
+            Route::post('edit/{id}', 'Backend\GroupController@edit');
+
+            Route::get('delete/{id}', 'Backend\GroupController@delete');
+            Route::get('restore/{id}', 'Backend\GroupController@restore');
+        });
+
         Route::group(['prefix' => 'problems', 'as' => 'problems::'], function () {
             Route::get('/', ['uses' => 'Backend\ProblemController@index', 'as' => 'list']);
 
@@ -141,10 +156,10 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'as' => 'frontend::'], function () {
             Route::group(['middleware' => 'ajax', 'as' => 'ajax::'], function () {
-                Route::get('/add-teacher/{id}', ['as' => 'addTeacher', 'uses' => 'Ajax\TeacherController@addTeacher'])->where('id', '[0-9]+');
-                Route::get('/confirm-student/{id}', ['as' => 'confirmStudent', 'uses' => 'Ajax\StudentController@confirm'])->where('id', '[0-9]+');
-                Route::get('/decline-student/{id}', ['as' => 'declineStudent', 'uses' => 'Ajax\StudentController@decline'])->where('id', '[0-9]+');
-                Route::get('/add-student-to-group', ['as' => 'addStudentToGroup', 'uses' => 'Ajax\StudentController@addToGroup']);
+                Route::get('/add-teacher/{id}', ['as' => 'addTeacher', 'uses' => 'Ajax\UserController@addTeacher'])->where('id', '[0-9]+');
+                Route::get('/confirm-student/{id}', ['as' => 'confirmStudent', 'uses' => 'Ajax\UserController@confirm'])->where('id', '[0-9]+');
+                Route::get('/decline-student/{id}', ['as' => 'declineStudent', 'uses' => 'Ajax\UserController@decline'])->where('id', '[0-9]+');
+                Route::get('/add-student-to-group', ['as' => 'addStudentToGroup', 'uses' => 'Ajax\UserController@addToGroup']);
             });
 
             Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
