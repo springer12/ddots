@@ -38,7 +38,7 @@
                                     <td class="wrap-text">{{ $server->name }}</td>
                                     <td>{{ $server->login }}</td>
                                     <td>{{ $server->token_created_at }}</td>
-                                    <td>{{ $server->created_at }}</td>
+                                    <td>{{ $server->deleted_at }}</td>
                                     <td>
                                         <a title="Edit" href="{{ action('Backend\TestingServersController@edit',['id'=> $server->id]) }}"><span class="glyphicon glyphicon-pencil"></span></a>
                                         @if (!$server->deleted_at)
