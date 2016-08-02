@@ -34,10 +34,8 @@
                             <tbody>
 
                             @foreach($groups as $group)
-
                                 <tr>
                                     <td>{{ $group->id }}</td>
-
                                     <td class="wrap-text">{{ $group->name }}</td>
                                     <td>{{ $group->getOwner()->name }}</td>
                                     <td>{{ $group->created_at }}</td>

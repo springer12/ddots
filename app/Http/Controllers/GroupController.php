@@ -63,8 +63,12 @@ class GroupController extends Controller
             $title = 'Create Group';
         }
 
+        $students = $group->getStudents();
+
         return view('groups.form')->with([
             'group' => $group,
+            'students' => $students,
+            'unincludedStudents' => $id?[]:Auth::user()->students->diff($students),
             'title' => $title,
         ]);
     }
@@ -94,8 +98,12 @@ class GroupController extends Controller
             $group->fill($fillData);
         } else {
             $group = Group::create($fillData);
-            $group->users()->attach(Auth::user());
         }
+
+        $users = $request->get('students');
+        $users[] = Auth::user()->id;
+
+        $group->users()->sync($users);
 
         $group->save();
 

@@ -89,8 +89,8 @@ class GroupController extends Controller
         return view('backend.groups.form')->with([
             'group' => $group,
             'owner' => $group->getOwner(),
-            'students' => $group->getStudents(),
-            'unincludedStudents' => $group->getOwner()->students->diff($students),
+            'students' => $students,
+            'unincludedStudents' => !$id?[]:$group->getOwner()->students->diff($students),
             'title' => $title,
         ]);
     }

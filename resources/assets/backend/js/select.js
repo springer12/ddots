@@ -79,7 +79,7 @@
             minimumInputLength: 1,
         })
             .on('change', function(e) {
-                console.log();
+                console.log($('[data-get-students-url]').data('get-students-url'));
                 $.ajax($('[data-get-students-url]').data('get-students-url'), {
                     method: 'get',
                     data: {

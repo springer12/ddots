@@ -39,6 +39,29 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('students') ? ' has-error' : '' }}">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                   for="students">Students</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select name="students[]" data-select-students
+                                        data-get-students-url="{{ route('backend::ajax::getStudents') }}"
+                                        class="form-control col-md-7 col-xs-12"
+                                        multiple>
+                                    @foreach($students as $student)
+                                        <option value="{{ $student->id }}"
+                                                selected>{{ $student->name }}</option>
+                                    @endforeach
+                                    @foreach($unincludedStudents as $student)
+                                        <option value="{{ $student->id }}">{{ $student->name }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('students'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('students') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

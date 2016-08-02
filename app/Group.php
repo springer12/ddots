@@ -15,8 +15,8 @@ class Group extends Model
     public static function getValidationRules()
     {
         return [
-            'name' => 'required|max:255|alpha_dash',
-            'description' => 'max:255|alpha_dash',
+            'name' => 'required|max:255|any_lang_name',
+            'description' => 'max:255',
         ];
     }
 

@@ -62,8 +62,8 @@ var path = require('path'),
     apps = {
         "frontend": {
             "fonts": [Bootstrap.fonts, appPath('frontend', 'fonts')],
-            "css": [Bootstrap.css, datetimepicker.css, appPath('frontend', 'css')],
-            "js": [jQuery, Bootstrap.js, moment.js, datetimepicker.js, bootstrap_checkbox.js, appPath('frontend', 'js')]
+            "css": [Bootstrap.css, datetimepicker.css, select2.css, appPath('frontend', 'css')],
+            "js": [jQuery, Bootstrap.js, moment.js, datetimepicker.js, bootstrap_checkbox.js, select2.js, appPath('frontend', 'js')]
         },
         "backend": {
             "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('backend', 'fonts')],
