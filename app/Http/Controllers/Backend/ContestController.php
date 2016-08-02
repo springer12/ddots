@@ -38,16 +38,15 @@ class ContestController extends Controller
         \Session::put('orderBy', $orderBy);
         \Session::put('orderDir', $orderDir);
 
-        $contests = Contest::orderBy($orderBy, $orderDir);
-        if (Auth::user()->hasRole(User::ROLE_TEACHER)) {
-            $contests = $contests->where('user_id', Auth::user()->id);
-        } elseif (Auth::user()->hasRole(User::ROLE_USER)) {
-            $contests = $contests->whereHas('users', function ($query) {
-                $query->where('user_id', Auth::user()->id);
-            })->where('is_active', true)->orWhere('labs', true);
-        } elseif (Auth::user()->hasRole(User::ROLE_LOW_USER)) {
-            $contests = $contests->where('labs', true)->where('is_active', true);
+        if($orderBy == 'owner') {
+            $contests = Contest::join('users', 'users.id', '=', 'user_id')
+                ->groupBy('contests.id')
+                ->orderBy('users.name', $orderDir)
+                ->select('contests.*');
+        } else {
+            $contests = Contest::orderBy($orderBy, $orderDir);
         }
+        
         $contests = $contests->paginate(10);
 
         return view('backend.contests.list')->with([

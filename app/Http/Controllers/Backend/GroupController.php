@@ -44,8 +44,7 @@ class GroupController extends Controller
                     ->orwhere('email', 'like', "%$query%");
             });
         }
-
-/*            */
+        
         if($orderBy == 'owner') {
             $groups = $groups->join('group_user', 'group_id', '=', 'groups.id')
                 ->join('users', 'user_id', '=', 'users.id')

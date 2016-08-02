@@ -22,7 +22,7 @@
                             <thead>
                             <tr>
                                 @if(Auth::user()->hasRole([\App\User::ROLE_USER, \App\User::ROLE_LOW_USER]))
-                                    <th>@include('helpers.grid-header', ['name' => 'Author',  'order' => 'owner.name'])</th>
+                                    <th>@include('helpers.grid-header', ['name' => 'Author',  'order' => 'owner'])</th>
                                 @endif
                                 <th>@include('helpers.grid-header', ['name' => 'Name',  'order' => 'name'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Start date', 'order' => 'start_date'])</th>

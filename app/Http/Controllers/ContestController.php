@@ -37,7 +37,15 @@ class ContestController extends Controller
         \Session::put('orderBy', $orderBy);
         \Session::put('orderDir', $orderDir);
 
-        $contests = Contest::orderBy($orderBy, $orderDir);
+        if($orderBy == 'owner') {
+            $contests = Contest::join('users', 'users.id', '=', 'user_id')
+                ->groupBy('contests.id')
+                ->orderBy('users.name', $orderDir)
+                ->select('contests.*');
+        } else {
+            $contests = Contest::orderBy($orderBy, $orderDir);
+        }
+
         if (Auth::user()->hasRole(User::ROLE_TEACHER)) {
             $contests = $contests->where('user_id', Auth::user()->id);
         } elseif (Auth::user()->hasRole(User::ROLE_USER)) {

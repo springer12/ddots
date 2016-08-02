@@ -19,7 +19,7 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>@include('helpers.grid-header', ['name' => 'Author',  'order' => 'owner.name'])</th>
+                                <th>@include('helpers.grid-header', ['name' => 'Author',  'order' => 'owner'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Name',  'order' => 'name'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Start date', 'order' => 'start_date'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'End date', 'order' => 'end_date'])</th>

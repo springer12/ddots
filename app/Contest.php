@@ -12,13 +12,13 @@ class Contest extends Model
     const TYPE_TOURNAMENT = 'tournament';
 
     protected $fillable = [
-        'name', 'description', 'user_id', 'start_date', 'end_date', 'is_active', 'is_standings_active', 'show_max', 'labs', 'owner.name',
+        'name', 'description', 'user_id', 'start_date', 'end_date', 'is_active', 'is_standings_active', 'show_max', 'labs',
     ];
 
     public static function sortable($list = false)
     {
         $columns = [
-            'id', 'name', 'start_date', 'end_date', 'created_at',
+            'id', 'name', 'start_date', 'end_date', 'created_at', 'owner',
         ];
 
         return ($list ? implode(',', $columns) : $columns);
