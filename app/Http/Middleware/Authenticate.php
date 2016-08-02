@@ -11,21 +11,25 @@ class Authenticate
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $guard
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
+     * @param  string|null $guard
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if($guard == 'testing_servers_api' && Auth::guard($guard)->guest()) {
+        if ($guard == 'testing_servers_api' && Auth::guard($guard)->guest()) {
             return response('Unauthorized.', 401);
         }
 
-        if($guard == 'testing_servers_auth' && Auth::guard($guard)->once(['login' => $request->get('login'), 'password' => $request->get('password')])) {
-            return $next($request);
+        if ($guard == 'testing_servers_auth') {
+            if (Auth::guard($guard)->once(['login' => $request->get('login'), 'password' => $request->get('password')])) {
+                return $next($request);
+            } else {
+                return response('Unauthorized.', 401);
+            }
         }
-        
+
         if (Auth::guard($guard)->guest()) {
             return $this->handleUnauthorizedRequest($request);
         }
@@ -33,7 +37,9 @@ class Authenticate
         return $next($request);
     }
 
-    protected function handleUnauthorizedRequest($request) {
+    protected
+    function handleUnauthorizedRequest($request)
+    {
         if ($request->ajax() || $request->wantsJson()) {
             return response('Unauthorized.', 401);
         } else {
