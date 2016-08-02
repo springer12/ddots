@@ -22,13 +22,13 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>@include('helpers.grid-header', ['name' => 'ID',           'order' => 'id'])</th>
-                                <th>@include('helpers.grid-header', ['name' => 'Server name',  'order' => 'name'])</th>
-                                <th>@include('helpers.grid-header', ['name' => 'Created Date', 'order' => 'created_at'])</th>
-                                <th>@include('helpers.grid-header', ['name' => 'Updated Date', 'order' => 'updated_at'])</th>
-                                <th>@include('helpers.grid-header', ['name' => 'Deleted Date', 'order' => 'deleted_at'])</th>
-                                <th>Token</th>
+                                <th>@include('helpers.grid-header', ['name' => 'ID',            'order' => 'id'])</th>
+                                <th>@include('helpers.grid-header', ['name' => 'Server name',   'order' => 'name'])</th>
+                                <th>@include('helpers.grid-header', ['name' => 'Login',         'order' => 'login'])</th>
+                                <th>@include('helpers.grid-header', ['name' => 'Token created', 'order' => 'token_created_at'])</th>
+                                <th>@include('helpers.grid-header', ['name' => 'Deleted Date',  'order' => 'deleted_at'])</th>
                                 <th>Actions</th>
+                                <th>Token</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -36,10 +36,9 @@
                                 <tr>
                                     <td>{{ $server->id }}</td>
                                     <td class="wrap-text">{{ $server->name }}</td>
+                                    <td>{{ $server->login }}</td>
+                                    <td>{{ $server->token_created_at }}</td>
                                     <td>{{ $server->created_at }}</td>
-                                    <td>{{ $server->updated_at }}</td>
-                                    <td>{{ $server->deleted_at }}</td>
-                                    <td class="wrap-text">{{ $server->api_token }}</td>
                                     <td>
                                         <a title="Edit" href="{{ action('Backend\TestingServersController@edit',['id'=> $server->id]) }}"><span class="glyphicon glyphicon-pencil"></span></a>
                                         @if (!$server->deleted_at)
@@ -48,6 +47,7 @@
                                             <a title="Restore" href="" data-toggle="confirmation" data-message="Are you sure you want to restore this server?" data-btn-ok-href="{{ action('Backend\TestingServersController@restore', ['id'=> $server->id]) }}" data-btn-ok-label="Restore"><span class="glyphicon glyphicon-repeat"></span></a>
                                         @endif
                                     </td>
+                                    <td class="wrap-text">{{ $server->api_token }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

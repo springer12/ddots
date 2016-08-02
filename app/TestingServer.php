@@ -17,7 +17,7 @@ class TestingServer extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'login', 'password'
+        'name', 'login', 'password', 'token_created_at'
     ];
 
     const TOKEN_TTL = 60 * 60; //seconds
@@ -30,7 +30,7 @@ class TestingServer extends Authenticatable
     public static function sortable($list = false)
     {
         $columns = [
-            'id', 'name', 'created_at', 'updated_at', 'deleted_at'
+            'id', 'name', 'login', 'token_created_at', 'deleted_at'
         ];
 
         return ($list ? implode(',', $columns) : $columns);
