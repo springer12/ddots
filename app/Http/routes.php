@@ -252,7 +252,7 @@ Route::group(['namespace' => 'TestingSystem', 'prefix' => 'testing-system-api'],
         Route::get('latest-new', 'SolutionController@latest_new');
         Route::post('{id}/report', 'SolutionController@store_report')->where('id', '[0-9]+');
     });
-    Route::get('/programming_languages', 'ProgrammingLanguagesController@index');
+    Route::get('/programming-languages', 'ProgrammingLanguagesController@index');
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
