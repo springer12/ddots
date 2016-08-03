@@ -3,9 +3,6 @@
 @section('content')
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-
-
-
             <div class="card">
                 <div class="header">
                     <h4 class="title">Login</h4>
