@@ -20,7 +20,11 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     /* backend func */
-    Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_ADMIN, 'prefix' => 'backend', 'as' => 'backend::'], function () {
+    Route::group([
+        'middleware' => 'access:web,0,' . App\User::ROLE_ADMIN,
+        'prefix'     => 'backend',
+        'as'         => 'backend::',
+    ], function () {
         Route::group(['middleware' => 'ajax', 'as' => 'ajax::'], function () {
             Route::get('/search-students', ['as' => 'searchStudents', 'uses' => 'Ajax\UserController@searchStudents']);
             Route::get('/get-students', ['as' => 'getStudents', 'uses' => 'Ajax\UserController@getStudents']);
@@ -56,11 +60,14 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
             Route::get('/', ['uses' => 'Backend\ContestController@index', 'as' => 'list']);
-            Route::get('/show/{id}', ['uses' => 'Backend\ContestController@show', 'as' => 'show'])->where('id', '[0-9]+');
-            Route::get('/hide/{id}', ['uses' => 'Backend\ContestController@hide', 'as' => 'hide'])->where('id', '[0-9]+');
+            Route::get('/show/{id}', ['uses' => 'Backend\ContestController@show', 'as' => 'show'])
+                ->where('id', '[0-9]+');
+            Route::get('/hide/{id}', ['uses' => 'Backend\ContestController@hide', 'as' => 'hide'])
+                ->where('id', '[0-9]+');
             Route::get('add', ['uses' => 'Backend\ContestController@showForm', 'as' => 'add']);
             Route::post('add', 'Backend\ContestController@edit');
-            Route::get('edit/{id}', ['uses' => 'Backend\ContestController@showForm', 'as' => 'edit'])->where('id', '[0-9]+');
+            Route::get('edit/{id}', ['uses' => 'Backend\ContestController@showForm', 'as' => 'edit'])
+                ->where('id', '[0-9]+');
             Route::post('edit/{id}', ['uses' => 'Backend\ContestController@edit'])->where('id', '[0-9]+');
         });
 
@@ -119,7 +126,10 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     /*  subdomain func  */
-    Route::group(['middleware' => 'admin_redirect', 'domain' => App\Subdomain::currentSubdomainName() . '.' . config('app.domain')], function () {
+    Route::group([
+        'middleware' => 'admin_redirect',
+        'domain'     => App\Subdomain::currentSubdomainName() . '.' . config('app.domain'),
+    ], function () {
 
         Route::get('/', 'HomeController@index');
         Route::get('/teachers', 'TeacherController@index');
@@ -132,8 +142,13 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('add', ['uses' => 'ContestController@showForm', 'as' => 'add']);
                 Route::post('add', 'ContestController@edit');
 
-                Route::get('edit/{id}', ['middleware' => 'contest_edit_access', 'uses' => 'ContestController@showForm', 'as' => 'edit'])->where('id', '[0-9]+');
-                Route::post('edit/{id}', ['middleware' => 'contest_edit_access', 'uses' => 'ContestController@edit'])->where('id', '[0-9]+');
+                Route::get('edit/{id}', [
+                    'middleware' => 'contest_edit_access',
+                    'uses'       => 'ContestController@showForm',
+                    'as'         => 'edit',
+                ])->where('id', '[0-9]+');
+                Route::post('edit/{id}', ['middleware' => 'contest_edit_access', 'uses' => 'ContestController@edit'])
+                    ->where('id', '[0-9]+');
             });
 
             Route::group(['prefix' => 'groups', 'as' => 'groups::'], function () {
@@ -156,20 +171,37 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::group(['middleware' => 'access:web,1,' . App\User::ROLE_ADMIN, 'as' => 'frontend::'], function () {
             Route::group(['middleware' => 'ajax', 'as' => 'ajax::'], function () {
-                Route::get('/add-teacher/{id}', ['as' => 'addTeacher', 'uses' => 'Ajax\UserController@addTeacher'])->where('id', '[0-9]+');
-                Route::get('/confirm-student/{id}', ['as' => 'confirmStudent', 'uses' => 'Ajax\UserController@confirm'])->where('id', '[0-9]+');
-                Route::get('/decline-student/{id}', ['as' => 'declineStudent', 'uses' => 'Ajax\UserController@decline'])->where('id', '[0-9]+');
-                Route::get('/add-student-to-group', ['as' => 'addStudentToGroup', 'uses' => 'Ajax\UserController@addToGroup']);
+                Route::get('/add-teacher/{id}', ['as' => 'addTeacher', 'uses' => 'Ajax\UserController@addTeacher'])
+                    ->where('id', '[0-9]+');
+                Route::get('/confirm-student/{id}', ['as' => 'confirmStudent', 'uses' => 'Ajax\UserController@confirm'])
+                    ->where('id', '[0-9]+');
+                Route::get('/decline-student/{id}', ['as' => 'declineStudent', 'uses' => 'Ajax\UserController@decline'])
+                    ->where('id', '[0-9]+');
+                Route::get('/add-student-to-group', [
+                    'as'   => 'addStudentToGroup',
+                    'uses' => 'Ajax\UserController@addToGroup',
+                ]);
             });
 
             Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
                 Route::get('/', ['uses' => 'ContestController@index', 'as' => 'list']);
                 Route::get('/{id}', ['uses' => 'ContestController@single', 'as' => 'single'])->where('id', '[0-9]+');
-                Route::get('/{contest_id}/{problem_id}/', ['uses' => 'ProblemController@contestProblem', 'as' => 'problem'])->where('contest_id', '[0-9]+')->where('problem_id', '[0-9]+');
-                Route::post('/{contest_id}/{problem_id}/', ['uses' => 'SolutionController@submit'])->where('contest_id', '[0-9]+')->where('problem_id', '[0-9]+');
-                Route::get('/{id}/standings/', ['middleware' => 'contest_standings_access', 'uses' => 'ContestController@standings', 'as' => 'standings'])->where('id', '[0-9]+');
-                Route::get('/solutions/{id}/', ['uses' => 'SolutionController@contestSolution', 'as' => 'solution'])->where('id', '[0-9]+');
-                Route::get('/{id}/solutions/', ['uses' => 'SolutionController@contestSolutions', 'as' => 'solutions'])->where('id', '[0-9]+');
+                Route::get('/{contest_id}/{problem_id}/', [
+                    'uses' => 'ProblemController@contestProblem',
+                    'as'   => 'problem',
+                ])->where('contest_id', '[0-9]+')->where('problem_id', '[0-9]+');
+                Route::post('/{contest_id}/{problem_id}/', ['uses' => 'SolutionController@submit'])
+                    ->where('contest_id', '[0-9]+')
+                    ->where('problem_id', '[0-9]+');
+                Route::get('/{id}/standings/', [
+                    'middleware' => 'contest_standings_access',
+                    'uses'       => 'ContestController@standings',
+                    'as'         => 'standings',
+                ])->where('id', '[0-9]+');
+                Route::get('/solutions/{id}/', ['uses' => 'SolutionController@contestSolution', 'as' => 'solution'])
+                    ->where('id', '[0-9]+');
+                Route::get('/{id}/solutions/', ['uses' => 'SolutionController@contestSolutions', 'as' => 'solutions'])
+                    ->where('id', '[0-9]+');
             });
         });
         Route::group(['middleware' => 'profile_access', 'prefix' => 'user', 'as' => 'frontend::user::'], function () {
@@ -196,8 +228,8 @@ Route::group(['namespace' => 'TestingSystem', 'prefix' => 'testing-system-api'],
         echo 'Schema will be there';
     });
     Route::post('auth/', ['middleware' => 'auth:testing_servers_auth', 'uses' => 'TestingServerController@getToken']);
-    
-    Route::group(['prefix' => 'problems', 'middleware' => 'auth:testing_servers_api'], function() {
+
+    Route::group(['prefix' => 'problems', 'middleware' => 'auth:testing_servers_api'], function () {
         Route::get('{id}/tests-archive.tar.gz', 'ProblemController@getArchive');
     });
     Route::group(['prefix' => 'solutions', 'middleware' => 'auth:testing_servers_api'], function () {
@@ -207,7 +239,7 @@ Route::group(['namespace' => 'TestingSystem', 'prefix' => 'testing-system-api'],
         Route::get('latest-new', 'SolutionController@latest_new');
         Route::post('{id}/report', 'SolutionController@store_report')->where('id', '[0-9]+');
     });
-    Route::resource('/programming_languages', 'ProgrammingLanguagesController');
+    Route::get('/programming_languages', 'ProgrammingLanguagesController@index');
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
