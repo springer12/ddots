@@ -7,7 +7,8 @@
 
     <title>DOTS</title>
 
-    <link href="{{ asset('backend-bundle/css/bundle' . (config('app.assets.minified', false) ? '.min' : '') . '.css') }}" rel='stylesheet' type='text/css'>
+    <link href="{{ asset('backend-bundle/css/bundle' . (config('app.assets.minified', false) ? '.min' : '') . '.css') }}"
+          rel='stylesheet' type='text/css'>
 
 </head>
 <body class="nav-md">
@@ -16,7 +17,8 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="{{ action('Backend\DashboardController@index') }}" class="site_title"><i class="fa fa-paw"></i> <span>DOTS ROOT</span></a>
+                    <a href="{{ action('Backend\DashboardController@index') }}" class="site_title"><i
+                                class="fa fa-paw"></i> <span>DOTS ROOT</span></a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -40,16 +42,29 @@
                     <div class="menu_section active">
                         <h3>General</h3>
                         <ul class="nav side-menu" style="">
-                            <li class="active"><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                            <li class="active"><a><i class="fa fa-home"></i> Home <span
+                                            class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu" style="display: block;">
-                                    <li class="{{ !Request::is(action('Backend\DashboardController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\DashboardController@index') }}">Dashboard</a></li>
-                                    <li class="{{ !Request::is(action('Backend\TestingServersController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\TestingServersController@index') }}">Testing servers</a></li>
-                                    <li class="{{ !Request::is(action('Backend\UserController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\UserController@index') }}">Users</a></li>
-                                    <li class="{{ !Request::is(action('Backend\ProblemController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\ProblemController@index') }}">Problems</a></li>
-                                    <li class="{{ !Request::is(action('Backend\SponsorController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\SponsorController@index') }}">Sponsors</a></li>
-                                    <li class="{{ !Request::is(action('Backend\SubdomainController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\SubdomainController@index') }}">Subdomains</a></li>
-                                    <li class="{{ !Request::is(action('Backend\ContestController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\ContestController@index') }}">Contests</a></li>
-                                    <li class="{{ !Request::is(action('Backend\GroupController@index')) ?: 'current-page' }}"><a href="{{ action('Backend\GroupController@index') }}">Groups</a></li>
+                                    <li class="{{ !Request::is(action('Backend\DashboardController@index')) ?: 'current-page' }}">
+                                        <a href="{{ action('Backend\DashboardController@index') }}">Dashboard</a></li>
+                                    <li class="{{ !Request::is(action('Backend\TestingServersController@index')) ?: 'current-page' }}">
+                                        <a href="{{ action('Backend\TestingServersController@index') }}">Testing
+                                            servers</a></li>
+                                    <li class="{{ !Request::is(action('Backend\UserController@index')) ?: 'current-page' }}">
+                                        <a href="{{ action('Backend\UserController@index') }}">Users</a></li>
+                                    <li class="{{ !Request::is(action('Backend\ProblemController@index')) ?: 'current-page' }}">
+                                        <a href="{{ action('Backend\ProblemController@index') }}">Problems</a></li>
+                                    <li class="{{ !Request::is(action('Backend\SponsorController@index')) ?: 'current-page' }}">
+                                        <a href="{{ action('Backend\SponsorController@index') }}">Sponsors</a></li>
+                                    <li class="{{ !Request::is(action('Backend\SubdomainController@index')) ?: 'current-page' }}">
+                                        <a href="{{ action('Backend\SubdomainController@index') }}">Subdomains</a></li>
+                                    <li class="{{ !Request::is(action('Backend\ContestController@index')) ?: 'current-page' }}">
+                                        <a href="{{ action('Backend\ContestController@index') }}">Contests</a></li>
+                                    <li class="{{ !Request::is(action('Backend\GroupController@index')) ?: 'current-page' }}">
+                                        <a href="{{ action('Backend\GroupController@index') }}">Groups</a></li>
+                                    <li class="{{ !Request::is(action('Backend\ProgrammingLanguageController@index')) ?: 'current-page' }}">
+                                        <a href="{{ action('Backend\ProgrammingLanguageController@index') }}">Programming
+                                            languages</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -70,12 +85,14 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
-                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="false">
                                 <img src="{{ Auth::user()->avatar }}" alt="">{{ Auth::user()->name }}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>

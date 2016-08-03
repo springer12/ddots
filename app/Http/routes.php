@@ -45,6 +45,19 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('restore/{id}', 'Backend\TestingServersController@restore');
         });
 
+        Route::group(['prefix' => 'programming-languages', 'as' => 'programming_languages::'], function () {
+            Route::get('/', ['uses' => 'Backend\ProgrammingLanguageController@index', 'as' => 'list']);
+
+            Route::get('add', ['uses' => 'Backend\ProgrammingLanguageController@showForm', 'as' => 'add']);
+            Route::post('add', 'Backend\ProgrammingLanguageController@edit');
+
+            Route::get('edit/{id}', ['uses' => 'Backend\ProgrammingLanguageController@showForm', 'as' => 'edit']);
+            Route::post('edit/{id}', 'Backend\ProgrammingLanguageController@edit');
+
+            Route::get('delete/{id}', 'Backend\ProgrammingLanguageController@delete');
+            Route::get('restore/{id}', 'Backend\ProgrammingLanguageController@restore');
+        });
+
         Route::group(['prefix' => 'subdomains', 'as' => 'subdomains::'], function () {
             Route::get('/', ['uses' => 'Backend\SubdomainController@index', 'as' => 'list']);
 
