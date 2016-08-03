@@ -15,26 +15,15 @@ use Illuminate\Support\Facades\File;
 class Problem extends Model
 {
     use SoftDeletes;
+    use Sortable;
+
+    protected static $sortable_columns = [
+        'id', 'name', 'created_at', 'updated_at', 'deleted_at', 'difficulty',
+    ];
 
     public $fillable = [
         'name', 'description', 'difficulty', 'archive'
     ];
-
-    /**
-     * The columns that grid can be sorted.
-     *
-     * @var bool
-     *
-     * @return string|array
-     */
-    public static function sortable($list = false)
-    {
-        $columns = [
-            'id', 'name', 'created_at', 'updated_at', 'deleted_at', 'difficulty',
-        ];
-
-        return ($list ? implode(',', $columns) : $columns);
-    }
 
     public static function getValidationRules()
     {

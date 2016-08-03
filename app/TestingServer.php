@@ -10,6 +10,11 @@ use Carbon\Carbon;
 class TestingServer extends Authenticatable
 {
     use SoftDeletes;
+    use Sortable;
+    
+    protected static $sortable_columns = [
+        'id', 'name', 'login', 'token_created_at', 'deleted_at'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -21,20 +26,6 @@ class TestingServer extends Authenticatable
     ];
 
     const TOKEN_TTL = 60 * 60; //seconds
-
-    /**
-     * The columns that grid can be sorted.
-     *
-     * @var array
-     */
-    public static function sortable($list = false)
-    {
-        $columns = [
-            'id', 'name', 'login', 'token_created_at', 'deleted_at'
-        ];
-
-        return ($list ? implode(',', $columns) : $columns);
-    }
 
     public function isTokenValid()
     {

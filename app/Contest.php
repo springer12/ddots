@@ -8,22 +8,18 @@ use Illuminate\Support\Facades\DB;
 
 class Contest extends Model
 {
+    use Sortable;
+
+    protected static $sortable_columns = [
+        'id', 'name', 'start_date', 'end_date', 'created_at', 'owner',
+    ];
 
     const TYPE_TOURNAMENT = 'tournament';
 
     protected $fillable = [
         'name', 'description', 'user_id', 'start_date', 'end_date', 'is_active', 'is_standings_active', 'show_max', 'labs',
     ];
-
-    public static function sortable($list = false)
-    {
-        $columns = [
-            'id', 'name', 'start_date', 'end_date', 'created_at', 'owner',
-        ];
-
-        return ($list ? implode(',', $columns) : $columns);
-    }
-
+    
     public static function getValidationRules()
     {
         return [
@@ -116,7 +112,7 @@ class Contest extends Model
             ->where('problem_id', '=', $problem_id)
             ->where('contest_id', '=', $this->id)
             ->first();
-        if($select) {
+        if ($select) {
             return $select->max_points;
         }
         return null;
@@ -151,14 +147,15 @@ class Contest extends Model
         return $users;
     }
 
-    public function getProblemData(){
+    public function getProblemData()
+    {
         $problems = [];
-        foreach($this->problems as $problem) {
+        foreach ($this->problems as $problem) {
             $problems[$problem->id]['name'] = $problem->name;
             $problems[$problem->id]['link'] = route('frontend::contests::problem', ['contest_id' => $this->id, 'problem_id' => $problem->id]);
             $solution = $problem->getContestDisplaySolution($this);
             $problems[$problem->id]['difficulty'] = $problem->difficulty;
-            if($solution) {
+            if ($solution) {
                 if (Auth::user()->hasRole(User::ROLE_TEACHER) || Auth::user()->id == $solution->user_id) {
                     $problems[$problem->id]['solution_link'] = route('frontend::contests::solution', ['id' => $solution->id]);
                 }

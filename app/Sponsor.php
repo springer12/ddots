@@ -9,16 +9,15 @@ use Illuminate\Support\Facades\Input;
 class Sponsor extends Model
 {
     use SoftDeletes;
+    use Sortable;
+    
+    protected static $sortable_columns = [
+        'id', 'name', 'show_on_main', 'created_at', 'updated_at', 'deleted_at'
+    ];
 
     protected $fillable = ['name', 'description', 'show_on_main', 'image', 'link'];
 
-    public static function sortable($list = false)
-    {
-        $columns = [
-            'id', 'name', 'show_on_main', 'created_at', 'updated_at', 'deleted_at'
-        ];
-        return ($list ? implode(',', $columns) : $columns);
-    }
+
 
     public static function getValidationRules()
     {

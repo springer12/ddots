@@ -13,6 +13,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Authenticatable
 {
     use SoftDeletes;
+    use Sortable;
+    
+    protected static $sortable_columns = [
+        'id', 'name', 'email', 'role', 'nickname', 'date_of_birth', 'place_of_study', 'programming_language', 'vk_link', 'fb_link', 'created_at', 'updated_at', 'deleted_at'
+    ];
+
     const ROLE_ADMIN = 'admin';
     const ROLE_LOW_USER = 'low_user';
     const ROLE_USER = 'user';
@@ -230,15 +236,6 @@ class User extends Authenticatable
         }
     }
 
-    public static function sortable($list = false)
-    {
-        $columns = [
-            'id', 'name', 'email', 'role', 'nickname', 'date_of_birth', 'place_of_study', 'programming_language', 'vk_link', 'fb_link', 'created_at', 'updated_at', 'deleted_at'
-        ];
-
-        return ($list ? implode(',', $columns) : $columns);
-    }
-
     public function setProgrammingLanguageAttribute($value)
     {
         $this->attributes['programming_language'] = !trim($value) ? null : trim($value);
@@ -249,7 +246,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Group::class, 'group_user', 'user_id')->withTimestamps();
     }
 
-    public static function search($term, $page, $searchTeachers, $teacher_id = null )
+    public static function search($term, $page, $searchTeachers, $teacher_id = null)
     {
         if ($searchTeachers) {
             $users = User::teacher();

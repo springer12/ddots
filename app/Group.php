@@ -9,6 +9,11 @@ use App\Http\Requests;
 class Group extends Model
 {
     use SoftDeletes;
+    use Sortable;
+
+    protected static $sortable_columns = [
+        'id', 'name', 'created_at', 'updated_at', 'deleted_at', 'owner'
+    ];
 
     protected $fillable = ['name', 'description'];
 
@@ -18,15 +23,6 @@ class Group extends Model
             'name' => 'required|max:255|any_lang_name',
             'description' => 'max:255',
         ];
-    }
-
-    public static function sortable($list = false)
-    {
-        $columns = [
-            'id', 'name', 'created_at', 'updated_at', 'deleted_at', 'owner'
-        ];
-
-        return ($list ? implode(',', $columns) : $columns);
     }
 
     public function users()

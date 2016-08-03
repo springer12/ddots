@@ -10,21 +10,19 @@ use Illuminate\Support\Facades\File;
 class Subdomain extends Model
 {
     use SoftDeletes;
+    use Sortable;
+
+    protected static $sortable_columns = [
+        'id', 'name', 'fullname', 'title', 'created_at', 'updated_at', 'deleted_at'
+    ];
+
     const DEFAULT_SUB_DOMAIN = 'labs';
 
     protected $fillable = ['name', 'fullname', 'description', 'title'];
 
-    public static function sortable($list = false)
+    public function users()
     {
-        $columns = [
-            'id', 'name', 'fullname', 'title', 'created_at', 'updated_at', 'deleted_at'
-        ];
-
-        return ($list ? implode(',', $columns) : $columns);
-    }
-
-    public function users(){
-        return $this->belongsToMany(User::class, 'subdomain_user','subdomain_id', 'user_id');
+        return $this->belongsToMany(User::class, 'subdomain_user', 'subdomain_id', 'user_id');
     }
 
     public static function getValidationRules()
@@ -38,27 +36,31 @@ class Subdomain extends Model
         ];
     }
 
-    public static function currentSubdomainName() {
-        if(\Schema::hasTable('subdomains')) {
+    public static function currentSubdomainName()
+    {
+        if (\Schema::hasTable('subdomains')) {
             $subdomain = self::where('name', explode('.', \Request::getHost())[0])
                 ->get()
                 ->first();
         }
-        if(empty($subdomain)) {
+        if (empty($subdomain)) {
             return self::DEFAULT_SUB_DOMAIN;
         }
         return $subdomain->name;
     }
 
-    public static function currentSubdomain() {
+    public static function currentSubdomain()
+    {
         return self::current()->firstOrFail();
     }
 
-    public function scopeCurrent($query) {
+    public function scopeCurrent($query)
+    {
         return $query->where('name', explode('.', \Request::getHost())[0]);
     }
 
-    private function getImageFilePath(){
+    private function getImageFilePath()
+    {
         return 'subdomains/images/';
     }
 
@@ -81,11 +83,13 @@ class Subdomain extends Model
         return null;
     }
 
-    public function getUrl(){
+    public function getUrl()
+    {
         return 'http://' . $this->name . '.' . config('app.domain') . '/';
     }
 
-    public function sponsors(){
+    public function sponsors()
+    {
         return $this->belongsToMany(Sponsor::class, 'sponsor_subdomain', 'subdomain_id', 'sponsor_id');
     }
 }
