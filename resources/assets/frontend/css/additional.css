@@ -4,3 +4,6 @@
 .align-center {
     text-align: center;
 }
+.select2-container--default .select2-selection--multiple {
+    background-color: #fffcf5 ;
+}
