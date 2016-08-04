@@ -54,6 +54,7 @@ class SolutionController extends Controller
 
         $solution_reports = $request->get('tests');
         $reports = [];
+        $succeeded = 0;
 
         foreach ($solution_reports as $report) {
             $reports[] = new SolutionReport([
@@ -61,9 +62,15 @@ class SolutionController extends Controller
                 'execution_time' => $report['execution_time'],
                 'memory_peak'    => $report['memory_peak'],
             ]);
+
+            if($report['status'] == 'OK') {
+                $succeeded++;
+            }
         }
 
         $solution = Solution::where('id', $id)->firstOrFail();
+
+        $solution->success_percentage = $succeeded * 100 / count($solution_reports);
 
         $solution->status  = $request->get('status');
         $solution->message = $request->get('message');
