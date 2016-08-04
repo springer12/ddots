@@ -112,27 +112,36 @@
                             </div>
                         </div>
 
-                        @if(old('programming_languages'))
-                            @foreach($programming_languages as $programming_language)
 
-                                <label for="programming_language">{{ $programming_language->name }}</label>
-                                <input id="programming_language" type="checkbox" name="programming_languages[]"
-                                       value="{{ $programming_language->id }}" {{ !in_array($programming_language->id, old('programming_languages'))?:'checked' }}>
-                            @endforeach
-                        @elseif($errors->has('programming_languages'))
-                            {{ $errors->first('programming_languages') }}
-                            @foreach($programming_languages as $programming_language)
-                                <label for="programming_language">{{ $programming_language->name }}</label>
-                                <input id="programming_language" type="checkbox" name="programming_languages[]"
-                                       value="{{ $programming_language->id }}">
-                            @endforeach
-                        @else
-                            @foreach($programming_languages as $programming_language)
-                                <label for="programming_language">{{ $programming_language->name }}</label>
-                                <input id="programming_language" type="checkbox" name="programming_languages[]"
-                                       value="{{ $programming_language->id }}" {{ !$contest->programming_languages->contains($programming_language->id)?:'checked' }}>
-                            @endforeach
-                        @endif
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                   for="programming_language">Programming languages</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select id="programming_language" name="programming_languages[]" data-select-programming-languages
+                                        class="form-control col-md-7 col-xs-12"
+                                        multiple>
+
+                                    @if(old('programming_languages'))
+                                        @foreach($programming_languages as $programming_language)
+                                            <option value="{{ $programming_language->id }}" {{ !in_array($programming_language->id, old('programming_languages'))?:'selected' }}>{{ $programming_language->name }}</option>
+                                        @endforeach
+                                    @elseif($errors->has('programming_languages'))
+                                        @foreach($programming_languages as $programming_language)
+                                            <option value="{{ $programming_language->id }}">{{ $programming_language->name }}</option>
+                                        @endforeach
+                                    @else
+                                        @foreach($programming_languages as $programming_language)
+                                            <option value="{{ $programming_language->id }}" {{ !$contest->programming_languages->contains($programming_language->id)?:'selected' }}>{{ $programming_language->name }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                @if ($errors->has('programming_languages'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('programming_languages') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
 
                         <div>
