@@ -108,7 +108,7 @@ class UserController extends Controller
         ];
 
         if ($id) {
-            $rules = array_merge(User::getValidationRules(), [
+            $rules = array_merge(User::getValidationRules((bool)$request->get('programming_language')), [
                 'email' => 'required|email|unique:users,email,' . $id,
                 'nickname' => 'required|max:255|english_alpha_dash|unique:users,nickname,' . $user->id]);
             if ($request->get('password') != '') {
@@ -116,7 +116,7 @@ class UserController extends Controller
                 $fillData = array_merge($fillData, ['password' => $request->get('password')]);
             }
         } else {
-            $rules = array_merge(User::getValidationRules(), [
+            $rules = array_merge(User::getValidationRules((bool)$request->get('programming_language')), [
                 'password' => 'required|min:6|confirmed',
                 'email' => 'required|email|unique:users',
                 'nickname' => 'required|max:255|english_alpha_dash|unique:users,nickname,']);

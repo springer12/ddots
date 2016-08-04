@@ -22,7 +22,7 @@ class UserController extends Controller
 
     public function upgrade(Request $request)
     {
-        $rules = array_merge(Auth::user()->getValidationRules(), [
+        $rules = array_merge(Auth::user()->getValidationRules((bool)$request->get('programming_language')), [
             'email' => 'required|email|unique:users,email,' . Auth::user()->id,
             'nickname' => 'required|max:255|english_alpha_dash|unique:users,nickname,' . Auth::user()->id
         ]);
@@ -52,7 +52,7 @@ class UserController extends Controller
 
     public function saveEdit(Request $request)
     {
-        $rules = array_merge(User::getValidationRules(), ['nickname' => 'required|max:255|english_alpha_dash|unique:users,nickname,' . Auth::user()->id]);
+        $rules = array_merge(User::getValidationRules((bool)$request->get('programming_language')), ['nickname' => 'required|max:255|english_alpha_dash|unique:users,nickname,' . Auth::user()->id]);
         $this->validate($request, $rules);
 
         if (Input::hasFile('avatar')) {

@@ -27,11 +27,11 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="avatar">Avatar</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="avatar">Avatar</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div><img width="100" height="100" src="{{ $user->avatar }}" alt="avatar"></div>
-                            <input type="file" name="avatar" id="avatar">
-                            
+                                <div><img width="100" height="100" src="{{ $user->avatar }}" alt="avatar"></div>
+                                <input type="file" name="avatar" id="avatar">
+
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
@@ -169,32 +169,18 @@
                             </div>
                         </div>
 
-
-                        <div class="form-group">
-                            <label for="programming_language" class="col-md-4 control-label">primary programming
+                        <div class="form-group{{ $errors->has('programming_language') ? ' has-error' : '' }}">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="programming_language">Programming
                                 language</label>
-
-                            <div class="col-md-6">
-                                <button data-language-selector-button class="btn btn-primary dropdown-toggle"
-                                        type="button"
-                                        data-toggle="dropdown">@if($user->programmingLanguage)
-                                        {{ $user->programmingLanguage->name }}
-                                    @else
-                                        Not Selected
-                                    @endif
-                                </button>
-                                <ul class="dropdown-menu">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select name="programming_language" class="form-control col-md-7 col-xs-12">
+                                    <option value="">Not selected</option>
                                     @foreach($programming_languages as $programming_language)
-                                        <li role="presentation"><a data-language-selector
-                                                                   data-id="{{ $programming_language->id }}">{{ $programming_language->name }}</a>
-                                        </li>
+                                        <option value="{{ $programming_language->id }}"
+                                                {{ $user->programming_language != $programming_language->id?:'selected' }}
+                                        >{{ $programming_language->name }}</option>
                                     @endforeach
-                                </ul>
-                                <input type="hidden" name="programming_language"
-                                       @if($user->programmingLanguage)
-                                       value="{{ $user->programmingLanguage->id }}
-                                       @endif
-                                               "/>
+                                </select>
                                 @if ($errors->has('programming_language'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('programming_language') }}</strong>

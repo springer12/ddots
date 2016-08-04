@@ -19,7 +19,7 @@ class RegexServiceProvider extends ServiceProvider
         });
 
         Validator::extend('any_lang_name', function($attribute, $value){
-            return preg_match('/^[\pL- ]+$/u', $value);
+            return preg_match('/^[\pL-\' ]+$/u', $value);
         });
 
         Validator::extend('alpha_dash_spaces', function($attribute, $value){

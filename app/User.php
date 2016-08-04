@@ -120,20 +120,24 @@ class User extends Authenticatable
     }
 
 
-    public static function getValidationRules()
+    public static function getValidationRules($language_submitted)
     {
-        return [
+        $rules = [
             'name' => 'required|max:255|any_lang_name',
             'avatar' => 'mimetypes:image/jpeg,image/bmp,image/png|max:1000',
             'role' => 'in:' . implode(',', array_keys(self::SETTABLE_ROLES)),
             'date_of_birth' => 'date|after:1920-01-01|before:' . Carbon::now()->sub(new \DateInterval('P4Y')),
             'profession' => 'max:255|alpha_dash_spaces',
             'place_of_study' => 'max:255|alpha_dash_spaces',
-            'programming_language' => 'exists:programming_languages,id',
             'vk_link' => 'url_domain:vk.com,new.vk.com,www.vk.com,www.new.vk.com',
             'fb_link' => 'url_domain:facebook.com,www.facebook.com',
             'subdomain' => 'exists:subdomains,id',
         ];
+
+        if($language_submitted) {
+            $rules['programming_language'] = 'exists:programming_languages,id';
+        }
+        return $rules;
     }
 
     public function setAvatar($name)
