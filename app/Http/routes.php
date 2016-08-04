@@ -32,6 +32,9 @@ Route::group(['middleware' => 'web'], function () {
         });
         Route::get('/', ['uses' => 'Backend\DashboardController@index', 'as' => 'dashboard']);
 
+        Route::get('/tester', ['uses' => 'Backend\TesterController@index', 'as' => 'tester']);
+        Route::post('/tester', ['uses' => 'Backend\TesterController@test']);
+
         Route::group(['prefix' => 'testing-servers', 'as' => 'testing_servers::'], function () {
             Route::get('/', ['uses' => 'Backend\TestingServersController@index', 'as' => 'list']);
 

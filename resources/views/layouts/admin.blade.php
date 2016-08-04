@@ -65,6 +65,8 @@
                                     <li class="{{ !Request::is(action('Backend\ProgrammingLanguageController@index')) ?: 'current-page' }}">
                                         <a href="{{ action('Backend\ProgrammingLanguageController@index') }}">Programming
                                             languages</a></li>
+                                    <li class="{{ !Request::is(action('Backend\TesterController@index')) ?: 'current-page' }}">
+                                        <a href="{{ action('Backend\TesterController@index') }}">Fake tester</a></li>
                                 </ul>
                             </li>
                         </ul>

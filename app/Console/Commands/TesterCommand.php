@@ -45,7 +45,8 @@ class TesterCommand extends Command
         $this->info('token: ' . $api_token);
 
         $count = 0;
-        while($id = json_decode((string)$client->get('testing-system-api/solutions/latest-new', ['query' => ['api_token' => $api_token]])->getBody())->id && $count < $this->option('count')) {
+        do {
+            $id = json_decode((string)$client->get('testing-system-api/solutions/latest-new', ['query' => ['api_token' => $api_token]])->getBody())->id;
             $this->info('latest new : ' . print_r($id, true));
 
             $solution = json_decode((string)$client->get('testing-system-api/solutions/' . $id, ['query' => ['api_token' => $api_token]])->getBody());
@@ -69,6 +70,6 @@ class TesterCommand extends Command
             $client->patch('testing-system-api/solutions/' . $id, ['json' => ['state' => 'tested', 'api_token' => $api_token]]);
 
             $count++;
-        }
+        } while($id && $count < $this->option('count'));
     }
 }
