@@ -199,6 +199,16 @@ Route::group(['middleware' => 'web'], function () {
                 ]);
             });
 
+            Route::group(['prefix' => 'messaging', 'as' => 'messages::'], function () {
+                Route::get('/', ['uses' => 'MessageController@index', 'as' => 'list']);
+
+                Route::get('/new', ['uses' => 'MessageController@newDialog', 'as' => 'new']);
+                Route::post('/new', 'MessageController@send');
+
+                Route::get('/{id}', ['uses' => 'MessageController@dialog', 'as' => 'dialog'])->where('id', '[0-9]+');
+                Route::post('/{id}', 'MessageController@send')->where('id', '[0-9]+');
+            });
+
             Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
                 Route::get('/', ['uses' => 'ContestController@index', 'as' => 'list']);
                 Route::get('/{id}', ['uses' => 'ContestController@single', 'as' => 'single'])->where('id', '[0-9]+');

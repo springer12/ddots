@@ -45,6 +45,12 @@
             </a>
         </li>
     @endif
-
-
+    @if(Auth::check())
+        <li {!! Request::is('messaging/') ? 'class="active"' : '' !!}>
+            <a href="{{ url('/messaging') }}">
+                <i class="ti-user"></i>
+                <p>Messaging</p>
+            </a>
+        </li>
+    @endif
 </ul>

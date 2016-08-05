@@ -14,7 +14,7 @@ class User extends Authenticatable
 {
     use SoftDeletes;
     use Sortable;
-    
+
     protected static $sortable_columns = [
         'id', 'name', 'email', 'role', 'nickname', 'date_of_birth', 'place_of_study', 'programming_language', 'vk_link', 'fb_link', 'created_at', 'updated_at', 'deleted_at'
     ];
@@ -134,7 +134,7 @@ class User extends Authenticatable
             'subdomain' => 'exists:subdomains,id',
         ];
 
-        if($language_submitted) {
+        if ($language_submitted) {
             $rules['programming_language'] = 'exists:programming_languages,id';
         }
         return $rules;
@@ -270,5 +270,65 @@ class User extends Authenticatable
             ->take(self::RESULTS_PER_PAGE)
             ->get();
         return ['results' => $users, 'total_count' => $count];
+    }
+
+    public function sentMessages()
+    {
+        return $this->hasMany(Message::class, 'messages', 'sender_id');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->hasMany(Message::class, 'messages', 'receiver_id');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'owner_id');
+    }
+
+    public function getDialogUsers()
+    {
+        return User::select('users.*')->join('messages', 'users.id', '= ', DB::raw('CASE
+	                      WHEN messages.sender_id = ' . $this->id . ' THEN messages.receiver_id
+	                      ELSE messages.sender_id
+                      END'))->distinct()->get();
+    }
+
+    public function getNoDialogStudents()
+    {
+        return $this->students()->whereNotIn('users.id', function ($query) {
+            return $query->select('users.id')->from('users')->join('messages', 'users.id', '= ', DB::raw('CASE
+	                      WHEN messages.sender_id = ' . $this->id . ' THEN messages.receiver_id
+	                      ELSE messages.sender_id
+                      END'))->distinct();
+        })->get();
+    }
+
+    public function getNoDialogTeachers()
+    {
+        return $this->teachers()->whereNotIn('users.id', function ($query) {
+            return $query->select('users.id')->from('users')->join('messages', 'users.id', '= ', DB::raw('CASE
+	                      WHEN messages.sender_id = ' . $this->id . ' THEN messages.receiver_id
+	                      ELSE messages.sender_id
+                      END'))->distinct();
+        })->get();
+    }
+
+    public function getLastMessageWith($id)
+    {
+        return $this->getMessagesWithQuery($id)->first();
+    }
+
+    public function getMessagesWith($id)
+    {
+        return $this->getMessagesWithQuery($id)->get();
+    }
+
+    private function getMessagesWithQuery($id)
+    {
+        return $this->messages()->where(function ($query) use ($id) {
+            return $query->where('sender_id', $id)->orWhere('receiver_id', $id);
+        })->latest();
     }
 }
