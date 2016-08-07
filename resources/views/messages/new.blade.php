@@ -18,6 +18,9 @@
                         </select>
                         {{ csrf_field() }}
                         <textarea name="text"></textarea>
+                        @if($errors->has('text'))
+                            <span><strong>{{ $errors->first('text') }}</strong></span>
+                        @endif
                         <input type="submit">
                     </form>
                 </div>

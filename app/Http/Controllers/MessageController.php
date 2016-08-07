@@ -23,9 +23,10 @@ class MessageController extends Controller
 
     public function send(Request $request, $id = null)
     {
+        $this->validate($request, Message::getValidationRules());
         $id = $id?$id:$request->get('user_id');
         $message = new Message();
-        $message->text = $request->get('text');
+        $message->text = e($request->get('text'));
         $message->sender()->associate(Auth::user()->id);
         $message->receiver()->associate($id);
         $message->owner()->associate(Auth::user()->id);

@@ -14,9 +14,13 @@
                             <div><span>{{ $message->sender->name }} :</span> {{ $message->text }}</div>
                         @endforeach
                     </div>
+
                     <form method="post">
                         {{ csrf_field() }}
                         <textarea name="text"></textarea>
+                        @if($errors->has('text'))
+                            <span><strong>{{ $errors->first('text') }}</strong></span>
+                        @endif
                         <input type="submit">
                     </form>
                 </div>
