@@ -10,41 +10,6 @@
             width: '100%'
         });
 
-        $('[data-select-participants]').select2({
-            width: '100%',
-            placeholder: 'Select students',
-
-            ajax: {
-                url: $('[data-student-search-url]').data('student-search-url'),
-                dataType: 'json',
-                quietMillis: 100,
-                data: function (params) {
-                    return {
-                        term: params.term,
-                        page: params.page || 1,
-                    }
-                },
-                processResults: function (data, params) {
-                    params.page = params.page || 1;
-                    return {
-                        results: $.map(data.results, function (student) {
-                            return {
-                                text: student.name,
-                                id: student.id
-                            }
-                        }),
-                        pagination: {
-                            more: (params.page * 10) < data.total_count
-                        }
-                    }
-                },
-                cache: true
-            },
-            escapeMarkup: function (markup) { return markup; },
-            minimumInputLength: 1,
-        });
-
-
         $('[data-select-owner]').select2({
             width: '100%',
             placeholder: 'Select owner',
