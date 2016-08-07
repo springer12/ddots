@@ -3,12 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class Contest extends Model
 {
     use Sortable;
+    use SoftDeletes;
 
     protected static $sortable_columns = [
         'id', 'name', 'start_date', 'end_date', 'created_at', 'owner',

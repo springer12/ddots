@@ -52,6 +52,29 @@ class User extends Authenticatable
         'created_at'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            $user->ownedContests()->delete();
+        });
+
+        static::restoring(function ($user) {
+            $user->ownedContests()->withTrashed()->restore();
+        });
+    }
+
+    public function ownedContests()
+    {
+        return $this->hasMany(Contest::class, 'user_id');
+    }
+
+    public function contests()
+    {
+        return $this->belongsToMany(Contest::class, 'contest_user', 'user_id', 'contest_id');
+    }
+
     /**
      * Mutator to hash password
      *
