@@ -73,22 +73,18 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('owner') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="owner">Owner <span
-                                        class="required">*</span></label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                   for="participants">Owner</label>
+
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="owner" required="required" class="form-control col-md-7 col-xs-12">
-                                    @if(!$contest->owner)
-                                        <option value="">Select a teacher</option>
+                                <select name="owner" data-select-owner
+                                        data-teacher-search-url="{{ route('backend::ajax::searchTeachers') }}"
+                                        class="form-control col-md-7 col-xs-12">
+                                    @if($old_owner)
+                                        <option value="{{ $old_owner->id }}" selected>{{ $old_owner->name }}</option>
+                                    @elseif($contest->owner)
+                                        <option value="{{ $contest->owner->id }}" selected>{{ $contest->owner->name }}</option>
                                     @endif
-                                    @foreach($teachers as $teacher)
-                                        <option value="{{ $teacher->id }}"
-                                        @if(old('owner'))
-                                            {{ !(old('owner') == $teacher->id)?:'selected' }}
-                                                @elseif($contest->owner)
-                                            {{ !$contest->owner->id == $teacher->id?:'selected' }}
-                                                @endif
-                                        >{{ $teacher->name }}</option>
-                                    @endforeach
                                 </select>
                                 @if ($errors->has('owner'))
                                     <span class="help-block">
@@ -172,7 +168,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12"
                                    for="participants">Participants</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="participants[]" data-select-participants data-student-search-url="{{ route('backend::ajax::searchStudents') }}"
+                                <select name="participants[]" data-select-students data-get-students-url="{{ route('backend::ajax::getStudents') }}"
                                         class="form-control col-md-7 col-xs-12"
                                         multiple>
                                     @foreach($participants as $participant)

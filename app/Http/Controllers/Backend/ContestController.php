@@ -61,12 +61,13 @@ class ContestController extends Controller
     public function showForm(Request $request, $id = null)
     {
         $contest = ($id ? Contest::findOrFail($id) : new Contest());
-
+        $old_owner = null;
         if ($id) {
             $title = 'Edit Contest';
             if (Session::get('errors')) {
-                $participants = User::user()->whereIn('id', old('participants'))->get();
 
+                $old_owner = User::find(old('owner'));
+                $participants = User::user()->whereIn('id', old('participants'))->get();
                 $included_problems = collect();
                 $problems = Problem::orderBy('name', 'desc')->get();
 
@@ -94,6 +95,7 @@ class ContestController extends Controller
             'contest' => $contest,
             'title' => $title,
             'participants' => $participants,
+            'old_owner' => $old_owner,
             'programming_languages' => ProgrammingLanguage::orderBy('name', 'desc')->get(),
             'teachers' => User::teacher()->select(['id', 'name'])->get(),
             'included_problems' => $included_problems,
