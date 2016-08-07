@@ -42,7 +42,7 @@ class MessageController extends Controller
         if(Auth::user()->hasRole(User::ROLE_TEACHER)) {
             $users = Auth::user()->getNoDialogStudents();
         } else {
-            $users = Auth::user()->getNoDialogTeahers();
+            $users = Auth::user()->getNoDialogTeachers();
         }
         return view('messages.new')->with(['users' => $users]);
     }
