@@ -203,9 +203,6 @@
                         <label for="show_max">Show maximum points for problems</label>
                         <input id="show_max" type="checkbox" name="show_max" {{ !$contest->show_max?:'checked' }}>
 
-                        <label for="labs">Is a labs contest</label>
-                        <input id="labs" type="checkbox" name="labs" {{ !$contest->labs?:'checked' }}>
-
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

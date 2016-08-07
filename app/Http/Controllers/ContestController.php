@@ -134,7 +134,6 @@ class ContestController extends Controller
             'is_active' => $request->get('is_active'),
             'is_standings_active' => $request->get('is_standings_active'),
             'show_max' => $request->get('show_max'),
-            'labs' => $request->get('labs'),
         ];
 
         $this->validate($request, Contest::getValidationRules(), ['programming_languages.required' => 'At least one language must be selected.']);
