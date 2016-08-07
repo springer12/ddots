@@ -88,7 +88,8 @@
                 </div>
             </div>
         @endif
-        <div data-solution data-ace-mode="{{ $solution->programming_language->ace_mode }}" class="ace-editor" id="editor">{{ $solution->getCode() }}</div>
+        <div data-solution data-ace-mode="{{ $solution->programming_language->ace_mode }}" class="ace-editor"
+             id="editor">{{ $solution->getCode() }}</div>
         <h3>Reports</h3>
         <div class="x_content">
             <table class="table">
@@ -102,10 +103,12 @@
                 </thead>
                 <tbody>
                 @foreach($solution->reports as $report)
-                    <td>{{ $solution->successful_reports? $solution->points / $solution->successful_reports: '-' }}</td>
-                    <td>{{ $report->execution_time }}</td>
-                    <td>{{ $report->status }}</td>
-                    <td>{{ $report->memory_peak }}</td>
+                    <tr>
+                        <td>{{ $solution->successful_reports? $solution->points / $solution->successful_reports: '-' }}</td>
+                        <td>{{ $report->execution_time }}</td>
+                        <td>{{ $report->status }}</td>
+                        <td>{{ $report->memory_peak }}</td>
+                    </tr>
                 @endforeach
                 </tbody>
             </table>
