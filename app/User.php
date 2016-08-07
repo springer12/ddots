@@ -292,7 +292,7 @@ class User extends Authenticatable
         return User::select('users.*')->join('messages', 'users.id', '= ', DB::raw('CASE
 	                      WHEN messages.sender_id = ' . $this->id . ' THEN messages.receiver_id
 	                      ELSE messages.sender_id
-                      END'))->distinct()->get();
+                      END'))->where('owner_id', $this->id)->distinct()->get();
     }
 
     public function getNoDialogStudents()

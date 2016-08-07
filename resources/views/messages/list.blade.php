@@ -13,23 +13,22 @@
                     <div class="x_title">
                         <div class="clearfix"></div>
                     </div>
-                    @if($dialog_users)
-                    <div class="x_content">
-                        <table class="table">
-                            <tbody>
-
-                            @foreach($dialog_users as $user)
-                                <tr>
-                                    <td class="wrap-text">{{ $user->name }}</td>
-                                    <td>
-                                        <a href="{{ route('frontend::messages::dialog', ['id' => $user->id]) }}">{{ $user->getLastMessageWith(Auth::user()->id)->sender->name }}
-                                            : {{ $user->getLastMessageWith(Auth::user()->id)->text }}</a></td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                        @endif
+                    @if(!$dialog_users->isEmpty())
+                        <div class="x_content">
+                            <table class="table">
+                                <tbody>
+                                @foreach($dialog_users as $user)
+                                    <tr>
+                                        <td class="wrap-text">{{ $user->name }}</td>
+                                        <td>
+                                            <a href="{{ route('frontend::messages::dialog', ['id' => $user->id]) }}">{{ $user->getLastMessageWith(Auth::user()->id)->sender->name }}
+                                                : {{ $user->getLastMessageWith(Auth::user()->id)->text }}</a></td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
