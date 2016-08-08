@@ -93,9 +93,9 @@
                                 </div>
 
 
-                                <div class="col-md-3">
+                                <div class="col-md-5">
                                     <div class="form-group{{ $errors->has('programming_language') ? ' has-error' : '' }}">
-                                        <label for="programming_language">Programming language</label>
+                                        <label for="programming_language">Programming Language</label>
                                             <select name="programming_language" class="form-control border-input">
                                                 <option value="">Not selected</option>
                                                 @foreach($programming_languages as $programming_language)
