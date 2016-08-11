@@ -34,4 +34,9 @@ class Message extends Model
             'text' => 'required|max:3000',
         ];
     }
+
+    public function getSenderName()
+    {
+        return $this->sender->hasRole(\App\User::ROLE_ADMIN)?'admin':$this->sender->name;
+    }
 }

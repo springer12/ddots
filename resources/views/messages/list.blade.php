@@ -19,9 +19,9 @@
                                 <tbody>
                                 @foreach($dialog_users as $user)
                                     <tr>
-                                        <td class="wrap-text">{{ $user->name }}</td>
+                                        <td class="wrap-text">{{ $user->hasRole(\App\User::ROLE_ADMIN)?'admin':$user->name }}</td>
                                         <td>
-                                            <a href="{{ route('frontend::messages::dialog', ['id' => $user->id]) }}">{{ $user->getLastMessageWith(Auth::user()->id)->sender->name }}
+                                            <a href="{{ route('frontend::messages::dialog', ['id' => $user->id]) }}">{{ $user->getLastMessageWith(Auth::user()->id)->getSenderName() }}
                                                 : {{ $user->getLastMessageWith(Auth::user()->id)->text }}</a></td>
                                     </tr>
                                 @endforeach

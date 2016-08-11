@@ -11,18 +11,20 @@
                     </div>
                     <div class="x_content">
                         @foreach($messages as $message)
-                            <div><span>{{ $message->sender->name }} :</span> {{ $message->text }}</div>
+                            <div><span>{{ $message->getSenderName() }} :</span> {{ $message->text }}</div>
                         @endforeach
                     </div>
 
-                    <form method="post">
-                        {{ csrf_field() }}
-                        <textarea name="text"></textarea>
-                        @if($errors->has('text'))
-                            <span><strong>{{ $errors->first('text') }}</strong></span>
-                        @endif
-                        <input type="submit">
-                    </form>
+                    @if($can_message)
+                        <form method="post">
+                            {{ csrf_field() }}
+                            <textarea name="text"></textarea>
+                            @if($errors->has('text'))
+                                <span><strong>{{ $errors->first('text') }}</strong></span>
+                            @endif
+                            <input type="submit">
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>
