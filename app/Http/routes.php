@@ -48,6 +48,13 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('restore/{id}', 'Backend\TestingServersController@restore');
         });
 
+        Route::group(['prefix' => 'messaging', 'as' => 'messages::'], function () {
+            Route::get('/', ['uses' => 'Backend\MessageController@index', 'as' => 'list']);
+            
+            Route::get('/{id}', ['uses' => 'Backend\MessageController@dialog', 'as' => 'dialog'])->where('id', '[0-9]+');
+            Route::post('/{id}', 'Backend\MessageController@send')->where('id', '[0-9]+');
+        });
+
         Route::group(['prefix' => 'programming-languages', 'as' => 'programming_languages::'], function () {
             Route::get('/', ['uses' => 'Backend\ProgrammingLanguageController@index', 'as' => 'list']);
 

@@ -58,6 +58,9 @@
                                         <a title="Edit"
                                            href="{{ action('Backend\UserController@edit',['id'=> $user->id]) }}"><span
                                                     class="glyphicon glyphicon-pencil"></span></a>
+                                        <a title="Go to dialog"
+                                           href="{{ action('Backend\MessageController@dialog',['id'=> $user->id]) }}"><span
+                                                    class="glyphicon glyphicon-envelope"></span></a>
                                         @if (!$user->deleted_at)
                                             <a title="Delete" href="" data-toggle="confirmation"
                                                data-message="Are you sure you want to delete this user from the system?"
