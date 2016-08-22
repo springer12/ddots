@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-2 col-sm-2 col-xs-2">
-                <a class="btn btn-primary" href="{{ route('frontend::messages::new') }}" role="button">New dialog</a>
+                <a class="btn btn-primary" href="{{ route('backend::users::list') }}" role="button">New dialog</a>
             </div>
         </div>
         <div class="row">
