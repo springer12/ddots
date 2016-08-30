@@ -9,6 +9,12 @@ use App\Http\Controllers\Controller;
 
 class TestingServerController extends Controller
 {
+    /**
+     * Gets the api token for a testing server
+     *
+     * @param Request $request
+     * @return array
+     */
     public function getToken(Request $request)
     {
         $server = TestingServer::where('login', $request->get('login'))->first();
