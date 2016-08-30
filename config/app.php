@@ -161,6 +161,7 @@ return [
 
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         \SocialiteProviders\Manager\ServiceProvider::class,
+        Asvae\ApiTester\ServiceProvider::class,
 
     ],
 
