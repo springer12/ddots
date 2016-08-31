@@ -28,8 +28,7 @@
                                 <tr data-student-row-id="{{ $student->id }}">
                                     <td>{{ $student->id }}</td>
                                     <td class="wrap-text">{{ $student->name }}</td>
-                                    <td>{{ $student->emАail }}</td>
-                                    <td>{{ $student->emАail }}</td>
+                                    <td>{{ $student->email }}</td>
                                     <td>{{ $student->nickname }}</td>
                                     <td>
                                         @foreach($student->groups as $group)
