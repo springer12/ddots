@@ -18,7 +18,7 @@
                     @if($can_message)
                         <form method="post">
                             {{ csrf_field() }}
-                            <textarea name="text"></textarea>
+                            <textarea class="form-control" rows="3" name="text"></textarea>
                             @if($errors->has('text'))
                                 <span><strong>{{ $errors->first('text') }}</strong></span>
                             @endif
