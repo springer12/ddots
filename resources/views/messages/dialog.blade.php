@@ -7,6 +7,8 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <a href="{{ route('frontend::messages::list') }}">Back to dialogs</a>
+                        </br>
+                        </br>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
@@ -22,7 +24,7 @@
                             @if($errors->has('text'))
                                 <span><strong>{{ $errors->first('text') }}</strong></span>
                             @endif
-                            <input type="submit">
+                             <button type="submit" class="btn btn-default">Send</button>
                         </form>
                     @endif
                 </div>
