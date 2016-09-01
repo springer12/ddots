@@ -17,7 +17,7 @@
                         <div class="col-xs-12 col-sm-6 col-md-8">
                             <div><span>{{ $message->getSenderName() }} :</span> {{ $message->text }}</div>
                         </div>
-                        <div class="col-xs-6 col-md-4 pull-right">22:22:22</div>
+                        <div class="col-xs-6 col-md-4"><div class="pull-right">22:22:22</div></div>
 
                         @endforeach
 
