@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use \Auth;
-use Illuminate\Pagination\Paginator;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserController extends Controller
 {
@@ -16,22 +16,18 @@ class UserController extends Controller
     {
         if (Auth::user()->hasRole(User::ROLE_TEACHER)) {
             User::findOrFail($id)->teachers()->updateExistingPivot(Auth::user()->id, ['confirmed' => true]);
-            $response['error'] = false;
         } else {
-            $response['error'] = true;
+            throw new HttpException(404);
         }
-        return $response;
     }
 
     public function decline(Request $request, $id)
     {
         if (Auth::user()->hasRole(User::ROLE_TEACHER)) {
             User::findOrFail($id)->teachers()->detach(Auth::user()->id);
-            $response['error'] = false;
         } else {
-            $response['error'] = true;
+            throw new HttpException(404);
         }
-        return $response;
     }
 
     public function addToGroup(Request $request)
@@ -44,11 +40,9 @@ class UserController extends Controller
             $user = User::find($request->get('student_id'));
             $user->groups()->attach($request->get('group_id'));
             $user->save();
-            $response['error'] = false;
         } else {
-            $response['error'] = true;
+            throw new HttpException(404);
         }
-        return $response;
     }
 
     public function getStudents(Request $request)
@@ -78,12 +72,13 @@ class UserController extends Controller
                 $teacher = User::where('role', User::ROLE_TEACHER)->find($id);
                 Auth::user()->teachers()->attach($teacher->id);
             }
+            if(!$remainingRequests) {
+                throw new HttpException(403);
+            }
             $response['remainingRequests'] = $remainingRequests - 1;
-            $response['error'] = false;
-        } else {
-            $response['error'] = true;
+            return $response;
         }
-        return $response;
+        throw new HttpException(404);
     }
 }
 

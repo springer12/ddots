@@ -4,15 +4,14 @@
             var $this = $(this);
             $this.prop('disabled', true);
             $.ajax($this.data('add-teacher-url')).success(function (response) {
-                if (response.error !== true) {
                     $this.hide();
                     $('#teacher_' + $this.data('teacher-id') + '.btn-success').show();
                     if (response.remainingRequests == 0) {
-                        window.alert('no more'); //@todo: alert???!!! only modal bootstrap dialogs
+                        $('[data-modal-text]').text('You have expended your allowed requests');
+                        $('[data-modal]').modal('show');
                         $('[data-teacher-id]').off('click');
                         $('[data-teacher-id]').prop('disabled', true);
                     }
-                }
             });
         });
     }

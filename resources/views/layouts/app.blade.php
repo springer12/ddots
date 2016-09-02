@@ -7,9 +7,11 @@
 
     <title>{{ App\Subdomain::currentSubdomain()->title }}</title>
 
-    <link href="{{ asset('frontend-bundle/css/bundle' . (config('app.assets.minified', false) ? '.min' : '') . '.css') }}" rel='stylesheet' type='text/css'>
+    <link href="{{ asset('frontend-bundle/css/bundle' . (config('app.assets.minified', false) ? '.min' : '') . '.css') }}"
+          rel='stylesheet' type='text/css'>
 </head>
 
+<body>
 <div class="wrapper">
     <div class="sidebar" data-background-color="white" data-active-color="danger">
         <div class="sidebar-wrapper">
@@ -32,7 +34,8 @@
                         <span class="icon-bar bar2"></span>
                         <span class="icon-bar bar3"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ action('HomeController@index') }}">{{ App\Subdomain::currentSubdomain()->fullname }}</a>
+                    <a class="navbar-brand"
+                       href="{{ action('HomeController@index') }}">{{ App\Subdomain::currentSubdomain()->fullname }}</a>
                 </div>
 
                 <div class="collapse navbar-collapse">
@@ -51,6 +54,22 @@
             </div>
         </div>
         @include('partial.footer')
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" data-modal>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body" data-modal-text>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
 
