@@ -19,13 +19,16 @@ class MessageController extends Controller
 
     public function dialog(Request $request, $id)
     {
-        return view('messages.dialog')->with(['messages' => Auth::user()->getMessagesWith($id), 'can_message' => Auth::user()->canWriteTo($id)]);
+        return view('messages.dialog')->with([
+            'messages' => Auth::user()->getMessagesWith($id),
+            'dialog_partner' => User::find($id),
+        ]);
     }
 
     public function send(Request $request, $id = null)
     {
-        $id = $id?$id:$request->get('user_id');
-        if(Auth::user()->canWriteTo($id)) {
+        $id = $id ? $id : $request->get('user_id');
+        if (Auth::user()->canWriteTo($id)) {
             $this->validate($request, Message::getValidationRules());
             $message = new Message();
             $message->text = e($request->get('text'));
@@ -44,7 +47,7 @@ class MessageController extends Controller
 
     public function newDialog(Request $request)
     {
-        if(Auth::user()->hasRole(User::ROLE_TEACHER)) {
+        if (Auth::user()->hasRole(User::ROLE_TEACHER)) {
             $users = Auth::user()->getNoDialogStudents();
             $users->push(User::admin()->first()); //@todo add logic for selecting an admin
             $users->last()->name = 'admin';
