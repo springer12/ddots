@@ -11,17 +11,16 @@ use App\Http\Controllers\Controller;
 class ProgrammingLanguagesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Returns all programming languages
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return array
      */
-    public function index()
+    public function index(Request $request)
     {
-        $languages = ProgrammingLanguage::all();
-
         $response = [];
 
-        foreach ($languages as $language) {
+        foreach (ProgrammingLanguage::all() as $language) {
             $response[] = [
                 'id'             => $language->id,
                 'title'          => $language->name,

@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-2 col-sm-2 col-xs-2">
-                <a class="btn btn-primary" href="{{ route('frontend::messages::new') }}" role="button">New dialog</a>
+                <a class="btn btn-primary" href="{{ route('backend::users::list') }}" role="button">New dialog</a>
             </div>
         </div>
         <div class="row">
@@ -21,7 +21,7 @@
                                     <tr>
                                         <td class="wrap-text">{{ $user->hasRole(\App\User::ROLE_ADMIN)?'admin':$user->name }}</td>
                                         <td>
-                                            <a href="{{ route('frontend::messages::dialog', ['id' => $user->id]) }}">{{ $user->getLastMessageWith(Auth::user()->id)->getSenderName() }}
+                                            <a href="{{ route('backend::messages::dialog', ['id' => $user->id]) }}">{{ $user->getLastMessageWith(Auth::user()->id)->getSenderName() }}
                                                 : {{ $user->getLastMessageWith(Auth::user()->id)->text }}</a></td>
                                     </tr>
                                 @endforeach

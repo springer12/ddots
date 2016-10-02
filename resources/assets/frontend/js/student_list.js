@@ -24,11 +24,7 @@
         var $this = $(this);
         $this.off('click');
         $.ajax($this.data('url')).success(function (response) {
-            if (response.error === false) {
                 $this.hide();
-            }
-        }).fail(function (response) {
-            console.log(response);
         })
     });
 })(jQuery, window, document);

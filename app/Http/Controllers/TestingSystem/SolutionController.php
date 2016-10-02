@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\File;
 
 class SolutionController extends Controller
 {
+    /**
+     * Gets the latest unreserved unprocessed solution
+     *
+     * @param Request $request
+     * @return array
+     */
     public function latest_new(Request $request) {
         $solution = Solution::oldestNew();
         $solution->state = Solution::STATE_RESERVED;
@@ -19,6 +25,13 @@ class SolutionController extends Controller
         return ['id' => $solution->id];
     }
 
+    /**
+     * Gets a solution
+     *
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
     public function show(Request $request, $id) {
         $solution = Solution::select('problem_id', 'programming_language_id', 'testing_mode')
             ->where('id', $id)
@@ -27,10 +40,24 @@ class SolutionController extends Controller
         return $solution;
     }
 
+    /**
+     * Gets a solution's source code
+     *
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
     public function show_source_code(Request $request, $id) {
         return File::get(Solution::where('id', $id)->firstOrFail()->sourceCodeFilePath());
     }
 
+    /**
+     * Updates a solution
+     *
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
     public function update(Request $request, $id) {
         $this->validate($request, [
             'state' => 'required|in:' . implode(',', Solution::getStates())
@@ -43,6 +70,13 @@ class SolutionController extends Controller
         return Response::make();
     }
 
+    /**
+     * Stores a report to a solution
+     *
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
     public function store_report(Request $request, $id) {
         $this->validate($request, [
             'status'                 => 'required|in:' . implode(',', Solution::getStatuses()),

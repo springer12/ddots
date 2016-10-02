@@ -220,6 +220,11 @@ class User extends Authenticatable
         return $query->where('role', self::ROLE_USER);
     }
 
+    public function scopeAdmin($query)
+    {
+        return $query->where('role', self::ROLE_ADMIN);
+    }
+
     public function allowedToRequestTeacher()
     {
         return $this->getRemainingRequests() > 0;
@@ -353,5 +358,18 @@ class User extends Authenticatable
         return $this->messages()->where(function ($query) use ($id) {
             return $query->where('sender_id', $id)->orWhere('receiver_id', $id);
         })->latest();
+    }
+    
+    public function canWriteTo($id)
+    {
+        if($this->hasRole(self::ROLE_ADMIN)) {
+            return true;
+        } elseif($this->hasRole(self::ROLE_TEACHER) && ($this->isTeacherOf($id) || User::find($id)->hasRole(self::ROLE_ADMIN))) {
+            return true;
+        } elseif($this->hasRole(self::ROLE_USER) && User::find($id)->isTeacherOf($this->id)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

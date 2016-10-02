@@ -4,7 +4,7 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-sm-12 col-xs-12 card">
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Students</h2>
@@ -40,11 +40,11 @@
                                             <a data-confirm data-student-id="{{ $student->id }}"
                                                data-url="{{ route('frontend::ajax::confirmStudent',['id' => $student->id]) }}"
                                                title="Confirm"><span
-                                                        class="glyphicon glyphicon-thumbs-up"></span></a>
+                                                        class="glyphicon glyphicon-ok"></span></a>
                                             <a data-decline data-student-id="{{ $student->id }}"
                                                data-url="{{ route('frontend::ajax::declineStudent',['id' => $student->id]) }}"
                                                title="Decline"><span
-                                                        class="glyphicon glyphicon-thumbs-down"></span></a>
+                                                        class="glyphicon glyphicon-remove"></span></a>
                                         @endif
                                         <a data-edit-student-id="{{ $student->id }}" title="Edit" data-toggle="dropdown"
                                                 {{ !$student->pivot->confirmed?:'style="display: none;"' }}><span
