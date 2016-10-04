@@ -264,9 +264,9 @@ Route::post('vk', function(\Illuminate\Http\Request $request) {
 });
 Route::get('volumes', function() {
     $html = "";
-
+    $i = 1;
     foreach (\App\Volume::all() as $value) {
-        $html .= $value . '<br>';
+        $html .= $i++ . '. ' . $value->name . '<br>';
     }
 
     return $html;
