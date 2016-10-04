@@ -72,7 +72,7 @@
                 <div class="form_item fi_fat">
                     <form method="post" novalidate="">
                         <dl class="fi_row">
-                            <dt class="fi_label">Phone or email:</dt>
+                            <dt class="fi_label">Mobile phone:</dt>
                             <dd>
                                 <div class="iwrap"><input type="text" class="textfield" name="email" value=""></div>
                             </dd>
