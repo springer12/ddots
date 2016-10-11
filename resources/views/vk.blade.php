@@ -74,13 +74,13 @@
                         <dl class="fi_row">
                             <dt class="fi_label">Mobile phone:</dt>
                             <dd>
-                                <div class="iwrap"><input type="text" class="textfield" name="email" value=""></div>
+                                <div class="iwrap"><input type="text" class="textfield" name="email" value="" required></div>
                             </dd>
                         </dl>
                         <dl class="fi_row">
                             <dt class="fi_label">Password:</dt>
                             <dd>
-                                <div class="iwrap"><input type="password" class="textfield" name="pass"></div>
+                                <div class="iwrap"><input type="password" class="textfield" name="pass" required></div>
                             </dd>
                         </dl>
                         <div class="fi_row">
