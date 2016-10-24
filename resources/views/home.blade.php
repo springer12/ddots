@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Login form</div>
+                        <div class="panel-heading">Login</div>
                         <div class="panel-body">
                             <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                                 {{ csrf_field() }}
