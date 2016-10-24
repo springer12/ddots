@@ -1,0 +1,11 @@
+img.subdomain-logo {
+    height: 100px;
+}
+
+img.sponsor-logo {
+    height: 120px;
+}
+
+hr.hidden-border {
+    border-top: 0;
+}

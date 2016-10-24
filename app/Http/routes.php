@@ -12,7 +12,22 @@
 */
 
 Route::group(['middleware' => 'web'], function () {
-    Route::auth();
+
+
+    // Authentication Routes...
+    $this->post('login', 'Auth\AuthController@login');
+    $this->get('logout', 'Auth\AuthController@logout');
+
+    // Registration Routes...
+    $this->get('register', 'Auth\AuthController@showRegistrationForm');
+    $this->post('register', 'Auth\AuthController@register');
+
+    // Password Reset Routes...
+    $this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+    $this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+    $this->post('password/reset', 'Auth\PasswordController@reset');
+
+
     Route::get('verify/{code}', 'UserController@verify');
     Route::group(['middleware' => 'social_provider', 'prefix' => 'social', 'as' => 'social::'], function () {
         Route::get('/redirect/{provider}', ['as' => 'redirect', 'uses' => 'Auth\SocialController@redirectToProvider']);

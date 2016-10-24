@@ -10,6 +10,7 @@
     "bootstrap-checkbox": "^1.4.0",
     "select2": "^4.0.3",
     "ace-builds": "^1.2.3",
-    "eonasdan-bootstrap-datetimepicker": "^4.17.37"
+    "eonasdan-bootstrap-datetimepicker": "^4.17.37",
+    "bootstrap-social": "^5.0.0"
   }
 }

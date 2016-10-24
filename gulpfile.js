@@ -20,6 +20,10 @@ var path = require('path'),
         "js": vendorPath('bootstrap/dist/js/bootstrap.js')
     },
 
+    bootstrap_social = {
+        "css": vendorPath('bootstrap-social/bootstrap-social.css')
+    },
+
 // gentelella
     gentelella = {
         "css": vendorPath('gentelella/build/css/custom.css'),
@@ -29,7 +33,7 @@ var path = require('path'),
 //font-awesome
     fontawesome = {
         "fonts": vendorPath('font-awesome/fonts', true),
-        "css": vendorPath('font-awesome/css/font-awesome.css'),
+        "css": vendorPath('font-awesome/css/font-awesome.min.css'),
     },
 
 // eonasdan-bootstrap-datetimepicker
@@ -61,13 +65,13 @@ var path = require('path'),
  */
     apps = {
         "frontend": {
-            "fonts": [Bootstrap.fonts, appPath('frontend', 'fonts')],
-            "css": [Bootstrap.css, datetimepicker.css, select2.css, appPath('frontend', 'css')],
+            "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('frontend', 'fonts')],
+            "css": [Bootstrap.css, bootstrap_social.css, fontawesome.css, datetimepicker.css, select2.css, appPath('frontend', 'css')],
             "js": [jQuery, Bootstrap.js, moment.js, datetimepicker.js, bootstrap_checkbox.js, select2.js, appPath('frontend', 'js')]
         },
         "backend": {
             "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('backend', 'fonts')],
-            "css": [Bootstrap.css, select2.css, fontawesome.css,datetimepicker.css, gentelella.css, appPath('backend', 'css')],
+            "css": [Bootstrap.css, select2.css, fontawesome.css, datetimepicker.css, gentelella.css, appPath('backend', 'css')],
             "js": [jQuery, select2.js, Bootstrap.js, gentelella.js, moment.js, datetimepicker.js, bootstrap_checkbox.js, appPath('backend', 'js')]
         },
         "ace": {
