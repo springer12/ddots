@@ -21,13 +21,13 @@
             <hr class="hidden-border">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Login</div>
-                        <div class="panel-body">
+                    <div class="card card-block">
+                        <div class="card-title">Login</div>
+                        <div class="card-text">
                             <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                                 {{ csrf_field() }}
                                 <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
-                                    <label class="col-md-4 control-label">Email</label>
+                                    <label class="col-md-4 control-label">Email / nickname</label>
 
                                     <div class="col-md-6">
                                         <input class="form-control" type="text" placeholder="Enter email" name="nickname">
@@ -86,29 +86,29 @@
         <!-- news -->
         <div class="row">
             <div class="col-sm-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">News</div>
-                    <div class="panel-body">
+                <div class="card card-block">
+                    <div class="card-title">News</div>
+                    <div class="card-text">
                         <div>
                             <p>Текст последней новости...</p>
                         </div>
                     </div>
                     <hr>
 
-                    <div class="panel-body">
+                    <div class="card-text">
                         <div>
                             <p>Текст последней новости...</p>
                         </div>
                     </div>
                     <hr>
 
-                    <div class="panel-body">
+                    <div class="card-text">
                         <div>
                             <p>Текст последней новости...</p>
                         </div>
                     </div>
                     <hr>
-                    <div class="panel-body">
+                    <div class="card-text">
 
                         <a href="#" class="btn btn-success pull-right">Last news</a>
                     </div>
@@ -123,11 +123,11 @@
         <!-- news -->
         <div class="row">
             <div class="col-sm-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Project was supported by</div>
+                <div class="card card-block">
+                    <div class="card-title">Project was supported by</div>
 
                     @foreach($subdomain->sponsors as $sponsor)
-                        <div class="panel-body">
+                        <div class="card-text">
                             <div class="row">
                                 <div class="col-sm-4">
                                     <a href="{{ $sponsor->link }}"><img src="{{ $sponsor->image }}" alt="sponsor-logo" class="sponsor-logo" /></a>
@@ -143,7 +143,7 @@
                         <hr>
                     @endforeach
 
-                    <div class="panel-body">
+                    <div class="card-text">
                         <a href="#" class="btn btn-success pull-right">All sponsors</a>
                     </div>
                 </div>
@@ -155,9 +155,9 @@
         <!-- news -->
         <div class="row">
             <div class="col-sm-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Subdomain's teachers and mentors</div>
-                    <div class="panel-body">
+                <div class="card card-block">
+                    <div class="card-title">Subdomain's teachers and mentors</div>
+                    <div class="card-text">
                         <div class="row">
                             <div class="col-sm-4">
                                 <a href="#"><img src="#" alt="sponsor-logo" class="sponsor-logo" /></a>
@@ -172,7 +172,7 @@
                     </div>
                     <hr>
 
-                    <div class="panel-body">
+                    <div class="card-text">
                         <div class="row">
                             <div class="col-sm-4">
                                 <a href="#"><img src="#" alt="sponsor-logo" class="sponsor-logo" /></a>
@@ -187,7 +187,7 @@
                     </div>
                     <hr>
 
-                    <div class="panel-body">
+                    <div class="card-text">
                         <div class="row">
                             <div class="col-sm-4">
                                 <a href="#"><img src="#" alt="sponsor-logo" class="sponsor-logo" /></a>
@@ -202,7 +202,7 @@
                     </div>
                     <hr>
 
-                    <div class="panel-body">
+                    <div class="card-text">
                         <a href="#" class="btn btn-success pull-right">All teachers and mentors</a>
                     </div>
                 </div>

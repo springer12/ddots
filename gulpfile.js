@@ -20,6 +20,12 @@ var path = require('path'),
         "js": vendorPath('bootstrap/dist/js/bootstrap.js')
     },
 
+// tether
+    tether = {
+        "css": vendorPath('tether/dist/css/tether.min.css'),
+        "js": vendorPath('tether/dist/js/tether.min.js')
+    },
+
     bootstrap_social = {
         "css": vendorPath('bootstrap-social/bootstrap-social.css')
     },
@@ -61,13 +67,13 @@ var path = require('path'),
     apps = {
         "frontend": {
             "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('frontend', 'fonts')],
-            "css": [Bootstrap.css, bootstrap_social.css, fontawesome.css, datetimepicker.css, select2.css, appPath('frontend', 'css')],
-            "js": [jQuery, Bootstrap.js, moment.js, datetimepicker.js, select2.js, appPath('frontend', 'js')]
+            "css": [tether.css, Bootstrap.css, bootstrap_social.css, fontawesome.css, datetimepicker.css, select2.css, appPath('frontend', 'css')],
+            "js": [jQuery, tether.js, Bootstrap.js, moment.js, datetimepicker.js, select2.js, appPath('frontend', 'js')]
         },
         "backend": {
             "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('backend', 'fonts')],
-            "css": [Bootstrap.css, select2.css, fontawesome.css, datetimepicker.css, gentelella.css, appPath('backend', 'css')],
-            "js": [jQuery, select2.js, Bootstrap.js, gentelella.js, moment.js, datetimepicker.js, appPath('backend', 'js')]
+            "css": [tether.css, Bootstrap.css, select2.css, fontawesome.css, datetimepicker.css, gentelella.css, appPath('backend', 'css')],
+            "js": [jQuery, tether.js, select2.js, Bootstrap.js, gentelella.js, moment.js, datetimepicker.js, appPath('backend', 'js')]
         },
         "ace": {
             "js": [ace]

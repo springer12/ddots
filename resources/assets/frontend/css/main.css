@@ -9,3 +9,7 @@ img.sponsor-logo {
 hr.hidden-border {
     border-top: 0;
 }
+
+.navbar {
+    border-radius: 0;
+}
