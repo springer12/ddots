@@ -18,6 +18,7 @@ class CreateWorkRimeReportsTable extends Migration
             $table->string('desc', 2000);
             $table->dateTime('when');
             $table->integer('minutes');
+            $table->enum('who', ['Valentine', 'Dmitry']);
 
 
         });
@@ -30,6 +31,6 @@ class CreateWorkRimeReportsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sponsors');
+        Schema::drop('work_time_reports');
     }
 }

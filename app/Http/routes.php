@@ -50,7 +50,7 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::group(['prefix' => 'messaging', 'as' => 'messages::'], function () {
             Route::get('/', ['uses' => 'Backend\MessageController@index', 'as' => 'list']);
-            
+
             Route::get('/{id}', ['uses' => 'Backend\MessageController@dialog', 'as' => 'dialog'])->where('id', '[0-9]+');
             Route::post('/{id}', 'Backend\MessageController@send')->where('id', '[0-9]+');
         });
@@ -277,4 +277,22 @@ Route::group(['namespace' => 'TestingSystem', 'prefix' => 'testing-system-api'],
 
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
     //future
+});
+
+Route::get('tracker', function() {
+    return view('tracker');
+});
+
+Route::post('tracker', function(Illuminate\Http\Request $request) {
+    DB::insert('
+INSERT INTO work_time_reports (`desc`,`minutes`,`when`, `who`)
+VALUES (?,?,?,?);
+', [
+        $request->get('desc'),
+        $request->get('minutes'),
+        $request->get('when'),
+        $request->get('who'),
+    ]);
+
+    return redirect()->to('tracker');
 });
