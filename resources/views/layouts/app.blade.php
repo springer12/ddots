@@ -15,7 +15,15 @@
 @include('partial.navbar')
 
 @yield('content')
-
+<footer class="text-muted">
+    <div class="container">
+        <p>
+            Copyright © 2005-2016, Молодёжное научное общество "Q-BIT" <br>
+            тех. поддержка: Н.А. Арзубов <br>
+            При использовании материалов сайта ссылка на dots.org.ua обязательна.
+        </p>
+    </div>
+</footer>
 @yield('scripts')
 <script src="{{ asset('frontend-bundle/js/bundle' . (config('app.assets.minified', false) ? '.min' : '') . '.js') }}"></script>
 </body>

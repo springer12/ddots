@@ -21,37 +21,37 @@
             <hr class="hidden-border">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="card card-block">
-                        <div class="card-title">Login</div>
-                        <div class="card-text">
-                            <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+                    <div class="card">
+                        <div class="card-header">Login</div>
+                        <div class="card-block">
+                            <form role="form" method="POST" action="{{ url('/login') }}">
                                 {{ csrf_field() }}
-                                <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
-                                    <label class="col-md-4 control-label">Email / nickname</label>
+                                <div class="form-group row {{ $errors->has('nickname') ? ' has-danger' : '' }}">
+                                    <label class="col-md-4 col-form-label">Email / nickname</label>
 
                                     <div class="col-md-6">
                                         <input class="form-control" type="text" placeholder="Enter email" name="nickname">
                                         @if ($errors->has('nickname'))
-                                            <span class="help-block">
+                                            <span class="form-control-feedback">
                                                 <strong>{{ $errors->first('nickname') }}</strong>
                                             </span>
                                         @endif
                                     </div>
                                 </div>
-                                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                    <label class="col-md-4 control-label">Password</label>
+                                <div class="form-group row {{ $errors->has('password') ? ' has-danger' : '' }}">
+                                    <label class="col-md-4 col-form-label">Password</label>
                                     <div class="col-md-6">
                                         <input class="form-control" type="password" placeholder="Password" name="password">
                                         @if ($errors->has('password'))
-                                            <span class="help-block">
+                                            <span class="form-control-feedback">
                                                 <strong>{{ $errors->first('password') }}</strong>
                                             </span>
                                         @endif
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <div class="col-md-6 col-md-offset-4">
+                                <div class="form-group row">
+                                    <div class="col-md-6 offset-md-4">
                                         <div class="checkbox">
                                             <label>
                                                 <input type="checkbox" name="remember"> Remember Me
@@ -59,8 +59,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-md-6 col-md-offset-4">
+                                <div class="form-group row ">
+                                    <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
                                             <i class="fa fa-btn fa-sign-in"></i> Login
                                         </button>
@@ -68,8 +68,8 @@
                                         <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-md-6 col-md-offset-4">
+                                <div class="form-group row ">
+                                    <div class="col-md-6 offset-md-4">
                                         <a class="btn btn-social-icon btn-vk"       href="{{ route('social::redirect', ['provider' => 'vkontakte']) }}"><span class="fa fa-vk"></span></a>
                                         <a class="btn btn-social-icon btn-google"   href="{{ route('social::redirect', ['provider' => 'google']) }}"><span class="fa fa-google"></span></a>
                                         <a class="btn btn-social-icon btn-facebook" href="{{ route('social::redirect', ['provider' => 'facebook']) }}"><span class="fa fa-facebook"></span></a>
@@ -86,29 +86,29 @@
         <!-- news -->
         <div class="row">
             <div class="col-sm-12">
-                <div class="card card-block">
-                    <div class="card-title">News</div>
-                    <div class="card-text">
+                <div class="card">
+                    <div class="card-header">News</div>
+                    <div class="card-block">
                         <div>
                             <p>Текст последней новости...</p>
                         </div>
                     </div>
                     <hr>
 
-                    <div class="card-text">
+                    <div class="card-block">
                         <div>
                             <p>Текст последней новости...</p>
                         </div>
                     </div>
                     <hr>
 
-                    <div class="card-text">
+                    <div class="card-block">
                         <div>
                             <p>Текст последней новости...</p>
                         </div>
                     </div>
                     <hr>
-                    <div class="card-text">
+                    <div class="card-block">
 
                         <a href="#" class="btn btn-success pull-right">Last news</a>
                     </div>
@@ -123,11 +123,11 @@
         <!-- news -->
         <div class="row">
             <div class="col-sm-12">
-                <div class="card card-block">
-                    <div class="card-title">Project was supported by</div>
+                <div class="card">
+                    <div class="card-header">Project was supported by</div>
 
                     @foreach($subdomain->sponsors as $sponsor)
-                        <div class="card-text">
+                        <div class="card-block">
                             <div class="row">
                                 <div class="col-sm-4">
                                     <a href="{{ $sponsor->link }}"><img src="{{ $sponsor->image }}" alt="sponsor-logo" class="sponsor-logo" /></a>
@@ -143,7 +143,7 @@
                         <hr>
                     @endforeach
 
-                    <div class="card-text">
+                    <div class="card-block">
                         <a href="#" class="btn btn-success pull-right">All sponsors</a>
                     </div>
                 </div>
@@ -155,9 +155,9 @@
         <!-- news -->
         <div class="row">
             <div class="col-sm-12">
-                <div class="card card-block">
-                    <div class="card-title">Subdomain's teachers and mentors</div>
-                    <div class="card-text">
+                <div class="card">
+                    <div class="card-header">Subdomain's teachers and mentors</div>
+                    <div class="card-block">
                         <div class="row">
                             <div class="col-sm-4">
                                 <a href="#"><img src="#" alt="sponsor-logo" class="sponsor-logo" /></a>
@@ -172,7 +172,7 @@
                     </div>
                     <hr>
 
-                    <div class="card-text">
+                    <div class="card-block">
                         <div class="row">
                             <div class="col-sm-4">
                                 <a href="#"><img src="#" alt="sponsor-logo" class="sponsor-logo" /></a>
@@ -187,7 +187,7 @@
                     </div>
                     <hr>
 
-                    <div class="card-text">
+                    <div class="card-block">
                         <div class="row">
                             <div class="col-sm-4">
                                 <a href="#"><img src="#" alt="sponsor-logo" class="sponsor-logo" /></a>
@@ -202,7 +202,7 @@
                     </div>
                     <hr>
 
-                    <div class="card-text">
+                    <div class="card-block">
                         <a href="#" class="btn btn-success pull-right">All teachers and mentors</a>
                     </div>
                 </div>
