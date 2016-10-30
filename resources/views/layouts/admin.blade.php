@@ -54,6 +54,8 @@
                                         <a href="{{ action('Backend\UserController@index') }}">Users</a></li>
                                     <li class="{{ !Request::is(action('Backend\ProblemController@index')) ?: 'current-page' }}">
                                         <a href="{{ action('Backend\ProblemController@index') }}">Problems</a></li>
+                                    <li class="{{ !Request::is(action('Backend\VolumeController@index')) ?: 'current-page' }}">
+                                        <a href="{{ action('Backend\VolumeController@index') }}">Volumes</a></li>
                                     <li class="{{ !Request::is(action('Backend\SponsorController@index')) ?: 'current-page' }}">
                                         <a href="{{ action('Backend\SponsorController@index') }}">Sponsors</a></li>
                                     <li class="{{ !Request::is(action('Backend\SubdomainController@index')) ?: 'current-page' }}">
