@@ -54,6 +54,8 @@
                                         <a href="{{ action('Backend\UserController@index') }}">Users</a></li>
                                     <li class="{{ !Request::is(action('Backend\ProblemController@index')) ?: 'current-page' }}">
                                         <a href="{{ action('Backend\ProblemController@index') }}">Problems</a></li>
+                                    <li class="{{ !Request::is(action('Backend\VolumeController@index')) ?: 'current-page' }}">
+                                        <a href="{{ action('Backend\VolumeController@index') }}">Volumes</a></li>
                                     <li class="{{ !Request::is(action('Backend\SponsorController@index')) ?: 'current-page' }}">
                                         <a href="{{ action('Backend\SponsorController@index') }}">Sponsors</a></li>
                                     <li class="{{ !Request::is(action('Backend\SubdomainController@index')) ?: 'current-page' }}">
@@ -92,12 +94,12 @@
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                aria-expanded="false">
                                 <img src="{{ Auth::user()->avatar }}" alt="">{{ Auth::user()->name }}
-                                <span class=" fa fa-angle-down"></span>
                             </a>
-                            <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
-                                </li>
-                            </ul>
+                            <div class="dropdown-menu pull-right">
+                                <a class="dropdown-item" href="{{ url('/logout') }}"><i
+                                            class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                </a>
+                            </div>
                         </li>
                     </ul>
                 </nav>

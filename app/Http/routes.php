@@ -12,7 +12,22 @@
 */
 
 Route::group(['middleware' => 'web'], function () {
-    Route::auth();
+
+
+    // Authentication Routes...
+    $this->post('login', 'Auth\AuthController@login');
+    $this->get('logout', 'Auth\AuthController@logout');
+
+    // Registration Routes...
+    $this->get('register', 'Auth\AuthController@showRegistrationForm');
+    $this->post('register', 'Auth\AuthController@register');
+
+    // Password Reset Routes...
+    $this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+    $this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+    $this->post('password/reset', 'Auth\PasswordController@reset');
+
+
     Route::get('verify/{code}', 'UserController@verify');
     Route::group(['middleware' => 'social_provider', 'prefix' => 'social', 'as' => 'social::'], function () {
         Route::get('/redirect/{provider}', ['as' => 'redirect', 'uses' => 'Auth\SocialController@redirectToProvider']);
@@ -29,6 +44,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/search-students', ['as' => 'searchStudents', 'uses' => 'Ajax\UserController@searchStudents']);
             Route::get('/get-students', ['as' => 'getStudents', 'uses' => 'Ajax\UserController@getStudents']);
             Route::get('/search-teachers', ['as' => 'searchTeachers', 'uses' => 'Ajax\UserController@searchTeachers']);
+            Route::get('/search-problems', ['as' => 'searchProblems', 'uses' => 'Ajax\ProblemController@search']);
         });
         Route::get('/', ['uses' => 'Backend\DashboardController@index', 'as' => 'dashboard']);
 
@@ -133,6 +149,19 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('restore/{id}', 'Backend\GroupController@restore');
         });
 
+        Route::group(['prefix' => 'volumes', 'as' => 'volumes::'], function () {
+            Route::get('/', ['uses' => 'Backend\VolumeController@index', 'as' => 'list']);
+
+            Route::get('add', ['uses' => 'Backend\VolumeController@showForm', 'as' => 'add']);
+            Route::post('add', 'Backend\VolumeController@edit');
+
+            Route::get('edit/{id}', ['uses' => 'Backend\VolumeController@showForm', 'as' => 'edit']);
+            Route::post('edit/{id}', 'Backend\VolumeController@edit');
+
+            Route::get('delete/{id}', 'Backend\VolumeController@delete');
+            Route::get('restore/{id}', 'Backend\VolumeController@restore');
+        });
+
         Route::group(['prefix' => 'problems', 'as' => 'problems::'], function () {
             Route::get('/', ['uses' => 'Backend\ProblemController@index', 'as' => 'list']);
 
@@ -223,7 +252,7 @@ Route::group(['middleware' => 'web'], function () {
                     'uses' => 'ProblemController@contestProblem',
                     'as'   => 'problem',
                 ])->where('contest_id', '[0-9]+')->where('problem_id', '[0-9]+');
-                Route::post('/{contest_id}/{problem_id}/', ['uses' => 'SolutionController@submit'])
+                Route::post('/{contest_id}/{problem_id}/', ['uses' => 'SolutionController@submit', 'as' => 'contest_problem'])
                     ->where('contest_id', '[0-9]+')
                     ->where('problem_id', '[0-9]+');
                 Route::get('/{id}/standings/', [

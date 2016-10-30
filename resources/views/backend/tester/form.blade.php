@@ -11,10 +11,10 @@
                 </div>
                 <div class="x_content">
                     <br>
-                    <form method="post" class="form-horizontal form-label-left" enctype="multipart/form-data">
+                    <form method="post" class=" form-label-left" enctype="multipart/form-data">
                         {!! csrf_field() !!}
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="login">Login <span
+                        <div class="form-group row">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="login">Login <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="login" required="required"
@@ -22,8 +22,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Password <span
+                        <div class="form-group row">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="password">Password <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="password" name="password"
@@ -32,15 +32,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Count</label>
+                        <div class="form-group row">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="name">Count</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="number" name="count" class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
 
                         <div class="ln_solid"></div>
-                        <div class="form-group">
+                        <div class="form-group row">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                 <a class="btn btn-primary"
                                    href=""

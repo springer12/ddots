@@ -21,6 +21,12 @@ class Contest extends Model
     protected $fillable = [
         'name', 'description', 'user_id', 'start_date', 'end_date', 'is_active', 'is_standings_active', 'show_max', 'labs',
     ];
+
+    protected $dates = [
+        'start_date',
+        'end_date',
+        'created_at',
+    ];
     
     public static function getValidationRules()
     {

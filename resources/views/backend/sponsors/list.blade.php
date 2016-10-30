@@ -42,20 +42,23 @@
                                     <td>{{ $sponsor->deleted_at }}</td>
                                     <td>
                                         <a title="Edit"
-                                           href="{{ action('Backend\SponsorController@edit',['id'=> $sponsor->id]) }}"><span
-                                                    class="glyphicon glyphicon-pencil"></span></a>
+                                           href="{{ action('Backend\SponsorController@edit',['id'=> $sponsor->id]) }}">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </a>
                                         @if (!$sponsor->deleted_at)
                                             <a title="Delete" href="" data-toggle="confirmation"
                                                data-message="Are you sure you want to delete this sponsor from the system?"
                                                data-btn-ok-href="{{ action('Backend\SponsorController@delete', ['id'=> $sponsor->id]) }}"
-                                               data-btn-ok-label="Delete"><span
-                                                        class="glyphicon glyphicon-trash"></span></a>
+                                               data-btn-ok-label="Delete">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </a>
                                         @else
                                             <a title="Restore" href="" data-toggle="confirmation"
                                                data-message="Are you sure you want to restore this sponsor?"
                                                data-btn-ok-href="{{ action('Backend\SponsorController@restore', ['id'=> $sponsor->id]) }}"
-                                               data-btn-ok-label="Restore"><span
-                                                        class="glyphicon glyphicon-repeat"></span></a>
+                                               data-btn-ok-label="Restore">
+                                                <i class="fa fa-repeat" aria-hidden="true"></i>
+                                            </a>
                                         @endif
                                     </td>
                                 </tr>
