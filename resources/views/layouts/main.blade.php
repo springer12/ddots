@@ -25,7 +25,6 @@
                 <ul class="nav navbar-nav  float-md-right">
                     <li class="nav-item"><a class="nav-item nav-link" href="{{ url('/register') }}"><i class="fa fa-file-o" aria-hidden="true"></i> Instructions</a></li>
                     <li class="nav-item"><a class="nav-item nav-link" href="{{ url('/register') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Register</a></li>
-                    <li class="nav-item"><a class="nav-item nav-link" href="{{ url('/register') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Register</a></li>
                 </ul>
             </div>
         </nav>
