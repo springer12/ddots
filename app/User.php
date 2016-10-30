@@ -345,21 +345,29 @@ class User extends Authenticatable
 
     public function getLastMessageWith($id)
     {
-        return $this->getMessagesWithQuery($id)->first();
+        return $this->getLatestMessagesWithQuery($id)->first();
     }
 
     public function getMessagesWith($id)
     {
-        return $this->getMessagesWithQuery($id)->get();
+        return $this->getLatestMessagesWithQuery($id)->get();
     }
 
-    private function getMessagesWithQuery($id)
+    public function getLatestMessagesWithQuery($id)
     {
         return $this->messages()->where(function ($query) use ($id) {
             return $query->where('sender_id', $id)->orWhere('receiver_id', $id);
         })->latest();
     }
-    
+
+    public function getMessagesWithQuery($id)
+    {
+        return $this->messages()->where(function ($query) use ($id) {
+            return $query->where('sender_id', $id)->orWhere('receiver_id', $id);
+        });
+    }
+
+
     public function canWriteTo($id)
     {
         if($this->hasRole(self::ROLE_ADMIN)) {
