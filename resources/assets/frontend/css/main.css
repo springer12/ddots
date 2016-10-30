@@ -5,6 +5,9 @@ img.subdomain-logo {
 img.sponsor-logo {
     height: 120px;
 }
+img.dots-logo {
+    height: 128px;
+}
 
 hr.hidden-border {
     border-top: 0;
