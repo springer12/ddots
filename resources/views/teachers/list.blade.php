@@ -9,7 +9,7 @@
             <div class="row">
                 @foreach($myTeachers as $teacher)
                     <div class="col-lg-4 col-md-5">
-                        <div class="card">
+                        <div class="card text-xs-center">
                             <a href="{{ route('frontend::user::profile', ['id' => $teacher->id]) }}"><img class="card-img-top teacher-avatar" src="{{ $teacher->avatar }}" alt="Card image cap"></a>
                             <div class="card-block">
                                 <h4>
@@ -27,7 +27,7 @@
             @foreach($allTeachers as $teacher)
 
                 <div class="col-lg-4 col-md-5">
-                    <div class="card">
+                    <div class="card text-xs-center">
                         <a href="{{ route('frontend::user::profile', ['id' => $teacher->id]) }}"><img class="card-img-top teacher-avatar" src="{{ $teacher->avatar }}" alt="Card image cap"></a>
                         <div class="card-block">
                             <h4>
