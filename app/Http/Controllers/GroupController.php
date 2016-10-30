@@ -68,7 +68,7 @@ class GroupController extends Controller
         return view('groups.form')->with([
             'group' => $group,
             'students' => $students,
-            'unincludedStudents' => $id?[]:Auth::user()->students->diff($students),
+            'unincludedStudents' => Auth::user()->students->diff($students),
             'title' => $title,
         ]);
     }

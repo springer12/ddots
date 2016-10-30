@@ -28,7 +28,6 @@
                                 <label class="form-control-label col-md-4" for="students">Students</label>
                                 <div class="col-md-8">
                                     <select name="students[]"
-                                            class="form-control border-input"
                                             data-select-students
                                             data-get-students-url="{{ route('backend::ajax::getStudents') }}"
                                             class="form-control col-md-7 col-xs-12"
