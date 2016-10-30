@@ -9,6 +9,7 @@
         </div>
         <hr class="hidden-border">
         <div class="card">
+            <div class="card-header">Groups</div>
             <div class="card-block">
                 <div class="col-xs-12">
                     <table class="table table-striped">

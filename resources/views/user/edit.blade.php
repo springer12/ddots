@@ -178,7 +178,7 @@
 
                             <div class="text-center">
                                 <button type="submit"
-                                        class="btn btn-info btn-fill btn-wd">{{ $user->hasRole(\App\User::ROLE_LOW_USER) ? 'Upgrade' : 'Update' }}
+                                        class="btn btn-success">{{ $user->hasRole(\App\User::ROLE_LOW_USER) ? 'Upgrade' : 'Update' }}
                                     Profile
                                 </button>
                             </div>

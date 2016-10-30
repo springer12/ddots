@@ -24,7 +24,7 @@
                         </div>
                         @if(Auth::check() && Auth::user()->id == $user->id)
                             <div class="text-center">
-                                <a href="{{ route('frontend::user::edit') }}" class="btn btn-info btn-fill btn-wd">
+                                <a href="{{ route('frontend::user::edit') }}" class="btn btn-success">
                                     @if($user->hasRole(\App\User::ROLE_LOW_USER))
                                         Upgrade
                                     @else
