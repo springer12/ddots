@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="card">
-            <h3 class="card-header">Problems</h3>
+            <div class="card-header">Problems</div>
             <div class="card-block">
                 <table class="table table-striped">
                     <thead>

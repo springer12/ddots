@@ -71,7 +71,7 @@
             <input type="submit" value="Submit"/>
         </form>
         <div class="card">
-            <h3 class="card-header">Solutions</h3>
+            <div class="card-header">Solutions</div>
             <div class="card-block">
                 <table class="table table-striped">
                     <thead>

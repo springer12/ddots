@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="card">
-            <h3 class="card-header">Standings</h3>
+            <div class="card-header">Standings</div>
             <div class="card-block scrollable-width">
                 <table class="table table-striped">
                     <thead>
