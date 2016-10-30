@@ -21,7 +21,7 @@
             <hr class="hidden-border">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="card">
+                    <div class="card" id="login">
                         <div class="card-header">Login</div>
                         <div class="card-block">
                             <form role="form" method="POST" action="{{ url('/login') }}">
