@@ -43,7 +43,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($problems as $id => $problem)
+                    @foreach($contest->getProblemData() as $id => $problem)
                         <tr>
                             <td>{{ $id }}</td>
                             <td class="no-wrap">

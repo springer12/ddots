@@ -88,7 +88,7 @@ class Problem extends Model
 
     private function getLatestSolution($query)
     {
-        return $query->orderBy('success_percentage', 'desc')
+        return $query->orderBy('created_at', 'desc')
             ->first();
     }
 

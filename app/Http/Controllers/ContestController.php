@@ -178,8 +178,7 @@ class ContestController extends Controller
     public function single(Request $request, $id)
     {
         $contest = Contest::findOrFail($id);
-        $problems = $contest->getProblemData();
-        return View('contests.single')->with(['contest' => $contest, 'problems' => $problems]);
+        return View('contests.single')->with(['contest' => $contest]);
     }
 
     public function standings(Request $request, $id)
