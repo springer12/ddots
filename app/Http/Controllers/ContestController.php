@@ -70,7 +70,7 @@ class ContestController extends Controller
     {
         $contest = ($id ? Contest::findOrFail($id) : new Contest());
         $participants = collect();
-        $students = Auth::user()->students()->get();
+        $students = Auth::user()->students()->where('confirmed', 1 )->get();
         if ($id) {
             $title = 'Edit Contest';
             if (Session::get('errors')) {
@@ -101,7 +101,6 @@ class ContestController extends Controller
             $unincluded_problems = Problem::orderBy('name', 'desc')->get();
             $included_problems = collect();
         }
-
 
         return view('contests.form')->with([
             'contest' => $contest,

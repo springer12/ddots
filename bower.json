@@ -12,7 +12,8 @@
     "ace-builds": "^1.2.3",
     "eonasdan-bootstrap-datetimepicker": "*",
     "bootstrap-social": "^5.0.0",
-    "glyphicons": "^0.0.2"
+    "glyphicons": "^0.0.2",
+    "mustache.js": "janl/mustache.js#^2.2.1"
   },
   "resolutions": {
     "font-awesome": "^4.6.3",
