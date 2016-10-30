@@ -20,6 +20,12 @@ var path = require('path'),
         "js": vendorPath('bootstrap/dist/js/bootstrap.js')
     },
 
+//glyphicons
+    glyphs = {
+        fonts: vendorPath('glyphicons/fonts', true),
+        css: vendorPath('glyphicons/styles/glyphicons.css'),
+    },
+
 // tether
     tether = {
         "css": vendorPath('tether/dist/css/tether.min.css'),
@@ -71,8 +77,8 @@ var path = require('path'),
             "js": [jQuery, tether.js, Bootstrap.js, moment.js, datetimepicker.js, select2.js, appPath('frontend', 'js')]
         },
         "backend": {
-            "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('backend', 'fonts')],
-            "css": [tether.css, Bootstrap.css, select2.css, fontawesome.css, datetimepicker.css, gentelella.css, appPath('backend', 'css')],
+            "fonts": [Bootstrap.fonts, fontawesome.fonts, glyphs.fonts, appPath('backend', 'fonts')],
+            "css": [tether.css, Bootstrap.css, select2.css, fontawesome.css, datetimepicker.css, gentelella.css,glyphs.css, appPath('backend', 'css')],
             "js": [jQuery, tether.js, select2.js, Bootstrap.js, gentelella.js, moment.js, datetimepicker.js, appPath('backend', 'js')]
         },
         "ace": {
