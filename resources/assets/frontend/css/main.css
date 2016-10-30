@@ -5,12 +5,21 @@ img.subdomain-logo {
 img.sponsor-logo {
     height: 120px;
 }
+
 img.dots-logo {
     height: 128px;
 }
 
+img.teacher-avatar {
+    width: 100%;
+}
+
 hr.hidden-border {
     border-top: 0;
+}
+
+.align-center {
+    text-align: center;
 }
 
 .navbar {
