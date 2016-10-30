@@ -1,3 +1,5 @@
+
+
 img.subdomain-logo {
     height: 100px;
 }
@@ -11,7 +13,7 @@ img.dots-logo {
 }
 
 img.teacher-avatar {
-    width: 100%;
+    max-width: 100%;
 }
 
 hr.hidden-border {
@@ -25,4 +27,23 @@ hr.hidden-border {
 .navbar {
     border-radius: 0;
     margin-bottom: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+html,
+body,
+.wrapper {
+    height: 100%;
+}
+.content {
+    box-sizing: border-box;
+    min-height: 100%;
+    padding-bottom: 90px;
+}
+.footer {
+    height: 80px;
+    margin-top: -80px;
 }

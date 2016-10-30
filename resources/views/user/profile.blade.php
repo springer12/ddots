@@ -3,15 +3,13 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-                <div class="card card-user">
-                    <div class="content">
-                        <div class="author">
-                            <img class="avatar border-white" src="{{ $user->avatar }}" alt="...">
-                            <h4 class="title">{{ $user->name }}<br>
-                                <a href="{{ route('frontend::user::profile', ['id' => $user->id]) }}"><small>{{ $user->nickname }}</small></a>
-                            </h4>
-                        </div>
+            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+                <div class="card  text-xs-center">
+                    <a href="{{ route('frontend::user::profile', ['id' => $user->id]) }}"><img class="card-img-top teacher-avatar" src="{{ $user->avatar }}" alt="Card image cap"></a>
+                    <div class="card-block">
+                        <h4>{{ $user->name }}<br>
+                            <a href="{{ route('frontend::user::profile', ['id' => $user->id]) }}"><small>{{ $user->nickname }}</small></a>
+                        </h4>
                         <div class="row">
                             <div class="col-md-12 align-center">
                                 @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->vk_link)
@@ -36,36 +34,35 @@
                         @endif
                     </div>
                     <hr>
-                    <div class="text-center">
+                    <div>
                         <div class="row">
-                            <div class="col-md-3 col-md-offset-1">
-                                @if($user->hasRole(\App\User::ROLE_USER) && $user->date_of_birth)
+                            @if($user->hasRole(\App\User::ROLE_USER) && $user->date_of_birth)
+                                <div class="col-md-4">
                                     <h5>{{ $user->getAge() }}<br><small>Years old</small></h5>
-                                @endif
-                            </div>
-                            <div class="col-md-4">
-                                @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]))
+                                </div>
+                            @endif
+                            @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]))
+                                <div class="col-md-4">
                                     <h5>{{ $user->created_at->diffInDays(Carbon\Carbon::now()) }}<br><small>{{ str_plural('Day', $user->created_at->diffInDays(Carbon\Carbon::now())) }} with us</small></h5>
-                                @endif
-                            </div>
-                            <div class="col-md-3">
-                                @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->profession)
+                                </div>
+                            @endif
+                            @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->profession)
+                                <div class="col-md-4">
                                     <h5>{{ $user->profession }}<br><small>Profession</small></h5>
-                                @endif
-                            </div>
+                                </div>
+                            @endif
 
 
-                            <div class="col-md-3 col-md-offset-1">
-                                @if($user->hasRole(\App\User::ROLE_USER) && $user->place_of_study)
+                            @if($user->hasRole(\App\User::ROLE_USER) && $user->place_of_study)
+                                <div class="col-md-4">
                                     <h5>{{ $user->place_of_study }}<br><small>Place of study</small></h5>
-                                @endif
-                            </div>
-                            <div class="col-md-4">
-                                @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->programmingLanguage)
+                                </div>
+                            @endif
+                            @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->programmingLanguage)
+                                <div class="col-md-4">
                                     <h5>{{ $user->programmingLanguage->name }}<br><small>Primary language</small></h5>
-                                @endif
-                            </div>
-                            <div class="col-md-3"></div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

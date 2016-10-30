@@ -12,19 +12,22 @@
 </head>
 
 <body>
-@include('partial.navbar')
-
-@yield('content')
-<footer class="text-muted">
-    <div class="container">
-        <p>
-            Copyright © 2005-2016, Молодёжное научное общество "Q-BIT" <br>
-            тех. поддержка: Н.А. Арзубов <br>
-            При использовании материалов сайта ссылка на dots.org.ua обязательна.
-        </p>
+<div class="wrapper">
+    @include('partial.navbar')
+    <div class="content">
+        @yield('content')
     </div>
-</footer>
-@yield('scripts')
+    <footer class="footer">
+        <div class="container">
+            <p class="text-justify text-muted">
+                Copyright © 2005-2016, Молодёжное научное общество "Q-BIT" <br>
+                тех. поддержка: Н.А. Арзубов <br>
+                При использовании материалов сайта ссылка на dots.org.ua обязательна.
+            </p>
+        </div>
+    </footer>
+    @yield('scripts')
+</div>
 <script src="{{ asset('frontend-bundle/js/bundle' . (config('app.assets.minified', false) ? '.min' : '') . '.js') }}"></script>
 </body>
 </html>
