@@ -44,6 +44,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/search-students', ['as' => 'searchStudents', 'uses' => 'Ajax\UserController@searchStudents']);
             Route::get('/get-students', ['as' => 'getStudents', 'uses' => 'Ajax\UserController@getStudents']);
             Route::get('/search-teachers', ['as' => 'searchTeachers', 'uses' => 'Ajax\UserController@searchTeachers']);
+            Route::get('/search-problems', ['as' => 'searchProblems', 'uses' => 'Ajax\ProblemController@search']);
         });
         Route::get('/', ['uses' => 'Backend\DashboardController@index', 'as' => 'dashboard']);
 
@@ -146,6 +147,19 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::get('delete/{id}', 'Backend\GroupController@delete');
             Route::get('restore/{id}', 'Backend\GroupController@restore');
+        });
+
+        Route::group(['prefix' => 'volumes', 'as' => 'volumes::'], function () {
+            Route::get('/', ['uses' => 'Backend\VolumeController@index', 'as' => 'list']);
+
+            Route::get('add', ['uses' => 'Backend\VolumeController@showForm', 'as' => 'add']);
+            Route::post('add', 'Backend\VolumeController@edit');
+
+            Route::get('edit/{id}', ['uses' => 'Backend\VolumeController@showForm', 'as' => 'edit']);
+            Route::post('edit/{id}', 'Backend\VolumeController@edit');
+
+            Route::get('delete/{id}', 'Backend\VolumeController@delete');
+            Route::get('restore/{id}', 'Backend\VolumeController@restore');
         });
 
         Route::group(['prefix' => 'problems', 'as' => 'problems::'], function () {

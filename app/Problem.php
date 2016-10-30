@@ -17,6 +17,7 @@ class Problem extends Model
     use SoftDeletes;
     use Sortable;
 
+    const RESULTS_PER_PAGE = 10;
     protected static $sortable_columns = [
         'id', 'name', 'created_at', 'updated_at', 'deleted_at', 'difficulty',
     ];
@@ -124,5 +125,17 @@ class Problem extends Model
         }
         $points_string .= ' / ' . $contest->getProblemMaxPoints($this->id);
         return $points_string;
+    }
+
+    public static function search($term, $page)
+    {
+        $problems = static::select(['id', 'name'])
+            ->where('name', 'LIKE', '%' . $term . '%');
+
+        $count = $problems->count();
+        $problems = $problems->skip(($page - 1) * static::RESULTS_PER_PAGE)
+            ->take(static::RESULTS_PER_PAGE)
+            ->get();
+        return ['results' => $problems, 'total_count' => $count];
     }
 }
