@@ -25,7 +25,7 @@
                         <tr>
                             <td class="no-wrap">{{ $user->hasRole(\App\User::ROLE_ADMIN)?'admin':$user->name }}</td>
                             <td>
-                                <a class="breaking-word" href="{{ route('frontend::messages::dialog', ['id' => $user->id]) }}">
+                                <a class="breaking-word" href="{{ route('frontend::messages::dialog', ['id' => $user->id]) }}#send-message">
                                     {{ $user->getLastMessageWith(Auth::user()->id)->getSenderName() }}: {{ $user->getLastMessageWith(Auth::user()->id)->text }}
                                 </a>
                             </td>
