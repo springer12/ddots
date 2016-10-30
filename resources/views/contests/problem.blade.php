@@ -5,71 +5,66 @@
 @endsection
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                name:
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                {{ $problem->name }}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                description:
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                {{ $problem->description }}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                difficulty:
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                {{ $problem->difficulty }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                {{ $contest->show_max?'Best':'Latest' }} points:
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                {{ $points }}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                Contest
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
+        <div class="card">
+            <div class="card-header">
                 <a href="{{ route('frontend::contests::single', ['id' => $contest->id]) }}">{{ $contest->name }}</a>
+                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                {{ $problem->name }}
+                <span class="float-xs-right">
+                    @for($i = 0; $i < $problem->difficulty; $i++)
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                    @endfor
+                </span>
+            </div>
+            <div class="card-block">
+                <form data-submit-solution method="post" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+
+
+                    <div class="form-group row{{ $errors->has('programming_language') ? ' has-danger' : '' }}">
+                        <label class="form-control-label col-md-4" for="programming_language">Programming
+                            language</label>
+                        <div class="col-md-8">
+                            <select data-programming-languages name="programming_language"
+                                    class="form-control border-input">
+                                @foreach($contest->programming_languages as $language)
+                                    <option data-ace-mode="{{ $language->ace_mode }}"
+                                            value="{{ $language->id }}">{{ $language->name }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('programming_language'))
+                                <span class="form-control-feedback">
+                                        <strong>{{ $errors->first('programming_language') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="ace-editor" id="editor"></div>
+                    </div>
+
+                    <div class="form-group row{{ $errors->has('solution_code_file') ? ' has-danger' : '' }}">
+                        <label class="form-control-label col-md-4" for="solution_code_file">Or upload file</label>
+                        <div class="col-md-8">
+                            <input type="file" name="solution_code_file"/>
+                            @if ($errors->has('solution_code_file'))
+                                <span class="form-control-feedback">
+                                        <strong>{{ $errors->first('solution_code_file') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+
+
+                    <input type="hidden" name="solution_code"/>
+                    <hr class="hidden-border">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </form>
             </div>
         </div>
-        <form data-submit-solution method="post" enctype="multipart/form-data">
-            {{ csrf_field() }}
-            <h3>Upload solution</h3>
-            <div class="ace-editor" id="editor"></div>
-            <div class="form-group{{ $errors->has('programming_language') ? ' has-danger' : '' }}">
-                <select data-programming-languages name="programming_language">
-                    <option value="" selected>Select a language</option>
-                    @foreach($contest->programming_languages as $language)
-                        <option data-ace-mode="{{ $language->ace_mode }}"
-                                value="{{ $language->id }}">{{ $language->name }}</option>
-                    @endforeach
-                </select>
-                @if ($errors->has('programming_language'))
-                    <span class="form-control-feedback">
-                        <strong>{{ $errors->first('programming_language') }}</strong>
-                    </span>
-                @endif
-            </div>
-            <input type="file" name="solution_code_file"/>
-            <input type="hidden" name="solution_code"/>
-            <input type="submit" value="Submit"/>
-        </form>
         <div class="card">
             <div class="card-header">Solutions</div>
             <div class="card-block">

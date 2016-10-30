@@ -63,7 +63,7 @@
 
                             <hr class="hidden-border">
                             <div class="form-group">
-                                <div class="col-md-8 col-md-offset-3">
+                                <div class="col-md-8 offset-md-3">
                                     <a class="btn btn-primary"
                                        href=""
                                        data-toggle="confirmation"

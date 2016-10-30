@@ -4,8 +4,6 @@
     <div class="container">
         <div class="card">
             <div class="card-header">{{ $contest->name }} <span class="tag tag-{{ $contest->is_active? 'success' : 'danger' }}">{{ $contest->is_active? 'Active' : 'Disabled' }}</span> <span class="float-xs-right">{{ $contest->start_date }} — {{ $contest->end_date }}</span></div>
-
-
             <div class="card-block">
                 <div class="row">
                     <div class="col-md-4">
