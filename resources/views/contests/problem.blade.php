@@ -56,7 +56,8 @@
                 <select data-programming-languages name="programming_language">
                     <option value="" selected>Select a language</option>
                     @foreach($contest->programming_languages as $language)
-                        <option data-ace-mode="{{ $language->ace_mode }}" value="{{ $language->id }}">{{ $language->name }}</option>
+                        <option data-ace-mode="{{ $language->ace_mode }}"
+                                value="{{ $language->id }}">{{ $language->name }}</option>
                     @endforeach
                 </select>
                 @if ($errors->has('programming_language'))
@@ -69,37 +70,40 @@
             <input type="hidden" name="solution_code"/>
             <input type="submit" value="Submit"/>
         </form>
-        <h3>Solutions</h3>
-        <div class="x_content">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Points</th>
-                    @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))
-                        <th>author</th>
-                    @endif
-                    <th>Source code</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($solutions as $solution)
+        <div class="card">
+            <h3 class="card-header">Solutions</h3>
+            <div class="card-block">
+                <table class="table table-striped">
+                    <thead>
                     <tr>
-                        <td>{{ $solution->created_at }}</td>
-                        <td>{{ $solution->getPoints() }}</td>
+                        <th>Date</th>
+                        <th>Points</th>
                         @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))
-                            <td>
-                                @if(Auth::user()->isTeacherOf($solution->owner->id))
-                                    <a href="{{ route('frontend::user::profile', ['id' => $solution->owner->id]) }}">{{ $solution->owner->name }}</a>
-                                @endif
-                            </td>
+                            <th>author</th>
                         @endif
-                        <td><a href="{{ route('frontend::contests::solution',['id' => $solution->id]) }}">Solution</a>
-                        </td>
+                        <th>Source code</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach($solutions as $solution)
+                        <tr>
+                            <td>{{ $solution->created_at }}</td>
+                            <td>{{ $solution->getPoints() }}</td>
+                            @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+                                <td class="no-wrap">
+                                    @if(Auth::user()->isTeacherOf($solution->owner->id))
+                                        <a href="{{ route('frontend::user::profile', ['id' => $solution->owner->id]) }}">{{ $solution->owner->name }}</a>
+                                    @endif
+                                </td>
+                            @endif
+                            <td>
+                                <a href="{{ route('frontend::contests::solution',['id' => $solution->id]) }}">Solution</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection
