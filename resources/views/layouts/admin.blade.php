@@ -93,11 +93,11 @@
                                aria-expanded="false">
                                 <img src="{{ Auth::user()->avatar }}" alt="">{{ Auth::user()->name }}
                             </a>
-                            <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li class="dropdown-item"><a href="{{ url('/logout') }}"><i
-                                                class="fa fa-sign-out pull-right"></i> Log Out</a>
-                                </li>
-                            </ul>
+                            <div class="dropdown-menu pull-right">
+                                <a class="dropdown-item" href="{{ url('/logout') }}"><i
+                                            class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                </a>
+                            </div>
                         </li>
                     </ul>
                 </nav>
