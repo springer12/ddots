@@ -37,20 +37,23 @@
                                     <td>{{ $group->deleted_at }}</td>
                                     <td>
                                         <a title="Edit"
-                                           href="{{ action('GroupController@edit',['id'=> $group->id]) }}"><span
-                                                    class="glyphicon glyphicon-pencil"></span></a>
+                                           href="{{ action('GroupController@edit',['id'=> $group->id]) }}">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </a>
                                         @if (!$group->deleted_at)
                                             <a title="Delete" href="" data-toggle="confirmation"
                                                data-message="Are you sure you want to delete this group from the system?"
                                                data-btn-ok-href="{{ action('GroupController@delete', ['id'=> $group->id]) }}"
-                                               data-btn-ok-label="Delete"><span
-                                                        class="glyphicon glyphicon-trash"></span></a>
+                                               data-btn-ok-label="Delete">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </a>
                                         @else
                                             <a title="Restore" href="" data-toggle="confirmation"
                                                data-message="Are you sure you want to restore this group?"
                                                data-btn-ok-href="{{ action('GroupController@restore', ['id'=> $group->id]) }}"
-                                               data-btn-ok-label="Restore"><span
-                                                        class="glyphicon glyphicon-repeat"></span></a>
+                                               data-btn-ok-label="Restore">
+                                                <i class="fa fa-repeat" aria-hidden="true"></i>
+                                            </a>
                                         @endif
                                     </td>
                                 </tr>

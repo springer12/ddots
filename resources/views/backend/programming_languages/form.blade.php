@@ -11,56 +11,56 @@
                 </div>
                 <div class="x_content">
                     <br>
-                    <form method="post" class="form-horizontal form-label-left" enctype="multipart/form-data">
+                    <form method="post" class=" form-label-left" enctype="multipart/form-data">
                         {!! csrf_field() !!}
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
+                        <div class="form-group row{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="name" value="{{ old('name') ?: $programming_language->name }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('name'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('ace_mode') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ace_mode">Ace editor mode</label>
+                        <div class="form-group row{{ $errors->has('ace_mode') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="ace_mode">Ace editor mode</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="ace_mode" value="{{ old('ace_mode') ?: $programming_language->ace_mode }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('ace_mode'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('ace_mode') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('compiler_image') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="compiler_image">Compiler image</label>
+                        <div class="form-group row{{ $errors->has('compiler_image') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="compiler_image">Compiler image</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="compiler_image" value="{{ old('compiler_image') ?: $programming_language->compiler_image }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('compiler_image'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('compiler_image') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('executor_image') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="executor_image">Executor image</label>
+                        <div class="form-group row{{ $errors->has('executor_image') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="executor_image">Executor image</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="executor_image" value="{{ old('executor_image') ?: $programming_language->executor_image }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('executor_image'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('executor_image') }}</strong>
                                     </span>
                                 @endif
@@ -68,7 +68,7 @@
                         </div>
 
                         <div class="ln_solid"></div>
-                        <div class="form-group">
+                        <div class="form-group row">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                 <a class="btn btn-primary"
                                    href=""

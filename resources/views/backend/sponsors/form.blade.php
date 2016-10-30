@@ -11,23 +11,23 @@
                 </div>
                 <div class="x_content">
                     <br>
-                    <form method="post" class="form-horizontal form-label-left" enctype="multipart/form-data">
+                    <form method="post" class=" form-label-left" enctype="multipart/form-data">
                         {!! csrf_field() !!}
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
+                        <div class="form-group row{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="name" value="{{ old('name') ?: $sponsor->name }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('name'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('image') ? ' has-error' : '' }}">
                             @if($sponsor->image)
                                 <div><img width="100" height="100" src="{{ $sponsor->image }}" alt="image"></div>
                             @endif
@@ -35,28 +35,28 @@
                             {{ $errors->first('image') }}
                         </div>
 
-                        <div class="form-group{{ $errors->has('link') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Link <span
+                        <div class="form-group row{{ $errors->has('link') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="name">Link <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="link" value="{{ old('link') ?: $sponsor->link }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('link'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('link') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Description <span
+                        <div class="form-group row{{ $errors->has('description') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="description">Description <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <textarea type="text" name="description" required="required"
                                           class="form-control col-md-7 col-xs-12">{{ old('description') ?old('description'): $sponsor->description }}</textarea>
                                 @if ($errors->has('description'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('description') }}</strong>
                                     </span>
                                 @endif
@@ -71,9 +71,9 @@
                             {{ !$sponsor->show_on_main?:'checked' }}
                                 @endif
                         >
-                        <div class="form-group{{ $errors->has('volumes') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('volumes') ? ' has-error' : '' }}">
 
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Subdomains</label>
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Subdomains</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="subdomains[]" data-select-subdomain
                                         class="form-control col-md-7 col-xs-12"
@@ -90,7 +90,7 @@
                                     @endforeach
                                 </select>
                                 @if ($errors->has('subdomains'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('subdomains') }}</strong>
                                     </span>
                                 @endif
@@ -98,7 +98,7 @@
                         </div>
 
                         <div class="ln_solid"></div>
-                        <div class="form-group">
+                        <div class="form-group row">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                 <a class="btn btn-primary"
                                    href=""

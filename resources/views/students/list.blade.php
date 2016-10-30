@@ -39,20 +39,24 @@
                                         @if($student->pivot->confirmed == 0)
                                             <a data-confirm data-student-id="{{ $student->id }}"
                                                data-url="{{ route('frontend::ajax::confirmStudent',['id' => $student->id]) }}"
-                                               title="Confirm"><span
-                                                        class="glyphicon glyphicon-ok"></span></a>
+                                               title="Confirm">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                            </a>
                                             <a data-decline data-student-id="{{ $student->id }}"
                                                data-url="{{ route('frontend::ajax::declineStudent',['id' => $student->id]) }}"
-                                               title="Decline"><span
-                                                        class="glyphicon glyphicon-remove"></span></a>
+                                               title="Decline">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </a>
                                         @endif
                                         <a data-edit-student-id="{{ $student->id }}" title="Edit" data-toggle="dropdown"
-                                                {{ !$student->pivot->confirmed?:'style="display: none;"' }}><span
-                                                    class="glyphicon glyphicon-pencil"></span></a>
+                                                {{ !$student->pivot->confirmed?:'style="display: none;"' }}>
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </a>
                                         <ul class="dropdown-menu">
                                             @foreach($groups->diff($student->groups) as $group)
                                                 <li role="presentation" data-add-student
-                                                    data-url="{{ route('frontend::ajax::addStudentToGroup',['student_id' => $student->id, 'group_id' => $group->id]) }}"><a>{{ $group->name }}</a>
+                                                    data-url="{{ route('frontend::ajax::addStudentToGroup',['student_id' => $student->id, 'group_id' => $group->id]) }}">
+                                                    <a>{{ $group->name }}</a>
                                                 </li>
                                             @endforeach
                                         </ul>

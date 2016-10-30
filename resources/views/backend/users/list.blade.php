@@ -56,23 +56,27 @@
                                     <td>{{ $user->deleted_at }}</td>
                                     <td>
                                         <a title="Edit"
-                                           href="{{ action('Backend\UserController@edit',['id'=> $user->id]) }}"><span
-                                                    class="glyphicon glyphicon-pencil"></span></a>
+                                           href="{{ action('Backend\UserController@edit',['id'=> $user->id]) }}">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </a>
                                         <a title="Go to dialog"
-                                           href="{{ action('Backend\MessageController@dialog',['id'=> $user->id]) }}"><span
-                                                    class="glyphicon glyphicon-envelope"></span></a>
+                                           href="{{ action('Backend\MessageController@dialog',['id'=> $user->id]) }}">
+                                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                                        </a>
                                         @if (!$user->deleted_at)
                                             <a title="Delete" href="" data-toggle="confirmation"
                                                data-message="Are you sure you want to delete this user from the system?"
                                                data-btn-ok-href="{{ action('Backend\UserController@delete', ['id'=> $user->id]) }}"
-                                               data-btn-ok-label="Delete"><span
-                                                        class="glyphicon glyphicon-trash"></span></a>
+                                               data-btn-ok-label="Delete">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </a>
                                         @else
                                             <a title="Restore" href="" data-toggle="confirmation"
                                                data-message="Are you sure you want to restore this user?"
                                                data-btn-ok-href="{{ action('Backend\UserController@restore', ['id'=> $user->id]) }}"
-                                               data-btn-ok-label="Restore"><span
-                                                        class="glyphicon glyphicon-repeat"></span></a>
+                                               data-btn-ok-label="Restore">
+                                                <i class="fa fa-repeat" aria-hidden="true"></i>
+                                            </a>
                                         @endif
                                     </td>
                                 </tr>

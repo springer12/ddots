@@ -11,69 +11,69 @@
                 </div>
                 <div class="x_content">
                     <br>
-                    <form method="post" class="form-horizontal form-label-left">
+                    <form method="post" class=" form-label-left">
                         {!! csrf_field() !!}
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
+                        <div class="form-group row{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="name" value="{{ old('name') ?: $contest->name }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('name'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Description<span
+                        <div class="form-group row{{ $errors->has('description') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="description">Description<span
                                         class="required">*</span></label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <textarea name="description" required="required"
                                           class="form-control col-md-7 col-xs-12"
                                 >{{ old('description') ?: $contest->description }}</textarea>
                                 @if ($errors->has('description'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('description') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="start_date">Start date<span
+                        <div class="form-group row{{ $errors->has('start_date') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="start_date">Start date<span
                                         class="required">*</span></label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="datetime" name="start_date" data-start-datepicker
                                        value="{{ old('start_date') ?: $contest->start_date }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('start_date'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('start_date') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('end_date') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="end_date">End date<span
+                        <div class="form-group row{{ $errors->has('end_date') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="end_date">End date<span
                                         class="required">*</span></label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="datetime" name="end_date" data-end-datepicker
                                        value="{{ old('end_date') ?: $contest->end_date }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('end_date'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('end_date') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('owner') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                        <div class="form-group row{{ $errors->has('owner') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12"
                                    for="participants">Owner</label>
 
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -87,15 +87,15 @@
                                     @endif
                                 </select>
                                 @if ($errors->has('owner'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('owner') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('is_active') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                        <div class="form-group row{{ $errors->has('is_active') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12"
                                    for="is_active">Active</label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="checkbox" name="is_active"
@@ -107,15 +107,15 @@
                                         @endif
                                 >
                                 @if ($errors->has('is_active'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('is_active') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('is_standings_active') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="is_standings_active">Active
+                        <div class="form-group row{{ $errors->has('is_standings_active') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="is_standings_active">Active
                                 standings</label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="checkbox" name="is_standings_active"
@@ -127,15 +127,15 @@
                                     {{ !$contest->is_standings_active?:'checked' }}
                                         @endif>
                                 @if ($errors->has('is_standings_active'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('is_standings_active') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                        <div class="form-group row">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12"
                                    for="programming_language">Programming languages</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select id="programming_language" name="programming_languages[]" data-select-programming-languages
@@ -157,15 +157,15 @@
                                     @endif
                                 </select>
                                 @if ($errors->has('programming_languages'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('programming_languages') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('participants') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                        <div class="form-group row{{ $errors->has('participants') ? ' has-error' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12"
                                    for="participants">Participants</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="participants[]" data-select-students data-get-students-url="{{ route('backend::ajax::getStudents') }}"
@@ -177,7 +177,7 @@
                                     @endforeach
                                 </select>
                                 @if ($errors->has('participants'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('participants') }}</strong>
                                     </span>
                                 @endif
@@ -231,7 +231,7 @@
                         >
 
                         <div class="ln_solid"></div>
-                        <div class="form-group">
+                        <div class="form-group row">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                 <a class="btn btn-primary"
                                    href=""

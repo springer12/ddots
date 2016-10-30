@@ -44,16 +44,19 @@
                                     <td>{{ $contest->description }}</td>
                                     <td>
                                         <a title="Edit"
-                                           href="{{ action('Backend\ContestController@edit',['id'=> $contest->id]) }}"><span
-                                                    class="glyphicon glyphicon-pencil"></span></a>
+                                           href="{{ action('Backend\ContestController@edit',['id'=> $contest->id]) }}">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </a>
                                         @if($contest->is_active == true)
                                             <a title="Hide"
-                                               href="{{ action('Backend\ContestController@hide',['id'=> $contest->id]) }}"><span
-                                                        class="glyphicon glyphicon-ban-circle"></span></a>
+                                               href="{{ action('Backend\ContestController@hide',['id'=> $contest->id]) }}">
+                                                <i class="fa fa-ban" aria-hidden="true"></i>
+                                            </a>
                                         @else
                                             <a title="Show"
-                                               href="{{ action('Backend\ContestController@show',['id'=> $contest->id]) }}"><span
-                                                        class="glyphicon glyphicon-repeat"></span></a>
+                                               href="{{ action('Backend\ContestController@show',['id'=> $contest->id]) }}">
+                                                <i class="fa fa-repeat" aria-hidden="true"></i>
+                                            </a>
                                         @endif
                                     </td>
                                 </tr>

@@ -5,7 +5,7 @@
                 <input type="text" class="search-query form-control" placeholder="Search" name="query" value="{{ $query }}">
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-primary" id="search">
-                        <span class="glyphicon glyphicon-search"></span>
+                        <i class="fa fa-search" aria-hidden="true"></i>
                     </button>
                 </span>
             </div>
