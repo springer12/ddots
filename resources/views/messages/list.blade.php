@@ -3,33 +3,39 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-2 col-sm-2 col-xs-2">
+            <div class="col-xs-12">
                 <a class="btn btn-primary" href="{{ route('frontend::messages::new') }}" role="button">New dialog</a>
             </div>
         </div>
+        <hr class="hidden-border">
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <div class="clearfix"></div>
-                    </div>
-                    @if(!$dialog_users->isEmpty())
-                        <div class="x_content">
-                            <table class="table">
-                                <tbody>
-                                @foreach($dialog_users as $user)
-                                    <tr>
-                                        <td class="wrap-text">{{ $user->hasRole(\App\User::ROLE_ADMIN)?'admin':$user->name }}</td>
-                                        <td>
-                                            <a href="{{ route('frontend::messages::dialog', ['id' => $user->id]) }}">{{ $user->getLastMessageWith(Auth::user()->id)->getSenderName() }}
-                                                : {{ $user->getLastMessageWith(Auth::user()->id)->text }}</a></td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @endif
-                </div>
+            <div class="col-xs-12">
+                @if(!$dialog_users->isEmpty())
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Last message</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        @foreach($dialog_users as $user)
+                        <tr>
+                            <td class="wrap-text">{{ $user->hasRole(\App\User::ROLE_ADMIN)?'admin':$user->name }}</td>
+                            <td>
+                                <a href="{{ route('frontend::messages::dialog', ['id' => $user->id]) }}">
+                                    {{ $user->getLastMessageWith(Auth::user()->id)->getSenderName() }}: {{ $user->getLastMessageWith(Auth::user()->id)->text }}
+                                </a>
+                            </td>
+                            <td class="wrap-text">{{ $user->getLastMessageWith(Auth::user()->id)->created_at }}</td>
+                        </tr>
+
+                        @endforeach
+                        </tbody>
+                    </table>
+                @endif
             </div>
         </div>
     </div>
