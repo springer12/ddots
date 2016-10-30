@@ -20,7 +20,7 @@
                                 <input type="text" name="name" value="{{ old('name') ?: $contest->name }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('name'))
-                                    <span class="help-block">
+                                    <span class="form-control-feedback">
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                 @endif
@@ -35,7 +35,7 @@
                                           class="form-control col-md-7 col-xs-12"
                                 >{{ old('description') ?: $contest->description }}</textarea>
                                 @if ($errors->has('description'))
-                                    <span class="help-block">
+                                    <span class="form-control-feedback">
                                         <strong>{{ $errors->first('description') }}</strong>
                                     </span>
                                 @endif
@@ -50,7 +50,7 @@
                                        value="{{ old('start_date') ?: $contest->start_date }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('start_date'))
-                                    <span class="help-block">
+                                    <span class="form-control-feedback">
                                         <strong>{{ $errors->first('start_date') }}</strong>
                                     </span>
                                 @endif
@@ -65,7 +65,7 @@
                                        value="{{ old('end_date') ?: $contest->end_date }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('end_date'))
-                                    <span class="help-block">
+                                    <span class="form-control-feedback">
                                         <strong>{{ $errors->first('end_date') }}</strong>
                                     </span>
                                 @endif
@@ -85,7 +85,7 @@
                                         @endif
                                 >
                                 @if ($errors->has('is_active'))
-                                    <span class="help-block">
+                                    <span class="form-control-feedback">
                                         <strong>{{ $errors->first('is_active') }}</strong>
                                     </span>
                                 @endif
@@ -105,7 +105,7 @@
                                     {{ !$contest->is_standings_active?:'checked' }}
                                         @endif>
                                 @if ($errors->has('is_standings_active'))
-                                    <span class="help-block">
+                                    <span class="form-control-feedback">
                                         <strong>{{ $errors->first('is_standings_active') }}</strong>
                                     </span>
                                 @endif
@@ -136,7 +136,7 @@
                                     @endif
                                 </select>
                                 @if ($errors->has('programming_languages'))
-                                    <span class="help-block">
+                                    <span class="form-control-feedback">
                                         <strong>{{ $errors->first('programming_languages') }}</strong>
                                     </span>
                                 @endif

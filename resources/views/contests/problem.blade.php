@@ -60,7 +60,7 @@
                     @endforeach
                 </select>
                 @if ($errors->has('programming_language'))
-                    <span class="help-block">
+                    <span class="form-control-feedback">
                         <strong>{{ $errors->first('programming_language') }}</strong>
                     </span>
                 @endif

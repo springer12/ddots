@@ -18,7 +18,7 @@
                                     <label for="name">Name <span class="required">*</span></label>
                                     <input type="text" name="name" class="form-control border-input" value="{{ old('name') ?: $group->name }}" required="required">
                                     @if ($errors->has('name'))
-                                        <span class="help-block">
+                                        <span class="form-control-feedback">
                                             <strong>{{ $errors->first('name') }}</strong>
                                         </span>
                                     @endif
@@ -43,7 +43,7 @@
                                         @endforeach
                                     </select>
                                     @if ($errors->has('students'))
-                                        <span class="help-block">
+                                        <span class="form-control-feedback">
                                         <strong>{{ $errors->first('students') }}</strong>
                                     </span>
                                     @endif
@@ -56,7 +56,7 @@
                                     <label for="description">Description</label>
                                     <textarea name="description" class="form-control border-input" rows="5">{{ old('description') ?: $group->description }}</textarea>
                                     @if ($errors->has('description'))
-                                        <span class="help-block">
+                                        <span class="form-control-feedback">
                                         <strong>{{ $errors->first('description') }}</strong>
                                     </span>
                                     @endif

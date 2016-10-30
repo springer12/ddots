@@ -18,7 +18,7 @@
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}">
                                     @if ($errors->has('name'))
-                                        <span class="help-block">
+                                        <span class="form-control-feedback">
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                     @endif
@@ -33,7 +33,7 @@
                                     <input id="nickname" type="text" class="form-control" name="nickname" value="{{ old('nickname') }}">
 
                                     @if ($errors->has('nickname'))
-                                        <span class="help-block">
+                                        <span class="form-control-feedback">
                                             <strong>{{ $errors->first('nickname') }}</strong>
                                         </span>
                                     @endif
@@ -49,7 +49,7 @@
                                     <input id="password" type="password" class="form-control" name="password" value="{{ old('password') }}">
 
                                     @if ($errors->has('password'))
-                                        <span class="help-block">
+                                        <span class="form-control-feedback">
                                             <strong>{{ $errors->first('password') }}</strong>
                                         </span>
                                     @endif
@@ -64,7 +64,7 @@
                                     <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}">
 
                                     @if ($errors->has('password_confirmation'))
-                                        <span class="help-block">
+                                        <span class="form-control-feedback">
                                             <strong>{{ $errors->first('password_confirmation') }}</strong>
                                         </span>
                                     @endif
