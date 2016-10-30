@@ -23,13 +23,13 @@
 
                         @foreach($dialog_users as $user)
                         <tr>
-                            <td class="wrap-text">{{ $user->hasRole(\App\User::ROLE_ADMIN)?'admin':$user->name }}</td>
+                            <td class="no-wrap">{{ $user->hasRole(\App\User::ROLE_ADMIN)?'admin':$user->name }}</td>
                             <td>
-                                <a href="{{ route('frontend::messages::dialog', ['id' => $user->id]) }}">
+                                <a class="breaking-word" href="{{ route('frontend::messages::dialog', ['id' => $user->id]) }}">
                                     {{ $user->getLastMessageWith(Auth::user()->id)->getSenderName() }}: {{ $user->getLastMessageWith(Auth::user()->id)->text }}
                                 </a>
                             </td>
-                            <td class="wrap-text">{{ $user->getLastMessageWith(Auth::user()->id)->created_at }}</td>
+                            <td class="no-wrap">{{ $user->getLastMessageWith(Auth::user()->id)->created_at }}</td>
                         </tr>
 
                         @endforeach

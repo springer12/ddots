@@ -20,6 +20,14 @@ hr.hidden-border {
     border-top: 0;
 }
 
+.breaking-word {
+    word-break: break-all;
+}
+
+.no-wrap {
+    white-space: nowrap;
+}
+
 .align-center {
     text-align: center;
 }
