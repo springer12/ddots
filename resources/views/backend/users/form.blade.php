@@ -13,7 +13,7 @@
                     <br>
                     <form method="post" class="form-label-left" enctype="multipart/form-data">
                         {!! csrf_field() !!}
-                        <div class="form-group row{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('name') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -26,7 +26,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group row{{ $errors->has('avatar') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('avatar') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="avatar">Avatar</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div><img width="100" height="100" src="{{ $user->avatar }}" alt="avatar"></div>
@@ -34,7 +34,7 @@
 
                             </div>
                         </div>
-                        <div class="form-group row{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('password') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="password">Password{!! !$passwordRequired?'':' <span
                                             class="required">*</span>' !!}</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -49,7 +49,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('password_confirmation') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="password_confirmation">Confirm
                                 password{!! !$passwordRequired?'':' <span
                                             class="required">*</span>' !!}</label>
@@ -66,7 +66,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('email') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="email">E-mail <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -82,7 +82,7 @@
                         </div>
 
 
-                        <div class="form-group row{{ $errors->has('role') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('role') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="role">Role <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -101,7 +101,7 @@
                         </div>
 
 
-                        <div class="form-group row{{ $errors->has('nickname') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('nickname') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="nickname">Nickname <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -115,7 +115,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('date_of_birth') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('date_of_birth') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="date_of_birth">Date of
                                 birth</label>
 
@@ -133,7 +133,7 @@
                         </div>
 
 
-                        <div class="form-group row{{ $errors->has('place_of_study') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('place_of_study') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="place_of_study">Place of
                                 study </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -149,7 +149,7 @@
                         </div>
 
 
-                        <div data-subdomain-select class="form-group row{{ $errors->has('subdomain') ? ' has-error' : '' }}"
+                        <div data-subdomain-select class="form-group row{{ $errors->has('subdomain') ? ' has-danger' : '' }}"
                              style="display: {{ $user->hasRole(\App\User::ROLE_TEACHER)?'block':'none' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="role">Subdomain</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -169,7 +169,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('programming_language') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('programming_language') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="programming_language">Programming
                                 language</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -189,7 +189,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('vk_link') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('vk_link') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="vk_link">VK link</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="vk_link" value="{{ old('vk_link') ?: $user->vk_link }}"
@@ -202,7 +202,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('fb_link') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('fb_link') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="fb_link">FB link</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="fb_link" value="{{ old('fb_link') ?: $user->fb_link }}"

@@ -12,7 +12,7 @@
                     <div class="content">
                         <form method="post" class="form-horizontal form-label-left">
                             {!! csrf_field() !!}
-                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
 
                                 <div class="col-md-6 col-md-offset-3">
                                     <label for="name">Name <span class="required">*</span></label>
@@ -25,7 +25,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('students') ? ' has-error' : '' }}">
+                            <div class="form-group{{ $errors->has('students') ? ' has-danger' : '' }}">
                                 <div class="col-md-6 col-md-offset-3">
                                     <label for="students">Students</label>
                                     <select name="students[]"
@@ -50,7 +50,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+                            <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
 
                                 <div class="col-md-6 col-md-offset-3">
                                     <label for="description">Description</label>

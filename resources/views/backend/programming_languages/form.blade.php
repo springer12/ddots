@@ -14,7 +14,7 @@
                     <form method="post" class=" form-label-left" enctype="multipart/form-data">
                         {!! csrf_field() !!}
 
-                        <div class="form-group row{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('name') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -28,7 +28,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('ace_mode') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('ace_mode') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="ace_mode">Ace editor mode</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="ace_mode" value="{{ old('ace_mode') ?: $programming_language->ace_mode }}"
@@ -41,7 +41,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('compiler_image') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('compiler_image') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="compiler_image">Compiler image</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="compiler_image" value="{{ old('compiler_image') ?: $programming_language->compiler_image }}"
@@ -54,7 +54,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('executor_image') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('executor_image') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="executor_image">Executor image</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="executor_image" value="{{ old('executor_image') ?: $programming_language->executor_image }}"

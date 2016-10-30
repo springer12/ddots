@@ -13,7 +13,7 @@
                     <br>
                     <form method="post" class=" form-label-left" enctype="multipart/form-data">
                         {!! csrf_field() !!}
-                        <div class="form-group row{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('name') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -27,7 +27,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('fullname') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('fullname') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="fullname">Full name <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -41,7 +41,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('title') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('title') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="fullname">Title <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -55,7 +55,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('description') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('description') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="description">Description <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -69,7 +69,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('image') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('image') ? ' has-danger' : '' }}">
                             <div><img width="100" height="100" src="{{ $subdomain->image }}" alt="image"></div>
                             <input type="file" name="image" id="image">
                             @if($errors->has('image'))

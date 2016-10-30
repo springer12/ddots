@@ -13,7 +13,7 @@
                     <br>
                     <form method="post" class=" form-label-left" enctype="multipart/form-data">
                         {!! csrf_field() !!}
-                        <div class="form-group row{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('name') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -27,7 +27,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('description') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('description') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="description">Description <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -41,7 +41,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('difficulty') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('difficulty') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="difficulty">Difficulty <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -58,7 +58,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('archive') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('archive') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="archive">Archive</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="file" name="archive" class="form-control col-md-7 col-xs-12">
@@ -70,7 +70,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('volumes') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('volumes') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Volumes <h2>Volume
                                     name must have atleast 1 non-numeric symbol!!!</h2></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">

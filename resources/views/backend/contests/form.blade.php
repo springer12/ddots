@@ -13,7 +13,7 @@
                     <br>
                     <form method="post" class=" form-label-left">
                         {!! csrf_field() !!}
-                        <div class="form-group row{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('name') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -27,7 +27,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('description') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('description') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="description">Description<span
                                         class="required">*</span></label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -42,7 +42,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('start_date') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('start_date') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="start_date">Start date<span
                                         class="required">*</span></label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -57,7 +57,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('end_date') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('end_date') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="end_date">End date<span
                                         class="required">*</span></label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -72,7 +72,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('owner') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('owner') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12"
                                    for="participants">Owner</label>
 
@@ -94,7 +94,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('is_active') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('is_active') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12"
                                    for="is_active">Active</label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -114,7 +114,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('is_standings_active') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('is_standings_active') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="is_standings_active">Active
                                 standings</label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -164,7 +164,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('participants') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('participants') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12"
                                    for="participants">Participants</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">

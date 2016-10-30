@@ -13,7 +13,7 @@
                     <br>
                     <form method="post" class=" form-label-left" enctype="multipart/form-data">
                         {!! csrf_field() !!}
-                        <div class="form-group row{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('name') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -27,7 +27,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('image') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('image') ? ' has-danger' : '' }}">
                             @if($sponsor->image)
                                 <div><img width="100" height="100" src="{{ $sponsor->image }}" alt="image"></div>
                             @endif
@@ -35,7 +35,7 @@
                             {{ $errors->first('image') }}
                         </div>
 
-                        <div class="form-group row{{ $errors->has('link') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('link') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="name">Link <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -49,7 +49,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row{{ $errors->has('description') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('description') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="description">Description <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -71,7 +71,7 @@
                             {{ !$sponsor->show_on_main?:'checked' }}
                                 @endif
                         >
-                        <div class="form-group row{{ $errors->has('volumes') ? ' has-error' : '' }}">
+                        <div class="form-group row{{ $errors->has('volumes') ? ' has-danger' : '' }}">
 
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Subdomains</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">

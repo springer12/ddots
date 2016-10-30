@@ -11,7 +11,7 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
                             {{ csrf_field() }}
 
-                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
 
                                 <label for="name" class="col-md-4 control-label">Name</label>
 
@@ -25,7 +25,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
+                            <div class="form-group{{ $errors->has('nickname') ? ' has-danger' : '' }}">
 
                                 <label for="nickname" class="col-md-4 control-label">Nickname</label>
 
@@ -41,7 +41,7 @@
                             </div>
 
 
-                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
 
                                 <label for="password" class="col-md-4 control-label">Password</label>
 
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                            <div class="form-group{{ $errors->has('password_confirmation') ? ' has-danger' : '' }}">
 
                                 <label for="password_confirmation" class="col-md-4 control-label">Confirm Password</label>
 
