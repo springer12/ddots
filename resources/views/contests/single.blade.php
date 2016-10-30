@@ -70,38 +70,42 @@
             @endforeach
         </ul>
 
-        <h3>Problems</h3>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Difficulty</th>
-                <th>{{ $contest->show_max?'Best':'Latest' }} points</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($problems as $id => $problem)
-                <tr>
-                    <td>{{ $id }}</td>
-                    <td>
-                        <a href="{{ $problem['link'] }}">{{ $problem['name'] }}</a>
-                    </td>
-                    <td>{{ $problem['difficulty'] }}</td>
-                    <td>
-                        @if(isset($problem['points']))
-                            @if(isset($problem['solution_link']))
-                                <a href="{{ $problem['solution_link'] }}">{{ $problem['points'] }}</a>
-                            @else
-                                {{ $problem['points'] }}
-                            @endif
-                        @else
-                            -
-                        @endif
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
+        <div class="card">
+            <h3 class="card-header">Problems</h3>
+            <div class="card-block">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Difficulty</th>
+                        <th>{{ $contest->show_max?'Best':'Latest' }} points</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($problems as $id => $problem)
+                        <tr>
+                            <td>{{ $id }}</td>
+                            <td class="no-wrap">
+                                <a href="{{ $problem['link'] }}">{{ $problem['name'] }}</a>
+                            </td>
+                            <td>{{ $problem['difficulty'] }}</td>
+                            <td>
+                                @if(isset($problem['points']))
+                                    @if(isset($problem['solution_link']))
+                                        <a href="{{ $problem['solution_link'] }}">{{ $problem['points'] }}</a>
+                                    @else
+                                        {{ $problem['points'] }}
+                                    @endif
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 @endsection
