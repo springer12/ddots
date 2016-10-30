@@ -4,19 +4,18 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-8 offset-md-2">
                 <div class="card">
-                    <div class="header">
-                        <h4 class="title">{{ $title }}</h4>
-                    </div>
-                    <div class="content">
-                        <form method="post" class="form-horizontal form-label-left">
+                    <div class="card-header">{{ $title }}</div>
+                    <div class="card-block">
+                        <form method="post">
                             {!! csrf_field() !!}
-                            <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-
-                                <div class="col-md-6 col-md-offset-3">
-                                    <label for="name">Name <span class="required">*</span></label>
-                                    <input type="text" name="name" class="form-control border-input" value="{{ old('name') ?: $group->name }}" required="required">
+                            <div class="form-group row{{ $errors->has('name') ? ' has-danger' : '' }}">
+                                <label class="form-control-label col-md-4" for="name">Name <span
+                                            class="required">*</span></label>
+                                <div class="col-md-8">
+                                    <input type="text" name="name" class="form-control border-input"
+                                           value="{{ old('name') ?: $group->name }}" required="required">
                                     @if ($errors->has('name'))
                                         <span class="form-control-feedback">
                                             <strong>{{ $errors->first('name') }}</strong>
@@ -25,9 +24,9 @@
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('students') ? ' has-danger' : '' }}">
-                                <div class="col-md-6 col-md-offset-3">
-                                    <label for="students">Students</label>
+                            <div class="form-group row{{ $errors->has('students') ? ' has-danger' : '' }}">
+                                <label class="form-control-label col-md-4" for="students">Students</label>
+                                <div class="col-md-8">
                                     <select name="students[]"
                                             class="form-control border-input"
                                             data-select-students
@@ -50,11 +49,11 @@
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
-
-                                <div class="col-md-6 col-md-offset-3">
-                                    <label for="description">Description</label>
-                                    <textarea name="description" class="form-control border-input" rows="5">{{ old('description') ?: $group->description }}</textarea>
+                            <div class="form-group row{{ $errors->has('description') ? ' has-danger' : '' }}">
+                                <label class="form-control-label col-md-4" for="description">Description</label>
+                                <div class="col-md-8">
+                                    <textarea name="description" class="form-control border-input"
+                                              rows="5">{{ old('description') ?: $group->description }}</textarea>
                                     @if ($errors->has('description'))
                                         <span class="form-control-feedback">
                                         <strong>{{ $errors->first('description') }}</strong>
@@ -62,8 +61,10 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <hr class="hidden-border">
                             <div class="form-group">
-                                <div class="col-md-6 col-md-offset-3">
+                                <div class="col-md-8 col-md-offset-3">
                                     <a class="btn btn-primary"
                                        href=""
                                        data-toggle="confirmation"
