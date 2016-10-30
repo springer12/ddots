@@ -2,74 +2,36 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                Name:
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                {{ $contest->name }}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                Description:
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                {{ $contest->description }}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                Start date:
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                {{ $contest->start_date }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                End date:
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                {{ $contest->end_date }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                Active:
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                {{ $contest->is_active }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                @if($contest->is_standings_active )
-                    <a href="{{ route('frontend::contests::standings', ['id' => $contest->id]) }}">standings</a>
-                @endif
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                <a href="{{ route('frontend::contests::solutions',['id' => $contest->id]) }}">all solutions</a>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-            </div>
-        </div>
+        <div class="card">
+            <div class="card-header">{{ $contest->name }} <span class="tag tag-{{ $contest->is_active? 'success' : 'danger' }}">{{ $contest->is_active? 'Active' : 'Disabled' }}</span> <span class="float-xs-right">{{ $contest->start_date }} — {{ $contest->end_date }}</span></div>
 
 
-        <h3>Programming languages</h3>
-        <ul>
-            @foreach($contest->programming_languages as $programming_language)
-                <li>{{ $programming_language->name }}</li>
-            @endforeach
-        </ul>
-
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>
+                            @foreach($contest->programming_languages as $programming_language)
+                            <span class="tag tag-primary">{{ $programming_language->name }}</span>
+                            @endforeach
+                        </h3>
+                        <h3><span class="tag tag-success">{{ $contest->end_date->diffInDays($contest->start_date) }} d. to finish</span></h3>
+                    </div>
+                    <div class="col-md-8">
+                        <p>{{ $contest->description }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-md-12">
+                        @if($contest->is_standings_active )
+                            <a class="btn btn-primary" href="{{ route('frontend::contests::standings', ['id' => $contest->id]) }}"><i class="fa fa-trophy" aria-hidden="true"></i> standings</a>
+                        @endif
+                        <a class="btn btn-primary" href="{{ route('frontend::contests::solutions',['id' => $contest->id]) }}"><i class="fa fa-code" aria-hidden="true"></i> solutions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="card">
             <h3 class="card-header">Problems</h3>
             <div class="card-block">
