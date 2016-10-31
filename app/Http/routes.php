@@ -275,6 +275,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_TEACHER . ',' . App\User::ROLE_ADMIN, 'as' => 'privileged::'], function () {
             Route::group(['middleware' => 'ajax', 'as' => 'ajax::'], function () {
                 Route::get('/search-problems', ['as' => 'searchProblems', 'uses' => 'Ajax\ProblemController@search']);
+                Route::get('/search-volumes', ['as' => 'searchVolumes', 'uses' => 'Ajax\VolumeController@search']);
             });
         });
     });

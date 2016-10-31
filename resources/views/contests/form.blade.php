@@ -191,8 +191,11 @@
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <select></select>
-                                            <button class="btn btn-success">Add volume</button>
+                                            <select data-volume-select
+                                                    data-get-volumes-url="{{ route('privileged::ajax::searchVolumes') }}"
+                                                    class="form-control col-md-7 col-xs-12">
+                                                <option></option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

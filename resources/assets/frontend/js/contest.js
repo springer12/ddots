@@ -42,13 +42,15 @@
         }
 
         function appendProblem(id, name, points) {
-            problems_elem.append(Mustache.render(element_template, {
-                name: name,
-                id: id,
-                element: 'problem',
-                type_problem: 1,
-                points: points
-            }));
+            if (!$('[data-problem-block-id=' + id + ']').length) {
+                problems_elem.append(Mustache.render(element_template, {
+                    name: name,
+                    id: id,
+                    element: 'problem',
+                    type_problem: 1,
+                    points: points
+                }));
+            }
         }
 
         $.each(problems_elem.data(), function (id, name) {
@@ -88,6 +90,19 @@
         $(problems_elem).on('click', '[data-remove-problem-id]', function () {
             var $this = $(this);
             $('[data-problem-block-id=' + $this.data('remove-problem-id') + ']').remove();
+        });
+
+        $(document.body).on('change', '[data-volume-select]', function () {
+            $.ajax({
+                method: 'GET',
+                url: $('[data-get-problems-url]').data('get-problems-url'),
+                data: {volume_id: $($(this).select2('data')[0].element).val()}
+            }).success(function (response) {
+                $.each(response, function (k, v) {
+                    appendProblem(v.id, v.name, 0);
+                });
+            });
+            $(this).val(null);
         });
 
         $(document.body).on('change', '[data-group-select]',
