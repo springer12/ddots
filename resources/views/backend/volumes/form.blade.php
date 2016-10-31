@@ -32,7 +32,7 @@
                                    for="problems">Problems</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="problems[]" data-select-problem-volume
-                                        data-get-problems-url="{{ route('backend::ajax::searchProblems') }}"
+                                        data-get-problems-url="{{ route('privileged::ajax::searchProblems') }}"
                                         class="form-control col-md-7 col-xs-12"
                                         multiple>
                                     @foreach($volume->problems as $problem)

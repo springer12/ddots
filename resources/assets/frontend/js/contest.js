@@ -23,26 +23,60 @@
         // });
 
         var participants_elem = $('[data-participants]');
-        var participant_template = $('#participant_block').html();
-        Mustache.parse(participant_template);
+        var problems_elem = $('[data-problems]');
+        var element_template = $('[data-element-block]').html();
+        Mustache.parse(element_template);
         $.each(participants_elem.data(), function (id, name) {
             if ($.isNumeric(id)) {
-                participants_elem.append(Mustache.render(participant_template, {
-                    name: name,
-                    id: id
-                }));
+                appendParticipant(id, name);
+            }
+        });
+
+        function appendParticipant(id, name) {
+            participants_elem.append(Mustache.render(element_template, {
+                name: name,
+                id: id,
+                element: 'participant',
+                type_participant: 1
+            }));
+        }
+
+        function appendProblem(id, name, points) {
+            problems_elem.append(Mustache.render(element_template, {
+                name: name,
+                id: id,
+                element: 'problem',
+                type_problem: 1,
+                points: points
+            }));
+        }
+
+        $.each(problems_elem.data(), function (id, name) {
+            if ($.isNumeric(id)) {
+                console.log($('[data-points-' + id + ']'));
+                console.log($('[data-points-' + id + ']').data('points-' + id));
+                console.log('points-' + id)
+                appendProblem(id, name, $('[data-' + id + '-points]').data(id + '-points'));
             }
         });
 
         function addParticipant(elem) {
             if (elem.length) {
-                participants_elem.append(Mustache.render(participant_template, {
-                    name: elem.text(),
-                    id: elem.val()
-                }));
+                appendParticipant(elem.val(), elem.text());
                 elem.remove();
             }
         }
+
+        function addProblem(elem) {
+            if (elem.length) {
+                appendProblem(elem.val(), elem.text(), 0)
+                elem.remove();
+            }
+        }
+
+        $(document.body).on('change', '[data-problem-select]', function () {
+            addProblem($($(this).select2('data')[0].element));
+        });
 
         $(document.body).on('change', '[data-participant-select]', function () {
             addParticipant($($(this).select2('data')[0].element));
@@ -52,6 +86,11 @@
             var $this = $(this);
             $('[data-participant-select]').append('<option value=' + $this.data('remove-participant-id') + '>' + $this.data('remove-participant-name') + '</option>')
             $('[data-participant-block-id=' + $this.data('remove-participant-id') + ']').remove();
+        });
+
+        $(problems_elem).on('click', '[data-remove-problem-id]', function () {
+            var $this = $(this);
+            $('[data-problem-block-id=' + $this.data('remove-problem-id') + ']').remove();
         });
 
         $(document.body).on('change', '[data-group-select]',

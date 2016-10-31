@@ -150,7 +150,7 @@
                                 <div class="card-block">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <select name="asd" class="form-control" data-participant-select>
+                                            <select class="form-control" data-participant-select>
                                                 <option></option>
                                                 @foreach($students as $student)
                                                     <option value="{{ $student->id }}">{{ $student->name }}</option>
@@ -172,21 +172,23 @@
 
                             <div class="card">{{-- @todo --}}
                                 <div class="card-header">Problems</div>
-                                <div data-problems>
-                                    @foreach($included_problems as $problem)
-                                        <div class="card-block">
-                                            {{ $problem->name }}
-                                        </div>
-                                    @endforeach
-
+                                <div data-problems
+                                     @foreach($included_problems as $problem)
+                                     data-{{ $problem->id }}="{{ $problem->name }}"
+                                     data-{{ $problem->id }}-points={{ $problem->pivot->max_points }}
+                                        @endforeach
+                                >
                                 </div>
 
                                 <hr class="hidden-border">
                                 <div class="card-block">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <select></select>
-                                            <button class="btn btn-success">Add problem</button>
+                                            <select data-problem-select
+                                                    data-get-problems-url="{{ route('privileged::ajax::searchProblems') }}"
+                                                    class="form-control col-md-7 col-xs-12">
+                                                <option></option>
+                                            </select>
                                         </div>
                                         <div class="col-md-6">
                                             <select></select>
@@ -216,17 +218,30 @@
             </div>
         </div>
     </div>
-    <script id="participant_block" type="x-tmpl-mustache">
-    <div data-participant-block-id=@{{ id }} class="card-block">
+    <script data-element-block type="x-tmpl-mustache">
+    <div data-@{{ element }}-block-id=@{{ id }} class="card-block">
         <div class="col-xs-1">
-            <a data-remove-participant-id="@{{ id }}"  data-remove-participant-name="@{{ name }}" href="javascript:void(0);">
+            <a data-remove-@{{ element }}-id="@{{ id }}"  data-remove-@{{ element }}-name="@{{ name }}" href="javascript:void(0);">
                 <span class="tag tag-danger"><i class="fa fa-remove"></i></span>
             </a>
         </div>
+        @{{ #type_participant }}
         <div class="col-xs-11">
             @{{ name }}
         </div>
-        <input type="hidden" name="participants[]" value="@{{ id }}">
+    @{{ /type_participant }}
+        @{{ #type_problem }}
+        <div class="col-xs-2">
+            <input name="points[@{{ id }}]" type="number" class="form-control" value="@{{ points }}"/>
+            </div>
+            <div class="col-xs-9">
+                @{{ name }}
+        </div>
+    @{{ /type_problem}}
+        <input type="hidden" name="@{{ element }}s[]" value="@{{ id }}">
     </div>
+
+
+
     </script>
 @endsection

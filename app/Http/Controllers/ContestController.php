@@ -37,7 +37,7 @@ class ContestController extends Controller
         \Session::put('orderBy', $orderBy);
         \Session::put('orderDir', $orderDir);
 
-        if($orderBy == 'owner') {
+        if ($orderBy == 'owner') {
             $contests = Contest::join('users', 'users.id', '=', 'user_id')
                 ->groupBy('contests.id')
                 ->orderBy('users.name', $orderDir)
@@ -70,7 +70,7 @@ class ContestController extends Controller
     {
         $contest = ($id ? Contest::findOrFail($id) : new Contest());
         $participants = collect();
-        $students = Auth::user()->students()->where('confirmed', 1 )->get();
+        $students = Auth::user()->students()->where('confirmed', 1)->get();
         if ($id) {
             $title = 'Edit Contest';
             if (Session::get('errors')) {
@@ -79,26 +79,14 @@ class ContestController extends Controller
                         $participants->push($student);
                     }
                 }
-
-                $included_problems = collect();
-                $problems = Problem::orderBy('name', 'desc')->get();
-
-                foreach ($problems as $problem) {
-                    if (in_array($problem->id, (array)old('problems'))) {
-                        $included_problems->push($problem);
-                    }
-                }
-                $unincluded_problems = $problems->diff($included_problems);
-
+                $included_problems = Problem::orderBy('name', 'desc')->whereIn('id', (array)old('problems'))->get();
             } else {
                 $participants = $contest->users()->user()->get();
-                $included_problems = $contest->problems;
-                $unincluded_problems = Problem::orderBy('name', 'desc')->get()->diff($included_problems);
+                $included_problems = $contest->problems()->withPivot('max_points')->get();
             }
             $students = $students->diff($participants);
         } else {
             $title = 'Create Contest';
-            $unincluded_problems = Problem::orderBy('name', 'desc')->get();
             $included_problems = collect();
         }
 
@@ -109,7 +97,6 @@ class ContestController extends Controller
             'participants' => $participants,
             'programming_languages' => ProgrammingLanguage::orderBy('name', 'desc')->get(),
             'included_problems' => $included_problems,
-            'unincluded_problems' => $unincluded_problems
         ]);
     }
 
@@ -148,7 +135,7 @@ class ContestController extends Controller
 
         $contest->problems()->sync($request->get('problems') ? array_combine($request->get('problems'), array_map(function ($a) {
             return ['max_points' => $a];
-        }, $request->get('problem_points'))) : []);
+        }, $request->get('points'))) : []);
 
         $contest->users()->sync((array)$request->get('participants'));
 
