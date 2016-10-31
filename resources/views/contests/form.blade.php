@@ -150,24 +150,16 @@
                                 <div class="card-block">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label class="form-control-label">
-                                                Add participants
-                                            </label>
-                                            <select class="form-control" data-participants-select>
-                                                <option selected>Select a participant</option>
+                                            <select name="asd" class="form-control" data-participant-select>
+                                                <option></option>
                                                 @foreach($students as $student)
-                                                    <option data-student-id="{{ $student->id }}">{{ $student->name }}</option>
+                                                    <option value="{{ $student->id }}">{{ $student->name }}</option>
                                                 @endforeach
                                             </select>
-                                            {{-- <a href="javascript:void(0)" class="btn btn-success">Add participant</a>--}}
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="form-control-label">
-                                                Add groups
-                                            </label>
                                             <select class="form-control" data-group-select>
-                                                <option>Select a group</option>
-                                                {{-- @todo --}}
+                                                <option></option>
                                                 @foreach(Auth::user()->groups as $group)
                                                     <option data-user-ids="{{ $group->users->pluck('id')->toJson() }}"
                                                             value="{{ $group->id }}">{{ $group->name }}</option>
@@ -236,14 +228,5 @@
         </div>
         <input type="hidden" name="participants[]" value="@{{ id }}">
     </div>
-
-
-
-
-
-
-
-
-
     </script>
 @endsection

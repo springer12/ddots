@@ -38,27 +38,27 @@
             if (elem.length) {
                 participants_elem.append(Mustache.render(participant_template, {
                     name: elem.text(),
-                    id: elem.data('student-id')
+                    id: elem.val()
                 }));
                 elem.remove();
             }
         }
 
-        $('[data-participants-select]').change(function () {
-            addParticipant($('[data-participants-select] > :selected'));
+        $(document.body).on('change', '[data-participant-select]', function () {
+            addParticipant($($(this).select2('data')[0].element));
         });
 
         $(participants_elem).on('click', '[data-remove-participant-id]', function () {
             var $this = $(this);
-            $('[data-participants-select]').append('<option data-student-id=' + $this.data('remove-participant-id') + '>' + $this.data('remove-participant-name') + '</option>')
+            $('[data-participant-select]').append('<option value=' + $this.data('remove-participant-id') + '>' + $this.data('remove-participant-name') + '</option>')
             $('[data-participant-block-id=' + $this.data('remove-participant-id') + ']').remove();
         });
 
-        $('[data-group-select]').change(function () {
-            var elem = $('[data-group-select] > :selected');
-            $.each(elem.data('user-ids'), function (k, v) {
-                addParticipant($('[data-student-id=' + v + ']'));
-            });
-        })
+        $(document.body).on('change', '[data-group-select]',
+            function () {
+                $.each($($(this).select2('data')[0].element).data('user-ids'), function (k, v) {
+                    addParticipant($('[data-participant-select] > option[value=' + v + ']'));
+                });
+            })
     });
 })(jQuery, window, document);
