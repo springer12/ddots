@@ -153,7 +153,7 @@
                                             <label class="form-control-label">
                                                 Add participants
                                             </label>
-                                            <select data-participants-select>
+                                            <select class="form-control" data-participants-select>
                                                 <option selected>Select a participant</option>
                                                 @foreach($students as $student)
                                                     <option data-student-id="{{ $student->id }}">{{ $student->name }}</option>
@@ -162,14 +162,17 @@
                                             {{-- <a href="javascript:void(0)" class="btn btn-success">Add participant</a>--}}
                                         </div>
                                         <div class="col-md-6">
-                                            <select>
+                                            <label class="form-control-label">
+                                                Add groups
+                                            </label>
+                                            <select class="form-control" data-group-select>
                                                 <option>Select a group</option>
                                                 {{-- @todo --}}
                                                 @foreach(Auth::user()->groups as $group)
-                                                    <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                                    <option data-user-ids="{{ $group->users->pluck('id')->toJson() }}"
+                                                            value="{{ $group->id }}">{{ $group->name }}</option>
                                                 @endforeach
                                             </select>
-                                            <button class="btn btn-success">Add group</button>
                                         </div>
                                     </div>
                                 </div>
@@ -224,8 +227,8 @@
     <script id="participant_block" type="x-tmpl-mustache">
     <div data-participant-block-id=@{{ id }} class="card-block">
         <div class="col-xs-1">
-            <a data-remove-participant-id="@{{ id }}"  href="javascript:void(0);">
-                <span class="tag tag-danger"><i class="fa fa-remove" data-remove-participant-name="@{{ name }}"></i></span>
+            <a data-remove-participant-id="@{{ id }}"  data-remove-participant-name="@{{ name }}" href="javascript:void(0);">
+                <span class="tag tag-danger"><i class="fa fa-remove"></i></span>
             </a>
         </div>
         <div class="col-xs-11">
@@ -233,6 +236,9 @@
         </div>
         <input type="hidden" name="participants[]" value="@{{ id }}">
     </div>
+
+
+
 
 
 

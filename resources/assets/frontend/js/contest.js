@@ -27,25 +27,38 @@
         Mustache.parse(participant_template);
         $.each(participants_elem.data(), function (id, name) {
             if ($.isNumeric(id)) {
-                addParticipant(id, name);
+                participants_elem.append(Mustache.render(participant_template, {
+                    name: name,
+                    id: id
+                }));
             }
         });
 
-        function addParticipant(id, name) {
-            participants_elem.append(Mustache.render(participant_template, {name: name, id: id}));
+        function addParticipant(elem) {
+            if (elem.length) {
+                participants_elem.append(Mustache.render(participant_template, {
+                    name: elem.text(),
+                    id: elem.data('student-id')
+                }));
+                elem.remove();
+            }
         }
 
         $('[data-participants-select]').change(function () {
-            var elem = $('[data-participants-select] > :selected');
-            addParticipant(elem.data('student-id'), elem.text());
-            elem.remove();
+            addParticipant($('[data-participants-select] > :selected'));
         });
 
         $(participants_elem).on('click', '[data-remove-participant-id]', function () {
-            console.log('asd');
             var $this = $(this);
             $('[data-participants-select]').append('<option data-student-id=' + $this.data('remove-participant-id') + '>' + $this.data('remove-participant-name') + '</option>')
             $('[data-participant-block-id=' + $this.data('remove-participant-id') + ']').remove();
         });
+
+        $('[data-group-select]').change(function () {
+            var elem = $('[data-group-select] > :selected');
+            $.each(elem.data('user-ids'), function (k, v) {
+                addParticipant($('[data-student-id=' + v + ']'));
+            });
+        })
     });
 })(jQuery, window, document);
