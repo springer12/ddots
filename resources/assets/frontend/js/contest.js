@@ -53,9 +53,6 @@
 
         $.each(problems_elem.data(), function (id, name) {
             if ($.isNumeric(id)) {
-                console.log($('[data-points-' + id + ']'));
-                console.log($('[data-points-' + id + ']').data('points-' + id));
-                console.log('points-' + id)
                 appendProblem(id, name, $('[data-' + id + '-points]').data(id + '-points'));
             }
         });
@@ -74,7 +71,7 @@
             }
         }
 
-        $(document.body).on('change', '[data-problem-select]', function () {
+        $(document.body).on('select2:change', '[data-problem-select]', function () {
             addProblem($($(this).select2('data')[0].element));
         });
 
@@ -98,6 +95,7 @@
                 $.each($($(this).select2('data')[0].element).data('user-ids'), function (k, v) {
                     addParticipant($('[data-participant-select] > option[value=' + v + ']'));
                 });
+                $(this).val(null);
             })
     });
 })(jQuery, window, document);
