@@ -4,15 +4,15 @@
     <div class="container">
 
         <!-- logo and title -->
-        <div class="row">
-            <div class="col-lg-2 col-md-3 col-sm-4">
+        <div class="container">
+            <div>
                 <a class="navbar-brand" href="{{ action('HomeController@index') }}">
                     <img src="{{ asset('frontend-bundle/media/dots.png') }}">
                 </a>
             </div>
-            <div class="col-lg-10 col-md-9 col-sm-8">
+            <div>
                 <h4>
-                    <p class="text-justify">
+                    <p>
                         С 16 февраля 2016 тестирующая система DOTS доступна для преподавателей информатики Харькова
                         и Харьковской области. Теперь все, кто преподаёт программирование, сможет зарегистрировать в
                         системе своих учеников, объединять их в группы и проводить практикумы по программированию с
