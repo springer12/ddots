@@ -59,7 +59,7 @@
                                 </td>
                                 @foreach($user['problems'] as $problem_id => $problem)
                                     <td>
-                                        @if($problem['points'])
+                                        @if($problem['points'] && $problem['solution_id'])
                                             @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
                                                 <a href="{{ route('frontend::contests::solution', ['id' => $problem['solution_id']]) }}">
                                                     {{ $problem['points'] }}
