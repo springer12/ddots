@@ -8,42 +8,44 @@
                 <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                 All Solutions</div>
             <div class="card-block">
-                <table class="table table-striped table-bordered table-sm">
-                    <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Result</th>
-                        <th>Points</th>
-                        <th>Problem</th>
-                        @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))
-                            <th>Author</th>
-                        @endif
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($solutions as $solution)
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-sm">
+                        <thead>
                         <tr>
-                            <td>{{ $solution->created_at }}</td>
-                            <td>{{ $solution->status }}</td>
-                            <td>
-                                <a href="{{ route('frontend::contests::solution', ['id' => $solution->id]) }}">{{ $solution->getPoints() }}</a>
-                            </td>
-                            <td>
-                                <a href="{{ route('frontend::contests::problem', ['contest_id' => $solution->getContest()->id, 'problem_id' => $solution->problem->id]) }}">{{ $solution->problem->name }}</a>
-                            </td>
-                            @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
-                                <td>
-                                    @if(Auth::user()->isTeacherOf($solution->owner->id))
-                                        <a href="{{ route('frontend::user::profile', ['id' => $solution->owner->id]) }}">{{ $solution->owner->name }}</a>
-                                    @endif
-                                </td>
+                            <th>Date</th>
+                            <th>Result</th>
+                            <th>Points</th>
+                            <th>Problem</th>
+                            @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+                                <th>Author</th>
                             @endif
-
                         </tr>
-                    @endforeach
-                    </tbody>
+                        </thead>
+                        <tbody>
+                        @foreach($solutions as $solution)
+                            <tr>
+                                <td>{{ $solution->created_at }}</td>
+                                <td>{{ $solution->status }}</td>
+                                <td>
+                                    <a href="{{ route('frontend::contests::solution', ['id' => $solution->id]) }}">{{ $solution->getPoints() }}</a>
+                                </td>
+                                <td>
+                                    <a href="{{ route('frontend::contests::problem', ['contest_id' => $solution->getContest()->id, 'problem_id' => $solution->problem->id]) }}">{{ $solution->problem->name }}</a>
+                                </td>
+                                @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+                                    <td>
+                                        @if(Auth::user()->isTeacherOf($solution->owner->id))
+                                            <a href="{{ route('frontend::user::profile', ['id' => $solution->owner->id]) }}">{{ $solution->owner->name }}</a>
+                                        @endif
+                                    </td>
+                                @endif
 
-                </table>
+                            </tr>
+                        @endforeach
+                        </tbody>
+
+                    </table>
+                </div>
             </div>
             {{ $solutions->links() }}
         </div>

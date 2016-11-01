@@ -9,7 +9,7 @@
                     <div class="col-md-4">
                         <h3>
                             @foreach($contest->programming_languages as $programming_language)
-                            <span class="tag tag-primary">{{ $programming_language->name }}</span>
+                                <span class="tag tag-primary">{{ $programming_language->name }}</span>
                             @endforeach
                         </h3>
                         <h3><span class="tag tag-success">{{ $contest->end_date->diffInDays($contest->start_date) }} d. to finish</span></h3>
@@ -33,38 +33,40 @@
         <div class="card">
             <div class="card-header">Problems</div>
             <div class="card-block">
-                <table class="table table-striped table-bordered table-sm">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Difficulty</th>
-                        <th>{{ $contest->show_max?'Best':'Latest' }} points</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($contest->getProblemData() as $id => $problem)
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-sm">
+                        <thead>
                         <tr>
-                            <td>{{ $id }}</td>
-                            <td class="no-wrap">
-                                <a href="{{ $problem['link'] }}">{{ $problem['name'] }}</a>
-                            </td>
-                            <td>{{ $problem['difficulty'] }}</td>
-                            <td>
-                                @if(isset($problem['points']))
-                                    @if(isset($problem['solution_link']))
-                                        <a href="{{ $problem['solution_link'] }}">{{ $problem['points'] }}</a>
-                                    @else
-                                        {{ $problem['points'] }}
-                                    @endif
-                                @else
-                                    -
-                                @endif
-                            </td>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Difficulty</th>
+                            <th>{{ $contest->show_max?'Best':'Latest' }} points</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @foreach($contest->getProblemData() as $id => $problem)
+                            <tr>
+                                <td>{{ $id }}</td>
+                                <td class="no-wrap">
+                                    <a href="{{ $problem['link'] }}">{{ $problem['name'] }}</a>
+                                </td>
+                                <td>{{ $problem['difficulty'] }}</td>
+                                <td>
+                                    @if(isset($problem['points']))
+                                        @if(isset($problem['solution_link']))
+                                            <a href="{{ $problem['solution_link'] }}">{{ $problem['points'] }}</a>
+                                        @else
+                                            {{ $problem['points'] }}
+                                        @endif
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

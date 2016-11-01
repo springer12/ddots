@@ -9,7 +9,7 @@
         </div>
         <hr class="hidden-border">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="table-responsive">
                 @if(!$dialog_users->isEmpty())
                     <table class="table table-striped table-bordered table-sm">
                         <thead>
