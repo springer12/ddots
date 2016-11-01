@@ -5,12 +5,12 @@
 
         <!-- logo and title -->
         <div class="container">
-            <div class="col-xs-12">
+            <div>
                 <a class="navbar-brand" href="{{ action('HomeController@index') }}">
                     <img src="{{ asset('frontend-bundle/media/dots.png') }}">
                 </a>
             </div>
-            <div class="col-xs-12">
+            <div>
                 <h4>
                     <p>
                         С 16 февраля 2016 тестирующая система DOTS доступна для преподавателей информатики Харькова
