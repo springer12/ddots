@@ -5,13 +5,15 @@
 @section('content')
     <div class="container">
         <div class="card">
-            <div class="card-header">
-                <a href="{{ route('frontend::contests::single', ['id' => $contest->id]) }}">{{ $contest->name }}</a>
-                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                <a href="{{ route('frontend::contests::contest_problem', ['contest_id' => $contest->id, 'problem_id' => $solution->problem->id ]) }}">{{ $solution->problem->name }}</a>
-                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                solution
-            </div>
+            @if($contest)
+                <div class="card-header">
+                    <a href="{{ route('frontend::contests::single', ['id' => $contest->id]) }}">{{ $contest->name }}</a>
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <a href="{{ route('frontend::contests::contest_problem', ['contest_id' => $contest->id, 'problem_id' => $solution->problem->id ]) }}">{{ $solution->problem->name }}</a>
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    solution
+                </div>
+            @endif
             <div class="card-block">
 
                 <table class="table">
@@ -30,7 +32,7 @@
                                 @if($solution->success_percentage)
                                     {{ $solution->success_percentage }} %
                                 @else
-                                                                        -
+                                    -
                                 @endif
                             @else
                                 {{ $solution->points }}
@@ -39,7 +41,9 @@
                     </tr>
                     <tr>
                         <td>Result</td>
-                        <td><span class="tag tag-{{ !$solution->status? 'success' : 'danger' }}">{{ $solution->status?: 'Success' }}</span></td>
+                        <td>
+                            <span class="tag tag-{{ !$solution->status? 'success' : 'danger' }}">{{ $solution->status?: 'Success' }}</span>
+                        </td>
                     </tr>
                     <tr>
                         <td>Max memory usag</td>
@@ -82,7 +86,9 @@
                         <tr>
                             <td>{{ $solution->successful_reports? $solution->points / $solution->successful_reports: '-' }}</td>
                             <td>{{ $report->execution_time }}</td>
-                            <td><span class="tag tag-{{ $report->status == App\SolutionReport::STATUS_OK? 'success' : 'danger' }}">{{ $report->status }}</span></td>
+                            <td>
+                                <span class="tag tag-{{ $report->status == App\SolutionReport::STATUS_OK? 'success' : 'danger' }}">{{ $report->status }}</span>
+                            </td>
                             <td>{{ $report->memory_peak }}</td>
                         </tr>
                     @endforeach
