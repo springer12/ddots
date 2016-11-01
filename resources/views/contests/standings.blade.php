@@ -45,38 +45,40 @@
                         </tr>
                         </tfoot>
                         <tbody>
-                        @foreach($users as $user_id => $user)
-                            <tr>
-                                <td>
-                                    @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER) && Auth::user()->isTeacherOf($user_id) || Auth::user()->id == $user_id)
-                                        <a href="{{ route('frontend::user::profile', ['id' => $user_id]) }}">
-                                            {{ $user['name'] }}
-                                        </a>
-                                    @else
-                                        {{ $user['name'] }}
-                                    @endif
-
-                                </td>
-                                @foreach($user['problems'] as $problem_id => $problem)
+                        @if(!empty($users))
+                            @foreach($users as $user_id => $user)
+                                <tr>
                                     <td>
-                                        @if($problem['points'] && $problem['solution_id'])
-                                            @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
-                                                <a href="{{ route('frontend::contests::solution', ['id' => $problem['solution_id']]) }}">
-                                                    {{ $problem['points'] }}
-                                                </a>
-                                            @else
-                                                {{ $problem['points'] }}
-                                            @endif
+                                        @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER) && Auth::user()->isTeacherOf($user_id) || Auth::user()->id == $user_id)
+                                            <a href="{{ route('frontend::user::profile', ['id' => $user_id]) }}">
+                                                {{ $user['name'] }}
+                                            </a>
                                         @else
-                                            -
+                                            {{ $user['name'] }}
                                         @endif
+
                                     </td>
-                                @endforeach
-                                <td>
-                                    {{ $user['points'] }}
-                                </td>
-                            </tr>
-                        @endforeach
+                                    @foreach($user['problems'] as $problem_id => $problem)
+                                        <td>
+                                            @if($problem['points'] && $problem['solution_id'])
+                                                @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+                                                    <a href="{{ route('frontend::contests::solution', ['id' => $problem['solution_id']]) }}">
+                                                        {{ $problem['points'] }}
+                                                    </a>
+                                                @else
+                                                    {{ $problem['points'] }}
+                                                @endif
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                    @endforeach
+                                    <td>
+                                        {{ $user['points'] }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                         </tbody>
                     </table>
                 </div>
