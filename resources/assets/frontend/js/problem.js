@@ -16,7 +16,8 @@
             editor.commands.addCommand({
                 name: "save",
                 bindKey: {win: "Ctrl-s", mac: "Command-s"},
-                exec: function(){},
+                exec: function () {
+                },
             });
 
 
@@ -28,6 +29,7 @@
             $('[data-programming-languages]').change(function () {
                 editor.getSession().setMode("ace/mode/" + $('[data-ace-mode]:selected').data('ace-mode'));
             });
+            $('[data-programming-languages]').trigger('change');
         }
 
         $('[data-submit-solution]').submit(function (e) {
