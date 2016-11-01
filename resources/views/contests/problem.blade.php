@@ -68,7 +68,7 @@
         <div class="card">
             <div class="card-header">Solutions</div>
             <div class="card-block">
-                <table class="table table-striped">
+                <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <tr>
                         <th>Date</th>
