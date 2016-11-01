@@ -73,7 +73,8 @@
             }
         }
 
-        $(document.body).on('select2:change', '[data-problem-select]', function () {
+        $(document.body).on('change', '[data-problem-select]', function () {
+            console.log($($(this).select2('data')[0].element));
             addProblem($($(this).select2('data')[0].element));
         });
 
