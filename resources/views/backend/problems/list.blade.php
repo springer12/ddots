@@ -41,11 +41,24 @@
                                     <td>{{ $problem->updated_at }}</td>
                                     <td>{{ $problem->deleted_at }}</td>
                                     <td>
-                                        <a title="Edit" href="{{ action('Backend\ProblemController@edit',['id'=> $problem->id]) }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a title="Edit"
+                                           href="{{ action('Backend\ProblemController@edit',['id'=> $problem->id]) }}">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </a>
                                         @if (!$problem->deleted_at)
-                                            <a title="Delete" href="" data-toggle="confirmation" data-message="Are you sure you want to delete this server from the system?" data-btn-ok-href="{{ action('Backend\ProblemController@delete', ['id'=> $problem->id]) }}" data-btn-ok-label="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                            <a title="Delete" href="" data-toggle="confirmation"
+                                               data-message="Are you sure you want to delete this server from the system?"
+                                               data-btn-ok-href="{{ action('Backend\ProblemController@delete', ['id'=> $problem->id]) }}"
+                                               data-btn-ok-label="Delete">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </a>
                                         @else
-                                            <a title="Restore" href="" data-toggle="confirmation" data-message="Are you sure you want to restore this server?" data-btn-ok-href="{{ action('Backend\ProblemController@restore', ['id'=> $problem->id]) }}" data-btn-ok-label="Restore"><span class="glyphicon glyphicon-repeat"></span></a>
+                                            <a title="Restore" href="" data-toggle="confirmation"
+                                               data-message="Are you sure you want to restore this server?"
+                                               data-btn-ok-href="{{ action('Backend\ProblemController@restore', ['id'=> $problem->id]) }}"
+                                               data-btn-ok-label="Restore">
+                                                <i class="fa fa-repeat" aria-hidden="true"></i>
+                                            </a>
                                         @endif
                                     </td>
                                 </tr>

@@ -3,15 +3,14 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-                <div class="card card-user">
-                    <div class="content">
-                        <div class="author">
-                            <img class="avatar border-white" src="{{ $user->avatar }}" alt="...">
-                            <h4 class="title">{{ $user->name }}<br>
-                                <a href="{{ route('frontend::user::profile', ['id' => $user->id]) }}"><small>{{ $user->nickname }}</small></a>
-                            </h4>
-                        </div>
+            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+                <div class="card text-xs-center">
+                    <div class="card-header text-xs-left">Profile</div>
+                    <div class="card-block">
+                        <a href="{{ route('frontend::user::profile', ['id' => $user->id]) }}"><img class="card-img-top teacher-avatar" src="{{ $user->avatar }}" alt="Card image cap"></a>
+                        <h4>{{ $user->name }}<br>
+                            <a href="{{ route('frontend::user::profile', ['id' => $user->id]) }}"><small>{{ $user->nickname }}</small></a>
+                        </h4>
                         <div class="row">
                             <div class="col-md-12 align-center">
                                 @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->vk_link)
@@ -25,7 +24,7 @@
                         </div>
                         @if(Auth::check() && Auth::user()->id == $user->id)
                             <div class="text-center">
-                                <a href="{{ route('frontend::user::edit') }}" class="btn btn-info btn-fill btn-wd">
+                                <a href="{{ route('frontend::user::edit') }}" class="btn btn-success">
                                     @if($user->hasRole(\App\User::ROLE_LOW_USER))
                                         Upgrade
                                     @else
@@ -36,36 +35,35 @@
                         @endif
                     </div>
                     <hr>
-                    <div class="text-center">
+                    <div>
                         <div class="row">
-                            <div class="col-md-3 col-md-offset-1">
-                                @if($user->hasRole(\App\User::ROLE_USER) && $user->date_of_birth)
+                            @if($user->hasRole(\App\User::ROLE_USER) && $user->date_of_birth)
+                                <div class="col-md-4">
                                     <h5>{{ $user->getAge() }}<br><small>Years old</small></h5>
-                                @endif
-                            </div>
-                            <div class="col-md-4">
-                                @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]))
+                                </div>
+                            @endif
+                            @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]))
+                                <div class="col-md-4">
                                     <h5>{{ $user->created_at->diffInDays(Carbon\Carbon::now()) }}<br><small>{{ str_plural('Day', $user->created_at->diffInDays(Carbon\Carbon::now())) }} with us</small></h5>
-                                @endif
-                            </div>
-                            <div class="col-md-3">
-                                @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->profession)
+                                </div>
+                            @endif
+                            @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->profession)
+                                <div class="col-md-4">
                                     <h5>{{ $user->profession }}<br><small>Profession</small></h5>
-                                @endif
-                            </div>
+                                </div>
+                            @endif
 
 
-                            <div class="col-md-3 col-md-offset-1">
-                                @if($user->hasRole(\App\User::ROLE_USER) && $user->place_of_study)
+                            @if($user->hasRole(\App\User::ROLE_USER) && $user->place_of_study)
+                                <div class="col-md-4">
                                     <h5>{{ $user->place_of_study }}<br><small>Place of study</small></h5>
-                                @endif
-                            </div>
-                            <div class="col-md-4">
-                                @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->programmingLanguage)
+                                </div>
+                            @endif
+                            @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->programmingLanguage)
+                                <div class="col-md-4">
                                     <h5>{{ $user->programmingLanguage->name }}<br><small>Primary language</small></h5>
-                                @endif
-                            </div>
-                            <div class="col-md-3"></div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -73,43 +71,33 @@
 
                 @if($user->hasRole(\App\User::ROLE_USER) && $user->teachers()->count())
                     <div class="card">
-                        <div class="header">
-                            <h4 class="title">Teachers</h4>
-                        </div>
-                        <div class="content">
-                            <ul class="list-unstyled team-members">
-
+                        <div class="card-header">Teachers</div>
+                        <div class="card-block">
+                            <div class="row">
                                 @foreach($user->teachers as $teacher)
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-xs-3">
+                                    <div class="col-md-4">
+                                        <div class="card text-xs-center">
+                                            <a href="{{ action('UserController@index', ['id' => $teacher->id]) }}">
+                                                <img class="card-img-top teacher-avatar" src="{{ $teacher->avatar }}" alt="Card image cap">
+                                            </a>
+                                            <div class="card-block">
                                                 <a href="{{ action('UserController@index', ['id' => $teacher->id]) }}">
-                                                    <div class="avatar">
-                                                        <img src="{{ $teacher->avatar }}" alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                                                    </div>
+                                                    <h4 class="card-title">{{ $teacher->name }}</h4>
+                                                    <p class="card-text"><small class="text-muted">{{ $teacher->nickname }}</small></p>
                                                 </a>
-                                            </div>
-                                            <div class="col-xs-6">
-
-                                                <a href="{{ action('UserController@index', ['id' => $teacher->id]) }}">
-                                                    {{ $teacher->name }}
-                                                    <br>
-                                                    <span class="text-muted"><small>{{ $teacher->nickname }}</small></span>
-                                                </a>
-                                            </div>
-
-                                            <div class="col-xs-3 text-right">
-                                                @if($teacher->vk_link)
-                                                    <a href="{{ $teacher->vk_link }}"><i class="dots-vk-icon"></i></a>
-                                                @endif
-                                                @if($teacher->fb_link)
-                                                    <a href="{{ $teacher->fb_link }}"><i class="dots-facebook-icon"></i></a>
-                                                @endif
+                                                <div class="card-text">
+                                                    @if($teacher->vk_link)
+                                                        <a class="btn btn-social-icon btn-vk" href="{{ $teacher->vk_link }}"><span class="fa fa-vk"></span></a>
+                                                    @endif
+                                                    @if($teacher->fb_link)
+                                                        <a class="btn btn-social-icon btn-facebook" href="{{ $teacher->fb_link }}"><span class="fa fa-facebook"></span></a>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
-                                    </li>
+                                    </div>
                                 @endforeach
-                            </ul>
+                            </div>
                         </div>
                     </div>
 

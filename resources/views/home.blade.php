@@ -1,135 +1,213 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="content">
-        <div class="container-fluid">
-            <!-- logo and title -->
-            <div class="row">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="dots-logo dots-sub-logo">
-                        <img src="{{ $subdomain->image }}" alt="sub-logo" />
-                    </div>
-                </div>
-                <div class="col-lg-9 col-sm-6 dots-tagline">
-                    <h1 class="title">
-                        <p>{{ $subdomain->fullname }}</p>
-                        <p>Практикум по програмированию</p>
-                    </h1>
-                </div>
+    <div class="container">
+        <!-- logo and title -->
+        <div class="row">
+            <div class="col-sm-2">
+                <img src="{{ $subdomain->image }}" alt="sub-logo" class="subdomain-logo"/>
             </div>
+            <div class="col-sm-10">
+                <h3>
+                    <p>{{ $subdomain->description }}</p>
+                    <p>Практикум по програмированию</p>
+                </h3>
+            </div>
+        </div>
 
-            <!-- description -->
-            @if(!Auth::check())
-                <div class="row">
-                    <div class="col-lg-12 col-sm-12 dots-wrap-content">
-                        <h2>Login form</h2>
-                        <div class="dots-card">
-                            <form class="form-inline" role="form" method="POST" action="{{ url('/login') }}">
+        <!-- description -->
+        @if(!Auth::check())
+
+            <hr class="hidden-border">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card" id="login">
+                        <div class="card-header">Login</div>
+                        <div class="card-block">
+                            <form role="form" method="POST" action="{{ url('/login') }}">
                                 {{ csrf_field() }}
-                                <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
-                                    <label class="sr-only" for="exampleInputEmail2">Email</label>
-                                    <input type="text" class="form-control border-input" id="exampleInputEmail2" placeholder="Enter email" name="nickname">
-                                    @if ($errors->has('nickname'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('nickname') }}</strong>
-                                    </span>
-                                    @endif
+                                <div class="form-group row {{ $errors->has('nickname') ? ' has-danger' : '' }}">
+                                    <label class="col-md-4 col-form-label">Email / nickname</label>
+
+                                    <div class="col-md-6">
+                                        <input class="form-control" type="text" placeholder="Enter email" name="nickname">
+                                        @if ($errors->has('nickname'))
+                                            <span class="form-control-feedback">
+                                                <strong>{{ $errors->first('nickname') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                    <label class="sr-only" for="exampleInputPassword2">Password</label>
-                                    <input type="password" class="form-control border-input" id="exampleInputPassword2" placeholder="Password" name="password">
-                                    @if ($errors->has('password'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                    @endif
+                                <div class="form-group row {{ $errors->has('password') ? ' has-danger' : '' }}">
+                                    <label class="col-md-4 col-form-label">Password</label>
+                                    <div class="col-md-6">
+                                        <input class="form-control" type="password" placeholder="Password" name="password">
+                                        @if ($errors->has('password'))
+                                            <span class="form-control-feedback">
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-wd">Login</button>
-                                <div class="dots-social-enter">
-                                    <span>Or login via:</span>
-                                    <ul class="dots-social-icons">
-                                        <li><a href="{{ route('social::redirect', ['provider' => 'vkontakte']) }}"><i class="dots-vk-icons"></i></a></li>
-                                        <li><a href="{{ route('social::redirect', ['provider' => 'google']) }}"><i class="dots-google-icons"></i></a></li>
-                                        <li><a href="{{ route('social::redirect', ['provider' => 'facebook']) }}"><i class="dots-facebook-icons"></i></a></li>
-                                    </ul>
+
+                                <div class="form-group row">
+                                    <div class="col-md-6 offset-md-4">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="remember"> Remember Me
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-6 offset-md-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-btn fa-sign-in"></i> Login
+                                        </button>
+
+                                        <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-6 offset-md-4">
+                                        <a class="btn btn-social-icon btn-vk"       href="{{ route('social::redirect', ['provider' => 'vkontakte']) }}"><span class="fa fa-vk"></span></a>
+                                        <a class="btn btn-social-icon btn-google"   href="{{ route('social::redirect', ['provider' => 'google']) }}"><span class="fa fa-google"></span></a>
+                                        <a class="btn btn-social-icon btn-facebook" href="{{ route('social::redirect', ['provider' => 'facebook']) }}"><span class="fa fa-facebook"></span></a>
+                                    </div>
                                 </div>
                             </form>
                         </div>
                     </div>
+
                 </div>
+            </div>
         @endif
+        <hr class="hidden-border">
         <!-- news -->
-            <div class="row">
-                <div class="col-lg-12 col-sm-12 dots-wrap-content">
-                    <h2>News</h2>
-                    <div class="dots-card">
-
-                        <div class="dots-news-wrap">
-                            <p>Текст последней новости</p>
-                            <a href="#">More</a>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">News</div>
+                    <div class="card-block">
+                        <div>
+                            <p>Текст последней новости...</p>
                         </div>
+                    </div>
+                    <hr>
 
-                        <a href="#" class="dots-full-content-link"><i class="ti-arrow-circle-down"></i>All news</a>
+                    <div class="card-block">
+                        <div>
+                            <p>Текст последней новости...</p>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="card-block">
+                        <div>
+                            <p>Текст последней новости...</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-block">
+
+                        <a href="#" class="btn btn-success pull-right">Last news</a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <hr class="hidden-border">
+        <!-- news -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">Project was supported by</div>
+
+                    @foreach($subdomain->sponsors as $sponsor)
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <a href="{{ $sponsor->link }}"><img src="{{ $sponsor->image }}" alt="sponsor-logo" class="sponsor-logo" /></a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="{{ $sponsor->link }}">{{ $sponsor->name }}</a>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{ $sponsor->description }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    @endforeach
+
+                    <div class="card-block">
+                        <a href="#" class="btn btn-success pull-right">All sponsors</a>
                     </div>
                 </div>
+
             </div>
+        </div>
 
-            <!-- sponsors -->
-            <div class="row">
-                <div class="col-lg-12 col-sm-12 dots-wrap-content">
-                    <h2>Project was supported by</h2>
-                    <div class="dots-card">
-                        <div class="content table-responsive table-full-width">
-                            <table class="table">
-                                <tbody>
-                                @foreach($subdomain->sponsors as $sponsor)
-                                <tr>
-                                    <td class="dots-tb-cont-logo"><a href="{{ $sponsor->link }}"><img src="{{ $sponsor->image }}" alt="sponsor-logo" /></a></td>
-                                    <td class="dots-tb-cont-name"><a href="{{ $sponsor->link }}">{{ $sponsor->name }}</a></td>
-                                    <td class="dots-tb-cont-description">{{ $sponsor->description }}</td>
-                                </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+        <hr class="hidden-border">
+        <!-- news -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">Subdomain's teachers and mentors</div>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <a href="#"><img src="#" alt="sponsor-logo" class="sponsor-logo" /></a>
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="#">Название</a>
+                            </div>
+                            <div class="col-sm-4">
+                                Описание
+                            </div>
                         </div>
+                    </div>
+                    <hr>
 
-                        <a href="#" class="dots-full-content-link"><i class="ti-arrow-circle-down"></i>All sponsors</a>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <a href="#"><img src="#" alt="sponsor-logo" class="sponsor-logo" /></a>
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="#">Название</a>
+                            </div>
+                            <div class="col-sm-4">
+                                Описание
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <a href="#"><img src="#" alt="sponsor-logo" class="sponsor-logo" /></a>
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="#">Название</a>
+                            </div>
+                            <div class="col-sm-4">
+                                Описание
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="card-block">
+                        <a href="#" class="btn btn-success pull-right">All teachers and mentors</a>
                     </div>
                 </div>
+
             </div>
-
-            <!-- teachers -->
-            <div class="row">
-                <div class="col-lg-12 col-sm-12 dots-wrap-content">
-                    <h2>Subdomain's teachers and mentors</h2>
-                    <div class="dots-card">
-                        <div class="content table-responsive table-full-width">
-                            <table class="table">
-                                <tbody>
-                                <tr>
-                                    <td class="dots-tb-cont-logo">lOGO</td>
-                                    <td class="dots-tb-cont-name">Название</td>
-                                    <td class="dots-tb-cont-description">Описание</td>
-                                </tr>
-                                <tr>
-                                    <td class="dots-tb-cont-logo">lOGO</td>
-                                    <td class="dots-tb-cont-name">Название</td>
-                                    <td class="dots-tb-cont-description">Описание</td>
-                                </tr>
-                                <tr>
-                                    <td class="dots-tb-cont-logo">lOGO</td>
-                                    <td class="dots-tb-cont-name">Название</td>
-                                    <td class="dots-tb-cont-description">Описание</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <a href="#" class="dots-full-content-link"><i class="ti-arrow-circle-down"></i>All teachers and mentors</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 @endsection

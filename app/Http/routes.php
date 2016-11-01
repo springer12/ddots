@@ -12,7 +12,22 @@
 */
 
 Route::group(['middleware' => 'web'], function () {
-    Route::auth();
+
+
+    // Authentication Routes...
+    $this->post('login', 'Auth\AuthController@login');
+    $this->get('logout', 'Auth\AuthController@logout');
+
+    // Registration Routes...
+    $this->get('register', 'Auth\AuthController@showRegistrationForm');
+    $this->post('register', 'Auth\AuthController@register');
+
+    // Password Reset Routes...
+    $this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+    $this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+    $this->post('password/reset', 'Auth\PasswordController@reset');
+
+
     Route::get('verify/{code}', 'UserController@verify');
     Route::group(['middleware' => 'social_provider', 'prefix' => 'social', 'as' => 'social::'], function () {
         Route::get('/redirect/{provider}', ['as' => 'redirect', 'uses' => 'Auth\SocialController@redirectToProvider']);
@@ -50,7 +65,7 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::group(['prefix' => 'messaging', 'as' => 'messages::'], function () {
             Route::get('/', ['uses' => 'Backend\MessageController@index', 'as' => 'list']);
-            
+
             Route::get('/{id}', ['uses' => 'Backend\MessageController@dialog', 'as' => 'dialog'])->where('id', '[0-9]+');
             Route::post('/{id}', 'Backend\MessageController@send')->where('id', '[0-9]+');
         });
@@ -131,6 +146,19 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::get('delete/{id}', 'Backend\GroupController@delete');
             Route::get('restore/{id}', 'Backend\GroupController@restore');
+        });
+
+        Route::group(['prefix' => 'volumes', 'as' => 'volumes::'], function () {
+            Route::get('/', ['uses' => 'Backend\VolumeController@index', 'as' => 'list']);
+
+            Route::get('add', ['uses' => 'Backend\VolumeController@showForm', 'as' => 'add']);
+            Route::post('add', 'Backend\VolumeController@edit');
+
+            Route::get('edit/{id}', ['uses' => 'Backend\VolumeController@showForm', 'as' => 'edit']);
+            Route::post('edit/{id}', 'Backend\VolumeController@edit');
+
+            Route::get('delete/{id}', 'Backend\VolumeController@delete');
+            Route::get('restore/{id}', 'Backend\VolumeController@restore');
         });
 
         Route::group(['prefix' => 'problems', 'as' => 'problems::'], function () {
@@ -223,7 +251,7 @@ Route::group(['middleware' => 'web'], function () {
                     'uses' => 'ProblemController@contestProblem',
                     'as'   => 'problem',
                 ])->where('contest_id', '[0-9]+')->where('problem_id', '[0-9]+');
-                Route::post('/{contest_id}/{problem_id}/', ['uses' => 'SolutionController@submit'])
+                Route::post('/{contest_id}/{problem_id}/', ['uses' => 'SolutionController@submit', 'as' => 'contest_problem'])
                     ->where('contest_id', '[0-9]+')
                     ->where('problem_id', '[0-9]+');
                 Route::get('/{id}/standings/', [
@@ -243,6 +271,12 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/edit', ['as' => 'edit', 'uses' => 'UserController@edit']);
             Route::post('/edit', ['as' => 'edit', 'uses' => 'UserController@saveEdit']);
             Route::get('/{id}', ['as' => 'profile', 'uses' => 'UserController@index'])->where('id', '[0-9]+');
+        });
+        Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_TEACHER . ',' . App\User::ROLE_ADMIN, 'as' => 'privileged::'], function () {
+            Route::group(['middleware' => 'ajax', 'as' => 'ajax::'], function () {
+                Route::get('/search-problems', ['as' => 'searchProblems', 'uses' => 'Ajax\ProblemController@search']);
+                Route::get('/search-volumes', ['as' => 'searchVolumes', 'uses' => 'Ajax\VolumeController@search']);
+            });
         });
     });
 
@@ -277,4 +311,22 @@ Route::group(['namespace' => 'TestingSystem', 'prefix' => 'testing-system-api'],
 
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
     //future
+});
+
+Route::get('tracker', function() {
+    return view('tracker');
+});
+
+Route::post('tracker', function(Illuminate\Http\Request $request) {
+    DB::insert('
+INSERT INTO work_time_reports (`desc`,`minutes`,`when`, `who`)
+VALUES (?,?,?,?);
+', [
+        $request->get('desc'),
+        $request->get('minutes'),
+        $request->get('when'),
+        $request->get('who'),
+    ]);
+
+    return redirect()->to('tracker');
 });

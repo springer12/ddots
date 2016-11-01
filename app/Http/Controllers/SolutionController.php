@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contest;
 use App\Solution;
 use App\User;
 use Illuminate\Http\Request;
@@ -17,7 +18,10 @@ class SolutionController extends Controller
     {
         $solution = Solution::findOrFail($id);
         $solution->fillData();
-        return View('contests.solution')->with(['solution' => $solution]);
+        return View('contests.solution')->with([
+            'solution' => $solution,
+            'contest'  => $solution->getContest(),
+        ]);
     }
 
     public function contestSolutions(Request $request, $id)
@@ -25,13 +29,15 @@ class SolutionController extends Controller
         if (Auth::user()->hasRole(User::ROLE_TEACHER)) {
             return View('contests.solutions')->with([
                 'solutions' => Solution::join('contest_solution', 'solutions.id', '=', 'solution_id')
-                ->where('contest_id', $id)->paginate(10)
+                    ->where('contest_id', $id)->paginate(10),
+                'contest' => Contest::findOrFail($id),
             ]);
         }
         return View('contests.solutions')->with([
             'solutions' => Solution::join('contest_solution', 'solutions.id', '=', 'solution_id')->where('contest_id', $id)
-                ->where('user_id', Auth::user()->id)->paginate(10)]
-        );
+                ->where('user_id', Auth::user()->id)->paginate(10),
+            'contest' => Contest::findOrFail($id),
+        ]);
     }
 
     public function submit(Request $request, $contest_id, $problem_id)

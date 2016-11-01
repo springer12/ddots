@@ -13,67 +13,49 @@
 
 
 <body>
+<header class="navbar navbar-dark bg-inverse navbar-static-top bd-navbar">
+    <div class="container">
+        <nav>
+            <button class="navbar-toggler float-xs-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#bd-main-nav" aria-controls="bd-main-nav" aria-expanded="false" aria-label="Toggle navigation"></button>
 
-<div class="wrapper dots-domain-wrap">
-
-
-    <div class="main-panel">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar bar1"></span>
-                        <span class="icon-bar bar2"></span>
-                        <span class="icon-bar bar3"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Домены</a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="ti-file"></i>
-                                <p>Инструкция</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="ti-id-badge"></i>
-                                <p>Регистрация</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="ti-user"></i>
-                                <p>Вход</p>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
+            <div class="collapse navbar-toggleable-xs" id="bd-main-nav">
+                <a class="navbar-brand" href="{{ action('HomeController@index') }}">
+                    DOTS
+                </a>
+                <ul class="nav navbar-nav  float-md-right">
+                    <li class="nav-item"><a class="nav-item nav-link" href="{{ url('/register') }}"><i class="fa fa-file-o" aria-hidden="true"></i> Instructions</a></li>
+                    <li class="nav-item"><a class="nav-item nav-link" href="{{ url('/register') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Register</a></li>
+                </ul>
             </div>
         </nav>
-
-        @include('helpers.flash')
-        @yield('content')
-
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="align-center copyright">
-                    Copyright © 2005-2016, Молодёжное научное общество "Q-BIT" <br>
-                    тех. поддержка: Н.А. Арзубов <br>
-                    При использовании материалов сайта ссылка на dots.org.ua обязательна.
-                </div>
-            </div>
-        </footer>
-
     </div>
-</div>
+</header>
+
+@include('helpers.flash')
+@yield('content')
+
+<footer class="text-muted">
+    <div class="container">
+        <p>
+            Copyright © 2005-2016, Молодёжное научное общество "Q-BIT" <br>
+            тех. поддержка: Н.А. Арзубов <br>
+            При использовании материалов сайта ссылка на dots.org.ua обязательна.
+        </p>
+    </div>
+</footer>
+
 
 </body>
 <script src="{{ asset('frontend-bundle/js/bundle' . (config('app.assets.minified', false) ? '.min' : '') . '.js') }}"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-86644916-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </body>
 </html>

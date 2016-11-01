@@ -2,12 +2,12 @@ var path = require('path'),
     fs = require('fs'),
     gUtil = require('gulp-util'),
     elixir = require('laravel-elixir'),
-    args   = require('yargs').argv,
+    args = require('yargs').argv,
     resourcesFolder = 'resources',
     appName = args.appName ? args.appName : gUtil.env.app && fs.statSync(appPath(gUtil.env.app)).isDirectory() ? gUtil.env.app : null,
-/*
- * Vendor resources
- */
+    /*
+     * Vendor resources
+     */
 
 
 // jQuery
@@ -20,6 +20,27 @@ var path = require('path'),
         "js": vendorPath('bootstrap/dist/js/bootstrap.js')
     },
 
+//glyphicons
+    glyphs = {
+        fonts: vendorPath('glyphicons/fonts', true),
+        css: vendorPath('glyphicons/styles/glyphicons.css'),
+    },
+
+//mustache
+    mustache = {
+        js: vendorPath('mustache.js/mustache.js')
+    },
+
+// tether
+    tether = {
+        "css": vendorPath('tether/dist/css/tether.min.css'),
+        "js": vendorPath('tether/dist/js/tether.min.js')
+    },
+
+    bootstrap_social = {
+        "css": vendorPath('bootstrap-social/bootstrap-social.css')
+    },
+
 // gentelella
     gentelella = {
         "css": vendorPath('gentelella/build/css/custom.css'),
@@ -29,18 +50,13 @@ var path = require('path'),
 //font-awesome
     fontawesome = {
         "fonts": vendorPath('font-awesome/fonts', true),
-        "css": vendorPath('font-awesome/css/font-awesome.css'),
+        "css": vendorPath('font-awesome/css/font-awesome.min.css'),
     },
 
 // eonasdan-bootstrap-datetimepicker
     datetimepicker = {
         "css": vendorPath('eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'),
         "js": vendorPath('eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')
-    },
-
-// bootstrap-checkbox
-    bootstrap_checkbox = {
-        "js": vendorPath('bootstrap-checkbox/dist/js/bootstrap-checkbox.js')
     },
 
 
@@ -51,24 +67,24 @@ var path = require('path'),
     },
 
     moment = {
-      js: vendorPath('moment/min/moment-with-locales.js')
+        js: vendorPath('moment/min/moment-with-locales.js')
     },
 
 //ace-builds code editor
     ace = vendorPath('ace-builds/src-min-noconflict', true),
-/*
- * Apps resources
- */
+    /*
+     * Apps resources
+     */
     apps = {
         "frontend": {
-            "fonts": [Bootstrap.fonts, appPath('frontend', 'fonts')],
-            "css": [Bootstrap.css, datetimepicker.css, select2.css, appPath('frontend', 'css')],
-            "js": [jQuery, Bootstrap.js, moment.js, datetimepicker.js, bootstrap_checkbox.js, select2.js, appPath('frontend', 'js')]
+            "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('frontend', 'fonts')],
+            "css": [tether.css, Bootstrap.css, bootstrap_social.css, fontawesome.css, datetimepicker.css, select2.css, appPath('frontend', 'css')],
+            "js": [jQuery, tether.js, Bootstrap.js, moment.js, datetimepicker.js, select2.js, mustache.js, appPath('frontend', 'js')]
         },
         "backend": {
-            "fonts": [Bootstrap.fonts, fontawesome.fonts, appPath('backend', 'fonts')],
-            "css": [Bootstrap.css, select2.css, fontawesome.css,datetimepicker.css, gentelella.css, appPath('backend', 'css')],
-            "js": [jQuery, select2.js, Bootstrap.js, gentelella.js, moment.js, datetimepicker.js, bootstrap_checkbox.js, appPath('backend', 'js')]
+            "fonts": [Bootstrap.fonts, fontawesome.fonts, glyphs.fonts, appPath('backend', 'fonts')],
+            "css": [tether.css, Bootstrap.css, select2.css, fontawesome.css, datetimepicker.css, gentelella.css, glyphs.css, appPath('backend', 'css')],
+            "js": [jQuery, tether.js, select2.js, Bootstrap.js, gentelella.js, moment.js, datetimepicker.js, appPath('backend', 'js')]
         },
         "ace": {
             "js": [ace]
@@ -88,7 +104,7 @@ var path = require('path'),
  */
 //@todo check build process
 //@todo check watch feature
-elixir(function(mix) {
+elixir(function (mix) {
     //mix.sass('app.scss');
     if (appName) {
         buildApp(mix, appName);
@@ -101,7 +117,7 @@ elixir(function(mix) {
 });
 
 function vendorPath(vPath, fromResource) {
-    return path.join((fromResource ? resourcesFolder + '/vendor': 'vendor'), vPath);
+    return path.join((fromResource ? resourcesFolder + '/vendor' : 'vendor'), vPath);
 }
 
 function appPath(appName, group) {

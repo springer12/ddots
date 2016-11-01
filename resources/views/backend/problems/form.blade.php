@@ -11,38 +11,38 @@
                 </div>
                 <div class="x_content">
                     <br>
-                    <form method="post" class="form-horizontal form-label-left" enctype="multipart/form-data">
+                    <form method="post" class=" form-label-left" enctype="multipart/form-data">
                         {!! csrf_field() !!}
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
+                        <div class="form-group row{{ $errors->has('name') ? ' has-danger' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="name" value="{{ old('name') ?: $problem->name }}"
                                        required="required" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('name'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Description <span
+                        <div class="form-group row{{ $errors->has('description') ? ' has-danger' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="description">Description <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <textarea name="description" required="required"
                                           class="form-control col-md-7 col-xs-12">{{ old('description') ?: $problem->description }}</textarea>
                                 @if ($errors->has('description'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('description') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('difficulty') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="difficulty">Difficulty <span
+                        <div class="form-group row{{ $errors->has('difficulty') ? ' has-danger' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="difficulty">Difficulty <span
                                         class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="difficulty" required="required" class="form-control col-md-7 col-xs-12">
@@ -51,27 +51,27 @@
                                     @endfor
                                 </select>
                                 @if ($errors->has('difficulty'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('difficulty') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('archive') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="archive">Archive</label>
+                        <div class="form-group row{{ $errors->has('archive') ? ' has-danger' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="archive">Archive</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="file" name="archive" class="form-control col-md-7 col-xs-12">
                                 @if ($errors->has('archive'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('archive') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('volumes') ? ' has-error' : '' }}">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Volumes <h2>Volume
+                        <div class="form-group row{{ $errors->has('volumes') ? ' has-danger' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Volumes <h2>Volume
                                     name must have atleast 1 non-numeric symbol!!!</h2></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="volumes[]" data-select-volume class="form-control col-md-7 col-xs-12"
@@ -87,7 +87,7 @@
                                     @endforeach
                                 </select>
                                 @if ($errors->has('volumes'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                         <strong>{{ $errors->first('volumes') }}</strong>
                                     </span>
                                 @endif
@@ -95,7 +95,7 @@
                         </div>
 
                         <div class="ln_solid"></div>
-                        <div class="form-group">
+                        <div class="form-group row">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                 <a class="btn btn-primary"
                                    href=""

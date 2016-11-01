@@ -4,11 +4,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-2 col-sm-2 col-xs-2">
-                <a class="btn btn-primary" href="{{ route('backend::programming_languages::add') }}" role="button">Add
-                    Programming Language</a>
+                <a class="btn btn-primary" href="{{ route('backend::volumes::add') }}" role="button">Add Volumes</a>
             </div>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @include('helpers.grid-search', ['action' => action('Backend\ProgrammingLanguageController@index')])
+                @include('helpers.grid-search', ['action' => action('Backend\VolumeController@index')])
             </div>
         </div>
 
@@ -16,7 +15,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Programming languages</h2>
+                        <h2>Volumes</h2>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
@@ -25,7 +24,6 @@
                             <tr>
                                 <th>@include('helpers.grid-header', ['name' => 'ID',           'order' => 'id'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Name',  'order' => 'name'])</th>
-
                                 <th>@include('helpers.grid-header', ['name' => 'Created Date', 'order' => 'created_at'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Updated Date', 'order' => 'updated_at'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Deleted Date', 'order' => 'deleted_at'])</th>
@@ -33,31 +31,33 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($programming_languages as $programming_language)
+
+                            @foreach($volumes as $volume)
                                 <tr>
-                                    <td>{{ $programming_language->id }}</td>
-                                    <td class="wrap-text">{{ $programming_language->name }}</td>
-                                    <td>{{ $programming_language->created_at }}</td>
-                                    <td>{{ $programming_language->updated_at }}</td>
-                                    <td>{{ $programming_language->deleted_at }}</td>
+                                    <td>{{ $volume->id }}</td>
+                                    <td class="wrap-text">{{ $volume->name }}</td>
+                                    <td>{{ $volume->created_at }}</td>
+                                    <td>{{ $volume->updated_at }}</td>
+                                    <td>{{ $volume->deleted_at }}</td>
                                     <td>
+
                                         <a title="Edit"
-                                           href="{{ action('Backend\ProgrammingLanguageController@edit',['id'=> $programming_language->id]) }}">
+                                           href="{{ action('Backend\VolumeController@edit',['id'=> $volume->id]) }}">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
-                                        @if (!$programming_language->deleted_at)
+                                        @if (!$volume->deleted_at)
                                             <a title="Delete" href="" data-toggle="confirmation"
-                                               data-message="Are you sure you want to delete this programming language from the system?"
-                                               data-btn-ok-href="{{ action('Backend\ProgrammingLanguageController@delete', ['id'=> $programming_language->id]) }}"
+                                               data-message="Are you sure you want to delete this volume from the system?"
+                                               data-btn-ok-href="{{ action('Backend\VolumeController@delete', ['id'=> $volume->id]) }}"
                                                data-btn-ok-label="Delete">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </a>
                                         @else
                                             <a title="Restore" href="" data-toggle="confirmation"
-                                               data-message="Are you sure you want to restore this programming language?"
-                                               data-btn-ok-href="{{ action('Backend\ProgrammingLanguageController@restore', ['id'=> $programming_language->id]) }}"
+                                               data-message="Are you sure you want to restore this volume?"
+                                               data-btn-ok-href="{{ action('Backend\VolumeController@restore', ['id'=> $volume->id]) }}"
                                                data-btn-ok-label="Restore">
-                                                <i class="fa fa-repeat" aria-hidden="true"></i>ы
+                                                <i class="fa fa-repeat" aria-hidden="true"></i>
                                             </a>
                                         @endif
                                     </td>
@@ -66,7 +66,7 @@
                             </tbody>
                         </table>
                         <div class="custom-pager">
-                            {{ $programming_languages->appends(\Illuminate\Support\Facades\Input::except('page'))->links() }}
+                            {{ $volumes->appends(\Illuminate\Support\Facades\Input::except('page'))->links() }}
                         </div>
                     </div>
                 </div>

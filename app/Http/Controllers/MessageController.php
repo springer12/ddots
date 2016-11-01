@@ -19,8 +19,10 @@ class MessageController extends Controller
 
     public function dialog(Request $request, $id)
     {
+        $messages = Auth::user()->getMessagesWithQuery($id)->orderBy('created_at', 'desc')->paginate(20);
+
         return view('messages.dialog')->with([
-            'messages' => Auth::user()->getMessagesWith($id),
+            'messages' => $messages,
             'dialog_partner' => User::find($id),
         ]);
     }

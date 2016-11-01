@@ -13,67 +13,31 @@
 
 <body>
 <div class="wrapper">
-    <div class="sidebar" data-background-color="white" data-active-color="danger">
-        <div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="{{ action('HomeController@index') }}" class="simple-text">
-                    <img width="45%" src="{{ App\Subdomain::currentSubdomain()->image }}" alt="logo">
-                </a>
-            </div>
-            @include('partial.sidebar')
-        </div>
+    @include('partial.navbar')
+    <div class="content">
+        @yield('content')
     </div>
-
-    <div class="main-panel">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar bar1"></span>
-                        <span class="icon-bar bar2"></span>
-                        <span class="icon-bar bar3"></span>
-                    </button>
-                    <a class="navbar-brand"
-                       href="{{ action('HomeController@index') }}">{{ App\Subdomain::currentSubdomain()->fullname }}</a>
-                </div>
-
-                <div class="collapse navbar-collapse">
-                    @include('partial.navbar')
-                </div>
-                {{--@todo: contest menu--}}
-            </div>
-        </nav>
-
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    @include('helpers.flash')
-                    @yield('content')
-                </div>
-            </div>
+    <footer class="footer">
+        <div class="container">
+            <p class="text-justify text-muted">
+                Copyright © 2005-2016, Молодёжное научное общество "Q-BIT" <br>
+                тех. поддержка: Н.А. Арзубов <br>
+                При использовании материалов сайта ссылка на dots.org.ua обязательна.
+            </p>
         </div>
-        @include('partial.footer')
-    </div>
+    </footer>
+    @yield('scripts')
 </div>
-<div class="modal fade" tabindex="-1" role="dialog" data-modal>
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-            </div>
-            <div class="modal-body" data-modal-text>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-@yield('scripts')
 <script src="{{ asset('frontend-bundle/js/bundle' . (config('app.assets.minified', false) ? '.min' : '') . '.js') }}"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-86644916-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </body>
 </html>

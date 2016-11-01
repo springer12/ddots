@@ -60,6 +60,7 @@ class ContestController extends Controller
 
     public function showForm(Request $request, $id = null)
     {
+        //@todo ajax problems
         $contest = ($id ? Contest::findOrFail($id) : new Contest());
         $old_owner = null;
         if ($id) {

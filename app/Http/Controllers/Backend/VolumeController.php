@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
-use App\Group;
+use App\Volume;
 use Illuminate\Http\Request;
-use App\User;
-use App\Http\Requests;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
-class GroupController extends Controller
+class VolumeController extends Controller
 {
     public function index(Request $request)
     {
@@ -19,11 +17,12 @@ class GroupController extends Controller
         $orderDir = $request->input('dir', $orderDirSession);
 
         $page = $request->input('page');
+        $query = $request->input('query', '');
 
-
-        if (!in_array($orderBy, User::sortable())) {
+        if (!in_array($orderBy, Volume::sortable())) {
             $orderBy = 'id';
         }
+
 
         if (!in_array($orderDir, ['asc', 'ASC', 'desc', 'DESC'])) {
             $orderDir = 'desc';
@@ -32,17 +31,23 @@ class GroupController extends Controller
         \Session::put('orderBy', $orderBy);
         \Session::put('orderDir', $orderDir);
 
-        $groups = $this->findQuery();
+        $volumes = $this->findQuery();
 
-        $groups = $groups->orderBy($orderBy, $orderDir)
-            ->paginate(10);
+        if ($query) {
+            $volumes = $volumes->where(function ($query_s) use ($query) {
+                $query_s->orwhere('id', 'like', "%$query%")
+                    ->orwhere('name', 'like', "%$query%");
+            });
+        }
 
-        return view('groups.list')->with([
-            'groups' => $groups,
+        $volumes = $volumes->paginate(10);
+
+        return view('backend.volumes.list')->with([
+            'volumes' => $volumes,
             'order_field' => $orderBy,
             'dir' => $orderDir,
             'page' => $page,
-
+            'query' => $query
         ]);
     }
 
@@ -56,19 +61,15 @@ class GroupController extends Controller
      */
     public function showForm(Request $request, $id = null)
     {
-        $group = ($id ? $this->findOrFail($id) : new Group());
+        $volume = ($id ? $this->findOrFail($id) : new Volume());
         if ($id) {
-            $title = 'Edit Group';
+            $title = 'Edit Volume';
         } else {
-            $title = 'Create Group';
+            $title = 'Create Volume';
         }
 
-        $students = $group->getStudents();
-
-        return view('groups.form')->with([
-            'group' => $group,
-            'students' => $students,
-            'unincludedStudents' => Auth::user()->students->diff($students),
+        return view('backend.volumes.form')->with([
+            'volume' => $volume,
             'title' => $title,
         ]);
     }
@@ -83,32 +84,23 @@ class GroupController extends Controller
      */
     public function edit(Request $request, $id = null)
     {
-        $group = (!$id ?: $this->findOrFail($id));
+        $volume = (!$id ?: $this->findOrFail($id));
 
-        $fillData = [
-            'name' => $request->get('name'),
-            'description' => $request->get('description'),
-        ];
-
-        $rules = Group::getValidationRules();
+        $rules = Volume::getValidationRules();
 
         $this->validate($request, $rules);
 
         if ($id) {
-            $group->fill($fillData);
+            $volume->fill($request->all());
         } else {
-            $group = Group::create($fillData);
+            $volume = Volume::create($request->all());
         }
 
-        $users = $request->get('students');
-        $users[] = Auth::user()->id;
+        $volume->problems()->sync($request->get('problems', []));
+        $volume->save();
 
-        $group->users()->sync($users);
-
-        $group->save();
-
-        \Session::flash('alert-success', 'The group was successfully saved');
-        return redirect()->route('teacherOnly::groups::list');
+        \Session::flash('alert-success', 'The volume was successfully saved');
+        return redirect()->route('backend::volumes::list');
     }
 
     /**
@@ -120,9 +112,9 @@ class GroupController extends Controller
      */
     public function delete($id)
     {
-        $group = $this->findOrFail($id);
-        $group->delete();
-        return redirect()->route('teacherOnly::groups::list')->with('alert-success', 'The group was successfully deleted');
+        $volume = $this->findOrFail($id);
+        $volume->delete();
+        return redirect()->route('backend::volumes::list')->with('alert-success', 'The volume was successfully deleted');
     }
 
     /**
@@ -134,9 +126,9 @@ class GroupController extends Controller
      */
     public function restore($id)
     {
-        $group = $this->findOrFail($id);
-        $group->restore();
-        return redirect()->route('teacherOnly::groups::list')->with('alert-success', 'The group was successfully restored');
+        $volume = $this->findOrFail($id);
+        $volume->restore();
+        return redirect()->route('backend::volumes::list')->with('alert-success', 'The volume was successfully restored');
     }
 
     /**
@@ -144,9 +136,7 @@ class GroupController extends Controller
      */
     protected function findQuery()
     {
-        return Group::withTrashed()->whereHas('users', function($query){
-            $query->where('user_id', Auth::user()->id);
-        });
+        return Volume::withTrashed();
     }
 
     protected function findOrFail($id)

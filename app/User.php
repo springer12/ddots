@@ -320,7 +320,7 @@ class User extends Authenticatable
         return User::select('users.*')->join('messages', 'users.id', '= ', DB::raw('CASE
 	                      WHEN messages.sender_id = ' . $this->id . ' THEN messages.receiver_id
 	                      ELSE messages.sender_id
-                      END'))->where('owner_id', $this->id)->distinct()->get();
+                      END'))->where('owner_id', $this->id)->orderBy('messages.created_at', 'desc')->distinct()->get();
     }
 
     public function getNoDialogStudents()
@@ -345,21 +345,29 @@ class User extends Authenticatable
 
     public function getLastMessageWith($id)
     {
-        return $this->getMessagesWithQuery($id)->first();
+        return $this->getLatestMessagesWithQuery($id)->first();
     }
 
     public function getMessagesWith($id)
     {
-        return $this->getMessagesWithQuery($id)->get();
+        return $this->getLatestMessagesWithQuery($id)->get();
     }
 
-    private function getMessagesWithQuery($id)
+    public function getLatestMessagesWithQuery($id)
     {
         return $this->messages()->where(function ($query) use ($id) {
             return $query->where('sender_id', $id)->orWhere('receiver_id', $id);
         })->latest();
     }
-    
+
+    public function getMessagesWithQuery($id)
+    {
+        return $this->messages()->where(function ($query) use ($id) {
+            return $query->where('sender_id', $id)->orWhere('receiver_id', $id);
+        });
+    }
+
+
     public function canWriteTo($id)
     {
         if($this->hasRole(self::ROLE_ADMIN)) {
