@@ -6,12 +6,12 @@
 
             <!-- logo and title -->
             <div class="row">
-                <div class="col-lg-3 col-sm-6">
+                <div class="col-lg-2 col-md-3 col-sm-4">
                     <div class="dots-logo">
                         <a href="http://dots.org.ua/dots/"></a>
                     </div>
                 </div>
-                <div class="col-lg-9 col-sm-6 dots-tagline">
+                <div class="col-lg-10 col-md-9 col-sm-8">
                     <h1 class="title">
                         <p>
                             С 16 февраля 2016 тестирующая система DOTS доступна для преподавателей информатики Харькова
