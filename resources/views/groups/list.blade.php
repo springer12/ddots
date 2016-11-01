@@ -12,7 +12,7 @@
             <div class="card-header">Groups</div>
             <div class="card-block">
                 <div class="col-xs-12">
-                    <table class="table table-striped table-bordered table-condensed">
+                    <table class="table table-striped table-bordered table-sm">
                         <thead>
                         <tr>
                             <th>@include('helpers.grid-header', ['name' => 'ID',           'order' => 'id'])</th>

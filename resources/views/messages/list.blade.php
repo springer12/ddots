@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-xs-12">
                 @if(!$dialog_users->isEmpty())
-                    <table class="table table-striped table-bordered table-condensed">
+                    <table class="table table-striped table-bordered table-sm">
                         <thead>
                         <tr>
                             <th>Username</th>

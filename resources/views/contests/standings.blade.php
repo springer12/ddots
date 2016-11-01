@@ -8,7 +8,7 @@
                 <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                 Standings</div>
             <div class="card-block scrollable-width">
-                <table class="table table-striped table-bordered table-condensed">
+                <table class="table table-striped table-bordered table-sm">
                     <thead>
                     <tr>
                         <th>User</th>
