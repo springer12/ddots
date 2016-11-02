@@ -317,6 +317,10 @@ Route::get('tracker', function() {
     return view('tracker');
 });
 
+Route::get('time', function() {
+return \DB::select("select sum(minutes) from work_time_reports")->first();
+});
+
 Route::post('tracker', function(Illuminate\Http\Request $request) {
     DB::insert('
 INSERT INTO work_time_reports (`desc`,`minutes`,`when`, `who`)
