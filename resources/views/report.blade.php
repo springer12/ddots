@@ -14,7 +14,7 @@
     <th>Деньги</th>
     <th>Описание</th>
     </tr>
-    @foreach(\DB::select("select * from work_time_reports") as $report)
+    @foreach(\DB::select("select * from work_time_reports order by `when` desc") as $report)
         <tr style="color: white; {{ $report->paid ? 'background-color:#5cb85c' : 'background-color:#d9534f' }}">
             <td>{{ $report->when }}</td>
             <td>{{ $report->minutes }} min</td>
