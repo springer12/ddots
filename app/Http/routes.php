@@ -317,8 +317,8 @@ Route::get('tracker', function() {
     return view('tracker');
 });
 
-Route::get('time', function() {
-return \DB::select("select sum(minutes) from work_time_reports");
+Route::get('report', function() {
+    return view('report');
 });
 
 Route::post('tracker', function(Illuminate\Http\Request $request) {
