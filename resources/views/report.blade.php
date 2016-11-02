@@ -5,8 +5,8 @@
 <br>
 <br>
 
-Не оплачено: {{ \DB::select("select sum(minutes) as minutes from work_time_reports where paid=0")[0]->minutes * 0.01 }} $<br>
-Оплачено: {{ \DB::select("select sum(minutes) as minutes from work_time_reports where paid=1")[0]->minutes * 0.01 }} $<br>
+Не оплачено: {{ \DB::select("select sum(minutes) as minutes from work_time_reports where paid=0")[0]->minutes * 0.1 }} $<br>
+Оплачено: {{ \DB::select("select sum(minutes) as minutes from work_time_reports where paid=1")[0]->minutes * 0.1 }} $<br>
 <table>
     <tr>
     <th>Дата</th>
@@ -18,7 +18,7 @@
         <tr style="color: white; {{ $report->paid ? 'background-color:#5cb85c' : 'background-color:#d9534f' }}">
             <td>{{ $report->when }}</td>
             <td>{{ $report->minutes }} min</td>
-            <td>{{ $report->minutes * 0.01 }} $</td>
+            <td>{{ $report->minutes * 0.1 }} $</td>
             <td>{{ $report->desc }}</td>
         </tr>
     @endforeach
