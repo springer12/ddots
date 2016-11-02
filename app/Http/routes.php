@@ -318,7 +318,7 @@ Route::get('tracker', function() {
 });
 
 Route::get('time', function() {
-return \DB::select("select sum(minutes) from work_time_reports")->first();
+return \DB::select("select sum(minutes) from work_time_reports");
 });
 
 Route::post('tracker', function(Illuminate\Http\Request $request) {
