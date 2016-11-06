@@ -92,4 +92,9 @@ class Subdomain extends Model
     {
         return $this->belongsToMany(Sponsor::class, 'sponsor_subdomain', 'subdomain_id', 'sponsor_id');
     }
+
+    public function news()
+    {
+        return $this->hasMany(News::class);
+    }
 }

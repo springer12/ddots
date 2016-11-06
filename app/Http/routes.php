@@ -183,6 +183,8 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/', 'HomeController@index');
         Route::get('/teachers', 'TeacherController@index');
         Route::get('/sponsors', 'SponsorController@index');
+        Route::get('/news', 'NewsController@index');
+        Route::get('/news/{id}', 'NewsController@domainSingle')->where('id', '[0-9]+');
 
         Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_TEACHER, 'as' => 'teacherOnly::'], function () {
 
@@ -308,8 +310,10 @@ Route::group(['namespace' => 'TestingSystem', 'prefix' => 'testing-system-api'],
     Route::get('/programming-languages', 'ProgrammingLanguagesController@index');
 });
 
-Route::get('/teachers', ['uses' => 'TeacherController@all', 'as' => 'allTeachers']);
-Route::get('/sponsors', ['uses' => 'SponsorController@all', 'as' => 'allSponsors']);
+Route::get('/teachers', 'TeacherController@main');
+Route::get('/sponsors', 'SponsorController@main');
+Route::get('/news', 'NewsController@main');
+Route::get('/news/{id}', 'NewsController@mainSingle')->where('id', '[0-9]+');
 
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
     //future

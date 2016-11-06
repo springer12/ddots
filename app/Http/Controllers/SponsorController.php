@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class SponsorController extends Controller
 {
-    public function all(Request $request)
+    public function main(Request $request)
     {
         return view('sponsors.all', ['sponsors' => Sponsor::main()->paginate(6)]);
     }
