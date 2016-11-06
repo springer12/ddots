@@ -7,7 +7,7 @@
                 <div class="card text-xs-center">
                     <div class="card-header text-xs-left">Profile</div>
                     <div class="card-block">
-                        <a href="{{ route('frontend::user::profile', ['id' => $user->id]) }}"><img class="card-img-top teacher-avatar" src="{{ $user->avatar }}" alt="Card image cap"></a>
+                        <a href="{{ route('frontend::user::profile', ['id' => $user->id]) }}"><img class="teacher-avatar" src="{{ $user->avatar }}" alt="Card image cap"></a>
                         <h4>{{ $user->name }}<br>
                             <a href="{{ route('frontend::user::profile', ['id' => $user->id]) }}"><small>{{ $user->nickname }}</small></a>
                         </h4>

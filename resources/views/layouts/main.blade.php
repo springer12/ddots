@@ -34,9 +34,9 @@
 @include('helpers.flash')
 @yield('content')
 
-<footer class="text-muted">
+<footer class="footer">
     <div class="container">
-        <p>
+        <p class="text-justify text-muted text-xs-center">
             Copyright © 2005-2016, Молодёжное научное общество "Q-BIT" <br>
             тех. поддержка: Н.А. Арзубов <br>
             При использовании материалов сайта ссылка на dots.org.ua обязательна.
