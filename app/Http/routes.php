@@ -13,7 +13,6 @@
 
 Route::group(['middleware' => 'web'], function () {
 
-
     // Authentication Routes...
     $this->post('login', 'Auth\AuthController@login');
     $this->get('logout', 'Auth\AuthController@logout');
@@ -27,6 +26,7 @@ Route::group(['middleware' => 'web'], function () {
     $this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
     $this->post('password/reset', 'Auth\PasswordController@reset');
 
+    Route::get('/teachers', ['uses' => 'TeacherController@all', 'as' => 'allTeachers']);
 
     Route::get('verify/{code}', 'UserController@verify');
     Route::group(['middleware' => 'social_provider', 'prefix' => 'social', 'as' => 'social::'], function () {
@@ -37,8 +37,8 @@ Route::group(['middleware' => 'web'], function () {
     /* backend func */
     Route::group([
         'middleware' => 'access:web,0,' . App\User::ROLE_ADMIN,
-        'prefix'     => 'backend',
-        'as'         => 'backend::',
+        'prefix' => 'backend',
+        'as' => 'backend::',
     ], function () {
         Route::group(['middleware' => 'ajax', 'as' => 'ajax::'], function () {
             Route::get('/search-students', ['as' => 'searchStudents', 'uses' => 'Ajax\UserController@searchStudents']);
@@ -179,7 +179,7 @@ Route::group(['middleware' => 'web'], function () {
     /*  subdomain func  */
     Route::group([
         'middleware' => 'admin_redirect',
-        'domain'     => App\Subdomain::currentSubdomainName() . '.' . config('app.domain'),
+        'domain' => App\Subdomain::currentSubdomainName() . '.' . config('app.domain'),
     ], function () {
 
         Route::get('/', 'HomeController@index');
@@ -195,8 +195,8 @@ Route::group(['middleware' => 'web'], function () {
 
                 Route::get('edit/{id}', [
                     'middleware' => 'contest_edit_access',
-                    'uses'       => 'ContestController@showForm',
-                    'as'         => 'edit',
+                    'uses' => 'ContestController@showForm',
+                    'as' => 'edit',
                 ])->where('id', '[0-9]+');
                 Route::post('edit/{id}', ['middleware' => 'contest_edit_access', 'uses' => 'ContestController@edit'])
                     ->where('id', '[0-9]+');
@@ -229,7 +229,7 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('/decline-student/{id}', ['as' => 'declineStudent', 'uses' => 'Ajax\UserController@decline'])
                     ->where('id', '[0-9]+');
                 Route::get('/add-student-to-group', [
-                    'as'   => 'addStudentToGroup',
+                    'as' => 'addStudentToGroup',
                     'uses' => 'Ajax\UserController@addToGroup',
                 ]);
             });
@@ -249,15 +249,15 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('/{id}', ['uses' => 'ContestController@single', 'as' => 'single'])->where('id', '[0-9]+');
                 Route::get('/{contest_id}/{problem_id}/', [
                     'uses' => 'ProblemController@contestProblem',
-                    'as'   => 'problem',
+                    'as' => 'problem',
                 ])->where('contest_id', '[0-9]+')->where('problem_id', '[0-9]+');
                 Route::post('/{contest_id}/{problem_id}/', ['uses' => 'SolutionController@submit', 'as' => 'contest_problem'])
                     ->where('contest_id', '[0-9]+')
                     ->where('problem_id', '[0-9]+');
                 Route::get('/{id}/standings/', [
                     'middleware' => 'contest_standings_access',
-                    'uses'       => 'ContestController@standings',
-                    'as'         => 'standings',
+                    'uses' => 'ContestController@standings',
+                    'as' => 'standings',
                 ])->where('id', '[0-9]+');
                 Route::get('/solutions/{id}/', ['uses' => 'SolutionController@contestSolution', 'as' => 'solution'])
                     ->where('id', '[0-9]+');
@@ -313,15 +313,15 @@ Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
     //future
 });
 
-Route::get('tracker', function() {
+Route::get('tracker', function () {
     return view('tracker');
 });
 
-Route::get('report', function() {
+Route::get('report', function () {
     return view('report');
 });
 
-Route::post('tracker', function(Illuminate\Http\Request $request) {
+Route::post('tracker', function (Illuminate\Http\Request $request) {
     DB::insert('
 INSERT INTO work_time_reports (`desc`,`minutes`,`when`, `who`)
 VALUES (?,?,?,?);

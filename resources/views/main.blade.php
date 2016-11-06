@@ -156,6 +156,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">Subdomains teachers and mentors</div>
+
                     <div class="card-block">
                         @foreach(App\User::teacher()->inRandomOrder()->take(3)->get() as $teacher)
                             <div class="row">
@@ -171,12 +172,10 @@
                                     {{ $teacher->description }}
                                 </div>
                             </div>
-                    </div>
-                    <hr>
-                    @endforeach
+                            <hr>
+                        @endforeach
 
-                    <div class="card-block">
-                        <a href="#" class="btn btn-success pull-right">All teachers and mentors</a>
+                        <a href="{{ url('teachers') }}" class="btn btn-success pull-right">All teachers and mentors</a>
                     </div>
                 </div>
 
