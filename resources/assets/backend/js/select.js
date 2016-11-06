@@ -73,43 +73,50 @@
         $('[data-select-programming-languages]').select2({
             width: '100%'
         });
-    });
 
 
-    $('[data-select-problem-volume]').select2({
-        width: '100%',
-        placeholder: 'Select problems',
+        $('[data-select-problem-volume]').select2({
+            width: '100%',
+            placeholder: 'Select problems',
 
-        ajax: {
-            url: $('[data-get-problems-url]').data('get-problems-url'),
-            dataType: 'json',
-            quietMillis: 100,
-            data: function (params) {
-                return {
-                    term: params.term,
-                    page: params.page || 1,
-                }
-            },
-            processResults: function (data, params) {
-                params.page = params.page || 1;
-                return {
-                    results: $.map(data.results, function (teacher) {
-                        return {
-                            text: teacher.name,
-                            id: teacher.id
-                        }
-                    }),
-                    pagination: {
-                        more: (params.page * 10) < data.total_count
+            ajax: {
+                url: $('[data-get-problems-url]').data('get-problems-url'),
+                dataType: 'json',
+                quietMillis: 100,
+                data: function (params) {
+                    return {
+                        term: params.term,
+                        page: params.page || 1,
                     }
-                }
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: $.map(data.results, function (teacher) {
+                            return {
+                                text: teacher.name,
+                                id: teacher.id
+                            }
+                        }),
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    }
+                },
+                cache: true
             },
-            cache: true
-        },
-        escapeMarkup: function (markup) {
-            return markup;
-        },
-        minimumInputLength: 1,
-    });
+            escapeMarkup: function (markup) {
+                return markup;
+            },
+            minimumInputLength: 1,
+        });
 
+        $('[data-subdomain-filter-select]').select2({
+            width: '200px'
+        }).change(function () {
+            var params = $.getURLParameters(window.location.href);
+            params.subdomain_id = $(this).val();
+            window.location.search = $.param(params);
+        });
+    });
 })(jQuery, window, document);

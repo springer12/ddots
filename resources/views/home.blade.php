@@ -30,7 +30,8 @@
                                     <label class="col-md-4 col-form-label">Email / nickname</label>
 
                                     <div class="col-md-6">
-                                        <input class="form-control" type="text" placeholder="Enter email" name="nickname">
+                                        <input class="form-control" type="text" placeholder="Enter email"
+                                               name="nickname">
                                         @if ($errors->has('nickname'))
                                             <span class="form-control-feedback">
                                                 <strong>{{ $errors->first('nickname') }}</strong>
@@ -41,7 +42,8 @@
                                 <div class="form-group row {{ $errors->has('password') ? ' has-danger' : '' }}">
                                     <label class="col-md-4 col-form-label">Password</label>
                                     <div class="col-md-6">
-                                        <input class="form-control" type="password" placeholder="Password" name="password">
+                                        <input class="form-control" type="password" placeholder="Password"
+                                               name="password">
                                         @if ($errors->has('password'))
                                             <span class="form-control-feedback">
                                                 <strong>{{ $errors->first('password') }}</strong>
@@ -88,31 +90,10 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">News</div>
+                    @each('partial.news_item', $subdomain->news()->orderBy('created_at', 'desc')->take(3)->get(), 'news_item')
                     <div class="card-block">
-                        <div>
-                            <p>Текст последней новости...</p>
-                        </div>
+                        <a href="{{ url('news') }}" class="btn btn-success pull-right">Latest news</a>
                     </div>
-                    <hr>
-
-                    <div class="card-block">
-                        <div>
-                            <p>Текст последней новости...</p>
-                        </div>
-                    </div>
-                    <hr>
-
-                    <div class="card-block">
-                        <div>
-                            <p>Текст последней новости...</p>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="card-block">
-
-                        <a href="#" class="btn btn-success pull-right">Last news</a>
-                    </div>
-
                 </div>
 
             </div>
@@ -144,7 +125,7 @@
                     @endforeach
 
                     <div class="card-block">
-                        <a href="#" class="btn btn-success pull-right">All sponsors</a>
+                        <a href="{{ url('sponsors') }}" class="btn btn-success pull-right">All sponsors</a>
                     </div>
                 </div>
 

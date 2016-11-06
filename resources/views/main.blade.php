@@ -53,29 +53,9 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">News</div>
+                    @each('partial.news_item', \App\News::main()->orderBy('created_at', 'desc')->take(3)->get(), 'news_item')
                     <div class="card-block">
-                        <div>
-                            <p>Текст последней новости...</p>
-                        </div>
-                    </div>
-                    <hr>
-
-                    <div class="card-block">
-                        <div>
-                            <p>Текст последней новости...</p>
-                        </div>
-                    </div>
-                    <hr>
-
-                    <div class="card-block">
-                        <div>
-                            <p>Текст последней новости...</p>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="card-block">
-
-                        <a href="#" class="btn btn-success pull-right">Last news</a>
+                        <a href="{{ url('news') }}" class="btn btn-success pull-right">Latest news</a>
                     </div>
 
                 </div>

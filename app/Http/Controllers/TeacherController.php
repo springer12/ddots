@@ -32,7 +32,7 @@ class TeacherController extends Controller
         ]);
     }
 
-    public function all()
+    public function main()
     {
         return view('teachers.all', ['teachers' => User::teacher()->paginate(9)]);
     }
