@@ -156,54 +156,26 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">Subdomain's teachers and mentors</div>
-                    <div class="card-block">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <a href="#"><img src="#" alt="sponsor-logo" class="sponsor-logo" /></a>
-                            </div>
-                            <div class="col-sm-4">
-                                <a href="#">Название</a>
-                            </div>
-                            <div class="col-sm-4">
-                                Описание
+                    <div class="card-header">Subdomains teachers and mentors</div>
+
+                    @foreach($subdomain->users()->teacher()->inRandomOrder()->take(3)->get() as $teacher)
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <a href="{{ url('user', ['id' => $teacher->id]) }}"><img src="{{ $teacher->avatar }}" alt="sponsor-logo" class="sponsor-logo" /></a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="{{ url('user', ['id' => $teacher->id]) }}">{{ $teacher->name }}</a>
+                                </div>
+                                <div class="col-sm-4">
+                                    Описание
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <hr>
-
+                        <hr>
+                    @endforeach
                     <div class="card-block">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <a href="#"><img src="#" alt="sponsor-logo" class="sponsor-logo" /></a>
-                            </div>
-                            <div class="col-sm-4">
-                                <a href="#">Название</a>
-                            </div>
-                            <div class="col-sm-4">
-                                Описание
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-
-                    <div class="card-block">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <a href="#"><img src="#" alt="sponsor-logo" class="sponsor-logo" /></a>
-                            </div>
-                            <div class="col-sm-4">
-                                <a href="#">Название</a>
-                            </div>
-                            <div class="col-sm-4">
-                                Описание
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-
-                    <div class="card-block">
-                        <a href="#" class="btn btn-success pull-right">All teachers and mentors</a>
+                        <a href="{{ url('teachers') }}" class="btn btn-success pull-right">All teachers and mentors</a>
                     </div>
                 </div>
 

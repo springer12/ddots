@@ -370,11 +370,11 @@ class User extends Authenticatable
 
     public function canWriteTo($id)
     {
-        if($this->hasRole(self::ROLE_ADMIN)) {
+        if ($this->hasRole(self::ROLE_ADMIN)) {
             return true;
-        } elseif($this->hasRole(self::ROLE_TEACHER) && ($this->isTeacherOf($id) || User::find($id)->hasRole(self::ROLE_ADMIN))) {
+        } elseif ($this->hasRole(self::ROLE_TEACHER) && ($this->isTeacherOf($id) || User::find($id)->hasRole(self::ROLE_ADMIN))) {
             return true;
-        } elseif($this->hasRole(self::ROLE_USER) && User::find($id)->isTeacherOf($this->id)) {
+        } elseif ($this->hasRole(self::ROLE_USER) && User::find($id)->isTeacherOf($this->id)) {
             return true;
         } else {
             return false;
