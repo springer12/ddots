@@ -31,20 +31,20 @@
                                 <td>{{ $group->created_at }}</td>
                                 <td>{{ $group->updated_at }}</td>
                                 <td>{{ $group->deleted_at }}</td>
-                                <td>
-                                    <a title="Edit"
+                                <td class="actions-menu btn-group">
+                                    <a class="btn btn-secondary" title="Edit"
                                        href="{{ action('GroupController@edit',['id'=> $group->id]) }}">
                                         <i class="fa fa-pencil" aria-hidden="true"></i>
                                     </a>
                                     @if (!$group->deleted_at)
-                                        <a title="Delete" href="" data-toggle="confirmation"
+                                        <a class="btn btn-danger" title="Delete" href="" data-toggle="confirmation"
                                            data-message="Are you sure you want to delete this group from the system?"
                                            data-btn-ok-href="{{ action('GroupController@delete', ['id'=> $group->id]) }}"
                                            data-btn-ok-label="Delete">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </a>
                                     @else
-                                        <a title="Restore" href="" data-toggle="confirmation"
+                                        <a class="btn btn-secondary" title="Restore" href="" data-toggle="confirmation"
                                            data-message="Are you sure you want to restore this group?"
                                            data-btn-ok-href="{{ action('GroupController@restore', ['id'=> $group->id]) }}"
                                            data-btn-ok-label="Restore">

@@ -24,7 +24,9 @@
                             @foreach($students as $student)
                                 <tr data-student-row-id="{{ $student->id }}">
                                     <td>{{ $student->id }}</td>
-                                    <td class="wrap-text"><a href="{{  route('frontend::user::profile', ['id' => $student->id]) }}">{{ $student->name }}</a></td>
+                                    <td class="wrap-text"><a
+                                                href="{{  route('frontend::user::profile', ['id' => $student->id]) }}">{{ $student->name }}</a>
+                                    </td>
                                     <td>{{ $student->email }}</td>
                                     <td>{{ $student->nickname }}</td>
                                     <td>
@@ -33,21 +35,21 @@
                                         @endforeach
                                     </td>
 
-                                    <td>
-                                    @if($student->pivot->confirmed == 0)
-                                            <a data-confirm data-student-id="{{ $student->id }}"
-                                               href="javascript:void(0);"
+                                    <td class="{{ $student->pivot->confirmed?:'actions-menu  btn-group' }}">
+                                        @if($student->pivot->confirmed == 0)
+                                            <a class="btn btn-secondary" data-confirm
+                                               data-student-id="{{ $student->id }}"
                                                data-url="{{ route('frontend::ajax::confirmStudent',['id' => $student->id]) }}"
                                                title="Confirm">
                                                 <i class="fa fa-check" aria-hidden="true"></i>
                                             </a>
-                                            <a data-decline data-student-id="{{ $student->id }}"
+                                            <a class="btn btn-danger" data-decline data-student-id="{{ $student->id }}"
                                                href="javascript:void(0);"
                                                data-url="{{ route('frontend::ajax::declineStudent',['id' => $student->id]) }}"
                                                title="Decline">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </a>
-                                    @endif
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

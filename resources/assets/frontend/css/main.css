@@ -63,3 +63,7 @@ div.ace-editor {
     width: 100%;
     height: 500px;
 }
+
+.actions-menu {
+    min-width: 110px;
+}

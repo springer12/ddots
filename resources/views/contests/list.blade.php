@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <a class="btn btn-primary" href="{{ route('teacherOnly::contests::add') }}" role="button">Add
-                                                                                                              Contest</a>
+                        Contest</a>
                 </div>
             </div>
             <hr class="hidden-border">
@@ -46,25 +46,25 @@
                                 <td class="no-wrap">{{ $contest->start_date }}</td>
                                 <td class="no-wrap">{{ $contest->end_date }}</td>
                                 <td class="breaking-word">{{ $contest->description }}</td>
-                                <td>
-                                    @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
-                                        <a title="Edit"
+                                @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+                                    <td class="actions-menu btn-group">
+                                        <a class="btn btn-secondary" title="Edit"
                                            href="{{ action('ContestController@edit',['id'=> $contest->id]) }}">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
                                         @if($contest->is_active == true)
-                                            <a title="Hide"
+                                            <a class="btn btn-secondary" title="Hide"
                                                href="{{ action('ContestController@hide',['id'=> $contest->id]) }}">
                                                 <i class="fa fa-ban" aria-hidden="true"></i>
                                             </a>
                                         @else
-                                            <a title="Show"
+                                            <a class="btn btn-secondary" title="Show"
                                                href="{{ action('ContestController@show',['id'=> $contest->id]) }}">
                                                 <i class="fa fa-repeat" aria-hidden="true"></i>
                                             </a>
                                         @endif
-                                    @endif
-                                </td>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>
