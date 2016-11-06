@@ -3,14 +3,12 @@
         @foreach($news as $news_item)
             <div class="col-md-6">
                 <div class="card">
+                    <div class="card-header">{{ $news_item->name }}</div>
                     <div class="card-block">
                         <div class="container">
                             <div class="row">
-                                <div class="col-xs-4">
-                                    <a href="{{ url('news', ['id' => $news_item->id]) }}">{{ $news_item->name }}</a>
-                                </div>
-                                <div class="col-xs-8 breaking-word">
-                                    {{ str_limit($news_item->stripped_content, 60) }}
+                                <div class="breaking-word">
+                                    <p class="indent"><a href="{{ url('news', ['id' => $news_item->id]) }}">{{ str_limit($news_item->stripped_content, 255) }}</a></p>
                                 </div>
                             </div>
                             <div class="row">

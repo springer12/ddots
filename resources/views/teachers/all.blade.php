@@ -6,11 +6,11 @@
             @foreach($teachers as $teacher)
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="card text-xs-center">
-                        <a href="{{ route('frontend::user::profile', ['id' => $teacher->id]) }}"><img
+                        <a class="teacher-avatar-container" href="{{ route('frontend::user::profile', ['id' => $teacher->id]) }}"><img
                                     class="card-img-top teacher-avatar" src="{{ $teacher->avatar }}"
                                     alt="Card image cap"></a>
                         <div class="card-block">
-                            <h4>
+                            <h4 class="teacher-name-container">
                                 <a href="{{ $teacher->subdomains()->first()->getUrl('user/' . $teacher->id) }}">{{ $teacher->name }}</a>
                             </h4>
                         </div>

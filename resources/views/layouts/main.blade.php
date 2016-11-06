@@ -19,7 +19,7 @@
             <button class="navbar-toggler float-xs-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#bd-main-nav" aria-controls="bd-main-nav" aria-expanded="false" aria-label="Toggle navigation"></button>
 
             <div class="collapse navbar-toggleable-xs" id="bd-main-nav">
-                <a class="navbar-brand" href="{{ action('HomeController@index') }}">
+                <a class="navbar-brand" href="/">
                     DOTS
                 </a>
                 <ul class="nav navbar-nav ">

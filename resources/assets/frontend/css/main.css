@@ -67,3 +67,20 @@ div.ace-editor {
 .actions-menu {
     min-width: 110px;
 }
+
+.teacher-avatar-container {
+    width: 250px;
+}
+
+.teacher-name-container {
+    height: 20px;
+    width: 200px;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+p.indent {
+    text-indent: 30px;
+}
