@@ -167,8 +167,8 @@
                                 <div class="col-sm-4">
                                     <a href="{{ url('user', ['id' => $teacher->id]) }}">{{ $teacher->name }}</a>
                                 </div>
-                                <div class="col-sm-4">
-                                    Описание
+                                <div class="col-sm-4 breaking-word">
+                                    {{ $teacher->description }}
                                 </div>
                             </div>
                         </div>
