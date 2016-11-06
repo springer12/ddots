@@ -42,7 +42,7 @@
                     <tr>
                         <td>Result</td>
                         <td>
-                            <span class="tag tag-{{ !$solution->status? 'success' : 'danger' }}">{{ $solution->status?: 'Success' }}</span>
+                            <span class="tag tag-{{ $solution->status == \App\Solution::STATUS_OK ? 'success' : 'danger' }}">{{ $solution->status?: 'in proccess' }}</span>
                         </td>
                     </tr>
                     <tr>
