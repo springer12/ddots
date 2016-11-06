@@ -28,14 +28,18 @@
                     <div class="card-header">Что такое dots?</div>
                     <div class="card-block">
                         <p class="text-justify">
-                            <b>Dots</b> - это тестирующая система для dots.org.ua, написаная на Python, sh и C и интенсивно
-                            использующая все возможности Docker контейнеров и Cgroup подсистемы ядра, запуская компиляторы и
+                            <b>Dots</b> - это тестирующая система для dots.org.ua, написаная на Python, sh и C и
+                            интенсивно
+                            использующая все возможности Docker контейнеров и Cgroup подсистемы ядра, запуская
+                            компиляторы и
                             тестируя пользовательские решения в отдельных Docker контейнерах. Такой подход делает DDots
                             максимально гибкой и модульной системой. <br> <br>
 
-                            Один DDots обрабатывает одно решение в единицу времени и предзагружает два решения в очередь для
+                            Один DDots обрабатывает одно решение в единицу времени и предзагружает два решения в очередь
+                            для
                             уменьшения задержек, связанных с сетью. Таким образом, для нагрузки нескольких ядер
-                            рекомендуется запускать N контейнеров DDots (это делается автоматически, Makefile автоматически
+                            рекомендуется запускать N контейнеров DDots (это делается автоматически, Makefile
+                            автоматически
                             определяет количество доступных ядер и использует все возможности). <br><br>
                         </p>
                     </div>
@@ -90,7 +94,8 @@
                         <div class="card-block">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <a href="{{ $subdomain->getUrl() }}"><img src="{{ $subdomain->image }}" alt="sponsor-logo" class="sponsor-logo" /></a>
+                                    <a href="{{ $subdomain->getUrl() }}"><img src="{{ $subdomain->image }}"
+                                                                              alt="sponsor-logo" class="sponsor-logo"/></a>
                                 </div>
                                 <div class="col-sm-4">
                                     <a href="{{ $subdomain->getUrl() }}">{{ $subdomain->title }}</a>
@@ -117,12 +122,14 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">Project was supported by</div>
+                    <div class="card-block">
+                        @foreach(\App\Sponsor::main()->inRandomOrder()->take(3)->get() as $sponsor)
 
-                    @foreach(\App\Sponsor::main()->get() as $sponsor)
-                        <div class="card-block">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <a href="{{ $sponsor->link }}"><img src="{{ $sponsor->image }}" alt="sponsor-logo" class="sponsor-logo" /></a>
+                                    <a href="{{ $sponsor->link }}"><img
+                                                src="{{ $sponsor->image }}"
+                                                alt="sponsor-logo" class="sponsor-logo"/></a>
                                 </div>
                                 <div class="col-sm-4">
                                     <a href="{{ $sponsor->link }}">{{ $sponsor->name }}</a>
@@ -131,12 +138,9 @@
                                     {{ $sponsor->description }}
                                 </div>
                             </div>
-                        </div>
-                        <hr>
-                    @endforeach
-
-                    <div class="card-block">
-                        <a href="#" class="btn btn-success pull-right">All sponsors</a>
+                            <hr>
+                        @endforeach
+                        <a href="{{ url('sponsors') }}" class="btn btn-success pull-right">All sponsors</a>
                     </div>
                 </div>
 
@@ -149,54 +153,27 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">Subdomain's teachers and mentors</div>
-                    <div class="card-block">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <a href="#"><img src="{{ asset('frontend-bundle/media/teacher.jpg') }}" alt="sponsor-logo" class="sponsor-logo" /></a>
-                            </div>
-                            <div class="col-sm-4">
-                                <a href="#">Название</a>
-                            </div>
-                            <div class="col-sm-4">
-                                Описание
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
+                    <div class="card-header">Subdomains teachers and mentors</div>
 
                     <div class="card-block">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <a href="#"><img src="{{ asset('frontend-bundle/media/teacher.jpg') }}" alt="sponsor-logo" class="sponsor-logo" /></a>
+                        @foreach(App\User::teacher()->inRandomOrder()->take(3)->get() as $teacher)
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <a href="{{ url('user', ['id' => $teacher->id]) }}"><img
+                                                src="{{ $teacher->avatar }}"
+                                                alt="sponsor-logo" class="sponsor-logo"/></a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="{{ url('user', ['id' => $teacher->id]) }}">{{ $teacher->name }}</a>
+                                </div>
+                                <div class="col-sm-4 breaking-word">
+                                    {{ $teacher->description }}
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <a href="#">Название</a>
-                            </div>
-                            <div class="col-sm-4">
-                                Описание
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
+                            <hr>
+                        @endforeach
 
-                    <div class="card-block">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <a href="#"><img src="{{ asset('frontend-bundle/media/teacher.jpg') }}" alt="sponsor-logo" class="sponsor-logo" /></a>
-                            </div>
-                            <div class="col-sm-4">
-                                <a href="#">Название</a>
-                            </div>
-                            <div class="col-sm-4">
-                                Описание
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-
-                    <div class="card-block">
-                        <a href="#" class="btn btn-success pull-right">All teachers and mentors</a>
+                        <a href="{{ url('teachers') }}" class="btn btn-success pull-right">All teachers and mentors</a>
                     </div>
                 </div>
 

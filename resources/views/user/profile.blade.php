@@ -7,9 +7,12 @@
                 <div class="card text-xs-center">
                     <div class="card-header text-xs-left">Profile</div>
                     <div class="card-block">
-                        <a href="{{ route('frontend::user::profile', ['id' => $user->id]) }}"><img class="teacher-avatar" src="{{ $user->avatar }}" alt="Card image cap"></a>
+                        <a href="{{ route('frontend::user::profile', ['id' => $user->id]) }}"><img
+                                    class="teacher-avatar" src="{{ $user->avatar }}" alt="Card image cap"></a>
                         <h4>{{ $user->name }}<br>
-                            <a href="{{ route('frontend::user::profile', ['id' => $user->id]) }}"><small>{{ $user->nickname }}</small></a>
+                            <a href="{{ route('frontend::user::profile', ['id' => $user->id]) }}">
+                                <small>{{ $user->nickname }}</small>
+                            </a>
                         </h4>
                         <div class="row">
                             <div class="col-md-12 align-center">
@@ -39,32 +42,54 @@
                         <div class="row">
                             @if($user->hasRole(\App\User::ROLE_USER) && $user->date_of_birth)
                                 <div class="col-md-4">
-                                    <h5>{{ $user->getAge() }}<br><small>Years old</small></h5>
+                                    <h5>{{ $user->getAge() }}<br>
+                                        <small>Years old</small>
+                                    </h5>
                                 </div>
                             @endif
                             @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]))
                                 <div class="col-md-4">
-                                    <h5>{{ $user->created_at->diffInDays(Carbon\Carbon::now()) }}<br><small>{{ str_plural('Day', $user->created_at->diffInDays(Carbon\Carbon::now())) }} with us</small></h5>
+                                    <h5>{{ $user->created_at->diffInDays(Carbon\Carbon::now()) }}<br>
+                                        <small>{{ str_plural('Day', $user->created_at->diffInDays(Carbon\Carbon::now())) }}
+                                            with us
+                                        </small>
+                                    </h5>
                                 </div>
                             @endif
                             @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->profession)
                                 <div class="col-md-4">
-                                    <h5>{{ $user->profession }}<br><small>Profession</small></h5>
+                                    <h5>{{ $user->profession }}<br>
+                                        <small>Profession</small>
+                                    </h5>
                                 </div>
                             @endif
 
 
                             @if($user->hasRole(\App\User::ROLE_USER) && $user->place_of_study)
                                 <div class="col-md-4">
-                                    <h5>{{ $user->place_of_study }}<br><small>Place of study</small></h5>
+                                    <h5>{{ $user->place_of_study }}<br>
+                                        <small>Place of study</small>
+                                    </h5>
                                 </div>
                             @endif
                             @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->programmingLanguage)
                                 <div class="col-md-4">
-                                    <h5>{{ $user->programmingLanguage->name }}<br><small>Primary language</small></h5>
+                                    <h5>{{ $user->programmingLanguage->name }}<br>
+                                        <small>Primary language</small>
+                                    </h5>
                                 </div>
                             @endif
                         </div>
+                        @if($user->description)
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-10 offset-md-1">
+                                    <p class="breaking-word text-xs-left">
+                                        <small>{{ $user->description }}</small>
+                                    </p>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
@@ -78,19 +103,25 @@
                                     <div class="col-md-4">
                                         <div class="card text-xs-center">
                                             <a href="{{ action('UserController@index', ['id' => $teacher->id]) }}">
-                                                <img class="card-img-top teacher-avatar" src="{{ $teacher->avatar }}" alt="Card image cap">
+                                                <img class="card-img-top teacher-avatar" src="{{ $teacher->avatar }}"
+                                                     alt="Card image cap">
                                             </a>
                                             <div class="card-block">
                                                 <a href="{{ action('UserController@index', ['id' => $teacher->id]) }}">
                                                     <h4 class="card-title">{{ $teacher->name }}</h4>
-                                                    <p class="card-text"><small class="text-muted">{{ $teacher->nickname }}</small></p>
+                                                    <p class="card-text">
+                                                        <small class="text-muted">{{ $teacher->nickname }}</small>
+                                                    </p>
                                                 </a>
                                                 <div class="card-text">
                                                     @if($teacher->vk_link)
-                                                        <a class="btn btn-social-icon btn-vk" href="{{ $teacher->vk_link }}"><span class="fa fa-vk"></span></a>
+                                                        <a class="btn btn-social-icon btn-vk"
+                                                           href="{{ $teacher->vk_link }}"><span class="fa fa-vk"></span></a>
                                                     @endif
                                                     @if($teacher->fb_link)
-                                                        <a class="btn btn-social-icon btn-facebook" href="{{ $teacher->fb_link }}"><span class="fa fa-facebook"></span></a>
+                                                        <a class="btn btn-social-icon btn-facebook"
+                                                           href="{{ $teacher->fb_link }}"><span
+                                                                    class="fa fa-facebook"></span></a>
                                                     @endif
                                                 </div>
                                             </div>

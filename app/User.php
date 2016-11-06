@@ -36,7 +36,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'nickname', 'email', 'password', 'role', 'date_of_birth', 'profession', 'programming_language', 'place_of_study', 'vk_link', 'fb_link',
+        'name', 'nickname', 'email', 'password', 'role', 'date_of_birth', 'profession', 'programming_language', 'place_of_study', 'vk_link', 'fb_link', 'description',
     ];
 
     /**
@@ -150,7 +150,7 @@ class User extends Authenticatable
     }
 
 
-    public static function getValidationRules($language_submitted)
+    public static function getValidationRules()
     {
         $rules = [
             'name' => 'required|max:255|any_lang_name',
@@ -162,11 +162,8 @@ class User extends Authenticatable
             'vk_link' => 'url_domain:vk.com,new.vk.com,www.vk.com,www.new.vk.com',
             'fb_link' => 'url_domain:facebook.com,www.facebook.com',
             'subdomain' => 'exists:subdomains,id',
+            'description' => 'string|max:255',
         ];
-
-        if ($language_submitted) {
-            $rules['programming_language'] = 'exists:programming_languages,id';
-        }
         return $rules;
     }
 
@@ -377,11 +374,11 @@ class User extends Authenticatable
 
     public function canWriteTo($id)
     {
-        if($this->hasRole(self::ROLE_ADMIN)) {
+        if ($this->hasRole(self::ROLE_ADMIN)) {
             return true;
-        } elseif($this->hasRole(self::ROLE_TEACHER) && ($this->isTeacherOf($id) || User::find($id)->hasRole(self::ROLE_ADMIN))) {
+        } elseif ($this->hasRole(self::ROLE_TEACHER) && ($this->isTeacherOf($id) || User::find($id)->hasRole(self::ROLE_ADMIN))) {
             return true;
-        } elseif($this->hasRole(self::ROLE_USER) && User::find($id)->isTeacherOf($this->id)) {
+        } elseif ($this->hasRole(self::ROLE_USER) && User::find($id)->isTeacherOf($this->id)) {
             return true;
         } else {
             return false;
