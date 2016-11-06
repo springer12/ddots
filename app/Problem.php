@@ -72,6 +72,39 @@ class Problem extends Model
         return File::get($this->getFilePath() . $value);
     }
 
+    public function getLink(Contest $contest) {
+        return route('frontend::contests::problem', ['contest_id' => $contest->id, 'problem_id' => $this->id]);
+    }
+
+    public function getSolutions(Contest $contest) {
+        return $contest->solutions()->where('problem_id', $this->id)->get();
+    }
+
+    public function getAVGScore(Contest $contest) {
+        return $contest
+            ->solutions()
+            ->select(\DB::raw('SUM(success_percentage / 100 * contest_problem.max_points) as total'))
+            ->join('contest_problem', 'solutions.problem_id', '=', 'contest_problem.problem_id')
+            ->where('solutions.problem_id', $this->id)
+            ->first()->total;
+    }
+
+    public function getUsersWhoTryToSolve(Contest $contest) {
+        return $contest
+            ->solutions()
+            ->where('problem_id', $this->id)
+            ->count();
+    }
+
+    public function getUsersWhoSolved(Contest $contest) {
+        return $contest
+            ->solutions()
+            ->where('problem_id', $this->id)
+            ->where('status', Solution::STATUS_OK)
+            ->count();
+    }
+
+
     private function getContestSolutionQuery($contest_id)
     {
         return DB::table('solutions')

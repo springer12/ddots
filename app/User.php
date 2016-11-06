@@ -99,6 +99,13 @@ class User extends Authenticatable
 
     }
 
+    public function haveSolutions(Contest $contest, Problem $problem) {
+        return $contest->solutions()
+            ->where('user_id', $this->id)
+            ->where('problem_id', $problem->id)
+            ->count();
+    }
+
     public function touchLastLogin()
     {
         $this->last_login = $this->freshTimestamp();

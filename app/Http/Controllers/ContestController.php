@@ -167,11 +167,42 @@ class ContestController extends Controller
         return View('contests.single')->with(['contest' => $contest]);
     }
 
-    public function standings(Request $request, $id)
+    public function standings(Request $request, $id) //@todo add results cache, invalidate cache when new solutions are comming
     {
         $contest = Contest::findOrFail($id);
-        $users = $contest->getUserData();
-        return View('contests.standings')->with(['contest' => $contest, 'users' => $users]);
+
+        $totals   = [];
+        $problems = $contest->problems;
+        $results  = [];
+
+        foreach ($contest->users as $user) {
+            $results[$user->id] = [
+                'position' => $contest->getUserPosition($user),
+                'user'     => $user,
+            ];
+
+            foreach ($problems as $problem) {
+                if($user->haveSolutions($contest, $problem)) {
+                    $results[$user->id]['solutions'][$problem->id] = $contest->getStandingsSolution($user, $problem);
+                } else {
+                    $results[$user->id]['solutions'][$problem->id] = null;
+                }
+            }
+        }
+        usort($results, function($a, $b) {
+            if($a['position'] == $b['position']) {
+                return $a['user'] == $b['user'] ? 0 : ($a['user'] > $b['user'] ? 1 : -1);
+            }
+
+            return $a['position'] > $b['position'] ? 1 : -1;
+        });
+
+        return View('contests.standings')->with([
+            'contest'  => $contest,
+            'results'  => $results,
+            'totals'   => $totals,
+            'problems' => $problems,
+        ]);
 
     }
 }

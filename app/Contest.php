@@ -27,7 +27,9 @@ class Contest extends Model
         'end_date',
         'created_at',
     ];
-    
+
+    public $standings_score = [];
+
     public static function getValidationRules()
     {
         return [
@@ -55,6 +57,11 @@ class Contest extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'contest_user', 'contest_id', 'user_id');
+    }
+
+    public function solutions()
+    {
+        return $this->belongsToMany(Solution::class, 'contest_solution', 'contest_id', 'solution_id');
     }
 
     public function owner()
@@ -126,35 +133,6 @@ class Contest extends Model
         return null;
     }
 
-    public function getUserData()
-    {
-        $users = [];
-        foreach ($this->users as $user) {
-            $users[$user->id]['points'] = 0;
-            $users[$user->id]['name'] = $user->name;
-            foreach ($this->problems as $problem) {
-                $solution = $problem->getContestUserDisplaySolution($this, $user->id);
-                if ($solution) {
-                    $users[$user->id]['problems'][$problem->id]['solution_id'] = $solution->id;
-                    $users[$user->id]['problems'][$problem->id]['points'] = $solution->success_percentage / 100 * $this->getProblemMaxPoints($problem->id);
-                    $users[$user->id]['points'] += $users[$user->id]['problems'][$problem->id]['points'];
-                } else {
-                    $users[$user->id]['problems'][$problem->id]['points'] = 0;
-                }
-            }
-        }
-        uasort($users, function ($a, $b) {
-            if ($a['points'] > $b['points']) {
-                return -1;
-            } elseif ($a['points'] == $b['points']) {
-                return 0;
-            } else {
-                return 1;
-            }
-        });
-        return $users;
-    }
-
     public function getProblemData()
     {
         $problems = [];
@@ -171,5 +149,102 @@ class Contest extends Model
             }
         }
         return $problems;
+    }
+
+    protected function fillScore() {
+        if(empty($this->standings_score)) {
+            $this->standings_score = $this->solutions()
+                ->join('contest_problem', 'solutions.problem_id', '=', 'contest_problem.problem_id')
+                ->select(\DB::raw('SUM(success_percentage / 100 * contest_problem.max_points) as total, user_id'))
+                ->groupBy('user_id')
+                ->get();
+
+
+            $this->standings_score = $this->standings_score->sortByDesc('total');
+            $this->standings_score = $this->standings_score->groupBy('total');
+
+            $i = 1;
+            $maped_score = [];
+            foreach ($this->standings_score as $grouped_score) {
+                $users_count = $grouped_score->reduce(function ($carry) {
+                    return $carry + 1;
+                });
+                foreach ($grouped_score as $score) {
+                    if($users_count > 1) {
+                        $maped_score[$score->user_id] = $i . '-' . ($i + $grouped_score->count() - 1);
+                    } else {
+                        $maped_score[$score->user_id] = $i;
+                    }
+                }
+
+                if($grouped_score->count() > 1) {
+                    $i = $i + $grouped_score->count();
+                } else {
+                    $i++;
+                }
+
+            }
+            $this->standings_score = $maped_score;
+
+            $last_position = $i - 1;
+            foreach ($this->users as $user) {
+                if(!isset($this->standings_score[$user->id])) {
+                    $last_position++;
+                }
+            }
+            foreach ($this->users as $user) {
+                if(!isset($this->standings_score[$user->id])) {
+                    if($last_position != $i) {
+                        $this->standings_score[$user->id] = $i . '-' . $last_position;
+                    } else {
+                        $this->standings_score[$user->id] = $i;
+                    }
+                }
+            }
+        }
+    }
+
+    public function getUserPosition(User $user) {
+
+        $this->fillScore();
+
+        return $this->standings_score[$user->id];
+    }
+
+    public function getStandingsSolution(User $user, Problem $problem) {
+        $solution = null;
+
+        $query = $this->solutions()
+            ->where('user_id', $user->id)
+            ->where('problem_id', $problem->id);
+
+        if($this->show_max) {
+            $solution = $query->orderBy('success_percentage', 'desc')->first();
+        } else {
+            $solution = $query->orderBy('created_at', 'desc')->first();
+        }
+
+        return $solution;
+    }
+
+    public function getAVGScore() {
+        return $this
+            ->solutions()
+            ->select(\DB::raw('SUM(success_percentage / 100 * contest_problem.max_points) as total'))
+            ->join('contest_problem', 'solutions.problem_id', '=', 'contest_problem.problem_id')
+            ->first()->total;
+    }
+
+    public function getUsersWhoTryToSolve() {
+        return $this
+            ->solutions()
+            ->count();
+    }
+
+    public function getUsersWhoSolved() {
+        return $this
+            ->solutions()
+            ->where('status', Solution::STATUS_OK)
+            ->count();
     }
 }
