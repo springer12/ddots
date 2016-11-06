@@ -3,10 +3,27 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class News extends Model
 {
-    protected $fillable = ['name', 'content'];
+    use Sortable;
+    use SoftDeletes;
+
+    public static function getValidationRules()
+    {
+        return [
+            'name' => 'required|string|max:255|min:2',
+            'content' => 'required|string|max:3000',
+            'subdomain_id' => 'exists:subdomains,id',
+        ];
+    }
+
+    protected static $sortable_columns = [
+        'id', 'name', 'created_at', 'updated_at', 'deleted_at'
+    ];
+
+    protected $fillable = ['name', 'content', 'subdomain_id', 'show_on_main'];
 
     public function setContentAttribute($value)
     {
@@ -17,5 +34,10 @@ class News extends Model
     public function scopeMain($query)
     {
         return $query->where('show_on_main', true);
+    }
+
+    public function subdomain()
+    {
+        return $this->belongsTo(Subdomain::class);
     }
 }

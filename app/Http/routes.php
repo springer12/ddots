@@ -61,6 +61,19 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('restore/{id}', 'Backend\TestingServersController@restore');
         });
 
+        Route::group(['prefix' => 'news', 'as' => 'news::'], function () {
+            Route::get('/', ['uses' => 'Backend\NewsController@index', 'as' => 'list']);
+
+            Route::get('add', ['uses' => 'Backend\NewsController@showForm', 'as' => 'add']);
+            Route::post('add', 'Backend\NewsController@edit');
+
+            Route::get('edit/{id}', ['uses' => 'Backend\NewsController@showForm', 'as' => 'edit']);
+            Route::post('edit/{id}', 'Backend\NewsController@edit');
+
+            Route::get('delete/{id}', 'Backend\NewsController@delete');
+            Route::get('restore/{id}', 'Backend\NewsController@restore');
+        });
+
         Route::group(['prefix' => 'messaging', 'as' => 'messages::'], function () {
             Route::get('/', ['uses' => 'Backend\MessageController@index', 'as' => 'list']);
 

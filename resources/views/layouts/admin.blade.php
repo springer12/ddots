@@ -52,6 +52,8 @@
                                             servers</a></li>
                                     <li class="{{ !Request::is(action('Backend\UserController@index')) ?: 'current-page' }}">
                                         <a href="{{ action('Backend\UserController@index') }}">Users</a></li>
+                                    <li class="{{ !Request::is(action('Backend\NewsController@index')) ?: 'current-page' }}">
+                                        <a href="{{ action('Backend\NewsController@index') }}">News</a></li>
                                     <li class="{{ !Request::is(action('Backend\ProblemController@index')) ?: 'current-page' }}">
                                         <a href="{{ action('Backend\ProblemController@index') }}">Problems</a></li>
                                     <li class="{{ !Request::is(action('Backend\VolumeController@index')) ?: 'current-page' }}">
@@ -124,5 +126,6 @@
 {{--@yield('content')--}}
 
 <script src="{{ asset('backend-bundle/js/bundle' . (config('app.assets.minified', false) ? '.min' : '') . '.js') }}"></script>
+<script src="//cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
 </body>
 </html>
