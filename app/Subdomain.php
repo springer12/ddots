@@ -83,9 +83,9 @@ class Subdomain extends Model
         return null;
     }
 
-    public function getUrl()
+    public function getUrl($postpend = '')
     {
-        return 'http://' . $this->name . '.' . config('app.domain') . '/';
+        return 'http://' . $this->name . '.' . config('app.domain') . '/' . $postpend;
     }
 
     public function sponsors()

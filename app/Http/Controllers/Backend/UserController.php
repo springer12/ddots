@@ -113,14 +113,12 @@ class UserController extends Controller
                 'nickname' => 'required|max:255|english_alpha_dash|unique:users,nickname,' . $user->id]);
             if ($request->get('password') != '') {
                 $rules = array_merge($rules, ['password' => 'required|min:6|confirmed']);
-                $fillData = array_merge($fillData, ['password' => $request->get('password')]);
             }
         } else {
             $rules = array_merge(User::getValidationRules((bool)$request->get('programming_language')), [
                 'password' => 'required|min:6|confirmed',
                 'email' => 'required|email|unique:users',
                 'nickname' => 'required|max:255|english_alpha_dash|unique:users,nickname,']);
-            $fillData = array_merge($fillData, ['password' => $request->get('password')]);
         }
 
         $this->validate($request, $rules);
@@ -129,6 +127,10 @@ class UserController extends Controller
             $user->fill($fillData);
         } else {
             $user = User::create($fillData);
+        }
+
+        if ($request->get('password')) {
+            $user->password = $request->get('password');
         }
 
         if (Input::hasFile('avatar')) {

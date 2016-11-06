@@ -5,7 +5,9 @@
         <div class="row">
             <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
                 <div class="card">
-                    <div class="card-header">{{ $user->hasRole(\App\User::ROLE_LOW_USER) ? 'Upgrade' : 'Update' }} Profile</div>
+                    <div class="card-header">{{ $user->hasRole(\App\User::ROLE_LOW_USER) ? 'Upgrade' : 'Update' }}
+                        Profile
+                    </div>
 
                     <div class="card-block">
                         <form role="form" method="POST"
@@ -91,20 +93,21 @@
 
                                 <div class="col-md-5">
                                     <div class="form-group{{ $errors->has('programming_language') ? ' has-danger' : '' }}">
-                                        <label for="programming_language" class="col-form-label">Programming Language</label>
-                                            <select name="programming_language" class="form-control border-input">
-                                                <option value="">Not selected</option>
-                                                @foreach($programming_languages as $programming_language)
-                                                    <option value="{{ $programming_language->id }}"
-                                                            {{ $user->programming_language != $programming_language->id?:'selected' }}
-                                                    >{{ $programming_language->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @if ($errors->has('programming_language'))
-                                                <span class="form-control-feedback">
+                                        <label for="programming_language" class="col-form-label">Programming
+                                            Language</label>
+                                        <select name="programming_language" class="form-control border-input">
+                                            <option value="">Not selected</option>
+                                            @foreach($programming_languages as $programming_language)
+                                                <option value="{{ $programming_language->id }}"
+                                                        {{ $user->programming_language != $programming_language->id?:'selected' }}
+                                                >{{ $programming_language->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('programming_language'))
+                                            <span class="form-control-feedback">
                                         <strong>{{ $errors->first('programming_language') }}</strong>
                                     </span>
-                                            @endif
+                                        @endif
 
                                     </div>
                                 </div>
@@ -175,6 +178,20 @@
                                     </div>
                                 </div>
                             @endif
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea class="form-control" id="description"
+                                                  name="description">{{ $user->description }}</textarea>
+                                        @if ($errors->has('description'))
+                                            <span class="form-control-feedback">
+                                                <strong>{{ $errors->first('description') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="text-center">
                                 <button type="submit"
