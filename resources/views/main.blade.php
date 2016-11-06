@@ -122,13 +122,14 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">Project was supported by</div>
+                    <div class="card-block">
+                        @foreach(\App\Sponsor::main()->inRandomOrder()->take(3)->get() as $sponsor)
 
-                    @foreach(\App\Sponsor::main()->get() as $sponsor)
-                        <div class="card-block">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <a href="{{ $sponsor->link }}"><img src="{{ $sponsor->image }}" alt="sponsor-logo"
-                                                                        class="sponsor-logo"/></a>
+                                    <a href="{{ $sponsor->link }}"><img
+                                                src="{{ $sponsor->image }}"
+                                                alt="sponsor-logo" class="sponsor-logo"/></a>
                                 </div>
                                 <div class="col-sm-4">
                                     <a href="{{ $sponsor->link }}">{{ $sponsor->name }}</a>
@@ -137,12 +138,9 @@
                                     {{ $sponsor->description }}
                                 </div>
                             </div>
-                        </div>
-                        <hr>
-                    @endforeach
-
-                    <div class="card-block">
-                        <a href="#" class="btn btn-success pull-right">All sponsors</a>
+                            <hr>
+                        @endforeach
+                        <a href="{{ url('sponsors') }}" class="btn btn-success pull-right">All sponsors</a>
                     </div>
                 </div>
 

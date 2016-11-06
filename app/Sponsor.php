@@ -35,17 +35,17 @@ class Sponsor extends Model
 
         if (Input::file($name)->isValid()) {
             if ($this->image) {
-                File::delete('sponsors/images/' . $this->image);
+                File::delete('sponsordata/images/' . $this->image);
             }
             $this->image = uniqid() . '.' . Input::file($name)->getClientOriginalExtension();
-            Input::file($name)->move('sponsors/images/', $this->image);
+            Input::file($name)->move('sponsordata/images/', $this->image);
         }
     }
 
     public function getImageAttribute($image)
     {
         if ($image) {
-            return url('sponsors/images/' . $image);
+            return url('sponsordata/images/' . $image);
         }
         return null;
     }

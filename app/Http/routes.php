@@ -26,8 +26,6 @@ Route::group(['middleware' => 'web'], function () {
     $this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
     $this->post('password/reset', 'Auth\PasswordController@reset');
 
-    Route::get('/teachers', ['uses' => 'TeacherController@all', 'as' => 'allTeachers']);
-
     Route::get('verify/{code}', 'UserController@verify');
     Route::group(['middleware' => 'social_provider', 'prefix' => 'social', 'as' => 'social::'], function () {
         Route::get('/redirect/{provider}', ['as' => 'redirect', 'uses' => 'Auth\SocialController@redirectToProvider']);
@@ -184,6 +182,7 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::get('/', 'HomeController@index');
         Route::get('/teachers', 'TeacherController@index');
+        Route::get('/sponsors', 'SponsorController@index');
 
         Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_TEACHER, 'as' => 'teacherOnly::'], function () {
 
@@ -308,6 +307,9 @@ Route::group(['namespace' => 'TestingSystem', 'prefix' => 'testing-system-api'],
     });
     Route::get('/programming-languages', 'ProgrammingLanguagesController@index');
 });
+
+Route::get('/teachers', ['uses' => 'TeacherController@all', 'as' => 'allTeachers']);
+Route::get('/sponsors', ['uses' => 'SponsorController@all', 'as' => 'allSponsors']);
 
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
     //future
