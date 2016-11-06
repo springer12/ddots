@@ -37,6 +37,7 @@ class Solution extends Model
     const STATE_RESERVED = 'reserved';
     const STATE_TESTED = 'tested';
 
+    const STATUS_OK = 'OK';
     const STATUS_CE = 'CE';
     const STATUS_FF = 'FF';
     const STATUS_NC = 'NC';
@@ -147,6 +148,7 @@ class Solution extends Model
     public static function getStatuses()
     {
         return [
+            self::STATUS_OK,
             self::STATUS_CE,
             self::STATUS_FF,
             self::STATUS_NC,
