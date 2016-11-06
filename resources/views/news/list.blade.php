@@ -13,6 +13,11 @@
                                     {{ str_limit($news_item->stripped_content, 60) }}
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-8 offset-md-4">
+                                    {{ $news_item->created_at }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -125,7 +125,7 @@
                     @endforeach
 
                     <div class="card-block">
-                        <a href="#" class="btn btn-success pull-right">All sponsors</a>
+                        <a href="{{ url('sponsors') }}" class="btn btn-success pull-right">All sponsors</a>
                     </div>
                 </div>
 
