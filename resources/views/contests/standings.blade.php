@@ -1,3 +1,8 @@
+<?php
+$users_count_who_try_to_solve = [];
+$users_count_who_solved = [];
+?>
+
 @extends('layouts.app')
 
 @section('content')
@@ -25,11 +30,11 @@
                         </thead>
                         <tbody>
 
+                        <?php $i = 1 ?>
                         @foreach($results as $result)
-                            <?php $total = 0 ?>
                             <tr>
                                 <td>
-                                    {{ $result['position'] }}
+                                    {{ $i++ }}
                                 </td>
                                 <td>
                                     @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER) && Auth::user()->isTeacherOf($result['user']->id) || Auth::user()->id == $result['user']->id)
@@ -42,22 +47,26 @@
                                 </td>
                                 @foreach($result['solutions'] as $solution)
                                     <td>
-                                        @if($solution)
+                                        @if(isset($solution))
                                             @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
-                                                <a href="{{ route('frontend::contests::solution', ['id' => $problem['solution_id']]) }}">
-                                                    {{ $solution->success_percentage / 100 * $contest->getProblemMaxPoints($solution->problem_id) }}
+                                                <a href="{{ route('frontend::contests::solution', ['id' => $solution->id]) }}">
+                                                    {{ number_format($solution->success_percentage / 100 * $contest->getProblemMaxPoints($solution->problem_id), 2, '.', '') }}
                                                 </a>
                                             @else
-                                                {{ $solution->success_percentage / 100 * $contest->getProblemMaxPoints($solution->problem_id) }}
+                                                {{ number_format($solution->success_percentage / 100 * $contest->getProblemMaxPoints($solution->problem_id), 2, '.', '') }}
                                             @endif
-                                            <?php $total += $solution->success_percentage / 100 * $contest->getProblemMaxPoints($solution->problem_id) ?>
-                                        @else
-                                            -
+
+                                            <?php
+                                            isset($users_count_who_solved[$solution->problem_id]) ?: $users_count_who_solved[$solution->problem_id] = 0;
+                                            if($solution->status == \App\Solution::STATUS_OK) {
+                                                $users_count_who_solved[$solution->problem_id]++;
+                                            }
+                                            ?>
                                         @endif
                                     </td>
                                 @endforeach
                                 <td>
-                                    {{ $total }}
+                                    {{ number_format($result['total'], 2, '.', '') }}
                                 </td>
                             </tr>
                         @endforeach
@@ -66,21 +75,27 @@
                         <tr>
                             <th colspan="2">Average points</th>
                             @foreach($contest->problems as $problem)
-                                <td>{{ $problem->getAVGScore($contest) }}</td>
+                                <td>{{ number_format($totals['avg_by_problems'][$problem->id], 2, '.', '') }}</td>
                             @endforeach
-                            <th>{{ $contest->getAVGScore() }}</th>
+                            <th>{{ number_format($totals['total_avg'], 2, '.', '')  }}</th>
                         </tr>
                         <tr>
                             <th colspan="2">Attempts</th>
                             @foreach($contest->problems as $problem)
-                                <td>{{ $problem->getUsersWhoTryToSolve($contest) }}</td>
+                                <td>{{ $users_count_who_try_to_solve[$problem->id] = $problem->getUsersWhoTryToSolve($contest) }}</td>
                             @endforeach
                             <th>{{ $contest->getUsersWhoTryToSolve() }}</th>
                         </tr>
                         <tr>
-                            <th colspan="2">Solutions</th>
+                            <th colspan="2">Solved</th>
                             @foreach($contest->problems as $problem)
-                                <td>{{ $problem->getUsersWhoSolved($contest) }}</td>
+                                <td>
+                                    @if($contest->show_max)
+                                        {{ $users_count_who_solved[$problem->id] = $problem->getUsersWhoSolved($contest) }} ({{ round($users_count_who_solved[$problem->id] / $users_count_who_try_to_solve[$problem->id] * 100) }}%)
+                                    @else
+                                        {{ $users_count_who_solved[$problem->id] }} ({{ round($users_count_who_solved[$problem->id] / $users_count_who_try_to_solve[$problem->id] * 100) }}%)
+                                    @endif
+                                </td>
                             @endforeach
                             <th>{{ $contest->getUsersWhoSolved() }}</th>
                         </tr>

@@ -6,6 +6,31 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Input;
 
+/**
+ * App\Sponsor
+ *
+ * @property integer $id
+ * @property string $name
+ * @property string $description
+ * @property string $link
+ * @property string $image
+ * @property boolean $show_on_main
+ * @property string $deleted_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Subdomain[] $subdomains
+ * @method static \Illuminate\Database\Query\Builder|\App\Sponsor whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Sponsor whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Sponsor whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Sponsor whereLink($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Sponsor whereImage($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Sponsor whereShowOnMain($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Sponsor whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Sponsor whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Sponsor whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Sponsor main()
+ * @mixin \Eloquent
+ */
 class Sponsor extends Model
 {
     use SoftDeletes;

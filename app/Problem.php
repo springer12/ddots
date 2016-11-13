@@ -10,7 +10,27 @@ use Illuminate\Support\Facades\File;
 
 /**
  * Class Problem
+ *
  * @package App
+ * @property integer $id
+ * @property string $name
+ * @property string $deleted_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $archive
+ * @property string $description
+ * @property boolean $difficulty
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Volume[] $volumes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Contest[] $contests
+ * @method static \Illuminate\Database\Query\Builder|\App\Problem whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Problem whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Problem whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Problem whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Problem whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Problem whereArchive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Problem whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Problem whereDifficulty($value)
+ * @mixin \Eloquent
  */
 class Problem extends Model
 {
@@ -92,15 +112,32 @@ class Problem extends Model
     public function getUsersWhoTryToSolve(Contest $contest) {
         return $contest
             ->solutions()
+            ->select(DB::raw('count(*) as item'))
             ->where('problem_id', $this->id)
+            ->groupBy('user_id', 'problem_id')
+            ->get()
             ->count();
     }
 
     public function getUsersWhoSolved(Contest $contest) {
+        if($contest->show_max) {
+            return $contest
+                ->solutions()
+                ->select(DB::raw('count(*) as item'))
+                ->where('problem_id', $this->id)
+                ->where('status', Solution::STATUS_OK)
+                ->groupBy('user_id', 'problem_id')
+                ->get()
+                ->count();
+        }
+
         return $contest
             ->solutions()
+            ->select(DB::raw('count(*) as item'))
             ->where('problem_id', $this->id)
-            ->where('status', Solution::STATUS_OK)
+            ->groupBy('user_id', 'created_at')
+            ->take(1)
+            ->get()
             ->count();
     }
 

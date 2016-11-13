@@ -4,6 +4,29 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Message
+ *
+ * @property integer $id
+ * @property integer $sender_id
+ * @property integer $receiver_id
+ * @property integer $owner_id
+ * @property string $text
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \App\User $sender
+ * @property-read \App\User $receiver
+ * @property-read \App\User $owner
+ * @method static \Illuminate\Database\Query\Builder|\App\Message whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Message whereSenderId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Message whereReceiverId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Message whereOwnerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Message whereText($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Message whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Message whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Message latest()
+ * @mixin \Eloquent
+ */
 class Message extends Model
 {
     use Sortable;

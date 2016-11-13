@@ -7,6 +7,33 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 
+/**
+ * App\Subdomain
+ *
+ * @property integer $id
+ * @property string $name
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
+ * @property string $description
+ * @property string $fullname
+ * @property string $title
+ * @property string $image
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Sponsor[] $sponsors
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\News[] $news
+ * @method static \Illuminate\Database\Query\Builder|\App\Subdomain whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Subdomain whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Subdomain whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Subdomain whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Subdomain whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Subdomain whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Subdomain whereFullname($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Subdomain whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Subdomain whereImage($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Subdomain current()
+ * @mixin \Eloquent
+ */
 class Subdomain extends Model
 {
     use SoftDeletes;

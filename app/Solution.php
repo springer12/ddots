@@ -8,6 +8,40 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * App\Solution
+ *
+ * @property integer $id
+ * @property string $state
+ * @property string $status
+ * @property string $testing_mode
+ * @property string $message
+ * @property integer $problem_id
+ * @property integer $programming_language_id
+ * @property integer $user_id
+ * @property integer $testing_server_id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property boolean $success_percentage
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\SolutionReport[] $reports
+ * @property-read \App\Problem $problem
+ * @property-read \App\User $owner
+ * @property-read \App\ProgrammingLanguage $programming_language
+ * @method static \Illuminate\Database\Query\Builder|\App\Solution whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Solution whereState($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Solution whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Solution whereTestingMode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Solution whereMessage($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Solution whereProblemId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Solution whereProgrammingLanguageId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Solution whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Solution whereTestingServerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Solution whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Solution whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Solution whereSuccessPercentage($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Solution oldestNew()
+ * @mixin \Eloquent
+ */
 class Solution extends Model
 {
 

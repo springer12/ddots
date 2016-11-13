@@ -10,6 +10,62 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\User
+ *
+ * @property integer $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $remember_token
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $role
+ * @property string $nickname
+ * @property string $date_of_birth
+ * @property string $avatar
+ * @property string $place_of_study
+ * @property string $profession
+ * @property string $last_login
+ * @property integer $programming_language
+ * @property string $vk_link
+ * @property string $fb_link
+ * @property string $deleted_at
+ * @property string $description
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Contest[] $ownedContests
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Contest[] $contests
+ * @property-read \App\ProgrammingLanguage $programmingLanguage
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $students
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $teachers
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Subdomain[] $subdomains
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Group[] $groups
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Message[] $sentMessages
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Message[] $receivedMessages
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Message[] $messages
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereRole($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereNickname($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereDateOfBirth($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereAvatar($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User wherePlaceOfStudy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereProfession($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereLastLogin($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereProgrammingLanguage($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereVkLink($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereFbLink($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User teacher()
+ * @method static \Illuminate\Database\Query\Builder|\App\User user()
+ * @method static \Illuminate\Database\Query\Builder|\App\User admin()
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable
 {
     use SoftDeletes;

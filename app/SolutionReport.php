@@ -4,6 +4,25 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\SolutionReport
+ *
+ * @property integer $id
+ * @property string $status
+ * @property float $execution_time
+ * @property float $memory_peak
+ * @property integer $solution_id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\App\SolutionReport whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SolutionReport whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SolutionReport whereExecutionTime($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SolutionReport whereMemoryPeak($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SolutionReport whereSolutionId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SolutionReport whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SolutionReport whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class SolutionReport extends Model
 {
     const STATUS_CE = 'CE';

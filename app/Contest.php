@@ -7,6 +7,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * App\Contest
+ *
+ * @property integer $id
+ * @property string $name
+ * @property integer $user_id
+ * @property string $deleted_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $description
+ * @property \Carbon\Carbon $start_date
+ * @property \Carbon\Carbon $end_date
+ * @property boolean $is_active
+ * @property boolean $is_standings_active
+ * @property boolean $labs
+ * @property string $type
+ * @property boolean $show_max
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\ProgrammingLanguage[] $programming_languages
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Problem[] $problems
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Solution[] $solutions
+ * @property-read \App\User $owner
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereStartDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereEndDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereIsActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereIsStandingsActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereLabs($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereShowMax($value)
+ * @mixin \Eloquent
+ */
 class Contest extends Model
 {
     use Sortable;
@@ -27,8 +65,6 @@ class Contest extends Model
         'end_date',
         'created_at',
     ];
-
-    public $standings_score = [];
 
     public static function getValidationRules()
     {
@@ -151,64 +187,26 @@ class Contest extends Model
         return $problems;
     }
 
-    protected function fillScore() {
-        if(empty($this->standings_score)) {
-            $this->standings_score = $this->solutions()
-                ->join('contest_problem', 'solutions.problem_id', '=', 'contest_problem.problem_id')
-                ->select(\DB::raw('SUM(success_percentage / 100 * contest_problem.max_points) as total, user_id'))
-                ->groupBy('user_id')
-                ->get();
+    public function getUserTotalResult(User $user) {
+        $total = 0;
 
+        $solutions = $this->solutions()
+            ->where('user_id', $user->id)
+            ->get();
 
-            $this->standings_score = $this->standings_score->sortByDesc('total');
-            $this->standings_score = $this->standings_score->groupBy('total');
+        $solutions = $solutions->groupBy('problem_id');
 
-            $i = 1;
-            $maped_score = [];
-            foreach ($this->standings_score as $grouped_score) {
-                $users_count = $grouped_score->reduce(function ($carry) {
-                    return $carry + 1;
-                });
-                foreach ($grouped_score as $score) {
-                    if($users_count > 1) {
-                        $maped_score[$score->user_id] = $i . '-' . ($i + $grouped_score->count() - 1);
-                    } else {
-                        $maped_score[$score->user_id] = $i;
-                    }
-                }
-
-                if($grouped_score->count() > 1) {
-                    $i = $i + $grouped_score->count();
-                } else {
-                    $i++;
-                }
-
-            }
-            $this->standings_score = $maped_score;
-
-            $last_position = $i - 1;
-            foreach ($this->users as $user) {
-                if(!isset($this->standings_score[$user->id])) {
-                    $last_position++;
-                }
-            }
-            foreach ($this->users as $user) {
-                if(!isset($this->standings_score[$user->id])) {
-                    if($last_position != $i) {
-                        $this->standings_score[$user->id] = $i . '-' . $last_position;
-                    } else {
-                        $this->standings_score[$user->id] = $i;
-                    }
-                }
+        foreach ($solutions as $problem_id => $grouped_solutions) {
+            if ($this->show_max) {
+                $total += $grouped_solutions
+                        ->max('success_percentage') * $this->getProblemMaxPoints($problem_id) / 100;
+            } else {
+                $total += $grouped_solutions->sortByDesc('created_at')
+                        ->first()->success_percentage * $this->getProblemMaxPoints($problem_id) / 100;
             }
         }
-    }
 
-    public function getUserPosition(User $user) {
-
-        $this->fillScore();
-
-        return $this->standings_score[$user->id];
+        return $total;
     }
 
     public function getStandingsSolution(User $user, Problem $problem) {
@@ -230,21 +228,27 @@ class Contest extends Model
     public function getAVGScore() {
         return $this
             ->solutions()
-            ->select(\DB::raw('SUM(success_percentage / 100 * contest_problem.max_points) as total'))
+            ->select(\DB::raw('AVG(success_percentage / 100 * contest_problem.max_points) as avg_score'))
             ->join('contest_problem', 'solutions.problem_id', '=', 'contest_problem.problem_id')
-            ->first()->total;
+            ->first()->avg_score;
     }
 
     public function getUsersWhoTryToSolve() {
         return $this
             ->solutions()
+            ->select(DB::raw('count(*) as item'))
+            ->groupBy('user_id', 'problem_id')
+            ->get()
             ->count();
     }
 
     public function getUsersWhoSolved() {
         return $this
             ->solutions()
+            ->select(DB::raw('count(*) as item'))
             ->where('status', Solution::STATUS_OK)
+            ->groupBy('user_id', 'problem_id')
+            ->get()
             ->count();
     }
 }

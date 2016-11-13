@@ -40,7 +40,7 @@ class SolutionController extends Controller
         ]);
     }
 
-    public function submit(Request $request, $contest_id, $problem_id)
+    public function submit(Request $request, $contest_id, $problem_id)//@todo:refactor that shit!
     {
         $this->validate($request, Solution::getValidationRules($contest_id));
         $solution = new Solution(['state' => Solution::STATE_NEW]);
@@ -49,7 +49,7 @@ class SolutionController extends Controller
         $solution->programming_language()->associate($request->get('programming_language'));
         $solution->save();
         if (!Auth::user()->hasRole(User::ROLE_TEACHER)) {
-            DB::table('contest_solution')->insert(['contest_id' => $contest_id, 'solution_id' => $solution->id]);
+            DB::table('contest_solution')->insert(['contest_id' => $contest_id, 'solution_id' => $solution->id]); //@todo:refactor that shit!
         }
         if ($request->hasFile('solution_code_file')) {
             $solution->saveCodeFile('solution_code_file');

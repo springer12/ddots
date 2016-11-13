@@ -32,7 +32,7 @@
                                 <td>{{ $group->updated_at }}</td>
                                 <td>{{ $group->deleted_at }}</td>
                                 <td class="actions-menu btn-group">
-                                    <a class="btn btn-secondary" title="Edit"
+                                    <a <a class="btn btn-secondary" title="Edit"
                                        href="{{ action('GroupController@edit',['id'=> $group->id]) }}">
                                         <i class="fa fa-pencil" aria-hidden="true"></i>
                                     </a>

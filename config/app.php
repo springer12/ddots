@@ -164,6 +164,9 @@ return [
         \SocialiteProviders\Manager\ServiceProvider::class,
         Asvae\ApiTester\ServiceProvider::class,
 
+        Barryvdh\Debugbar\ServiceProvider::class,
+
+
     ],
 
     /*

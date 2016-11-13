@@ -48,17 +48,17 @@
                                 <td class="breaking-word">{{ $contest->description }}</td>
                                 @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
                                     <td class="actions-menu btn-group">
-                                        <a class="btn btn-secondary" title="Edit"
+                                        <a <a class="btn btn-secondary" title="Edit"
                                            href="{{ action('ContestController@edit',['id'=> $contest->id]) }}">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
                                         @if($contest->is_active == true)
-                                            <a class="btn btn-secondary" title="Hide"
+                                            <a class="btn btn-secondary btn-danger" title="Hide"
                                                href="{{ action('ContestController@hide',['id'=> $contest->id]) }}">
                                                 <i class="fa fa-ban" aria-hidden="true"></i>
                                             </a>
                                         @else
-                                            <a class="btn btn-secondary" title="Show"
+                                            <a class="btn btn-secondary btn-success" title="Show"
                                                href="{{ action('ContestController@show',['id'=> $contest->id]) }}">
                                                 <i class="fa fa-repeat" aria-hidden="true"></i>
                                             </a>

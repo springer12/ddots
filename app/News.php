@@ -5,6 +5,31 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\News
+ *
+ * @property integer $id
+ * @property string $name
+ * @property string $content
+ * @property string $stripped_content
+ * @property integer $subdomain_id
+ * @property boolean $show_on_main
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
+ * @property-read \App\Subdomain $subdomain
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereContent($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereStrippedContent($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereSubdomainId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereShowOnMain($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News main()
+ * @mixin \Eloquent
+ */
 class News extends Model
 {
     use Sortable;

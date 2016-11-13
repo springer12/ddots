@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contest;
 use App\Problem;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -167,6 +168,7 @@ class ContestController extends Controller
         return View('contests.single')->with(['contest' => $contest]);
     }
 
+    //@todo:1 min results array cache could be temporary solution
     public function standings(Request $request, $id) //@todo add results cache, invalidate cache when new solutions are comming
     {
         $contest = Contest::findOrFail($id);
@@ -176,33 +178,83 @@ class ContestController extends Controller
         $results  = [];
 
         foreach ($contest->users as $user) {
-            $results[$user->id] = [
-                'position' => $contest->getUserPosition($user),
+            $result = [
+                'total'    => $contest->getUserTotalResult($user),
                 'user'     => $user,
+                'last_standings_solution_at' => Carbon::createFromTimestamp(0),
             ];
 
             foreach ($problems as $problem) {
                 if($user->haveSolutions($contest, $problem)) {
-                    $results[$user->id]['solutions'][$problem->id] = $contest->getStandingsSolution($user, $problem);
+                    $solution = $contest->getStandingsSolution($user, $problem);
+                    $result['last_standings_solution_at'] = $result['last_standings_solution_at'] > $solution->created_at ?: $solution->created_at;
+                    $result['solutions'][$problem->id] = $solution;
                 } else {
-                    $results[$user->id]['solutions'][$problem->id] = null;
+                    $result['solutions'][$problem->id] = null;
                 }
             }
+
+            $results[] = $result;
         }
         usort($results, function($a, $b) {
-            if($a['position'] == $b['position']) {
-                return $a['user'] == $b['user'] ? 0 : ($a['user'] > $b['user'] ? 1 : -1);
+            if($a['total'] != $b['total']) {
+                return $a['total'] == $b['total'] ? 0 : ($a['total'] > $b['total'] ? -1 : 1);
             }
 
-            return $a['position'] > $b['position'] ? 1 : -1;
+            if($a['last_standings_solution_at'] != $b['last_standings_solution_at']) {
+                return $a['last_standings_solution_at'] == $b['last_standings_  solution_at'] ? 0 : ($a['last_standings_solution_at'] > $b['last_standings_solution_at'] ? -1 : 1);
+            }
+
+            return $a['user']->name > $b['user']->name ? 1 : -1;
         });
+
+        $totals = $this->getStandingsTotals($contest, $results);
 
         return View('contests.standings')->with([
             'contest'  => $contest,
             'results'  => $results,
-            'totals'   => $totals,
             'problems' => $problems,
+            'totals'   => $totals,
         ]);
 
+    }
+
+    protected function getStandingsTotals(Contest $contest, $results) {
+        $totals = [];
+
+        if(count($results)) {
+            $totals['total_avg'] = 0;
+            foreach ($results as $result) {
+                $totals['total_avg'] += $result['total'];
+            }
+            $totals['total_avg'] /= count($results);
+
+
+            $totals['avg_by_problems'] = [];
+            foreach ($results as $result) {
+                foreach ($result['solutions'] as $solution) {
+                    if(!$solution) {
+                        continue;
+                    }
+
+                    if(!isset($totals['avg_by_problems'][$solution->problem_id])) {
+                        $totals['avg_by_problems'][$solution->problem_id] = [
+                            'total' => $solution->success_percentage * $contest->getProblemMaxPoints($solution->problem_id) / 100,
+                            'count' => 1,
+                        ];
+                    } else {
+                        $totals['avg_by_problems'][$solution->problem_id]['total'] += $solution->success_percentage * $contest->getProblemMaxPoints($solution->problem_id) / 100;
+                        $totals['avg_by_problems'][$solution->problem_id]['count']++;
+                    }
+                }
+            }
+            $mapped_avgs = [];
+            foreach ($totals['avg_by_problems'] as $problem_id => $avg_by_problem) {
+                $mapped_avgs[$problem_id] = $avg_by_problem['total'] /= $avg_by_problem['count'];
+            }
+            $totals['avg_by_problems'] = $mapped_avgs;
+        }
+
+        return $totals;
     }
 }
