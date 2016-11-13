@@ -48,7 +48,7 @@ $users_count_who_solved = [];
                                 @foreach($result['solutions'] as $solution)
                                     <td>
                                         @if(isset($solution))
-                                            @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+                                            @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER) || $solution->user_id === Auth::user()->id)
                                                 <a href="{{ route('frontend::contests::solution', ['id' => $solution->id]) }}">
                                                     {{ number_format($solution->success_percentage / 100 * $contest->getProblemMaxPoints($solution->problem_id), 2, '.', '') }}
                                                 </a>
@@ -56,9 +56,12 @@ $users_count_who_solved = [];
                                                 {{ number_format($solution->success_percentage / 100 * $contest->getProblemMaxPoints($solution->problem_id), 2, '.', '') }}
                                             @endif
 
+                                            @if($solution->reviewed === null)
+                                                <i class="tag tag-warning" title="code review">CR</i>
+                                            @endif
                                             <?php
                                             isset($users_count_who_solved[$solution->problem_id]) ?: $users_count_who_solved[$solution->problem_id] = 0;
-                                            if($solution->status == \App\Solution::STATUS_OK) {
+                                            if ($solution->status == \App\Solution::STATUS_OK) {
                                                 $users_count_who_solved[$solution->problem_id]++;
                                             }
                                             ?>
@@ -93,12 +96,14 @@ $users_count_who_solved = [];
                                     @if($contest->show_max)
                                         {{ $users_count_who_solved[$problem->id] = $problem->getUsersWhoSolved($contest) }}
                                         @if($users_count_who_solved[$problem->id])
-                                            ({{ round($users_count_who_solved[$problem->id] / $users_count_who_try_to_solve[$problem->id] * 100) }}%)
+                                            ({{ round($users_count_who_solved[$problem->id] / $users_count_who_try_to_solve[$problem->id] * 100) }}
+                                            %)
                                         @endif
                                     @else
                                         {{ $users_count_who_solved[$problem->id] }}
                                         @if($users_count_who_solved[$problem->id])
-                                            ({{ round($users_count_who_solved[$problem->id] / $users_count_who_try_to_solve[$problem->id] * 100) }}%)
+                                            ({{ round($users_count_who_solved[$problem->id] / $users_count_who_try_to_solve[$problem->id] * 100) }}
+                                            %)
                                         @endif
                                     @endif
                                 </td>

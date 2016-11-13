@@ -192,7 +192,6 @@ class ContestController extends Controller
                 'user' => $user,
                 'last_standings_solution_at' => Carbon::createFromTimestamp(0),
             ];
-
             foreach ($problems as $problem) {
                 if ($user->haveSolutions($contest, $problem)) {
                     $solution = $contest->getStandingsSolution($user, $problem);
@@ -205,13 +204,14 @@ class ContestController extends Controller
 
             $results[] = $result;
         }
+        //dd($results);
         usort($results, function ($a, $b) {
             if ($a['total'] != $b['total']) {
                 return $a['total'] == $b['total'] ? 0 : ($a['total'] > $b['total'] ? -1 : 1);
             }
 
             if ($a['last_standings_solution_at'] != $b['last_standings_solution_at']) {
-                return $a['last_standings_solution_at'] == $b['last_standings_  solution_at'] ? 0 : ($a['last_standings_solution_at'] > $b['last_standings_solution_at'] ? -1 : 1);
+                return $a['last_standings_solution_at'] == $b['last_standings_solution_at'] ? 0 : ($a['last_standings_solution_at'] > $b['last_standings_solution_at'] ? -1 : 1);
             }
 
             return $a['user']->name > $b['user']->name ? 1 : -1;
