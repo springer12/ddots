@@ -168,14 +168,14 @@ class Solution extends Model
     public function getPoints()
     {
         $select = DB::table('contest_problem')
-                ->join('contest_solution', 'contest_problem.contest_id', '=', 'contest_solution.contest_id')
-                ->join('solutions', function ($join) {
-                    $join->on('solutions.problem_id', '=', 'contest_problem.problem_id')
-                        ->on('contest_solution.solution_id', '=', 'solutions.id');
-                })
-                ->where('solution_id', $this->attributes['id'])
-                ->select('max_points')->first();
-        if($select) {
+            ->join('contest_solution', 'contest_problem.contest_id', '=', 'contest_solution.contest_id')
+            ->join('solutions', function ($join) {
+                $join->on('solutions.problem_id', '=', 'contest_problem.problem_id')
+                    ->on('contest_solution.solution_id', '=', 'solutions.id');
+            })
+            ->where('solution_id', $this->attributes['id'])
+            ->select('max_points')->first();
+        if ($select) {
             return $this->attributes['success_percentage'] / 100 * $select->max_points;
         }
         return null;
@@ -208,7 +208,12 @@ class Solution extends Model
         } catch (\Exception $e) {
             return "";
         }
+    }
 
+    public function annul()
+    {
+        $this->status = static::STATUS_ZR;
+        $this->success_percentage = 0;
     }
 
 }

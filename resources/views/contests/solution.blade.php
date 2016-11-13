@@ -23,7 +23,7 @@
                     </tr>
                     <tr>
                         <td>Programming language</td>
-                        <td><span class="tag tag-success">{{ $solution->programming_language->name }}</span></td>
+                        <td>{{ $solution->programming_language->name }}</td>
                     </tr>
                     <tr>
                         <td>Points</td>
@@ -37,12 +37,22 @@
                             @else
                                 {{ $solution->points }}
                             @endif
+
+                            @if($solution->status !== App\Solution::STATUS_ZR)
+                                <a data-btn-ok-href="{{ route('teacherOnly::solutions::annul', ['id' => $solution->id]) }}"
+                                   href=""
+                                   class="btn btn-danger btn-sm"
+                                   data-btn-ok-label="Annul"
+                                   data-toggle="confirmation"
+                                   data-message="Are you sure you want to annul this solution?"
+                                >Annul</a>
+                            @endif
                         </td>
                     </tr>
                     <tr>
                         <td>Result</td>
                         <td>
-                            <span class="tag tag-{{ $solution->status == \App\Solution::STATUS_OK ? 'success' : 'danger' }}">{{ $solution->status?: 'in proccess' }}</span>
+                            {{ $solution->status?: 'in proccess' }}
                         </td>
                     </tr>
                     <tr>
@@ -66,7 +76,7 @@
                     </div>
                 @endif
                 <div data-solution data-ace-mode="{{ $solution->programming_language->ace_mode }}" class="ace-editor"
-                     id="editor">{{ $solution->getCode() }}</div>
+                     id="editor">{{ $solution->status === App\Solution::STATUS_ZR?'Solution annulled':$solution->getCode() }}</div>
             </div>
         </div>
         <div class="card">

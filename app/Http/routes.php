@@ -201,6 +201,10 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_TEACHER, 'as' => 'teacherOnly::'], function () {
 
+            Route::group(['prefix' => 'solutions', 'as' => 'solutions::'], function () {
+                Route::get('{id}/annul', ['uses' => 'SolutionController@annul', 'as' => 'annul']);
+            });
+
             Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
                 Route::get('/hide/{id}', ['uses' => 'ContestController@hide', 'as' => 'hide'])->where('id', '[0-9]+');
                 Route::get('/show/{id}', ['uses' => 'ContestController@show', 'as' => 'show'])->where('id', '[0-9]+');

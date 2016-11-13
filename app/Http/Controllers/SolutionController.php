@@ -20,7 +20,7 @@ class SolutionController extends Controller
         $solution->fillData();
         return View('contests.solution')->with([
             'solution' => $solution,
-            'contest'  => $solution->getContest(),
+            'contest' => $solution->getContest(),
         ]);
     }
 
@@ -54,6 +54,16 @@ class SolutionController extends Controller
             File::put($solution->sourceCodeFilePath(), $request->get('solution_code'));
         }
 
+        return redirect()->action('SolutionController@contestSolution', ['id' => $solution->id]);
+    }
+
+    public function annul(Request $request, $id)
+    {
+        $solution = Solution::findOrFail($id);
+        if (Auth::user()->isTeacherOf($solution->user_id)) {
+            $solution->annul();
+        }
+        $solution->save();
         return redirect()->action('SolutionController@contestSolution', ['id' => $solution->id]);
     }
 }
