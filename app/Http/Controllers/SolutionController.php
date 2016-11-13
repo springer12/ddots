@@ -26,16 +26,12 @@ class SolutionController extends Controller
 
     public function contestSolutions(Request $request, $id)
     {
-        if (Auth::user()->hasRole(User::ROLE_TEACHER)) {
-            return View('contests.solutions')->with([
-                'solutions' => Solution::join('contest_solution', 'solutions.id', '=', 'solution_id')
-                    ->where('contest_id', $id)->paginate(10),
-                'contest' => Contest::findOrFail($id),
-            ]);
+        $solutions = Solution::join('contest_solution', 'solutions.id', '=', 'solution_id')->where('contest_id', $id);
+        if (!Auth::user()->hasRole(User::ROLE_TEACHER)) {
+            $solutions = $solutions->where('user_id', Auth::user()->id);
         }
         return View('contests.solutions')->with([
-            'solutions' => Solution::join('contest_solution', 'solutions.id', '=', 'solution_id')->where('contest_id', $id)
-                ->where('user_id', Auth::user()->id)->paginate(10),
+            'solutions' => $solutions->paginate(10),
             'contest' => Contest::findOrFail($id),
         ]);
     }
@@ -43,6 +39,7 @@ class SolutionController extends Controller
     public function submit(Request $request, $contest_id, $problem_id)//@todo:refactor that shit!
     {
         $this->validate($request, Solution::getValidationRules($contest_id));
+
         $solution = new Solution(['state' => Solution::STATE_NEW]);
         $solution->owner()->associate(Auth::user()->id);
         $solution->problem()->associate($problem_id);
