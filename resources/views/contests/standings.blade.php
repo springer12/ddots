@@ -91,9 +91,15 @@ $users_count_who_solved = [];
                             @foreach($contest->problems as $problem)
                                 <td>
                                     @if($contest->show_max)
-                                        {{ $users_count_who_solved[$problem->id] = $problem->getUsersWhoSolved($contest) }} ({{ round($users_count_who_solved[$problem->id] / $users_count_who_try_to_solve[$problem->id] * 100) }}%)
+                                        {{ $users_count_who_solved[$problem->id] = $problem->getUsersWhoSolved($contest) }}
+                                        @if($users_count_who_solved[$problem->id])
+                                            ({{ round($users_count_who_solved[$problem->id] / $users_count_who_try_to_solve[$problem->id] * 100) }}%)
+                                        @endif
                                     @else
-                                        {{ $users_count_who_solved[$problem->id] }} ({{ round($users_count_who_solved[$problem->id] / $users_count_who_try_to_solve[$problem->id] * 100) }}%)
+                                        {{ $users_count_who_solved[$problem->id] }}
+                                        @if($users_count_who_solved[$problem->id])
+                                            ({{ round($users_count_who_solved[$problem->id] / $users_count_who_try_to_solve[$problem->id] * 100) }}%)
+                                        @endif
                                     @endif
                                 </td>
                             @endforeach
