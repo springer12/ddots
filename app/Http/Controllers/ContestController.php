@@ -231,21 +231,21 @@ class ContestController extends Controller
 
 
             $totals['avg_by_problems'] = [];
+            foreach ($contest->problems as $problem) {
+                $totals['avg_by_problems'][$problem->id] = [
+                    'total' => 0,
+                    'count' => 0,
+                ];
+            }
+
             foreach ($results as $result) {
                 foreach ($result['solutions'] as $solution) {
                     if(!$solution) {
                         continue;
                     }
 
-                    if(!isset($totals['avg_by_problems'][$solution->problem_id])) {
-                        $totals['avg_by_problems'][$solution->problem_id] = [
-                            'total' => $solution->success_percentage * $contest->getProblemMaxPoints($solution->problem_id) / 100,
-                            'count' => 1,
-                        ];
-                    } else {
-                        $totals['avg_by_problems'][$solution->problem_id]['total'] += $solution->success_percentage * $contest->getProblemMaxPoints($solution->problem_id) / 100;
-                        $totals['avg_by_problems'][$solution->problem_id]['count']++;
-                    }
+                    $totals['avg_by_problems'][$solution->problem_id]['total'] += $solution->success_percentage * $contest->getProblemMaxPoints($solution->problem_id) / 100;
+                    $totals['avg_by_problems'][$solution->problem_id]['count']++;
                 }
             }
             $mapped_avgs = [];
