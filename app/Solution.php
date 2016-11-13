@@ -216,4 +216,13 @@ class Solution extends Model
         $this->success_percentage = 0;
     }
 
+    public function approve()
+    {
+        $this->reviewed = true;
+    }
+
+    public function decline()
+    {
+        $this->reviewed = false;
+    }
 }
