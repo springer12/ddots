@@ -1,27 +1,5 @@
 (function ($, window, document) {
     $(document).ready(function () {
-        // $('[data-participants]').on('click', '[data-participant]', function () {
-        //     var $this = $(this);
-        //     $('[data-students]').append('<li role="presentation"><a data-student data-student-id="' + $this.data('student-id') + '">' + $this.text() + '</a></li>');
-        //     $this.parent().remove();
-        // });
-        // $('[data-students]').on('click', '[data-student]', function () {
-        //     var $this = $(this);
-        //     $('[data-participants]').append('<li><a data-participant data-student-id="' + $this.data('student-id') + '">' + $this.text() + '</a><input type="hidden" name="participants[]" value="' + $this.data('student-id') + '" /></li>');
-        //     $this.parent().remove();
-        // });
-        //
-        // $('[data-included-problems]').on('click', '[data-included-problem]', function () {
-        //     var $this = $(this);
-        //     $('[data-unincluded-problems]').append('<li role="presentation"><a data-unincluded-problem data-problem-id="' + $this.data('problem-id') + '">' + $this.text() + '</a></li>');
-        //     $this.parent().remove();
-        // });
-        // $('[data-unincluded-problems]').on('click', '[data-unincluded-problem]', function () {
-        //     var $this = $(this);
-        //     $('[data-included-problems]').append('<li><a data-included-problem data-problem-id="' + $this.data('problem-id') + '">' + $this.text() + '</a><input type="hidden" name="problems[]" value="' + $this.data('problem-id') + '" /><input type="number" name="problem_points[' + $this.data('problem-id') + ']" value="0"/></li>');
-        //     $this.parent().remove();
-        // });
-
         var participants_elem = $('[data-participants]');
         var problems_elem = $('[data-problems]');
         var element_template = $('[data-element-block]').html();
@@ -41,21 +19,22 @@
             }));
         }
 
-        function appendProblem(id, name, points) {
+        function appendProblem(id, name, points, review) {
             if (!$('[data-problem-block-id=' + id + ']').length) {
                 problems_elem.append(Mustache.render(element_template, {
                     name: name,
                     id: id,
                     element: 'problem',
                     type_problem: 1,
-                    points: points
+                    points: points,
+                    review: review
                 }));
             }
         }
 
         $.each(problems_elem.data(), function (id, name) {
             if ($.isNumeric(id)) {
-                appendProblem(id, name, $('[data-' + id + '-points]').data(id + '-points'));
+                appendProblem(id, name, $('[data-' + id + '-points]').data(id + '-points'), $('[data-' + id + '-review]').data(id + '-review'));
             }
         });
 
