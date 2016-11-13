@@ -250,7 +250,7 @@ class ContestController extends Controller
             }
             $mapped_avgs = [];
             foreach ($totals['avg_by_problems'] as $problem_id => $avg_by_problem) {
-                $mapped_avgs[$problem_id] = $avg_by_problem['total'] /= $avg_by_problem['count'];
+                $mapped_avgs[$problem_id] = $avg_by_problem['count'] ? $avg_by_problem['total'] /= $avg_by_problem['count'] : 0;
             }
             $totals['avg_by_problems'] = $mapped_avgs;
         }
