@@ -79,6 +79,8 @@ class Solution extends Model
     const STATUS_CT = 'CT';
     const STATUS_UE = 'UE';
 
+    const STATUS_ZR = 'ZR'; //annuled solution
+
     protected $fillable = ['state'];
 
     public function reports()
