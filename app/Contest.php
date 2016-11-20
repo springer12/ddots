@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\DB;
  * @property boolean $labs
  * @property string $type
  * @property boolean $show_max
+ * @property boolean $is_acm
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\ProgrammingLanguage[] $programming_languages
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Problem[] $problems
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
@@ -43,6 +44,7 @@ use Illuminate\Support\Facades\DB;
  * @method static \Illuminate\Database\Query\Builder|\App\Contest whereLabs($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Contest whereType($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Contest whereShowMax($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereIsAcm($value)
  * @mixin \Eloquent
  */
 class Contest extends Model
@@ -57,7 +59,7 @@ class Contest extends Model
     const TYPE_TOURNAMENT = 'tournament';
 
     protected $fillable = [
-        'name', 'description', 'user_id', 'start_date', 'end_date', 'is_active', 'is_standings_active', 'show_max', 'labs',
+        'name', 'description', 'user_id', 'start_date', 'end_date', 'is_active', 'is_standings_active', 'show_max', 'labs', 'is_acm',
     ];
 
     protected $dates = [
@@ -187,7 +189,8 @@ class Contest extends Model
         return $problems;
     }
 
-    public function getUserTotalResult(User $user) {
+    public function getUserTotalResult(User $user)
+    {
         $total = 0;
 
         $solutions = $this->solutions()
@@ -209,14 +212,15 @@ class Contest extends Model
         return $total;
     }
 
-    public function getStandingsSolution(User $user, Problem $problem) {
+    public function getStandingsSolution(User $user, Problem $problem)
+    {
         $solution = null;
 
         $query = $this->solutions()
             ->where('user_id', $user->id)
             ->where('problem_id', $problem->id);
 
-        if($this->show_max) {
+        if ($this->show_max) {
             $solution = $query->orderBy('success_percentage', 'desc')->first();
         } else {
             $solution = $query->orderBy('created_at', 'desc')->first();
@@ -225,7 +229,8 @@ class Contest extends Model
         return $solution;
     }
 
-    public function getAVGScore() {
+    public function getAVGScore()
+    {
         return $this
             ->solutions()
             ->select(\DB::raw('AVG(success_percentage / 100 * contest_problem.max_points) as avg_score'))
@@ -233,7 +238,8 @@ class Contest extends Model
             ->first()->avg_score;
     }
 
-    public function getUsersWhoTryToSolve() {
+    public function getUsersWhoTryToSolve()
+    {
         return $this
             ->solutions()
             ->select(DB::raw('count(*) as item'))
@@ -242,7 +248,8 @@ class Contest extends Model
             ->count();
     }
 
-    public function getUsersWhoSolved() {
+    public function getUsersWhoSolved()
+    {
         return $this
             ->solutions()
             ->select(DB::raw('count(*) as item'))

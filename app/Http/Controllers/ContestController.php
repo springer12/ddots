@@ -112,25 +112,15 @@ class ContestController extends Controller
     public function edit(Request $request, $id = null)
     {
         $contest = (!$id ?: Contest::findOrFail($id));
-        $fillData = [
-            'name' => $request->get('name'),
-            'description' => $request->get('description'),
-            'start_date' => $request->get('start_date'),
-            'end_date' => $request->get('end_date'),
-            'user_id' => Auth::user()->id,
-            'is_active' => $request->get('is_active'),
-            'is_standings_active' => $request->get('is_standings_active'),
-            'show_max' => $request->get('show_max'),
-        ];
 
         $this->validate($request, Contest::getValidationRules(), ['programming_languages.required' => 'At least one language must be selected.']);
 
-
         if ($id) {
-            $contest->fill($fillData);
+            $contest->fill($request->except('labs'));
         } else {
-            $contest = Contest::create($fillData);
+            $contest = Contest::create($request->except('labs'));
         }
+        $contest->is_acm = $request->has('is_acm');
 
         $contest->programming_languages()->sync($request->get('programming_languages') ? $request->get('programming_languages') : []);
 
@@ -173,19 +163,19 @@ class ContestController extends Controller
     {
         $contest = Contest::findOrFail($id);
 
-        $totals   = [];
+        $totals = [];
         $problems = $contest->problems;
-        $results  = [];
+        $results = [];
 
         foreach ($contest->users as $user) {
             $result = [
-                'total'    => $contest->getUserTotalResult($user),
-                'user'     => $user,
+                'total' => $contest->getUserTotalResult($user),
+                'user' => $user,
                 'last_standings_solution_at' => Carbon::createFromTimestamp(0),
             ];
 
             foreach ($problems as $problem) {
-                if($user->haveSolutions($contest, $problem)) {
+                if ($user->haveSolutions($contest, $problem)) {
                     $solution = $contest->getStandingsSolution($user, $problem);
                     $result['last_standings_solution_at'] = $result['last_standings_solution_at'] > $solution->created_at ?: $solution->created_at;
                     $result['solutions'][$problem->id] = $solution;
@@ -196,12 +186,12 @@ class ContestController extends Controller
 
             $results[] = $result;
         }
-        usort($results, function($a, $b) {
-            if($a['total'] != $b['total']) {
+        usort($results, function ($a, $b) {
+            if ($a['total'] != $b['total']) {
                 return $a['total'] == $b['total'] ? 0 : ($a['total'] > $b['total'] ? -1 : 1);
             }
 
-            if($a['last_standings_solution_at'] != $b['last_standings_solution_at']) {
+            if ($a['last_standings_solution_at'] != $b['last_standings_solution_at']) {
                 return $a['last_standings_solution_at'] == $b['last_standings_  solution_at'] ? 0 : ($a['last_standings_solution_at'] > $b['last_standings_solution_at'] ? -1 : 1);
             }
 
@@ -211,18 +201,19 @@ class ContestController extends Controller
         $totals = $this->getStandingsTotals($contest, $results);
 
         return View('contests.standings')->with([
-            'contest'  => $contest,
-            'results'  => $results,
+            'contest' => $contest,
+            'results' => $results,
             'problems' => $problems,
-            'totals'   => $totals,
+            'totals' => $totals,
         ]);
 
     }
 
-    protected function getStandingsTotals(Contest $contest, $results) {
+    protected function getStandingsTotals(Contest $contest, $results)
+    {
         $totals = [];
 
-        if(count($results)) {
+        if (count($results)) {
             $totals['total_avg'] = 0;
             foreach ($results as $result) {
                 $totals['total_avg'] += $result['total'];
@@ -240,7 +231,7 @@ class ContestController extends Controller
 
             foreach ($results as $result) {
                 foreach ($result['solutions'] as $solution) {
-                    if(!$solution) {
+                    if (!$solution) {
                         continue;
                     }
 

@@ -28,7 +28,8 @@
                         </div>
 
                         <div class="form-group row{{ $errors->has('description') ? ' has-danger' : '' }}">
-                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="description">Description<span
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12"
+                                   for="description">Description<span
                                         class="required">*</span></label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <textarea name="description" required="required"
@@ -43,7 +44,8 @@
                         </div>
 
                         <div class="form-group row{{ $errors->has('start_date') ? ' has-danger' : '' }}">
-                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="start_date">Start date<span
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="start_date">Start
+                                date<span
                                         class="required">*</span></label></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="datetime" name="start_date" data-start-datepicker
@@ -83,7 +85,8 @@
                                     @if($old_owner)
                                         <option value="{{ $old_owner->id }}" selected>{{ $old_owner->name }}</option>
                                     @elseif($contest->owner)
-                                        <option value="{{ $contest->owner->id }}" selected>{{ $contest->owner->name }}</option>
+                                        <option value="{{ $contest->owner->id }}"
+                                                selected>{{ $contest->owner->name }}</option>
                                     @endif
                                 </select>
                                 @if ($errors->has('owner'))
@@ -116,7 +119,7 @@
 
                         <div class="form-group row{{ $errors->has('is_standings_active') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="is_standings_active">Active
-                                standings</label></label>
+                                standings</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="checkbox" name="is_standings_active"
 
@@ -134,11 +137,22 @@
                             </div>
                         </div>
 
+
+                        <div class="form-group row">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="is_acm">Is ACM</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="checkbox" id="is_acm" name="is_acm"
+                                       class="form-control col-md-7 col-xs-12"
+                                        {{ !old('is_acm') && !$contest->is_acm ?:'checked="checked"' }}>
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12"
                                    for="programming_language">Programming languages</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select id="programming_language" name="programming_languages[]" data-select-programming-languages
+                                <select id="programming_language" name="programming_languages[]"
+                                        data-select-programming-languages
                                         class="form-control col-md-7 col-xs-12"
                                         multiple>
 
@@ -168,7 +182,8 @@
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12"
                                    for="participants">Participants</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="participants[]" data-select-students data-get-students-url="{{ route('backend::ajax::getStudents') }}"
+                                <select name="participants[]" data-select-students
+                                        data-get-students-url="{{ route('backend::ajax::getStudents') }}"
                                         class="form-control col-md-7 col-xs-12"
                                         multiple>
                                     @foreach($participants as $participant)
