@@ -20,7 +20,6 @@
         }
 
         function appendProblem(id, name, points, review, time_penalty) {
-            console.log(time_penalty);
             if (!$('[data-problem-block-id=' + id + ']').length) {
                 problems_elem.append(Mustache.render(element_template, {
                     name: name,
