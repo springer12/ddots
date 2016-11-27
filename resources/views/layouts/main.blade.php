@@ -23,9 +23,7 @@
                     DOTS
                 </a>
                 <ul class="nav navbar-nav ">
-                    <li class="nav-item {{ Request::is('teachers') ? 'active' : '' }}"><a class="nav-item nav-link" href="{{ url('teachers') }}">Teachers</a></li>
-                    <li class="nav-item {{ Request::is('sponsors') ? 'active' : '' }}"><a class="nav-item nav-link" href="{{ url('sponsors') }}">Sponsors</a></li>
-                    <li class="nav-item {{ Request::is('news') ? 'active' : '' }}"><a class="nav-item nav-link" href="{{ url('news') }}">News</a></li>
+                   <li class="nav-item {{ Request::is('news') ? 'active' : '' }}"><a class="nav-item nav-link" href="{{ url('news') }}">News</a></li>
                 </ul>
                 <ul class="nav navbar-nav  float-md-right">
                     <li class="nav-item"><a class="nav-item nav-link" href="{{ url('/register') }}"><i class="fa fa-file-o" aria-hidden="true"></i> Instructions</a></li>{{-- @todo --}}
