@@ -100,26 +100,20 @@ class ProblemController extends Controller
             $problem->fill($fillData);
         } else {
             $problem = new Problem($fillData);
-        }
-
-
-        $new_volumes = [];
-        if ($request->has('volumes')) {
-            foreach ($request->get('volumes') as $key => $volume) {
-                if (!is_numeric($volume)) {
-                    $new_volumes[] = Volume::create(['name' => $volume])->id;
-                } else {
-                    $new_volumes[] = $volume;
-                }
-            }
+            $problem->save();
         }
 
         if ($request->hasFile('archive')) {
             $problem->setArchive('archive');
         }
 
-        $problem->volumes()->sync($new_volumes);
+        if($request->has('volumes')) {
+            $problem->volumes()->sync($request->get('volumes'));
+        } else {
+            $problem->volumes()->sync([]);
+        }
         $problem->save();
+
         \Session::flash('alert-success', 'The problem was successfully saved');
         return redirect()->route('backend::problems::list');
     }

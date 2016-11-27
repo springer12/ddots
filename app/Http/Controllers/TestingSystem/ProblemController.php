@@ -18,7 +18,7 @@ class ProblemController extends Controller
      */
     public function getArchive(Request $request, $id)
     {
-        return Problem::findOrFail($id)->archive;
+        return response()->download(Problem::findOrFail($id)->getArchivePath());
     }
 }
  

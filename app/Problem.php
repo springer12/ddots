@@ -92,6 +92,10 @@ class Problem extends Model
         return File::get($this->getFilePath() . $value);
     }
 
+    public function getArchivePath() {
+        return $this->getFilePath() . $this->attributes['archive'];
+    }
+
     public function getLink(Contest $contest) {
         return route('frontend::contests::problem', ['contest_id' => $contest->id, 'problem_id' => $this->id]);
     }
