@@ -226,4 +226,9 @@ class Solution extends Model
     {
         $this->reviewed = false;
     }
+
+    public function messages()
+    {
+        return $this->hasMany(SolutionMessage::class);
+    }
 }

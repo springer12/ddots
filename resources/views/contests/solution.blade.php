@@ -118,5 +118,29 @@
                 </table>
             </div>
         </div>
+
+        <div class="card">
+            <div class="card-header">Messages</div>
+            @foreach($solution->messages as $message)
+                <div class="card-block">
+                    <b>{{ $message->user->name }}:</b>
+                    {{ $message->text }}
+                </div>
+            @endforeach
+            @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
+                <div class="card-block">
+                    <form method="post" action="{{ action('SolutionMessageController@message', ['id' => $solution->id]) }}">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <textarea rows="3" name="text" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="form-control" role="button" value="Post"/>
+                        </div>
+                    </form>
+                </div>
+            @endif
+        </div>
+
     </div>
 @endsection

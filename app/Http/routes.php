@@ -201,6 +201,7 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_TEACHER, 'as' => 'teacherOnly::'], function () {
 
+            Route::post('solution-message/{id}', ['uses' => 'SolutionMessageController@message', 'as' => 'message']);
             Route::group(['prefix' => 'solutions', 'as' => 'solutions::'], function () {
                 Route::get('{id}/annul', ['uses' => 'SolutionController@annul', 'as' => 'annul']);
                 Route::get('{id}/approve', ['uses' => 'SolutionController@approve', 'as' => 'approve']);
