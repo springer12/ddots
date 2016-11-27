@@ -5,11 +5,10 @@
         <div class="card">
             <div class="card-header">{{ $contest->name }}
                 <span class="tag tag-{{ $contest->is_active? 'success' : 'danger' }}">{{ $contest->is_active? 'Active' : 'Disabled' }}</span>
-                <a class="btn btn-secondary" title="Edit"
+                <a class="btn btn-sm btn-secondary float-xs-right" title="Edit"
                    href="{{ action('ContestController@edit',['id'=> $contest->id]) }}">
                     <i class="fa fa-pencil" aria-hidden="true"></i>
                 </a>
-                <span class="float-xs-right">{{ $contest->start_date }} — {{ $contest->end_date }}</span>
             </div>
             <div class="card-block">
                 <div class="row">
@@ -33,6 +32,7 @@
                             <a class="btn btn-primary" href="{{ route('frontend::contests::standings', ['id' => $contest->id]) }}"><i class="fa fa-trophy" aria-hidden="true"></i> standings</a>
                         @endif
                         <a class="btn btn-primary" href="{{ route('frontend::contests::solutions',['id' => $contest->id]) }}"><i class="fa fa-code" aria-hidden="true"></i> solutions</a>
+                        <span class="float-xs-right">{{ $contest->start_date }} — {{ $contest->end_date }}</span>
                     </div>
                 </div>
             </div>
