@@ -3,12 +3,15 @@
 @section('content')
     <div class="container">
         <div class="card">
-            <div class="card-header">{{ $contest->name }}
-                <span class="tag tag-{{ $contest->is_active? 'success' : 'danger' }}">{{ $contest->is_active? 'Active' : 'Disabled' }}</span>
-                <a class="btn btn-sm btn-secondary float-xs-right" title="Edit"
-                   href="{{ action('ContestController@edit',['id'=> $contest->id]) }}">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                </a>
+            <div class="card-header">
+                <h3>
+                    {{ $contest->name }}
+                    <span class="tag tag-{{ $contest->is_active? 'success' : 'danger' }}">{{ $contest->is_active? 'Active' : 'Disabled' }}</span>
+                    <a class="btn btn-secondary float-xs-right" title="Edit"
+                       href="{{ action('ContestController@edit',['id'=> $contest->id]) }}">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                </h3>
             </div>
             <div class="card-block">
                 <div class="row">
