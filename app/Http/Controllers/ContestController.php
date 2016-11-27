@@ -173,8 +173,6 @@ class ContestController extends Controller
     public function standings(Request $request, $id) //@todo add results cache, invalidate cache when new solutions are comming
     {
         $contest = Contest::findOrFail($id);
-
-        $totals = [];
         $problems = $contest->problems;
         $results = [];
         if (!$contest->is_acm) {
@@ -211,25 +209,46 @@ class ContestController extends Controller
 
             $totals = $this->getStandingsTotals($contest, $results);
         } else {
+
+            $template = ['users_attempted' => 0, 'attempts' => 0, 'correct_solutions' => 0];
+            foreach (Solution::getStatuses() as $status => $description) {
+                $template['statuses'][$status]['count'] = 0;
+            }
+            $totals = $template;
+            foreach ($contest->problems()->withPivot('time_penalty')->get() as $problem) {
+                $totals[$problem->id] = $template;
+            }
             foreach ($contest->users as $user) {
-                $correct_solutions = 0;
                 $total_solutions = 0;
+                $correct_solutions = 0;
                 $result = [
                     'user' => $user,
                     'total' => 0,
-                    'time' => 11,
+                    'time' => 0,
                 ];
                 foreach ($contest->problems as $problem) {
-                    $solutions = $contest->solutions()->where('user_id', $user->id)->where('problem_id', $problem->id)->get();
-                    $result[$problem->id]['solved'] = false;
-                    foreach ($solutions as $solution) {
-                        if ($solution->status === Solution::STATUS_OK) {
-                            $result[$problem->id]['solved'] = true;
-                            $correct_solutions++;
-                        }
-                        $total_solutions++;
+                    $solutions = $contest->solutions()->where('user_id', $user->id)->where('problem_id', $problem->id)->orderBy('created_at')->get();
+                    if (!$solutions->isEmpty()) {
+                        $totals[$problem->id]['users_attempted']++;
                     }
-                    $result[$problem->id]['attempts'] = count($solutions);
+                    $result[$problem->id]['solved'] = false;
+                    $result[$problem->id]['attempts'] = 0;
+                    foreach ($solutions as $index => $solution) {
+                        $totals[$problem->id]['statuses'][$solution->status]['count']++;
+                        $result[$problem->id]['attempts']++;
+                        $total_solutions++;
+                        $totals[$problem->id]['attempts']++;
+                        $final_solution = $solution;
+                        if ($solution->status === Solution::STATUS_OK) {
+                            $totals[$problem->id]['correct_solutions']++;
+
+                            $correct_solutions++;
+                            $result[$problem->id]['solved'] = true;
+                            break;
+                        }
+                    }
+                    $result[$problem->id]['time'] = ($result[$problem->id]['attempts'] > 1 ? ($result[$problem->id]['attempts'] - 1) * $problem->pivot->time_penalty : 0) + (int)(($final_solution->created_at->getTImeStamp() - $contest->start_date->getTimestamp()) / 60);
+                    $result['time'] += $result[$problem->id]['time'];
                     if ($result[$problem->id]['solved']) {
                         $result['total']++;
                     }
@@ -242,6 +261,29 @@ class ContestController extends Controller
                 }
                 $results[] = $result;
             }
+
+            foreach ($contest->problems as $problem) {
+                $totals['attempts'] += $totals[$problem->id]['attempts'];
+                $totals['users_attempted'] += $totals[$problem->id]['users_attempted'];
+                $totals['correct_solutions'] += $totals[$problem->id]['correct_solutions'];
+                foreach (Solution::getStatuses() as $status => $description) {
+                    $totals['statuses'][$status]['count'] += $totals[$problem->id]['statuses'][$status]['count'];
+                    $totals[$problem->id]['statuses'][$status]['percentage'] = $totals[$problem->id]['statuses'][$status]['count'] / $totals[$problem->id]['attempts'] * 100;
+                }
+            }
+
+            /*foreach ($contest->problems as $problem) {
+                foreach (Solution::getStatuses() as $status => $description) {
+                    $totals[$problem->id]['statuses']['percentage'] = $totals[$problem->id]['statuses'][$status]['count'] / $totals['attempts'] * 100;
+                }
+            }*/
+
+            foreach (Solution::getStatuses() as $status => $description) {
+                $totals['statuses'][$status]['percentage'] =
+                    $totals['statuses'][$status]['count']
+                    / $totals['attempts'] * 100;
+            }
+
             usort($results, function ($a, $b) {
                 if ($a['total'] < $b['total']) {
                     return 1;

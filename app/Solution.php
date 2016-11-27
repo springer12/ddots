@@ -184,13 +184,14 @@ class Solution extends Model
     public static function getStatuses()
     {
         return [
-            self::STATUS_OK,
-            self::STATUS_CE,
-            self::STATUS_FF,
-            self::STATUS_NC,
-            self::STATUS_CC,
-            self::STATUS_CT,
-            self::STATUS_UE,
+            self::STATUS_OK => 'All cool',
+            self::STATUS_CE => 'Compilation error',
+            self::STATUS_FF => 'Final fantasy',
+            self::STATUS_NC => 'Not cool',
+            self::STATUS_CC => 'Not cool',
+            self::STATUS_CT => 'Not cool',
+            self::STATUS_UE => 'Not cool',
+            self::STATUS_ZR => 'Annulled',
         ];
     }
 
