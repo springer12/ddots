@@ -83,7 +83,7 @@ class ContestController extends Controller
                 $included_problems = Problem::orderBy('name', 'desc')->whereIn('id', (array)old('problems'))->get();
             } else {
                 $participants = $contest->users()->user()->get();
-                $included_problems = $contest->problems()->withPivot('max_points', 'review_required')->get();
+                $included_problems = $contest->problems()->withPivot('max_points', 'review_required', 'time_penalty')->get();
             }
             $students = $students->diff($participants);
         } else {
@@ -128,10 +128,12 @@ class ContestController extends Controller
 
         $reviews = $request->get('review_required');
         $points = $request->get('points');
+        $time_penalties = $request->get('time_penalty');
         foreach ($request->get('problems') as $problem) {
             $contest_problems[$problem] = [
                 'max_points' => $points[$problem],
                 'review_required' => isset($reviews[$problem]),
+                'time_penalty' => $time_penalties[$problem],
             ];
         }
 
@@ -233,7 +235,7 @@ class ContestController extends Controller
                     }
                 }
 
-                if($total_solutions) {
+                if ($total_solutions) {
                     $result['error_percentage'] = ($total_solutions - $correct_solutions) / $total_solutions * 100;
                 } else {
                     $result['error_percentage'] = 0;

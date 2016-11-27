@@ -194,6 +194,7 @@
                                            data-{{ $problem->id }}="{{ $problem->name }}"
                                            data-{{ $problem->id }}-points="{{ $problem->pivot->max_points }}"
                                            data-{{ $problem->id }}-review="{{ $problem->pivot->review_required }}"
+                                           data-{{ $problem->id }}-time-penalty="{{ $problem->pivot->time_penalty }}"
                                             @endforeach
                                     >
                                         <thead>
@@ -201,6 +202,7 @@
                                             <th>Name</th>
                                             <th>Points</th>
                                             <th>Review</th>
+                                            <th>Time penalty</th>
                                             <th>Remove</th>
                                         </tr>
                                         </thead>
@@ -262,6 +264,9 @@
                    checked
                     @{{ /review }}
             />
+        </td>
+        <td>
+            <input name="time_penalty[@{{ id }}]" type="number" class="form-control" value="@{{ time_penalty }}"/>
         </td>
         @{{ /type_problem}}
         <td>
