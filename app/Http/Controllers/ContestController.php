@@ -144,7 +144,7 @@ class ContestController extends Controller
         $contest->save();
 
         \Session::flash('alert-success', 'The contest was successfully saved');
-        return redirect()->route('frontend::contests::list');
+        return redirect()->route('frontend::contests::single', ['id' => $contest->id]);
     }
 
     public function hide(Request $request, $id)

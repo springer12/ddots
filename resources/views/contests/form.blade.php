@@ -26,7 +26,7 @@
                                     <button type="submit" class="btn btn-success">Save</button>
                                 </li>
                                 <li class="nav-item float-md-right">
-                                    <a class="btn btn-primary"
+                                    <a class="btn btn-warning"
                                        href=""
                                        data-toggle="confirmation"
                                        data-message="Are you sure you want to leave the page? The changes won't be saved."
