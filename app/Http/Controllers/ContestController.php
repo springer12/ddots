@@ -175,30 +175,24 @@ class ContestController extends Controller
         $totals = [];
         $problems = $contest->problems;
         $results = [];
+        if (!$contest->is_acm) {
+            foreach ($contest->users as $user) {
+                $result = [
+                    'total' => $contest->getUserTotalResult($user),
+                    'user' => $user,
+                    'last_standings_solution_at' => Carbon::createFromTimestamp(0),
+                ];
 
-        foreach ($contest->users as $user) {
-            $result = [
-                'total' => $contest->getUserTotalResult($user),
-                'user' => $user,
-                'last_standings_solution_at' => Carbon::createFromTimestamp(0),
-            ];
-            foreach ($problems as $problem) {
-                if ($user->haveSolutions($contest, $problem)) {
-                    $solution = $contest->getStandingsSolution($user, $problem);
-                    $result['last_standings_solution_at'] = $result['last_standings_solution_at'] > $solution->created_at ?: $solution->created_at;
-                    $result['solutions'][$problem->id] = $solution;
-                } else {
-                    $result['solutions'][$problem->id] = null;
+                foreach ($problems as $problem) {
+                    if ($user->haveSolutions($contest, $problem)) {
+                        $solution = $contest->getStandingsSolution($user, $problem);
+                        $result['last_standings_solution_at'] = $result['last_standings_solution_at'] > $solution->created_at ?: $solution->created_at;
+                        $result['solutions'][$problem->id] = $solution;
+                    } else {
+                        $result['solutions'][$problem->id] = null;
+                    }
                 }
-            }
 
-            $results[] = $result;
-        }
-        //dd($results);
-        usort($results, function ($a, $b) {
-            if ($a['total'] != $b['total']) {
-                return $a['total'] == $b['total'] ? 0 : ($a['total'] > $b['total'] ? -1 : 1);
-            }
                 $results[] = $result;
             }
             usort($results, function ($a, $b) {
@@ -206,12 +200,12 @@ class ContestController extends Controller
                     return $a['total'] == $b['total'] ? 0 : ($a['total'] > $b['total'] ? -1 : 1);
                 }
 
-            if ($a['last_standings_solution_at'] != $b['last_standings_solution_at']) {
-                return $a['last_standings_solution_at'] == $b['last_standings_solution_at'] ? 0 : ($a['last_standings_solution_at'] > $b['last_standings_solution_at'] ? -1 : 1);
-            }
+                if ($a['last_standings_solution_at'] != $b['last_standings_solution_at']) {
+                    return $a['last_standings_solution_at'] == $b['last_standings_solution_at'] ? 0 : ($a['last_standings_solution_at'] > $b['last_standings_solution_at'] ? -1 : 1);
+                }
 
-            return $a['user']->name > $b['user']->name ? 1 : -1;
-        });
+                return $a['user']->name > $b['user']->name ? 1 : -1;
+            });
 
             $totals = $this->getStandingsTotals($contest, $results);
         } else {
@@ -239,7 +233,11 @@ class ContestController extends Controller
                     }
                 }
 
-                $result['error_percentage'] = ($total_solutions - $correct_solutions) / $total_solutions * 100;
+                if($total_solutions) {
+                    $result['error_percentage'] = ($total_solutions - $correct_solutions) / $total_solutions * 100;
+                } else {
+                    $result['error_percentage'] = 0;
+                }
                 $results[] = $result;
             }
             usort($results, function ($a, $b) {
