@@ -2,7 +2,6 @@
 
     $(document).ready(function () {
         $('[data-select-volume]').select2({
-            tags: true,
             width: '100%'
         });
 

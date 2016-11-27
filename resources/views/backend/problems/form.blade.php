@@ -71,19 +71,11 @@
                         </div>
 
                         <div class="form-group row{{ $errors->has('volumes') ? ' has-danger' : '' }}">
-                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Volumes <h2>Volume
-                                    name must have atleast 1 non-numeric symbol!!!</h2></label>
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Volumes</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="volumes[]" data-select-volume class="form-control col-md-7 col-xs-12"
-                                        multiple>
+                                <select name="volumes[]" data-select-volume class="form-control col-md-7 col-xs-12" multiple>
                                     @foreach(\App\Volume::all() as $volume)
-                                        <option value="{{ $volume->id }}"
-                                        @if($errors->has())
-                                            {{ !in_array($volume->id, (array)old('volumes'))?:'selected' }}
-                                                @else
-                                            {{ !$problem->volumes()->find($volume->id) ?: 'selected'}}
-                                                @endif
-                                        >{{ $volume->name }}</option>
+                                        <option value="{{ $volume->id }}" {{ $problem->volumes()->find($volume->id) ? 'selected' : '' }}>{{ $volume->name }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('volumes'))
