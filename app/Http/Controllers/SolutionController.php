@@ -30,7 +30,7 @@ class SolutionController extends Controller
         if (!Auth::user()->hasRole(User::ROLE_TEACHER)) {
             $solutions = $solutions->where('user_id', Auth::user()->id);
         }
-        return View('contests.solutions')->with([
+        return view('contests.solutions')->with([
             'solutions' => $solutions->paginate(10),
             'contest' => Contest::findOrFail($id),
         ]);
@@ -39,14 +39,17 @@ class SolutionController extends Controller
     public function submit(Request $request, $contest_id, $problem_id)//@todo:refactor that shit!
     {
         $this->validate($request, Solution::getValidationRules($contest_id));
-
         $solution = new Solution(['state' => Solution::STATE_NEW]);
+        $contest = Contest::findOrFail($contest_id);
+        if (!$contest->getProblemReviewRequired($problem_id)) {
+            $solution->reviewed = true;
+        }
         $solution->owner()->associate(Auth::user()->id);
         $solution->problem()->associate($problem_id);
         $solution->programming_language()->associate($request->get('programming_language'));
         $solution->save();
         if (!Auth::user()->hasRole(User::ROLE_TEACHER)) {
-            DB::table('contest_solution')->insert(['contest_id' => $contest_id, 'solution_id' => $solution->id]); //@todo:refactor that shit!
+            $contest->solutions()->save($solution);
         }
         if ($request->hasFile('solution_code_file')) {
             $solution->saveCodeFile('solution_code_file');
@@ -63,6 +66,22 @@ class SolutionController extends Controller
         if (Auth::user()->isTeacherOf($solution->user_id)) {
             $solution->annul();
         }
+        $solution->save();
+        return redirect()->action('SolutionController@contestSolution', ['id' => $solution->id]);
+    }
+
+    public function approve(Request $request, $id)
+    {
+        $solution = Solution::findOrFail($id);
+        $solution->approve();
+        $solution->save();
+        return redirect()->action('SolutionController@contestSolution', ['id' => $solution->id]);
+    }
+
+    public function decline(Request $request, $id)
+    {
+        $solution = Solution::findOrFail($id);
+        $solution->decline();
         $solution->save();
         return redirect()->action('SolutionController@contestSolution', ['id' => $solution->id]);
     }

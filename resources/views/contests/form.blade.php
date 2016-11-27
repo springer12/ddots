@@ -146,15 +146,20 @@
 
                             <div class="card">{{-- @todo --}}
                                 <div class="card-header">Participants</div>
-                                <div data-participants
-                                     @foreach($participants as $participant)
-                                     data-{{ $participant->id }}="{{ $participant->name }}"
-                                        @endforeach
-                                >
-
-
+                                <div class="card-block">
+                                    <table class="table table-striped" data-participants
+                                           @foreach($participants as $participant)
+                                           data-{{ $participant->id }}="{{ $participant->name }}"
+                                            @endforeach
+                                    >
+                                        <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Remove</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
                                 </div>
-
                                 <hr class="hidden-border">
                                 <div class="card-block">
                                     <div class="row">
@@ -180,15 +185,27 @@
                             </div>
 
                             <div class="card">{{-- @todo --}}
-                                <div class="card-header">Problems</div>
-                                <div data-problems
-                                     @foreach($included_problems as $problem)
-                                     data-{{ $problem->id }}="{{ $problem->name }}"
-                                     data-{{ $problem->id }}-points={{ $problem->pivot->max_points }}
-                                        @endforeach
-                                >
+                                <div class="card-header">
+                                    Problems
                                 </div>
-
+                                <div class="card-block">
+                                    <table class="table table-striped" data-problems
+                                           @foreach($included_problems as $problem)
+                                           data-{{ $problem->id }}="{{ $problem->name }}"
+                                           data-{{ $problem->id }}-points="{{ $problem->pivot->max_points }}"
+                                           data-{{ $problem->id }}-review="{{ $problem->pivot->review_required }}"
+                                            @endforeach
+                                    >
+                                        <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Points</th>
+                                            <th>Review</th>
+                                            <th>Remove</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                                 <hr class="hidden-border">
                                 <div class="card-block">
                                     <div class="row">
@@ -231,32 +248,29 @@
         </div>
     </div>
     <script data-element-block type="x-tmpl-mustache">
-    <div data-@{{ element }}-block-id=@{{ id }} class="card-block">
-        <div class="col-xs-1">
-            <a data-remove-@{{ element }}-id="@{{ id }}"  data-remove-@{{ element }}-name="@{{ name }}" href="javascript:void(0);">
+    <tr data-@{{ element }}-block-id=@{{ id }}>
+        <td>
+            @{{ name }}
+        </td>
+        @{{ #type_problem }}
+        <td>
+            <input name="points[@{{ id }}]" type="number" class="form-control" value="@{{ points }}"/>
+        </td>
+        <td>
+            <input name="review_required[@{{ id }}]" type="checkbox" class="form-control"
+                   @{{ #review }}
+                   checked
+                    @{{ /review }}
+            />
+        </td>
+        @{{ /type_problem}}
+        <td>
+            <a data-remove-@{{ element }}-id="@{{ id }}" data-remove-@{{ element }}-name="@{{ name }}"
+               href="javascript:void(0);">
                 <span class="tag tag-danger"><i class="fa fa-remove"></i></span>
             </a>
-        </div>
-        @{{ #type_participant }}
-        <div class="col-xs-11">
-            @{{ name }}
-        </div>
-    @{{ /type_participant }}
-        @{{ #type_problem }}
-        <div class="col-xs-2">
-            <input name="points[@{{ id }}]" type="number" class="form-control" value="@{{ points }}"/>
-            </div>
-            <div class="col-xs-9">
-                @{{ name }}
-        </div>
-    @{{ /type_problem}}
+        </td>
         <input type="hidden" name="@{{ element }}s[]" value="@{{ id }}">
-    </div>
-
-
-
-
-
-
+    </tr>
     </script>
 @endsection

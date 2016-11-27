@@ -171,6 +171,20 @@ class Contest extends Model
         return null;
     }
 
+
+    public function getProblemReviewRequired($problem_id)
+    {
+        $select = DB::table('contest_problem')
+            ->select('review_required')
+            ->where('problem_id', '=', $problem_id)
+            ->where('contest_id', '=', $this->id)
+            ->first();
+        if ($select) {
+            return $select->review_required;
+        }
+        return null;
+    }
+
     public function getProblemData()
     {
         $problems = [];
@@ -200,15 +214,19 @@ class Contest extends Model
         $solutions = $solutions->groupBy('problem_id');
 
         foreach ($solutions as $problem_id => $grouped_solutions) {
-            if ($this->show_max) {
-                $total += $grouped_solutions
-                        ->max('success_percentage') * $this->getProblemMaxPoints($problem_id) / 100;
-            } else {
-                $total += $grouped_solutions->sortByDesc('created_at')
-                        ->first()->success_percentage * $this->getProblemMaxPoints($problem_id) / 100;
+            if ($grouped_solutions) {
+                if ($this->show_max) {
+                    $solution = $grouped_solutions->where('reviewed', 1)->sortByDesc('success_percentage')->first();
+                } else {
+                    $solution = $grouped_solutions->where('reviewed', 1)->sortByDesc('created_at')->first();
+                }
+
+                if ($solution) {
+
+                    $total += $solution->success_percentage * $this->getProblemMaxPoints($problem_id) / 100;
+                }
             }
         }
-
         return $total;
     }
 

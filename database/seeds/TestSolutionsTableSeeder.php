@@ -30,6 +30,7 @@ class TestSolutionsTableSeeder extends Seeder
                 $solution->testing_mode = 'full';
                 $solution->problem_id = $problems->random(1)->id;
                 $solution->programming_language_id = 1;
+                $solution->reviewed = 1;
                 $solution->user_id = $users->random(1)->id;
                 $solution->created_at = $generator->date();
                 $solution->success_percentage = rand(0, 100);

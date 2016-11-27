@@ -83,7 +83,7 @@ class ContestController extends Controller
                 $included_problems = Problem::orderBy('name', 'desc')->whereIn('id', (array)old('problems'))->get();
             } else {
                 $participants = $contest->users()->user()->get();
-                $included_problems = $contest->problems()->withPivot('max_points')->get();
+                $included_problems = $contest->problems()->withPivot('max_points', 'review_required')->get();
             }
             $students = $students->diff($participants);
         } else {
@@ -124,9 +124,18 @@ class ContestController extends Controller
 
         $contest->programming_languages()->sync($request->get('programming_languages') ? $request->get('programming_languages') : []);
 
-        $contest->problems()->sync($request->get('problems') ? array_combine($request->get('problems'), array_map(function ($a) {
-            return ['max_points' => $a];
-        }, $request->get('points'))) : []);
+        $contest_problems = [];
+
+        $reviews = $request->get('review_required');
+        $points = $request->get('points');
+        foreach ($request->get('problems') as $problem) {
+            $contest_problems[$problem] = [
+                'max_points' => $points[$problem],
+                'review_required' => isset($reviews[$problem]),
+            ];
+        }
+
+        $contest->problems()->sync($contest_problems);
 
         $contest->users()->sync((array)$request->get('participants'));
 
@@ -224,7 +233,11 @@ class ContestController extends Controller
                     }
                 }
 
-                $result['error_percentage'] = ($total_solutions - $correct_solutions) / $total_solutions * 100;
+                if($total_solutions) {
+                    $result['error_percentage'] = ($total_solutions - $correct_solutions) / $total_solutions * 100;
+                } else {
+                    $result['error_percentage'] = 0;
+                }
                 $results[] = $result;
             }
             usort($results, function ($a, $b) {
