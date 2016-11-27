@@ -203,6 +203,8 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::group(['prefix' => 'solutions', 'as' => 'solutions::'], function () {
                 Route::get('{id}/annul', ['uses' => 'SolutionController@annul', 'as' => 'annul']);
+                Route::get('{id}/approve', ['uses' => 'SolutionController@approve', 'as' => 'approve']);
+                Route::get('{id}/decline', ['uses' => 'SolutionController@decline', 'as' => 'decline']);
             });
 
             Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {

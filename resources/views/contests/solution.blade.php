@@ -38,7 +38,7 @@
                                 {{ $solution->points }}
                             @endif
 
-                            @if($solution->status !== App\Solution::STATUS_ZR)
+                            @if($solution->status !== App\Solution::STATUS_ZR && Auth::user()->isTeacherOf($solution->owner->id))
                                 <a data-btn-ok-href="{{ route('teacherOnly::solutions::annul', ['id' => $solution->id]) }}"
                                    href=""
                                    class="btn btn-danger btn-sm"
@@ -66,6 +66,18 @@
                 </table>
 
                 @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER) && Auth::user()->isTeacherOf($solution->owner->id))
+                    @if($solution->reviewed === null)
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <a class="btn btn-success"
+                                   href="{{ route('teacherOnly::solutions::approve', ['id' => $solution->id]) }}">Approve</a>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <a class="btn btn-danger"
+                                   href="{{ route('teacherOnly::solutions::decline', ['id' => $solution->id]) }}">Decline</a>
+                            </div>
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-6">
                             Author:

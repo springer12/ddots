@@ -83,7 +83,7 @@ class ContestController extends Controller
                 $included_problems = Problem::orderBy('name', 'desc')->whereIn('id', (array)old('problems'))->get();
             } else {
                 $participants = $contest->users()->user()->get();
-                $included_problems = $contest->problems()->withPivot('max_points')->get();
+                $included_problems = $contest->problems()->withPivot('max_points', 'review_required')->get();
             }
             $students = $students->diff($participants);
         } else {
@@ -124,9 +124,18 @@ class ContestController extends Controller
 
         $contest->programming_languages()->sync($request->get('programming_languages') ? $request->get('programming_languages') : []);
 
-        $contest->problems()->sync($request->get('problems') ? array_combine($request->get('problems'), array_map(function ($a) {
-            return ['max_points' => $a];
-        }, $request->get('points'))) : []);
+        $contest_problems = [];
+
+        $reviews = $request->get('review_required');
+        $points = $request->get('points');
+        foreach ($request->get('problems') as $problem) {
+            $contest_problems[$problem] = [
+                'max_points' => $points[$problem],
+                'review_required' => isset($reviews[$problem]),
+            ];
+        }
+
+        $contest->problems()->sync($contest_problems);
 
         $contest->users()->sync((array)$request->get('participants'));
 
@@ -166,24 +175,30 @@ class ContestController extends Controller
         $totals = [];
         $problems = $contest->problems;
         $results = [];
-        if (!$contest->is_acm) {
-            foreach ($contest->users as $user) {
-                $result = [
-                    'total' => $contest->getUserTotalResult($user),
-                    'user' => $user,
-                    'last_standings_solution_at' => Carbon::createFromTimestamp(0),
-                ];
 
-                foreach ($problems as $problem) {
-                    if ($user->haveSolutions($contest, $problem)) {
-                        $solution = $contest->getStandingsSolution($user, $problem);
-                        $result['last_standings_solution_at'] = $result['last_standings_solution_at'] > $solution->created_at ?: $solution->created_at;
-                        $result['solutions'][$problem->id] = $solution;
-                    } else {
-                        $result['solutions'][$problem->id] = null;
-                    }
+        foreach ($contest->users as $user) {
+            $result = [
+                'total' => $contest->getUserTotalResult($user),
+                'user' => $user,
+                'last_standings_solution_at' => Carbon::createFromTimestamp(0),
+            ];
+            foreach ($problems as $problem) {
+                if ($user->haveSolutions($contest, $problem)) {
+                    $solution = $contest->getStandingsSolution($user, $problem);
+                    $result['last_standings_solution_at'] = $result['last_standings_solution_at'] > $solution->created_at ?: $solution->created_at;
+                    $result['solutions'][$problem->id] = $solution;
+                } else {
+                    $result['solutions'][$problem->id] = null;
                 }
+            }
 
+            $results[] = $result;
+        }
+        //dd($results);
+        usort($results, function ($a, $b) {
+            if ($a['total'] != $b['total']) {
+                return $a['total'] == $b['total'] ? 0 : ($a['total'] > $b['total'] ? -1 : 1);
+            }
                 $results[] = $result;
             }
             usort($results, function ($a, $b) {
@@ -191,12 +206,12 @@ class ContestController extends Controller
                     return $a['total'] == $b['total'] ? 0 : ($a['total'] > $b['total'] ? -1 : 1);
                 }
 
-                if ($a['last_standings_solution_at'] != $b['last_standings_solution_at']) {
-                    return $a['last_standings_solution_at'] == $b['last_standings_solution_at'] ? 0 : ($a['last_standings_solution_at'] > $b['last_standings_solution_at'] ? -1 : 1);
-                }
+            if ($a['last_standings_solution_at'] != $b['last_standings_solution_at']) {
+                return $a['last_standings_solution_at'] == $b['last_standings_solution_at'] ? 0 : ($a['last_standings_solution_at'] > $b['last_standings_solution_at'] ? -1 : 1);
+            }
 
-                return $a['user']->name > $b['user']->name ? 1 : -1;
-            });
+            return $a['user']->name > $b['user']->name ? 1 : -1;
+        });
 
             $totals = $this->getStandingsTotals($contest, $results);
         } else {
