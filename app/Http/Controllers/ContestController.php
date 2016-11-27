@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Contest;
 use App\Problem;
+use App\Solution;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use App\Http\Requests;
 use App\ProgrammingLanguage;
 use App\User;
 
@@ -83,7 +83,7 @@ class ContestController extends Controller
                 $included_problems = Problem::orderBy('name', 'desc')->whereIn('id', (array)old('problems'))->get();
             } else {
                 $participants = $contest->users()->user()->get();
-                $included_problems = $contest->problems()->withPivot('max_points', 'review_required')->get();
+                $included_problems = $contest->problems()->withPivot('max_points', 'review_required', 'time_penalty')->get();
             }
             $students = $students->diff($participants);
         } else {
@@ -112,25 +112,15 @@ class ContestController extends Controller
     public function edit(Request $request, $id = null)
     {
         $contest = (!$id ?: Contest::findOrFail($id));
-        $fillData = [
-            'name' => $request->get('name'),
-            'description' => $request->get('description'),
-            'start_date' => $request->get('start_date'),
-            'end_date' => $request->get('end_date'),
-            'user_id' => Auth::user()->id,
-            'is_active' => $request->get('is_active'),
-            'is_standings_active' => $request->get('is_standings_active'),
-            'show_max' => $request->get('show_max'),
-        ];
 
         $this->validate($request, Contest::getValidationRules(), ['programming_languages.required' => 'At least one language must be selected.']);
 
-
         if ($id) {
-            $contest->fill($fillData);
+            $contest->fill($request->except('labs'));
         } else {
-            $contest = Contest::create($fillData);
+            $contest = Contest::create($request->except('labs'));
         }
+        $contest->is_acm = $request->has('is_acm');
 
         $contest->programming_languages()->sync($request->get('programming_languages') ? $request->get('programming_languages') : []);
 
@@ -138,10 +128,12 @@ class ContestController extends Controller
 
         $reviews = $request->get('review_required');
         $points = $request->get('points');
+        $time_penalties = $request->get('time_penalty');
         foreach ($request->get('problems') as $problem) {
             $contest_problems[$problem] = [
                 'max_points' => $points[$problem],
                 'review_required' => isset($reviews[$problem]),
+                'time_penalty' => $time_penalties[$problem],
             ];
         }
 
@@ -181,43 +173,135 @@ class ContestController extends Controller
     public function standings(Request $request, $id) //@todo add results cache, invalidate cache when new solutions are comming
     {
         $contest = Contest::findOrFail($id);
-
-        $totals = [];
         $problems = $contest->problems;
         $results = [];
+        if (!$contest->is_acm) {
+            foreach ($contest->users as $user) {
+                $result = [
+                    'total' => $contest->getUserTotalResult($user),
+                    'user' => $user,
+                    'last_standings_solution_at' => Carbon::createFromTimestamp(0),
+                ];
 
-        foreach ($contest->users as $user) {
-            $result = [
-                'total' => $contest->getUserTotalResult($user),
-                'user' => $user,
-                'last_standings_solution_at' => Carbon::createFromTimestamp(0),
-            ];
-            foreach ($problems as $problem) {
-                if ($user->haveSolutions($contest, $problem)) {
-                    $solution = $contest->getStandingsSolution($user, $problem);
-                    $result['last_standings_solution_at'] = $result['last_standings_solution_at'] > $solution->created_at ?: $solution->created_at;
-                    $result['solutions'][$problem->id] = $solution;
+                foreach ($problems as $problem) {
+                    if ($user->haveSolutions($contest, $problem)) {
+                        $solution = $contest->getStandingsSolution($user, $problem);
+                        $result['last_standings_solution_at'] = $result['last_standings_solution_at'] > $solution->created_at ?: $solution->created_at;
+                        $result['solutions'][$problem->id] = $solution;
+                    } else {
+                        $result['solutions'][$problem->id] = null;
+                    }
+                }
+
+                $results[] = $result;
+            }
+            usort($results, function ($a, $b) {
+                if ($a['total'] != $b['total']) {
+                    return $a['total'] == $b['total'] ? 0 : ($a['total'] > $b['total'] ? -1 : 1);
+                }
+
+                if ($a['last_standings_solution_at'] != $b['last_standings_solution_at']) {
+                    return $a['last_standings_solution_at'] == $b['last_standings_solution_at'] ? 0 : ($a['last_standings_solution_at'] > $b['last_standings_solution_at'] ? -1 : 1);
+                }
+
+                return $a['user']->name > $b['user']->name ? 1 : -1;
+            });
+
+            $totals = $this->getStandingsTotals($contest, $results);
+        } else {
+
+            $template = ['users_attempted' => 0, 'attempts' => 0, 'correct_solutions' => 0];
+            foreach (Solution::getStatuses() as $status => $description) {
+                $template['statuses'][$status]['count'] = 0;
+            }
+            $totals = $template;
+            foreach ($contest->problems()->withPivot('time_penalty')->get() as $problem) {
+                $totals[$problem->id] = $template;
+            }
+            foreach ($contest->users as $user) {
+                $total_solutions = 0;
+                $correct_solutions = 0;
+                $result = [
+                    'user' => $user,
+                    'total' => 0,
+                    'time' => 0,
+                ];
+                foreach ($contest->problems as $problem) {
+                    $solutions = $contest->solutions()->where('user_id', $user->id)->where('problem_id', $problem->id)->orderBy('created_at')->get();
+                    if (!$solutions->isEmpty()) {
+                        $totals[$problem->id]['users_attempted']++;
+                    }
+                    $result[$problem->id]['solved'] = false;
+                    $result[$problem->id]['attempts'] = 0;
+                    foreach ($solutions as $index => $solution) {
+                        $totals[$problem->id]['statuses'][$solution->status]['count']++;
+                        $result[$problem->id]['attempts']++;
+                        $total_solutions++;
+                        $totals[$problem->id]['attempts']++;
+                        $final_solution = $solution;
+                        if ($solution->status === Solution::STATUS_OK) {
+                            $totals[$problem->id]['correct_solutions']++;
+
+                            $correct_solutions++;
+                            $result[$problem->id]['solved'] = true;
+                            break;
+                        }
+                    }
+                    $result[$problem->id]['time'] = ($result[$problem->id]['attempts'] > 1 ? ($result[$problem->id]['attempts'] - 1) * $problem->pivot->time_penalty : 0) + (int)(($final_solution->created_at->getTImeStamp() - $contest->start_date->getTimestamp()) / 60);
+                    $result['time'] += $result[$problem->id]['time'];
+                    if ($result[$problem->id]['solved']) {
+                        $result['total']++;
+                    }
+                }
+
+                if ($total_solutions) {
+                    $result['error_percentage'] = ($total_solutions - $correct_solutions) / $total_solutions * 100;
                 } else {
-                    $result['solutions'][$problem->id] = null;
+                    $result['error_percentage'] = 0;
+                }
+                $results[] = $result;
+            }
+
+            foreach ($contest->problems as $problem) {
+                $totals['attempts'] += $totals[$problem->id]['attempts'];
+                $totals['users_attempted'] += $totals[$problem->id]['users_attempted'];
+                $totals['correct_solutions'] += $totals[$problem->id]['correct_solutions'];
+                foreach (Solution::getStatuses() as $status => $description) {
+                    $totals['statuses'][$status]['count'] += $totals[$problem->id]['statuses'][$status]['count'];
+                    $totals[$problem->id]['statuses'][$status]['percentage'] = $totals[$problem->id]['statuses'][$status]['count'] / $totals[$problem->id]['attempts'] * 100;
                 }
             }
 
-            $results[] = $result;
+            /*foreach ($contest->problems as $problem) {
+                foreach (Solution::getStatuses() as $status => $description) {
+                    $totals[$problem->id]['statuses']['percentage'] = $totals[$problem->id]['statuses'][$status]['count'] / $totals['attempts'] * 100;
+                }
+            }*/
+
+            foreach (Solution::getStatuses() as $status => $description) {
+                $totals['statuses'][$status]['percentage'] =
+                    $totals['statuses'][$status]['count']
+                    / $totals['attempts'] * 100;
+            }
+
+            usort($results, function ($a, $b) {
+                if ($a['total'] < $b['total']) {
+                    return 1;
+                } elseif ($a['total'] > $b['total']) {
+                    return -1;
+                } elseif ($a['time'] < $b['time']) {
+                    return 1;
+                } elseif ($a['time'] > $b['time']) {
+                    return -1;
+                } elseif ($a['error_percentage'] < $b['error_percentage']) {
+                    return 1;
+                } elseif ($a['error_percentage'] > $b['error_percentage']) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            });
         }
-        //dd($results);
-        usort($results, function ($a, $b) {
-            if ($a['total'] != $b['total']) {
-                return $a['total'] == $b['total'] ? 0 : ($a['total'] > $b['total'] ? -1 : 1);
-            }
-
-            if ($a['last_standings_solution_at'] != $b['last_standings_solution_at']) {
-                return $a['last_standings_solution_at'] == $b['last_standings_solution_at'] ? 0 : ($a['last_standings_solution_at'] > $b['last_standings_solution_at'] ? -1 : 1);
-            }
-
-            return $a['user']->name > $b['user']->name ? 1 : -1;
-        });
-
-        $totals = $this->getStandingsTotals($contest, $results);
 
         return View('contests.standings')->with([
             'contest' => $contest,

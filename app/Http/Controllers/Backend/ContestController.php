@@ -38,7 +38,7 @@ class ContestController extends Controller
         \Session::put('orderBy', $orderBy);
         \Session::put('orderDir', $orderDir);
 
-        if($orderBy == 'owner') {
+        if ($orderBy == 'owner') {
             $contests = Contest::join('users', 'users.id', '=', 'user_id')
                 ->groupBy('contests.id')
                 ->orderBy('users.name', $orderDir)
@@ -46,7 +46,7 @@ class ContestController extends Controller
         } else {
             $contests = Contest::orderBy($orderBy, $orderDir);
         }
-        
+
         $contests = $contests->paginate(10);
 
         return view('backend.contests.list')->with([
@@ -115,27 +115,15 @@ class ContestController extends Controller
     public function edit(Request $request, $id = null)
     {
         $contest = (!$id ?: Contest::findOrFail($id));
-        $fillData = [
-            'name' => $request->get('name'),
-            'description' => $request->get('description'),
-            'start_date' => $request->get('start_date'),
-            'end_date' => $request->get('end_date'),
-            'user_id' => $request->get('owner'),
-            'is_active' => $request->get('is_active'),
-            'is_standings_active' => $request->get('is_standings_active'),
-            'show_max' => $request->get('show_max'),
-            'labs' => $request->get('labs'),
-        ];
-
         $rules = Contest::getValidationRules() + ['owner' => 'required|exists:users,id,role,' . User::ROLE_TEACHER];
         $this->validate($request, $rules, ['programming_languages.required' => 'At least one language must be selected.']);
 
         if ($id) {
-            $contest->fill($fillData);
+            $contest->fill($request->all());
         } else {
-            $contest = Contest::create($fillData);
+            $contest = Contest::create($request->all());
         }
-
+        $contest->is_acm = $request->has('is_acm');
         $contest->programming_languages()->sync($request->get('programming_languages') ? $request->get('programming_languages') : []);
 
         $contest->problems()->sync($request->get('problems') ? array_combine($request->get('problems'), array_map(function ($a) {

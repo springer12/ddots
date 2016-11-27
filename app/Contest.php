@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\DB;
  * @property boolean $labs
  * @property string $type
  * @property boolean $show_max
+ * @property boolean $is_acm
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\ProgrammingLanguage[] $programming_languages
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Problem[] $problems
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
@@ -43,6 +44,7 @@ use Illuminate\Support\Facades\DB;
  * @method static \Illuminate\Database\Query\Builder|\App\Contest whereLabs($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Contest whereType($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Contest whereShowMax($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contest whereIsAcm($value)
  * @mixin \Eloquent
  */
 class Contest extends Model
@@ -57,7 +59,7 @@ class Contest extends Model
     const TYPE_TOURNAMENT = 'tournament';
 
     protected $fillable = [
-        'name', 'description', 'user_id', 'start_date', 'end_date', 'is_active', 'is_standings_active', 'show_max', 'labs',
+        'name', 'description', 'user_id', 'start_date', 'end_date', 'is_active', 'is_standings_active', 'show_max', 'labs', 'is_acm',
     ];
 
     protected $dates = [

@@ -19,7 +19,8 @@
             }));
         }
 
-        function appendProblem(id, name, points, review) {
+        function appendProblem(id, name, points, review, time_penalty) {
+            console.log(time_penalty);
             if (!$('[data-problem-block-id=' + id + ']').length) {
                 problems_elem.append(Mustache.render(element_template, {
                     name: name,
@@ -27,14 +28,15 @@
                     element: 'problem',
                     type_problem: 1,
                     points: points,
-                    review: review
+                    review: review,
+                    time_penalty: time_penalty
                 }));
             }
         }
 
         $.each(problems_elem.data(), function (id, name) {
             if ($.isNumeric(id)) {
-                appendProblem(id, name, $('[data-' + id + '-points]').data(id + '-points'), $('[data-' + id + '-review]').data(id + '-review'));
+                appendProblem(id, name, problems_elem.data(id + '-points'), problems_elem.data(id + '-review'), problems_elem.data(id + '-time-penalty'));
             }
         });
 
@@ -47,13 +49,12 @@
 
         function addProblem(elem) {
             if (elem.length) {
-                appendProblem(elem.val(), elem.text(), 0)
+                appendProblem(elem.val(), elem.text(), 0, 0, 20)
                 elem.remove();
             }
         }
 
         $(document.body).on('change', '[data-problem-select]', function () {
-            console.log($($(this).select2('data')[0].element));
             addProblem($($(this).select2('data')[0].element));
         });
 
@@ -79,7 +80,7 @@
                 data: {volume_id: $($(this).select2('data')[0].element).val()}
             }).success(function (response) {
                 $.each(response, function (k, v) {
-                    appendProblem(v.id, v.name, 0);
+                    appendProblem(v.id, v.name, 0, 0, 20);
                 });
             });
             $(this).val(null);

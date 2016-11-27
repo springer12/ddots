@@ -13,7 +13,7 @@
                                 <label class="control-label col-md-4" for="name">Name <span
                                             class="required">*</span></label>
                                 <div class="col-md-8">
-                                    <input type="text" name="name" value="{{ old('name') ?: $contest->name }}"
+                                    <input type="text" id="name" name="name" value="{{ old('name') ?: $contest->name }}"
                                            required="required" class="form-control">
                                     @if ($errors->has('name'))
                                         <span class="form-control-feedback">
@@ -27,7 +27,7 @@
                                 <label class="control-label col-md-4" for="description">Description<span
                                             class="required">*</span></label>
                                 <div class="col-md-8">
-                                    <textarea name="description" required="required"
+                                    <textarea name="description" id="description" required="required"
                                               class="form-control">{{ old('description') ?: $contest->description }}</textarea>
                                     @if ($errors->has('description'))
                                         <span class="form-control-feedback">
@@ -40,7 +40,7 @@
                             <div class="form-group row {{ $errors->has('start_date') ? ' has-danger' : '' }}">
                                 <label class="control-label col-md-4" for="start_date">Start date<span class="required">*</span></label>
                                 <div class="col-md-8">
-                                    <input type="datetime" name="start_date" data-start-datepicker
+                                    <input type="datetime" id="start_date" name="start_date" data-start-datepicker
                                            value="{{ old('start_date') ?: $contest->start_date }}" required="required"
                                            class="form-control">
                                     @if ($errors->has('start_date'))
@@ -55,7 +55,7 @@
                                 <label class="control-label col-md-4" for="end_date">End date<span
                                             class="required">*</span></label>
                                 <div class="col-md-8">
-                                    <input type="datetime" name="end_date" data-end-datepicker
+                                    <input type="datetime" id="end_date" name="end_date" data-end-datepicker
                                            value="{{ old('end_date') ?: $contest->end_date }}" required="required"
                                            class="form-control">
                                     @if ($errors->has('end_date'))
@@ -97,7 +97,7 @@
                             <div class="form-group row {{ $errors->has('is_active') ? ' has-danger' : '' }}">
                                 <label class="control-label col-md-4" for="is_active">Active</label>
                                 <div class="col-md-8">
-                                    <input type="checkbox" name="is_active"
+                                    <input type="checkbox" id="is_active" name="is_active"
                                            class="form-control" {{ $errors->has() ? (!old('is_active')?:'checked') : (!$contest->is_active?:'checked') }}>
                                     @if ($errors->has('is_active'))
                                         <span class="form-control-feedback">
@@ -110,7 +110,7 @@
                             <div class="form-group row {{ $errors->has('is_standings_active') ? ' has-danger' : '' }}">
                                 <label class="control-label col-md-4" for="is_standings_active">Active standings</label>
                                 <div class="col-md-8">
-                                    <input type="checkbox" name="is_standings_active"
+                                    <input type="checkbox" id="is_standings_active" name="is_standings_active"
                                            class="form-control" {{ $errors->has() ? (!old('is_standings_active')?:'checked') : (!$contest->is_standings_active?:'checked') }}>
                                     @if ($errors->has('is_standings_active'))
                                         <span class="form-control-feedback">
@@ -124,7 +124,7 @@
                                 <label class="control-label col-md-4" for="show_max">Show maximum points in
                                     results</label>
                                 <div class="col-md-8">
-                                    <input type="checkbox" name="show_max"
+                                    <input type="checkbox" id="show_max" name="show_max"
                                            class="form-control" {{ $errors->has() ? (!old('show_max')?:'checked') : (!$contest->show_max?:'checked') }}>
                                     @if ($errors->has('show_max'))
                                         <span class="form-control-feedback">
@@ -134,6 +134,15 @@
                                 </div>
                             </div>
 
+
+                            <div class="form-group row">
+                                <label class="control-label col-md-4" for="is_acm">Is ACM</label>
+                                <div class="col-md-8">
+                                    <input type="checkbox" id="is_acm" name="is_acm"
+                                           {{ !old('is_acm') && !$contest->is_acm ?:'checked="checked"' }}
+                                           class="form-control">
+                                </div>
+                            </div>
 
                             <div class="card">{{-- @todo --}}
                                 <div class="card-header">Participants</div>
@@ -185,6 +194,7 @@
                                            data-{{ $problem->id }}="{{ $problem->name }}"
                                            data-{{ $problem->id }}-points="{{ $problem->pivot->max_points }}"
                                            data-{{ $problem->id }}-review="{{ $problem->pivot->review_required }}"
+                                           data-{{ $problem->id }}-time-penalty="{{ $problem->pivot->time_penalty }}"
                                             @endforeach
                                     >
                                         <thead>
@@ -192,6 +202,7 @@
                                             <th>Name</th>
                                             <th>Points</th>
                                             <th>Review</th>
+                                            <th>Time penalty</th>
                                             <th>Remove</th>
                                         </tr>
                                         </thead>
@@ -253,6 +264,9 @@
                    checked
                     @{{ /review }}
             />
+        </td>
+        <td>
+            <input name="time_penalty[@{{ id }}]" type="number" class="form-control" value="@{{ time_penalty }}"/>
         </td>
         @{{ /type_problem}}
         <td>

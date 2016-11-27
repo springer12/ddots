@@ -32,7 +32,7 @@ class TestSolutionsTableSeeder extends Seeder
                 $solution->programming_language_id = 1;
                 $solution->reviewed = 1;
                 $solution->user_id = $users->random(1)->id;
-                $solution->created_at = $generator->date();
+                $solution->created_at = $generator->dateTimeBetween($contest->start_date, $contest->end_date);
                 $solution->success_percentage = rand(0, 100);
                 if($solution->success_percentage == 100) {
                     $solution->state = Solution::STATE_TESTED;
