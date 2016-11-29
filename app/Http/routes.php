@@ -32,6 +32,10 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/handle/{provider}', ['as' => 'handle', 'uses' => 'Auth\SocialController@handleProviderCallback']);
     });
 
+    Route::any('ts', function() {
+        echo 123;
+    });
+    
     /* backend func */
     Route::group([
         'middleware' => 'access:web,0,' . App\User::ROLE_ADMIN,
