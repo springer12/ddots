@@ -36,18 +36,16 @@ Route::group(['middleware' => 'web'], function () {
 
 
 
-        if($_SERVER['PHP_AUTH_USER'] != 'vbox-1.2' || $_SERVER['PHP_AUTH_PW'] != 'xobo2ven') {
-            header('HTTP/1.0 403 Forbidden');
-            die('Forbidden');
-        }
+//        if($_SERVER['PHP_AUTH_USER'] != 'vbox-1.2' || $_SERVER['PHP_AUTH_PW'] != 'xobo2ven') {
+//            header('HTTP/1.0 403 Forbidden');
+//            die('Forbidden');
+//        }
 
         header('Content-type: text/plain');
         echo "Dotsbot/1.2\n";
 
         \Log::info('$_REQUEST ', $_REQUEST);
         \Log::info('$_SERVER ', $_SERVER);
-
-        die('Forbidden');
 
 
     });
