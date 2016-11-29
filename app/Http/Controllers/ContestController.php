@@ -259,7 +259,7 @@ class ContestController extends Controller
                             $result['total']++;
                         }
                     } else {
-                        $result[$problem->id]['time'];
+                        $result[$problem->id]['time'] = 0;
                     }
                 }
 
