@@ -251,10 +251,14 @@ class ContestController extends Controller
                             break;
                         }
                     }
-                    $result[$problem->id]['time'] = ($result[$problem->id]['attempts'] > 1 ? ($result[$problem->id]['attempts'] - 1) * $problem->pivot->time_penalty : 0) + (int)(($final_solution->created_at->getTImeStamp() - $contest->start_date->getTimestamp()) / 60);
-                    $result['time'] += $result[$problem->id]['time'];
-                    if ($result[$problem->id]['solved']) {
-                        $result['total']++;
+                    if($final_solution) {
+                        $result[$problem->id]['time'] = ($result[$problem->id]['attempts'] > 1 ? ($result[$problem->id]['attempts'] - 1) * $problem->pivot->time_penalty : 0) + (int)(($final_solution->created_at->getTImeStamp() - $contest->start_date->getTimestamp()) / 60);
+                        $result['time'] += $result[$problem->id]['time'];
+                        if ($result[$problem->id]['solved']) {
+                            $result['total']++;
+                        }
+                    } else {
+                        $result[$problem->id]['time'];
                     }
                 }
 
