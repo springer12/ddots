@@ -66,6 +66,11 @@ class Problem extends Model
         return $dir;
     }
 
+    public static function getAlternateFilePath()
+    {
+        return base_path('var/test_db/');
+    }
+
     public function volumes()
     {
         return $this->belongsToMany('App\Volume');
@@ -79,11 +84,12 @@ class Problem extends Model
     public function setArchive($name)
     {
         if (Input::file($name)->isValid()) {
-            if ($this->attributes['archive']) {
+            if (isset($this->attributes['archive'])) {
                 File::delete($this->getFilePath() . $this->attributes['archive']);
             }
             $this->attributes['archive'] = Input::file($name)->getClientOriginalName();
             Input::file($name)->move($this->getFilePath(), $this->attributes['archive']);
+            File::copy($this->getFilePath() . $this->attributes['archive'], static::getAlternateFilePath() . $this->id . '.tar.gz');
         }
     }
 
