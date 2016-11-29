@@ -81,7 +81,9 @@ if (is_int(strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')))
 }
 
 /* Bot's routine */
-
+function can() {
+    return true;
+}
 function gzip_enabled() {
     global $gzip_enabled;
     return isset($gzip_enabled) ? $gzip_enabled : false;
@@ -143,6 +145,12 @@ function get_raw_post_data() {
     }
     return $HTTP_RAW_POST_DATA;
 }
+function db_query() {
+    return true;
+}
+function db_affected_rows() {
+    return true;
+}
 
 function bot_checkout_solution($id, $mode = -3) {
     $id = (int)$id;
@@ -156,6 +164,15 @@ function bot_checkout_solution($id, $mode = -3) {
 
 function bot_rollback_solution($id) {
     return bot_checkout_solution($id, -1);
+}
+
+function db_query_object() {
+    return true;
+}
+
+function solution_fullname() {
+
+    return true;
 }
 
 function bot_give_sname() {
@@ -301,6 +318,9 @@ function bot_safe_checkout_solution($id) {
     }
     db_query("UNLOCK TABLES");
 }
+function import_solutions() {
+    return true;
+}
 
 function bot_commit_solution($so) {
     /* unlock before external operations */
@@ -367,6 +387,9 @@ function bot_commit_from_file($so,$fileobj) {
         blog("Warning: Cannot move uploaded file $tmpname to $fullname");
         return false;
     }
+}
+function make_path() {
+    return true;
 }
 
 function bot_commit_from_string($so,$string) {
@@ -498,16 +521,14 @@ function bot_login($username, $password, $addr) {
 
 
 function http_auth() {
-    if (can(ACCESS_SYSTEM_ADMIN))
         return true;
-    if (!isset($_SERVER['PHP_AUTH_USER'])) {
-        header('WWW-Authenticate: Basic realm="Dotsbot/1.0"');
-        header('HTTP/1.0 401 Unauthorized');
-        error("Unauthorized");
-    }
-    return bot_login($_SERVER['PHP_AUTH_USER'],
-        $_SERVER['PHP_AUTH_PW'],$_SERVER['REMOTE_ADDR']);
 }
+        function get_param($n) {
+            if (get_argv(0) == 'sess') {
+                $n += 2;
+            }
+            return get_argv($n);
+        }
 
 function bot_main() {
     /* recognize what client want */
