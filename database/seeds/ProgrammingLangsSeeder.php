@@ -14,7 +14,6 @@ class ProgrammingLangsSeeder extends Seeder
         \App\ProgrammingLanguage::create(['name' => 'C (C89)', 'ace_mode' => 'c_cpp']);
         \App\ProgrammingLanguage::create(['name' => 'C (C11)', 'ace_mode' => 'c_cpp']);
         \App\ProgrammingLanguage::create(['name' => 'C++ (C++03)', 'ace_mode' => 'c_cpp']);
-        \App\ProgrammingLanguage::create(['name' => 'C++ (C++03)', 'ace_mode' => 'c_cpp']);
         \App\ProgrammingLanguage::create(['name' => 'C++ (C++11)', 'ace_mode' => 'c_cpp']);
         \App\ProgrammingLanguage::create(['name' => 'C++ (C++14)', 'ace_mode' => 'c_cpp']);
         \App\ProgrammingLanguage::create(['name' => 'Pascal', 'ace_mode' => 'pascal']);
