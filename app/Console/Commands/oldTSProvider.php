@@ -2,25 +2,34 @@
 
 namespace App\Console\Commands;
 
-use App\Problem;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 
-class oldTSProvider extends Command
+class TesterCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'start_testing_problems';
+    protected $signature = 'tester {--login=} {--password=} {--count=1}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Daemon for old testing system';
+    protected $description = 'Simulate testing solutions via api';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * Execute the console command.
@@ -29,64 +38,44 @@ class oldTSProvider extends Command
      */
     public function handle()
     {
-        $login    = $this->ask('login: ');
-        $password = $this->secret('password: ');
-
-
 
         $client = new Client(['base_uri' => url('/')]);
-        $auth = ['login' => $login, 'password' => $password];
+        $auth = ['login' => $this->option('login'), 'password' => $this->option('password')];
         $api_token = json_decode((string)$client->request('POST', 'testing-system-api/auth', ['json' => $auth])->getBody())->api_token;
         $this->info('token: ' . $api_token);
 
-        $solutions_to_proccess = [];
-
+        $count = 0;
         while (true) {
-
-            while (true) {
-                try {
-                    $id = json_decode((string)$client->get('testing-system-api/solutions/latest-new', ['query' => ['api_token' => $api_token]])
-                        ->getBody())->id;
-                } catch (\Exception $e) {
-                    break;
-                    $this->error('error latest-new');
-                }
-                if($id) {
-                    $solutions_to_proccess[$id] = $id;
-                }
-
+            try {
+                $id = json_decode((string)$client->get('testing-system-api/solutions/latest-new', ['query' => ['api_token' => $api_token]])
+                    ->getBody())->id;
+            } catch (\Exception $e) {
+                sleep(1000);
+                continue;
             }
-            if(!empty($solutions_to_proccess)) {
-                foreach ($solutions_to_proccess as $id => $solutions_to_procces) {
-                    if(is_file(base_path('var/results/' . (int)substr($this->solutionIdToString($id), 0, 3) . '/' . $this->solutionIdToString($id)))) {
+            $this->info('latest new : ' . print_r($id, true));
 
-                        $report = file_get_contents(base_path('var/results/' . (int)substr($this->solutionIdToString($id), 0, 3) . '/' . $this->solutionIdToString($id)));
-                        $client->post('testing-system-api/solutions/' . $id . '/report', ['json' => $report]);
-                        $client->patch('testing-system-api/solutions/' . $id, ['json' => ['state' => 'tested', 'api_token' => $api_token]]);
-                        unset($solutions_to_procces[$id]);
-                    } else {
-                        $this->info("no solution : \t" . base_path('var/results/' . (int)substr($this->solutionIdToString($id), 0, 3) . '/' . $this->solutionIdToString($id)));
-                    }
-                }
-                unset($solutions_to_procces);
+            $solution = json_decode((string)$client->get('testing-system-api/solutions/' . $id, ['query' => ['api_token' => $api_token]])->getBody());
+            $this->info('solution : ' . print_r($solution, true));
+
+            $code = (string)$client->get('testing-system-api/solutions/' . $id . '/source-code', ['query' => ['api_token' => $api_token]])->getBody();
+            $this->info('solution : ' . print_r($code, true));
+
+            $this->info('fake testing...');
+
+            $report = ['status' => 'OK', 'message' => 'what a nice solution', 'tests' => [], 'api_token' => $api_token];
+            for ($i = 0; $i < 15; $i++) {
+                $report['tests'][] = ['status' => 'OK', 'execution_time' => rand(1, 2000) / 100, 'memory_peak' => rand(200, 20000) / 100];
             }
-        }
-    }
 
-    private function solutionIdToString($id) {
-        switch ($id) {
-            case $id < 10:
-                return '00000' . $id;
-            case $id < 100:
-                return '0000' . $id;
-            case $id < 1000:
-                return '000' . $id;
-            case $id < 10000:
-                return '00' . $id;
-            case $id < 100000:
-                return '0' . $id;
-            default:
-                return $id;
+            $this->info('reporting...');
+            $client->post('testing-system-api/solutions/' . $id . '/report', ['json' => $report]);
+
+            $this->info('updating solution...');
+
+            $client->patch('testing-system-api/solutions/' . $id, ['json' => ['state' => 'tested', 'api_token' => $api_token]]);
+
+            $count++;
         }
     }
 }
