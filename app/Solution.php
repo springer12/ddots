@@ -235,7 +235,7 @@ class Solution extends Model
             $this->problem_id,
             $this->id,
             isset(static::$langs[$this->programming_language->name])?static::$langs[$this->programming_language->name]:'',
-            $this->getContest()->is_acm ? 'A' : 'F');
+            \Auth::user()->hasRole(User::ROLE_USER) ? ($this->getContest()->is_acm ? 'A' : 'F') : 'F');
     }
 
     public function saveCodeFile($file)
