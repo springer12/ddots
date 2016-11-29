@@ -34,21 +34,20 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('ts/bot/', function() {
 
+
+
+        if($_SERVER['PHP_AUTH_USER'] != 'vbox-1.2' || $_SERVER['PHP_AUTH_PW'] != 'xobo2ven') {
+            header('HTTP/1.0 403 Forbidden');
+            die('Forbidden');
+        }
+
+        header('Content-type: text/plain');
+
         \Log::info('$_REQUEST ', $_REQUEST);
         \Log::info('$_SERVER ', $_SERVER);
 
-
-        header('HTTP/1.0 403 Forbidden');
         die('Forbidden');
 
-
-//        if($_SERVER['PHP_AUTH_USER'] != '' || $_SERVER['PHP_AUTH_PW'] != '') {
-//            header('HTTP/1.0 403 Forbidden');
-//            die('Forbidden');
-//        }
-//        get_param()
-
-//        header('Content-type: text/plain');
 
     });
     
