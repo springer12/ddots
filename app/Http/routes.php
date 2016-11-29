@@ -32,8 +32,24 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/handle/{provider}', ['as' => 'handle', 'uses' => 'Auth\SocialController@handleProviderCallback']);
     });
 
-    Route::any('ts', function() {
-        echo 123;
+    Route::get('ts/bot/', function() {
+
+        \Log::info('$_REQUEST ', print_r($_REQUEST));
+        \Log::info('$_SERVER ', print_r($_SERVER));
+
+
+        header('HTTP/1.0 403 Forbidden');
+        die('Forbidden');
+
+
+//        if($_SERVER['PHP_AUTH_USER'] != '' || $_SERVER['PHP_AUTH_PW'] != '') {
+//            header('HTTP/1.0 403 Forbidden');
+//            die('Forbidden');
+//        }
+//        get_param()
+
+//        header('Content-type: text/plain');
+
     });
     
     /* backend func */
