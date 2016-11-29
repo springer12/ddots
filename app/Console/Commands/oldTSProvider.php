@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 
-class TesterCommand extends Command
+class oldTSProvider extends Command
 {
     /**
      * The name and signature of the console command.
