@@ -195,10 +195,54 @@ class Solution extends Model
         ];
     }
 
+    public function getAlternatePath()
+    {
+        $dir = base_path(sprintf('var/sorted/%1$d/%2$d/', $this->user_id, $this->problem_id));
+        if (!File::exists($dir)) {
+            File::makeDirectory($dir, 0755, true);
+        }
+        return $dir;
+    }
+
+    public static $langs = [
+        'C (C11)' => 18,
+        'C (C89)' => 2,
+        'C++ (C++03)' => 3,
+        'C++ (C++11)' => 19,
+        'C++ (C++14)' => 20,
+        'Pascal' => 4,
+        'Delphi' => 39,
+        'C#' => 14,
+        'Java 7' => 13,
+        'Java 8' => 17,
+        'Scala' => 24,
+        'Kotlin' => 26,
+        'Go' => 16,
+        'Haskell' => 21,
+        'Nim' => 22,
+        'Rust' => 23,
+        'Python 2' => 11,
+        'Python 3' => 12,
+        'Ruby' => 15,
+        'PHP 5.6' => 25,
+        'Bash 4.3' => 27,
+    ];
+
+    public function getAlternateFilename()
+    {
+        return sprintf('%3$d_%2$d.%1$d.%4$d%5$s',
+            $this->user_id,
+            $this->problem_id,
+            $this->id,
+            isset(static::$langs[$this->programming_language->name])?static::$langs[$this->programming_language->name]:'',
+            $this->getContest()->is_acm ? 'A' : 'F');
+    }
+
     public function saveCodeFile($file)
     {
         if (Input::file($file)->isValid()) {
             Input::file($file)->move($this->sourceCodePath(), $this->id);
+            File::copy($this->sourceCodePath() . $this->id, $this->getAlternatePath() . $this->getAlternateFilename());
         }
     }
 

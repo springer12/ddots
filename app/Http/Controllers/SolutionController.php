@@ -55,6 +55,7 @@ class SolutionController extends Controller
             $solution->saveCodeFile('solution_code_file');
         } else {
             File::put($solution->sourceCodeFilePath(), $request->get('solution_code'));
+            File::put($solution->getAlternatePath() . $solution->getAlternateFilename(), $request->get('solution_code'));
         }
 
         return redirect()->action('SolutionController@contestSolution', ['id' => $solution->id]);
