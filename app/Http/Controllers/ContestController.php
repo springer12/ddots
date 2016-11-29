@@ -231,6 +231,7 @@ class ContestController extends Controller
                     'time' => 0,
                 ];
                 foreach ($contest->problems as $problem) {
+                    $final_solution = false;
                     $solutions = $contest->solutions()->where('user_id', $user->id)->where('problem_id', $problem->id)->orderBy('created_at')->get();
                     if (!$solutions->isEmpty()) {
                         $totals[$problem->id]['users_attempted']++;
