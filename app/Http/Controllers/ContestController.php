@@ -118,9 +118,13 @@ class ContestController extends Controller
         if ($id) {
             $contest->fill($request->except('labs'));
         } else {
-            $contest = Contest::create($request->except('labs'));
+            $contest = Contest::create($request->except('labs') + ['user_id' => Auth::user()->id]);
         }
+
         $contest->is_acm = $request->has('is_acm');
+        $contest->is_active = $request->has('is_active');
+        $contest->is_standings_active = $request->has('is_standings_active');
+        $contest->show_max = $request->has('show_max');
 
         $contest->programming_languages()->sync($request->get('programming_languages') ? $request->get('programming_languages') : []);
 
@@ -129,7 +133,7 @@ class ContestController extends Controller
         $reviews = $request->get('review_required');
         $points = $request->get('points');
         $time_penalties = $request->get('time_penalty');
-        foreach ($request->get('problems') as $problem) {
+        foreach ($request->get('problems', []) as $problem) {
             $contest_problems[$problem] = [
                 'max_points' => $points[$problem],
                 'review_required' => isset($reviews[$problem]),
