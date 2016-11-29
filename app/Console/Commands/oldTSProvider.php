@@ -12,7 +12,7 @@ class TesterCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'tester {--login=} {--password=} {--count=1}';
+    protected $signature = 'faketester {--login=} {--password=} {--count=1}';
 
     /**
      * The console command description.
