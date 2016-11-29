@@ -34,8 +34,8 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('ts/bot/', function() {
 
-        \Log::info('$_REQUEST ', print_r($_REQUEST, true));
-        \Log::info('$_SERVER ', print_r($_SERVER, true));
+        \Log::info('$_REQUEST ', $_REQUEST);
+        \Log::info('$_SERVER ', $_SERVER);
 
 
         header('HTTP/1.0 403 Forbidden');
