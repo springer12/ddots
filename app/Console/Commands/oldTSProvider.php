@@ -50,7 +50,7 @@ class oldTSProvider extends Command
                 $id = json_decode((string)$client->get('testing-system-api/solutions/latest-new', ['query' => ['api_token' => $api_token]])
                     ->getBody())->id;
             } catch (\Exception $e) {
-                sleep(1);
+                sleep(3);
                 continue;
             }
             $this->info('latest new : ' . print_r($id, true));
