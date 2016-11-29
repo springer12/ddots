@@ -42,6 +42,7 @@ Route::group(['middleware' => 'web'], function () {
         }
 
         header('Content-type: text/plain');
+        echo "Dotsbot/1.0\n";
 
         \Log::info('$_REQUEST ', $_REQUEST);
         \Log::info('$_SERVER ', $_SERVER);
