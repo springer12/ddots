@@ -79,7 +79,7 @@ class SolutionController extends Controller
      */
     public function store_report(Request $request, $id) {
         $this->validate($request, [
-            'status'                 => 'required|in:' . implode(',', array_flip(Solution::getStatuses())),
+            'status'                 => 'required|in:' . implode(',', Solution::getStatuses()),
             'message'                => 'string|max:255',
             'tests.*.status'         => 'required|in:' . implode(',', SolutionReport::getStatuses()),
             'tests.*.execution_time' => 'required|numeric',
