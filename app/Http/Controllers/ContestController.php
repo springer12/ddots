@@ -215,7 +215,7 @@ class ContestController extends Controller
         } else {
 
             $template = ['users_attempted' => 0, 'attempts' => 0, 'correct_solutions' => 0];
-            foreach (Solution::getStatuses() as $status => $description) {
+            foreach (Solution::getStatuses() as $status) {
                 $template['statuses'][$status]['count'] = 0;
             }
             $totals = $template;
@@ -246,7 +246,7 @@ class ContestController extends Controller
                         $final_solution = $solution;
                         if ($solution->status === Solution::STATUS_OK) {
                             $totals[$problem->id]['correct_solutions']++;
-
+                            $result[$problem->id]['solution_id'] = $solution->id;
                             $correct_solutions++;
                             $result[$problem->id]['solved'] = true;
                             break;
@@ -275,9 +275,10 @@ class ContestController extends Controller
                 $totals['attempts'] += $totals[$problem->id]['attempts'];
                 $totals['users_attempted'] += $totals[$problem->id]['users_attempted'];
                 $totals['correct_solutions'] += $totals[$problem->id]['correct_solutions'];
-                foreach (Solution::getStatuses() as $status => $description) {
+                foreach (Solution::getStatuses() as $status) {
                     $totals['statuses'][$status]['count'] += $totals[$problem->id]['statuses'][$status]['count'];
-                    $totals[$problem->id]['statuses'][$status]['percentage'] = $totals[$problem->id]['statuses'][$status]['count'] / $totals[$problem->id]['attempts'] * 100;
+
+                    $totals[$problem->id]['statuses'][$status]['percentage'] = $totals[$problem->id]['statuses'][$status]['count'] / ($totals[$problem->id]['attempts'] ?: 1) * 100;
                 }
             }
 
@@ -287,7 +288,7 @@ class ContestController extends Controller
                 }
             }*/
 
-            foreach (Solution::getStatuses() as $status => $description) {
+            foreach (Solution::getStatuses() as $status) {
                 $totals['statuses'][$status]['percentage'] =
                     $totals['statuses'][$status]['count']
                     / $totals['attempts'] * 100;

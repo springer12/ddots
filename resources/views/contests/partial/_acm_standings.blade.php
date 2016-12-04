@@ -20,20 +20,32 @@
 
             <tr>
                 <td>{{ $i++ }}</td>
-                <td>{{ $result['user']->name }}</td>
+                <td>
+                    @if(Auth::user()->isTeacherOf($result['user']->id) || Auth::user()->id == $result['user']->id)
+                        <a href="{{ route('frontend::user::profile', ['id' => $result['user']->id]) }}">{{ $result['user']->name }}</a>
+                    @else
+                        {{ $result['user']->name }}
+                    @endif
+                </td>
                 @foreach($problems as $problem)
                     <td>
                         @if(isset($result[$problem->id]))
-                            <div class="col-xs-12">
-                                {{ $result[$problem->id]['solved'] ? '+' : '-' }}{{ $result[$problem->id]['attempts'] > 1 ? $result[$problem->id]['attempts'] - 1 : '' }}
-                            </div>
-                            <div class="col-xs-12">
-                                <?php
-                                $hours = (int)($result[$problem->id]['time'] / 60);
-                                $minutes = $result[$problem->id]['time'] - $hours * 60;
-                                ?>
-                                {{ $hours }}:{{ str_pad($minutes, 2, 0, STR_PAD_LEFT) }}
-                            </div>
+                            @if(isset($result[$problem->id]['solution_id']))
+                                <a href="{{ route('frontend::contests::solution', ['id' => $result[$problem->id]['solution_id']]) }}">
+                                    @endif
+                                    <div class="col-xs-12">
+                                        {{ $result[$problem->id]['solved'] ? '+' : '-' }}{{ $result[$problem->id]['attempts'] > 1 ? $result[$problem->id]['attempts'] - 1 : '' }}
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <?php
+                                        $hours = (int)($result[$problem->id]['time'] / 60);
+                                        $minutes = $result[$problem->id]['time'] - $hours * 60;
+                                        ?>
+                                        {{ $hours }}:{{ str_pad($minutes, 2, 0, STR_PAD_LEFT) }}
+                                    </div>
+                                    @if(isset($result[$problem->id]['solution_id']))
+                                </a>
+                            @endif
                         @endif
                     </td>
                 @endforeach
@@ -78,7 +90,7 @@
             @endforeach
             <td colspan="3">{{ $totals['attempts'] }}</td>
         </tr>
-        @foreach(\app\Solution::getStatuses() as $status => $description)
+        @foreach(\app\Solution::getStatusDescriptions() as $status => $description)
             <tr>
                 <td colspan="2">
                     <div class="col-xs-12">{{ $status }}</div>
@@ -87,7 +99,9 @@
                 @foreach($problems as $problem)
                     <td>
                         <div class="col-xs-12">{{ $totals[$problem->id]['statuses'][$status]['count'] }}</div>
-                        <div class="col-xs-12">{{ number_format($totals[$problem->id]['statuses'][$status]['percentage'], 1) }}%</div>
+                        <div class="col-xs-12">{{ number_format($totals[$problem->id]['statuses'][$status]['percentage'], 1) }}
+                            %
+                        </div>
                     </td>
                 @endforeach
                 <td colspan="3">

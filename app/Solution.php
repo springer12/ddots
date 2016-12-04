@@ -181,6 +181,20 @@ class Solution extends Model
         return null;
     }
 
+    public static function getStatusDescriptions()
+    {
+        return [
+            self::STATUS_OK => 'All cool',
+            self::STATUS_CE => 'Compilation error',
+            self::STATUS_FF => 'Final fantasy',
+            self::STATUS_NC => 'Not cool',
+            self::STATUS_CC => 'Not cool',
+            self::STATUS_CT => 'Not cool',
+            self::STATUS_UE => 'Not cool',
+            self::STATUS_ZR => 'Annulled',
+        ];
+    }
+
     public static function getStatuses()
     {
         return [
@@ -234,7 +248,7 @@ class Solution extends Model
             $this->user_id,
             $this->problem_id,
             $this->id,
-            isset(static::$langs[$this->programming_language->name])?static::$langs[$this->programming_language->name]:'',
+            isset(static::$langs[$this->programming_language->name]) ? static::$langs[$this->programming_language->name] : '',
             \Auth::user()->hasRole(User::ROLE_USER) ? ($this->getContest()->is_acm ? 'A' : 'F') : 'F');
     }
 
