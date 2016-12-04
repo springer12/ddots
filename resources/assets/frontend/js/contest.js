@@ -92,9 +92,7 @@
                 });
                 $(this).val(null);
             });
-
-
-
+        $('[data-contest-save-input]').attr('disabled', false);
     });
     $('[data-acm-input]').on('change', function() {
         if(this.checked) {
