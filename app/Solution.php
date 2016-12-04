@@ -184,13 +184,13 @@ class Solution extends Model
     public static function getStatusDescriptions()
     {
         return [
-            self::STATUS_OK => 'All cool',
-            self::STATUS_CE => 'Compilation error',
-            self::STATUS_FF => 'Final fantasy',
-            self::STATUS_NC => 'Not cool',
-            self::STATUS_CC => 'Not cool',
-            self::STATUS_CT => 'Not cool',
-            self::STATUS_UE => 'Not cool',
+            self::STATUS_OK => 'Test Passed',
+            self::STATUS_CE => 'Compilation Error',
+            self::STATUS_FF => 'Forbidden Function',
+            self::STATUS_NC => 'No Checker found',
+            self::STATUS_CC => 'Checker Crashed',
+            self::STATUS_CT => 'Checker Timed out',
+            self::STATUS_UE => 'Unknown Error',
             self::STATUS_ZR => 'Annulled',
         ];
     }
