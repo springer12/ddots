@@ -57,6 +57,7 @@ class Contest extends Model
     ];
 
     const TYPE_TOURNAMENT = 'tournament';
+    const TYPE_EXAM = 'exam';
 
     protected $fillable = [
         'name', 'description', 'user_id', 'start_date', 'end_date', 'is_active', 'is_standings_active', 'show_max', 'labs', 'is_acm',
