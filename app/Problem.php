@@ -37,6 +37,10 @@ class Problem extends Model
     use SoftDeletes;
     use Sortable;
 
+    public $max_points;
+    public $review_required;
+    public $time_penalty;
+
     const RESULTS_PER_PAGE = 10;
     protected static $sortable_columns = [
         'id', 'name', 'created_at', 'updated_at', 'deleted_at', 'difficulty',

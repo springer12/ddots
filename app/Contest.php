@@ -60,7 +60,7 @@ class Contest extends Model
     const TYPE_EXAM = 'exam';
 
     protected $fillable = [
-        'name', 'description', 'user_id', 'start_date', 'end_date', 'is_active', 'is_standings_active', 'show_max', 'labs', 'is_acm',
+        'name', 'description', 'user_id', 'start_date', 'end_date', 'is_active', 'is_standings_active', 'labs', 'is_acm',
     ];
 
     protected $dates = [
@@ -75,8 +75,9 @@ class Contest extends Model
             'name' => 'required|max:255',
             'description' => 'required|max:3000',
             'start_date' => 'required|date_format:Y-m-d H:i:s',
-            'end_date' => 'required|date_format:Y-m-d H:i:s',
-            'programming_languages' => 'required',
+            'end_date' => 'required|date_format:Y-m-d H:i:s|after:start_date',
+            'participants' => 'required',
+            'problems' => 'required',
             'programming_languages.*' => 'exists:programming_languages,id',
             'problems.*' => 'exists:problems,id',
             'problem_points.*' => 'required|integer|between:1,100',
@@ -106,42 +107,6 @@ class Contest extends Model
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function setIsActiveAttribute($value)
-    {
-        if ($value === null) {
-            $this->attributes['is_active'] = false;
-        } else {
-            $this->attributes['is_active'] = true;
-        }
-    }
-
-    public function setShowMaxAttribute($value)
-    {
-        if ($value === null) {
-            $this->attributes['show_max'] = false;
-        } else {
-            $this->attributes['show_max'] = true;
-        }
-    }
-
-    public function setIsStandingsActiveAttribute($value)
-    {
-        if ($value === null) {
-            $this->attributes['is_standings_active'] = false;
-        } else {
-            $this->attributes['is_standings_active'] = true;
-        }
-    }
-
-    public function setLabsAttribute($value)
-    {
-        if ($value === null) {
-            $this->attributes['labs'] = false;
-        } else {
-            $this->attributes['labs'] = true;
-        }
     }
 
     public function hide()
