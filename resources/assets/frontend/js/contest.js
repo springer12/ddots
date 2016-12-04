@@ -94,12 +94,34 @@
             });
         $('[data-contest-save-input]').attr('disabled', false);
     });
-    $('[data-acm-input]').on('change', function() {
+
+    var $acm = $('[data-acm-input]');
+    var $show_max = $('[data-show-max-input]');
+    var $standings = $('[data-standings-input]');
+
+    $acm.on('change', function() {
         if(this.checked) {
-            $('[data-show-max-input]').attr('disabled', true);
-            $('[data-show-max-input]').prop('checked', false);
+            $show_max.attr('disabled', true);
+            $show_max.prop('checked', false);
         } else {
-            $('[data-show-max-input]').attr('disabled', false);
+            $show_max.attr('disabled', false);
+        }
+    });
+
+    $('[data-exam-input]').on('change', function() {
+        if(this.checked) {
+            $standings.attr('disabled', true);
+            $standings.prop('checked', false);
+
+            $acm.attr('disabled', true);
+            $acm.prop('checked', false);
+
+            $show_max.attr('disabled', true);
+            $show_max.prop('checked', false);
+        } else {
+            $show_max.attr('disabled', false);
+            $standings.attr('disabled', false);
+            $acm.attr('disabled', false);
         }
     });
 })(jQuery, window, document);

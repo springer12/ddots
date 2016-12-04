@@ -151,17 +151,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row {{ $errors->has('is_standings_active') ? ' has-danger' : '' }}">
-                                        <label class="control-label col-md-4" for="is_standings_active">Active
-                                            standings</label>
+                                    <div class="form-group row">
+                                        <label class="control-label col-md-4" for="is_exam">Is Exam</label>
                                         <div class="col-md-8">
-                                            <input type="checkbox" id="is_standings_active" name="is_standings_active"
-                                                   class="form-control" {{ $errors->has() ? (!old('is_standings_active')?:'checked') : (!$contest->is_standings_active?:'checked') }}>
-                                            @if ($errors->has('is_standings_active'))
-                                                <span class="form-control-feedback">
-                                                    <strong>{{ $errors->first('is_standings_active') }}</strong>
-                                                </span>
-                                            @endif
+                                            <input type="checkbox" id="is_exam" name="is_exam" data-exam-input
+                                                   {{ !old('is_exam') && $contest->type != \App\Contest::TYPE_EXAM ?:'checked="checked"' }}
+                                                   class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -169,7 +164,18 @@
                                         <div class="col-md-8">
                                             <input type="checkbox" id="is_acm" name="is_acm" data-acm-input
                                                    {{ !old('is_acm') && !$contest->is_acm ?:'checked="checked"' }}
+                                                   {{ !old('is_exam') && $contest->type != \App\Contest::TYPE_EXAM ?: 'disabled="disabled"'}}
                                                    class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-md-4" for="is_standings_active">Active
+                                            standings</label>
+                                        <div class="col-md-8">
+                                            <input type="checkbox" id="is_standings_active" name="is_standings_active"
+                                                   data-standings-input
+                                                   {{ !old('is_exam') && $contest->type != \App\Contest::TYPE_EXAM ?: 'disabled="disabled"'}}
+                                                   class="form-control" {{ $errors->has() ? (!old('is_standings_active')?:'checked') : (!$contest->is_standings_active?:'checked') }}>
                                         </div>
                                     </div>
                                     <div class="form-group row {{ $errors->has('show_max') ? ' has-danger' : '' }}">

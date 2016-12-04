@@ -129,10 +129,20 @@ class ContestController extends Controller
             $contest = Contest::create($request->except('labs') + ['user_id' => Auth::user()->id]);
         }
 
-        $contest->is_acm = $request->has('is_acm');
+        if($request->has('is_exam')) {
+            $contest->type = Contest::TYPE_EXAM;
+            $contest->is_acm = false;
+        } else {
+            $contest->is_acm = $request->has('is_acm');
+        }
+
         $contest->is_active = $request->has('is_active');
         $contest->is_standings_active = $request->has('is_standings_active');
-        $contest->show_max = $request->has('show_max');
+        if($contest->is_acm) {
+            $contest->show_max = false;
+        } else {
+            $contest->show_max = $request->has('show_max');
+        }
 
         $contest->programming_languages()->sync($request->get('programming_languages') ? $request->get('programming_languages') : []);
 
