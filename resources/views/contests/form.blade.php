@@ -207,6 +207,7 @@
                                            data-{{ $participant->id }}="{{ $participant->name }}"
                                             @endforeach
                                     >
+                                        <tbody></tbody>
                                         <tr>
                                             <th class="col-sm-11">Name</th>
                                             <th class="col-sm-1">Remove</th>
@@ -242,6 +243,7 @@
                                            data-{{ $problem->id }}-time-penalty="{{ $problem->pivot->time_penalty }}"
                                             @endforeach
                                     >
+                                        <tbody></tbody>
                                         <tr>
                                             <th class="col-sm-8">Name</th>
                                             <th class="col-sm-1">Points</th>
