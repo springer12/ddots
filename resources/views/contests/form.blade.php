@@ -207,11 +207,12 @@
                                            data-{{ $participant->id }}="{{ $participant->name }}"
                                             @endforeach
                                     >
-                                        <tbody></tbody>
+                                        <thead>
                                         <tr>
-                                            <th class="col-sm-11">Name</th>
-                                            <th class="col-sm-1">Remove</th>
+                                            <th>Name</th>
+                                            <th>Remove</th>
                                         </tr>
+                                        </thead>
                                     </table>
                                 </div>
 
@@ -235,23 +236,23 @@
                                         </div>
                                     </div>
                                     <hr class="invisible">
-                                    <table class="table table-striped table-bordered table-sm">
+                                    <table class="table table-striped table-bordered table-sm" data-problems
+                                           @foreach($included_problems as $problem)
+                                           data-{{ $problem->id }}="{{ $problem->name }}"
+                                           data-{{ $problem->id }}-points="{{ $problem->pivot->max_points }}"
+                                           data-{{ $problem->id }}-review="{{ $problem->pivot->review_required }}"
+                                           data-{{ $problem->id }}-time-penalty="{{ $problem->pivot->time_penalty }}"
+                                            @endforeach
+                                    >
+                                        <thead>
                                         <tr>
-                                            <th class="col-sm-8">Name</th>
-                                            <th class="col-sm-1">Points</th>
-                                            <th class="col-sm-1">Review</th>
-                                            <th class="col-sm-1">Time penalty</th>
-                                            <th class="col-sm-1">Remove</th>
+                                            <th>Name</th>
+                                            <th>Points</th>
+                                            <th>Review</th>
+                                            <th>Time penalty</th>
+                                            <th>Remove</th>
                                         </tr>
-                                        <tbody data-problems
-                                               @foreach($included_problems as $problem)
-                                               data-{{ $problem->id }}="{{ $problem->name }}"
-                                               data-{{ $problem->id }}-points="{{ $problem->pivot->max_points }}"
-                                               data-{{ $problem->id }}-review="{{ $problem->pivot->review_required }}"
-                                               data-{{ $problem->id }}-time-penalty="{{ $problem->pivot->time_penalty }}"
-                                                @endforeach>
-
-                                        </tbody>
+                                        </thead>
                                     </table>
                                 </div>
                             </div>
