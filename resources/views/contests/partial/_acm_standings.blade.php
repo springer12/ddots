@@ -30,7 +30,7 @@
                 @foreach($problems as $problem)
                     <td>
                         @if(isset($result[$problem->id]))
-                            @if(isset($result[$problem->id]['solution_id']))
+                            @if(isset($result[$problem->id]['solution_id']) && Auth::user()->hasRole(App\User::ROLE_TEACHER || Auth::user()->id == $result['user']->id))
                                 <a href="{{ route('frontend::contests::solution', ['id' => $result[$problem->id]['solution_id']]) }}">
                                     @endif
                                     <div class="col-xs-12">
@@ -43,7 +43,7 @@
                                         ?>
                                         {{ $hours }}:{{ str_pad($minutes, 2, 0, STR_PAD_LEFT) }}
                                     </div>
-                                    @if(isset($result[$problem->id]['solution_id']))
+                                    @if(isset($result[$problem->id]['solution_id']) && Auth::user()->hasRole(App\User::ROLE_TEACHER || Auth::user()->id == $result['user']->id))
                                 </a>
                             @endif
                         @endif
