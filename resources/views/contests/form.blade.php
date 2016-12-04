@@ -248,9 +248,9 @@
                                     <table class="table table-striped table-bordered table-sm" data-problems
                                            @foreach($included_problems as $problem)
                                            data-{{ $problem->id }}="{{ $problem->name }}"
-                                           data-{{ $problem->id }}-points="{{ $problem->pivot->max_points }}"
-                                           data-{{ $problem->id }}-review="{{ $problem->pivot->review_required }}"
-                                           data-{{ $problem->id }}-time-penalty="{{ $problem->pivot->time_penalty }}"
+                                           data-{{ $problem->id }}-points="{{ isset($problem->pivot)?$problem->pivot->max_points:$problem->max_points }}"
+                                           data-{{ $problem->id }}-review="{{ isset($problem->pivot)?$problem->pivot->review_required:$problem->review_required  }}"
+                                           data-{{ $problem->id }}-time-penalty="{{ isset($problem->pivot)?$problem->pivot->time_penalty:$problem->time_penalty }}"
                                             @endforeach
                                     >
                                         <thead>

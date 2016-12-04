@@ -80,7 +80,15 @@ class ContestController extends Controller
                         $participants->push($student);
                     }
                 }
+                $max_points = (array)old('points');
+                $time_penalty = (array)old('time_penalty');
+                $review = (array)old('review_required');
                 $included_problems = Problem::orderBy('name', 'desc')->whereIn('id', (array)old('problems'))->get();
+                foreach ($included_problems as $problem) {
+                    $problem->max_points = $max_points[$problem->id];
+                    $problem->time_penalty = $time_penalty[$problem->id];
+                    $problem->review_required = isset($review[$problem->id]);
+                }
             } else {
                 $participants = $contest->users()->user()->get();
                 $included_problems = $contest->problems()->withPivot('max_points', 'review_required', 'time_penalty')->get();
