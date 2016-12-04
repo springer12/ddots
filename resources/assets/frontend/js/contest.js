@@ -91,6 +91,17 @@
                     addParticipant($('[data-participant-select] > option[value=' + v + ']'));
                 });
                 $(this).val(null);
-            })
+            });
+
+
+
+    });
+    $('[data-acm-input]').on('change', function() {
+        if(this.checked) {
+            $('[data-show-max-input]').attr('disabled', true);
+            $('[data-show-max-input]').prop('checked', false);
+        } else {
+            $('[data-show-max-input]').attr('disabled', false);
+        }
     });
 })(jQuery, window, document);

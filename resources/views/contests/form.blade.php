@@ -153,28 +153,25 @@
                                             @endif
                                         </div>
                                     </div>
-
-                                    <div class="form-group row {{ $errors->has('show_max') ? ' has-danger' : '' }}">
+                                    <div class="form-group row">
+                                        <label class="control-label col-md-4" for="is_acm">Is ACM</label>
+                                        <div class="col-md-8">
+                                            <input type="checkbox" id="is_acm" name="is_acm" data-acm-input
+                                                   {{ !old('is_acm') && !$contest->is_acm ?:'checked="checked"' }}
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row {{ $errors->has('show_max') ? ' has-danger' : '' }}" >
                                         <label class="control-label col-md-4" for="show_max">Show maximum points in
                                             results</label>
                                         <div class="col-md-8">
                                             <input type="checkbox" id="show_max" name="show_max"
-                                                   class="form-control" {{ $errors->has() ? (!old('show_max')?:'checked') : (!$contest->show_max?:'checked') }}>
+                                                   class="form-control" {{ $errors->has() ? (!old('show_max')?:'asdasd') : (!$contest->show_max ?:'checked') }} {{ !(old('is_acm') || $contest->is_acm) ?: 'disabled' }} data-show-max-input>
                                             @if ($errors->has('show_max'))
                                                 <span class="form-control-feedback">
                                             <strong>{{ $errors->first('show_max') }}</strong>
                                         </span>
                                             @endif
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group row">
-                                        <label class="control-label col-md-4" for="is_acm">Is ACM</label>
-                                        <div class="col-md-8">
-                                            <input type="checkbox" id="is_acm" name="is_acm"
-                                                   {{ !old('is_acm') && !$contest->is_acm ?:'checked="checked"' }}
-                                                   class="form-control">
                                         </div>
                                     </div>
                                 </div>
