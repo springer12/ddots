@@ -31,7 +31,8 @@
                     params.page = params.page || 1;
                     return {
                         results: $.map(data.results, function (problem) {
-                            if (!$('[data-problem-block-id=' + problem.id + ']').length) {
+
+                            if (!$('[data-problem-block-id=' + problem.id + ']').length || $('[data-exam-input]')[0].checked) {
                                 return {
                                     text: problem.name,
                                     id: problem.id

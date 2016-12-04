@@ -69,24 +69,29 @@ class Contest extends Model
         'created_at',
     ];
 
-    public static function getValidationRules()
+    public static function getValidationRules($is_exam)
     {
-        return [
+        $arr = [
             'name' => 'required|max:255',
             'description' => 'required|max:3000',
             'start_date' => 'required|date_format:Y-m-d H:i:s',
             'end_date' => 'required|date_format:Y-m-d H:i:s|after:start_date',
             'participants' => 'required',
-            'problems' => 'required',
             'programming_languages.*' => 'exists:programming_languages,id',
             'problems.*' => 'exists:problems,id',
             'problem_points.*' => 'required|integer|between:1,100',
         ];
+        return $arr + ($is_exam ? [] : ['problems' => 'required']);
     }
 
     public function programming_languages()
     {
         return $this->belongsToMany(ProgrammingLanguage::class, 'contest_programming_language', 'contest_id', 'programming_language_id');
+    }
+
+    public function problemUsers()
+    {
+        return $this->hasMany(ContestProblemUser::class);
     }
 
     public function problems()

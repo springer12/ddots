@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contest;
+use App\ContestProblemUser;
 use App\Problem;
 use App\Solution;
 use Carbon\Carbon;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\ProgrammingLanguage;
 use App\User;
+use Psy\Util\Json;
 
 class ContestController extends Controller
 {
@@ -80,18 +82,39 @@ class ContestController extends Controller
                         $participants->push($student);
                     }
                 }
-                $max_points = (array)old('points');
-                $time_penalty = (array)old('time_penalty');
-                $review = (array)old('review_required');
-                $included_problems = Problem::orderBy('name', 'desc')->whereIn('id', (array)old('problems'))->get();
-                foreach ($included_problems as $problem) {
-                    $problem->max_points = $max_points[$problem->id];
-                    $problem->time_penalty = $time_penalty[$problem->id];
-                    $problem->review_required = isset($review[$problem->id]);
+                if ($contest->type != Contest::TYPE_EXAM && !old('is_exam')) {
+                    $max_points = (array)old('points');
+                    $time_penalty = (array)old('time_penalty');
+                    $review = (array)old('review_required');
+                    $included_problems = Problem::orderBy('name', 'desc')->whereIn('id', (array)old('problems'))->get();
+                    foreach ($included_problems as $problem) {
+                        $problem->max_points = $max_points[$problem->id];
+                        $problem->time_penalty = $time_penalty[$problem->id];
+                        $problem->review_required = isset($review[$problem->id]);
+                    }
+                } else {
+                    $included_problems = [];
+                    foreach (old('user_problems') as $key => $user_item) {
+                        $included_problems[$key] = json_decode($user_item, true);
+                    }
+                    $included_problems = Json::encode($included_problems);
                 }
             } else {
                 $participants = $contest->users()->user()->get();
-                $included_problems = $contest->problems()->withPivot('max_points', 'review_required', 'time_penalty')->get();
+                if ($contest->type != Contest::TYPE_EXAM && !old('is_exam')) {
+                    $included_problems = $contest->problems()->withPivot('max_points', 'review_required', 'time_penalty')->get();
+                } else {
+                    $included_problems = [];
+                    foreach ($contest->problemUsers as $cpu) {
+                        $included_problems[$cpu->user_id][$cpu->problem_id] = [
+                            'max_points' => $cpu->max_points,
+                            'review_required' => $cpu->review_required,
+                            'time_penalty' => $cpu->time_penalty,
+                            'name' => $cpu->problem->name,
+                        ];
+                    }
+                    $included_problems = Json::encode($included_problems);
+                }
             }
             $students = $students->diff($participants);
         } else {
@@ -121,7 +144,7 @@ class ContestController extends Controller
     {
         $contest = (!$id ?: Contest::findOrFail($id));
 
-        $this->validate($request, Contest::getValidationRules(), ['programming_languages.required' => 'At least one language must be selected.']);
+        $this->validate($request, Contest::getValidationRules($request->has('is_exam')), ['programming_languages.required' => 'At least one language must be selected.']);
 
         if ($id) {
             $contest->fill($request->except('labs'));
@@ -129,7 +152,7 @@ class ContestController extends Controller
             $contest = Contest::create($request->except('labs') + ['user_id' => Auth::user()->id]);
         }
 
-        if($request->has('is_exam')) {
+        if ($request->has('is_exam')) {
             $contest->type = Contest::TYPE_EXAM;
             $contest->is_acm = false;
         } else {
@@ -138,7 +161,7 @@ class ContestController extends Controller
 
         $contest->is_active = $request->has('is_active');
         $contest->is_standings_active = $request->has('is_standings_active');
-        if($contest->is_acm) {
+        if ($contest->is_acm) {
             $contest->show_max = false;
         } else {
             $contest->show_max = $request->has('show_max');
@@ -146,22 +169,42 @@ class ContestController extends Controller
 
         $contest->programming_languages()->sync($request->get('programming_languages') ? $request->get('programming_languages') : []);
 
-        $contest_problems = [];
+        if ($contest->type != Contest::TYPE_EXAM) {
+            $contest_problems = [];
+            $reviews = $request->get('review_required');
+            $points = $request->get('points');
+            $time_penalties = $request->get('time_penalty');
+            foreach ($request->get('problems', []) as $problem) {
+                $contest_problems[$problem] = [
+                    'max_points' => $points[$problem],
+                    'review_required' => isset($reviews[$problem]),
+                    'time_penalty' => $time_penalties[$problem],
+                ];
+            }
 
-        $reviews = $request->get('review_required');
-        $points = $request->get('points');
-        $time_penalties = $request->get('time_penalty');
-        foreach ($request->get('problems', []) as $problem) {
-            $contest_problems[$problem] = [
-                'max_points' => $points[$problem],
-                'review_required' => isset($reviews[$problem]),
-                'time_penalty' => $time_penalties[$problem],
-            ];
+            $contest->problems()->sync($contest_problems);
+            $contest->users()->sync((array)$request->get('participants'));
+        } else {
+            $contest->users()->sync($request->get('participants', []));
+            $contest->problems()->sync([]);
+            $user_problems = $request->get('user_problems', []);
+            ContestProblemUser::where('contest_id', $contest->id)->delete();
+            foreach ($request->get('participants', []) as $user) {
+                if (isset($user_problems[$user])) {
+                    $user_problem = json_decode($user_problems[$user], true);
+                    foreach ($user_problem as $problem_id => $problem) {
+                        ContestProblemUser::create([
+                            'user_id' => $user,
+                            'problem_id' => $problem_id,
+                            'contest_id' => $contest->id,
+                            'max_points' => $problem['max_points'],
+                            'time_penalty' => $problem['time_penalty'],
+                            'review_required' => $problem['review_required'],
+                        ]);
+                    }
+                }
+            }
         }
-
-        $contest->problems()->sync($contest_problems);
-
-        $contest->users()->sync((array)$request->get('participants'));
 
         $contest->save();
 
@@ -270,7 +313,7 @@ class ContestController extends Controller
                             break;
                         }
                     }
-                    if($final_solution) {
+                    if ($final_solution) {
                         $result[$problem->id]['time'] = ($result[$problem->id]['attempts'] > 1 ? ($result[$problem->id]['attempts'] - 1) * $problem->pivot->time_penalty : 0) + (int)(($final_solution->created_at->getTImeStamp() - $contest->start_date->getTimestamp()) / 60);
                         $result['time'] += $result[$problem->id]['time'];
                         if ($result[$problem->id]['solved']) {
