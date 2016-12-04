@@ -202,14 +202,14 @@
                                         </div>
                                     </div>
                                     <hr class="invisible">
-                                    <table class="table table-striped" data-participants
+                                    <table class="table table-striped table-bordered table-sm" data-participants
                                            @foreach($participants as $participant)
                                            data-{{ $participant->id }}="{{ $participant->name }}"
                                             @endforeach
                                     >
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Remove</th>
+                                            <th class="col-sm-11">Name</th>
+                                            <th class="col-sm-1">Remove</th>
                                         </tr>
                                     </table>
                                 </div>
@@ -234,7 +234,7 @@
                                         </div>
                                     </div>
                                     <hr class="invisible">
-                                    <table class="table table-striped" data-problems
+                                    <table class="table table-striped table-bordered table-sm" data-problems
                                            @foreach($included_problems as $problem)
                                            data-{{ $problem->id }}="{{ $problem->name }}"
                                            data-{{ $problem->id }}-points="{{ $problem->pivot->max_points }}"
@@ -243,11 +243,11 @@
                                             @endforeach
                                     >
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Points</th>
-                                            <th>Review</th>
-                                            <th>Time penalty</th>
-                                            <th>Remove</th>
+                                            <th class="col-sm-8">Name</th>
+                                            <th class="col-sm-1">Points</th>
+                                            <th class="col-sm-1">Review</th>
+                                            <th class="col-sm-1">Time penalty</th>
+                                            <th class="col-sm-1">Remove</th>
                                         </tr>
                                     </table>
                                 </div>
