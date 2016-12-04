@@ -46,8 +46,8 @@
                                                    required="required" class="form-control">
                                             @if ($errors->has('name'))
                                                 <span class="form-control-feedback">
-                                            <strong>{{ $errors->first('name') }}</strong>
-                                        </span>
+                                                    <strong>{{ $errors->first('name') }}</strong>
+                                                </span>
                                             @endif
                                         </div>
                                     </div>
@@ -60,8 +60,8 @@
                                               class="form-control">{{ old('description') ?: $contest->description }}</textarea>
                                             @if ($errors->has('description'))
                                                 <span class="form-control-feedback">
-                                            <strong>{{ $errors->first('description') }}</strong>
-                                        </span>
+                                                    <strong>{{ $errors->first('description') }}</strong>
+                                                </span>
                                             @endif
                                         </div>
                                     </div>
@@ -77,8 +77,8 @@
                                                    class="form-control">
                                             @if ($errors->has('start_date'))
                                                 <span class="form-control-feedback">
-                                        <strong>{{ $errors->first('start_date') }}</strong>
-                                    </span>
+                                                    <strong>{{ $errors->first('start_date') }}</strong>
+                                                </span>
                                             @endif
                                         </div>
                                     </div>
@@ -93,15 +93,15 @@
                                                    class="form-control">
                                             @if ($errors->has('end_date'))
                                                 <span class="form-control-feedback">
-                                            <strong>{{ $errors->first('end_date') }}</strong>
-                                        </span>
+                                                    <strong>{{ $errors->first('end_date') }}</strong>
+                                                </span>
                                             @endif
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label class="control-label col-md-4" for="programming_language">Programming
-                                            languages</label>
+                                                                                                         languages</label>
                                         <div class="col-md-8">
                                             <select id="programming_language" name="programming_languages[]"
                                                     data-select-programming-languages class="form-control" multiple>
@@ -121,8 +121,8 @@
                                             </select>
                                             @if ($errors->has('programming_languages'))
                                                 <span class="form-control-feedback">
-                                            <strong>{{ $errors->first('programming_languages') }}</strong>
-                                        </span>
+                                                    <strong>{{ $errors->first('programming_languages') }}</strong>
+                                                </span>
                                             @endif
                                         </div>
                                     </div>
@@ -134,22 +134,22 @@
                                                    class="form-control" {{ $errors->has() ? (!old('is_active')?:'checked') : (!$contest->is_active?:'checked') }}>
                                             @if ($errors->has('is_active'))
                                                 <span class="form-control-feedback">
-                                            <strong>{{ $errors->first('is_active') }}</strong>
-                                        </span>
+                                                    <strong>{{ $errors->first('is_active') }}</strong>
+                                                </span>
                                             @endif
                                         </div>
                                     </div>
 
                                     <div class="form-group row {{ $errors->has('is_standings_active') ? ' has-danger' : '' }}">
                                         <label class="control-label col-md-4" for="is_standings_active">Active
-                                            standings</label>
+                                                                                                        standings</label>
                                         <div class="col-md-8">
                                             <input type="checkbox" id="is_standings_active" name="is_standings_active"
                                                    class="form-control" {{ $errors->has() ? (!old('is_standings_active')?:'checked') : (!$contest->is_standings_active?:'checked') }}>
                                             @if ($errors->has('is_standings_active'))
                                                 <span class="form-control-feedback">
-                                            <strong>{{ $errors->first('is_standings_active') }}</strong>
-                                        </span>
+                                                    <strong>{{ $errors->first('is_standings_active') }}</strong>
+                                                </span>
                                             @endif
                                         </div>
                                     </div>
@@ -163,14 +163,14 @@
                                     </div>
                                     <div class="form-group row {{ $errors->has('show_max') ? ' has-danger' : '' }}" >
                                         <label class="control-label col-md-4" for="show_max">Show maximum points in
-                                            results</label>
+                                                                                             results</label>
                                         <div class="col-md-8">
                                             <input type="checkbox" id="show_max" name="show_max"
                                                    class="form-control" {{ $errors->has() ? (!old('show_max')?:'asdasd') : (!$contest->show_max ?:'checked') }} {{ !(old('is_acm') || $contest->is_acm) ?: 'disabled' }} data-show-max-input>
                                             @if ($errors->has('show_max'))
                                                 <span class="form-control-feedback">
-                                            <strong>{{ $errors->first('show_max') }}</strong>
-                                        </span>
+                                                    <strong>{{ $errors->first('show_max') }}</strong>
+                                                </span>
                                             @endif
                                         </div>
                                     </div>
@@ -199,17 +199,16 @@
                                         </div>
                                     </div>
                                     <hr class="invisible">
-                                    <table class="table table-striped" data-participants
+                                    <table class="table table-striped table-bordered table-sm" data-participants
                                            @foreach($participants as $participant)
                                            data-{{ $participant->id }}="{{ $participant->name }}"
                                             @endforeach
                                     >
-                                        <thead>
+                                        <tbody></tbody>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Remove</th>
+                                            <th class="col-sm-11">Name</th>
+                                            <th class="col-sm-1">Remove</th>
                                         </tr>
-                                        </thead>
                                     </table>
                                 </div>
 
@@ -233,23 +232,23 @@
                                         </div>
                                     </div>
                                     <hr class="invisible">
-                                    <table class="table table-striped" data-problems
-                                           @foreach($included_problems as $problem)
-                                           data-{{ $problem->id }}="{{ $problem->name }}"
-                                           data-{{ $problem->id }}-points="{{ $problem->pivot->max_points }}"
-                                           data-{{ $problem->id }}-review="{{ $problem->pivot->review_required }}"
-                                           data-{{ $problem->id }}-time-penalty="{{ $problem->pivot->time_penalty }}"
-                                            @endforeach
-                                    >
-                                        <thead>
+                                    <table class="table table-striped table-bordered table-sm">
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Points</th>
-                                            <th>Review</th>
-                                            <th>Time penalty</th>
-                                            <th>Remove</th>
+                                            <th class="col-sm-8">Name</th>
+                                            <th class="col-sm-1">Points</th>
+                                            <th class="col-sm-1">Review</th>
+                                            <th class="col-sm-1">Time penalty</th>
+                                            <th class="col-sm-1">Remove</th>
                                         </tr>
-                                        </thead>
+                                        <tbody data-problems
+                                               @foreach($included_problems as $problem)
+                                               data-{{ $problem->id }}="{{ $problem->name }}"
+                                               data-{{ $problem->id }}-points="{{ $problem->pivot->max_points }}"
+                                               data-{{ $problem->id }}-review="{{ $problem->pivot->review_required }}"
+                                               data-{{ $problem->id }}-time-penalty="{{ $problem->pivot->time_penalty }}"
+                                                @endforeach>
+
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -263,24 +262,24 @@
     <tr data-@{{ element }}-block-id=@{{ id }}>
         <td>
             @{{ name }}
-        </td>
-        @{{ #type_problem }}
-        <td>
-            <input name="points[@{{ id }}]" type="number" class="form-control" value="@{{ points }}"/>
+                                                      </td>
+                                                      @{{ #type_problem }}
+                                                      <td>
+                                                          <input name="points[@{{ id }}]" type="number" class="form-control" value="@{{ points }}"/>
         </td>
         <td>
             <input name="review_required[@{{ id }}]" type="checkbox" class="form-control"
                    @{{ #review }}
-        checked
-         @{{ /review }}
-        />
-    </td>
-    <td>
-        <input name="time_penalty[@{{ id }}]" type="number" class="form-control" value="@{{ time_penalty }}"/>
+                                                      checked
+                                                       @{{ /review }}
+                                                      />
+                                                  </td>
+                                                  <td>
+                                                      <input name="time_penalty[@{{ id }}]" type="number" class="form-control" value="@{{ time_penalty }}"/>
         </td>
         @{{ /type_problem}}
-        <td>
-            <a data-remove-@{{ element }}-id="@{{ id }}" data-remove-@{{ element }}-name="@{{ name }}"
+                                                      <td>
+                                                          <a data-remove-@{{ element }}-id="@{{ id }}" data-remove-@{{ element }}-name="@{{ name }}"
                href="javascript:void(0);">
                 <span class="tag tag-danger"><i class="fa fa-remove"></i></span>
             </a>
