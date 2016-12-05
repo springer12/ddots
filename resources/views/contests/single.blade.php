@@ -4,9 +4,8 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h3>
-                    {{ $contest->name }}
-                    <span class="tag tag-{{ $contest->is_active? 'success' : 'danger' }}">{{ $contest->is_active? 'Active' : 'Disabled' }}</span>
+                <h3>{{ $contest->name }}
+                    {{--<span class="tag tag-{{ $contest->is_active? 'success' : 'danger' }}">{{ $contest->is_active? 'Active' : 'Disabled' }}</span>--}}
                     <a class="btn btn-secondary float-xs-right" title="Edit"
                        href="{{ action('ContestController@edit',['id'=> $contest->id]) }}">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -15,27 +14,31 @@
             </div>
             <div class="card-block">
                 <div class="row">
-                    <div class="col-md-4">
-                        <h3>
+                    <div class="col-md-3 container">
+                        <ul style="list-style: none">
+                            <li><h4>{{ $contest->end_date->diffInDays($contest->start_date) }} days</h4></li>
+                            <li><h4>{{ $contest->start_date }}</h4></li>
+                            <li><h4>{{ $contest->end_date }}</h4></li>
+                        </ul>
+                        <hr class="invisible">
+                        <ul style="list-style: none">
                             @foreach($contest->programming_languages as $programming_language)
-                                <span class="tag tag-primary">{{ $programming_language->name }}</span>
+                                <li><h5> ● {{ $programming_language->name }}</h5></li>
                             @endforeach
-                        </h3>
-                        <h3><span class="tag tag-success">{{ $contest->end_date->diffInDays($contest->start_date) }} d. to finish</span></h3>
+                        </ul>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <p>{{ $contest->description }}</p>
                     </div>
                 </div>
             </div>
             <div class="card-block">
-                <div class="row">
-                    <div class="col-md-12">
+                <div class="row pull-right">
+                    <div class="col-md-12 btn-group">
                         @if($contest->is_standings_active )
-                            <a class="btn btn-primary" href="{{ route('frontend::contests::standings', ['id' => $contest->id]) }}"><i class="fa fa-trophy" aria-hidden="true"></i> standings</a>
+                            <a class="btn btn-success" href="{{ route('frontend::contests::standings', ['id' => $contest->id]) }}"><i class="fa fa-trophy" aria-hidden="true"></i> standings</a>
                         @endif
                         <a class="btn btn-primary" href="{{ route('frontend::contests::solutions',['id' => $contest->id]) }}"><i class="fa fa-code" aria-hidden="true"></i> solutions</a>
-                        <span class="float-xs-right">{{ $contest->start_date }} — {{ $contest->end_date }}</span>
                     </div>
                 </div>
             </div>
