@@ -99,6 +99,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    <div class="col-md-12 align-center">{{ $solutions->links() }}</div>
                 </div>
             </div>
         </div>
