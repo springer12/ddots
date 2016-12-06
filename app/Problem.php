@@ -70,6 +70,15 @@ class Problem extends Model
         return $dir;
     }
 
+    public function getImagePath() {
+        $dir = public_path('problems/' . $this->id . '/');
+        if (!File::exists($dir)) {
+            File::makeDirectory($dir, 0755, true);
+        }
+
+        return $dir;
+    }
+
     public static function getAlternateFilePath()
     {
         return base_path('var/test_db/');
@@ -83,6 +92,24 @@ class Problem extends Model
     public function contests()
     {
         return $this->belongsToMany(Contest::class, 'contest_problem', 'problem_id', 'contest_id')->withTimestamps();
+    }
+
+    public function setImage($name)
+    {
+        if (Input::file($name)->isValid()) {
+            if (File::exists($this->getImagePath() . 'image.png')) {
+                File::delete($this->getImagePath() . 'image.png');
+            }
+
+            Input::file($name)->move($this->getImagePath(), 'image.png');
+        }
+    }
+
+    public function getImageAttribute() {
+        if (!File::exists($this->getImagePath() . 'image.png')) {
+            return asset('frontend-bundle/media/no-problem-image.png');
+        }
+        return asset('problems/' . $this->id . '/image.png');
     }
 
     public function setArchive($name)
