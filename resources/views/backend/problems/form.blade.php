@@ -70,6 +70,18 @@
                             </div>
                         </div>
 
+                        <div class="form-group row{{ $errors->has('image') ? ' has-danger' : '' }}">
+                            <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="image">Image</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="file" name="image" class="form-control col-md-7 col-xs-12">
+                                @if ($errors->has('image'))
+                                    <span class="form-text">
+                                        <strong>{{ $errors->first('image') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group row{{ $errors->has('volumes') ? ' has-danger' : '' }}">
                             <label class="form-control-label col-md-3 col-sm-3 col-xs-12" for="volumes">Volumes</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">

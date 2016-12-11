@@ -107,6 +107,10 @@ class ProblemController extends Controller
             $problem->setArchive('archive');
         }
 
+        if ($request->hasFile('image')) {
+            $problem->setImage('image');
+        }
+
         if($request->has('volumes')) {
             $problem->volumes()->sync($request->get('volumes'));
         } else {

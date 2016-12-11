@@ -18,7 +18,12 @@ class ProblemController extends Controller
         //$points_string = $problem->getPointsString($contest);
         $solutions = Solution::whereHas('problem', function ($query) use ($problem_id) {
             $query->where('problem_id', '=', $problem_id);
-        })->join('contest_solution', 'solution_id', '=', 'id')->where('contest_id', $contest_id)->get();
+        })
+            ->join('contest_solution', 'solution_id', '=', 'id')
+            ->where('contest_id', $contest_id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+
         return View('contests.problem')->with([
             'problem' => $problem,
             'solutions' => $solutions,
