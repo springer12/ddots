@@ -31,7 +31,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/redirect/{provider}', ['as' => 'redirect', 'uses' => 'Auth\SocialController@redirectToProvider']);
         Route::get('/handle/{provider}', ['as' => 'handle', 'uses' => 'Auth\SocialController@handleProviderCallback']);
     });
-    
+
     /* backend func */
     Route::group([
         'middleware' => 'access:web,0,' . App\User::ROLE_ADMIN,
@@ -200,6 +200,11 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/news/{id}', 'NewsController@domainSingle')->where('id', '[0-9]+');
 
         Route::group(['middleware' => 'access:web,0,' . App\User::ROLE_TEACHER, 'as' => 'teacherOnly::'], function () {
+
+            Route::group(['prefix' => 'problems', 'as' => 'problems::'], function () {
+                Route::get('/', 'ProblemController@index');
+                Route::get('/{id}', 'ProblemController@single')->where('id', '[0-9]+');
+            });
 
             Route::post('solution-message/{id}', ['uses' => 'SolutionMessageController@message', 'as' => 'message']);
             Route::group(['prefix' => 'solutions', 'as' => 'solutions::'], function () {

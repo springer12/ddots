@@ -71,7 +71,7 @@ class Problem extends Model
     }
 
     public function getImagePath() {
-        $dir = public_path('problems/' . $this->id . '/');
+        $dir = public_path('problemdata/' . $this->id . '/');
         if (!File::exists($dir)) {
             File::makeDirectory($dir, 0755, true);
         }

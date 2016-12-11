@@ -1,11 +1,8 @@
 
 <header class="navbar navbar-dark bg-inverse navbar-static-top bd-navbar">
     <div class="container">
-
-
         <nav>
             <button class="navbar-toggler float-xs-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#bd-main-nav" aria-controls="bd-main-nav" aria-expanded="false" aria-label="Toggle navigation"></button>
-
             <div class="collapse navbar-toggleable-xs" id="bd-main-nav">
                 <a class="navbar-brand" href="{{ action('HomeController@index') }}">
                     {{ App\Subdomain::currentSubdomain()->fullname }}
@@ -19,6 +16,7 @@
                     @if (Auth::check() && Auth::user()->hasRole(App\User::ROLE_TEACHER))
                         <li class="nav-item {{ Request::is('groups') ? 'active' : '' }}"><a class="nav-item nav-link" href="{{ url('/groups') }}">Groups</a></li>
                         <li class="nav-item {{ Request::is('students') ? 'active' : '' }}"><a class="nav-item nav-link" href="{{ url('/students') }}">Students</a></li>
+                        <li class="nav-item {{ Request::is('problems') ? 'active' : '' }}"><a class="nav-item nav-link" href="{{ url('/problems') }}">Problems</a></li>
                     @endif
                     @if(Auth::check())
                         <li class="nav-item {{ Request::is('contests') ? 'active' : '' }}"><a class="nav-item nav-link" href="{{ url('/contests') }}">Contests</a></li>

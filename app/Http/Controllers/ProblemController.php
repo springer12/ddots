@@ -31,4 +31,52 @@ class ProblemController extends Controller
             /*'points' => $points_string*/
         ]);
     }
+
+    public function index(Request $request)
+    {
+        $orderBySession = \Session::get('orderBy', 'updated_at');
+        $orderBy = $request->input('order', $orderBySession);
+
+        $orderDirSession = \Session::get('orderDir', 'desc');
+        $orderDir = $request->input('dir', $orderDirSession);
+
+        $page = $request->input('page');
+        $query = $request->input('query', '');
+
+        if (!in_array($orderBy, Problem::sortable())) {
+            $orderBy = 'id';
+        }
+
+        if (!in_array($orderDir, ['asc', 'ASC', 'desc', 'DESC'])) {
+            $orderDir = 'desc';
+        }
+
+        \Session::put('orderBy', $orderBy);
+        \Session::put('orderDir', $orderDir);
+
+        $problems = Problem::query();
+
+        if ($query) {
+            $problems = $problems->where(function ($query_s) use ($query) {
+                $query_s->orwhere('id', 'like', "%$query%")
+                    ->orwhere('name', 'like', "%$query%");
+            });
+        }
+
+        $problems = $problems->orderBy($orderBy, $orderDir)
+            ->paginate(10);
+
+        return view('problems.list')->with([
+            'problems' => $problems,
+            'order_field' => $orderBy,
+            'dir' => $orderDir,
+            'page' => $page,
+            'query' => $query
+        ]);
+    }
+
+    public function single(Request $request, $id)
+    {
+        return view('problems.single', ['problem' => Problem::findOrFail($id)]);
+    }
 }
