@@ -32,7 +32,7 @@
                     return {
                         results: $.map(data.results, function (problem) {
 
-                            if (!$('[data-problem-block-id=' + problem.id + ']').length || $('[data-exam-input]')[0].checked) {
+                            if (!$('[data-problem-block-id=' + problem.id + ']').length) {
                                 return {
                                     text: problem.name,
                                     id: problem.id

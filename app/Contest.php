@@ -160,7 +160,12 @@ class Contest extends Model
     {
         $problems = [];
         if($this->type == static::TYPE_EXAM) {
-            foreach ($this->problemUsers()->where('user_id', Auth::user()->id)->get() as $cpu) {
+            if(Auth::user()->hasRole(User::ROLE_TEACHER)) {
+                $all_problems = $this->problemUsers()->groupBy('problem_id')->get();
+            } else {
+                $all_problems = $this->problemUsers()->where('user_id', Auth::user()->id)->get();
+            }
+            foreach ($all_problems as $cpu) {
                 $problems[$cpu->problem->id]['name'] = $cpu->problem->name;
                 $problems[$cpu->problem->id]['link'] = route('frontend::contests::problem', ['contest_id' => $this->id, 'problem_id' => $cpu->problem->id]);
                 $problems[$cpu->problem->id]['difficulty'] = $cpu->problem->difficulty;
