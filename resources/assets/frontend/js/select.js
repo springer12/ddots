@@ -31,6 +31,7 @@
                     params.page = params.page || 1;
                     return {
                         results: $.map(data.results, function (problem) {
+
                             if (!$('[data-problem-block-id=' + problem.id + ']').length) {
                                 return {
                                     text: problem.name,

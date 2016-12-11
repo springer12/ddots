@@ -57,6 +57,7 @@ class Contest extends Model
     ];
 
     const TYPE_TOURNAMENT = 'tournament';
+    const TYPE_EXAM = 'exam';
 
     protected $fillable = [
         'name', 'description', 'user_id', 'start_date', 'end_date', 'is_active', 'is_standings_active', 'labs', 'is_acm',
@@ -68,24 +69,29 @@ class Contest extends Model
         'created_at',
     ];
 
-    public static function getValidationRules()
+    public static function getValidationRules($is_exam)
     {
-        return [
+        $arr = [
             'name' => 'required|max:255',
             'description' => 'required|max:3000',
             'start_date' => 'required|date_format:Y-m-d H:i:s',
             'end_date' => 'required|date_format:Y-m-d H:i:s|after:start_date',
             'participants' => 'required',
-            'problems' => 'required',
             'programming_languages.*' => 'exists:programming_languages,id',
             'problems.*' => 'exists:problems,id',
             'problem_points.*' => 'required|integer|between:1,100',
         ];
+        return $arr + ($is_exam ? [] : ['problems' => 'required']);
     }
 
     public function programming_languages()
     {
         return $this->belongsToMany(ProgrammingLanguage::class, 'contest_programming_language', 'contest_id', 'programming_language_id');
+    }
+
+    public function problemUsers()
+    {
+        return $this->hasMany(ContestProblemUser::class);
     }
 
     public function problems()
@@ -153,16 +159,30 @@ class Contest extends Model
     public function getProblemData()
     {
         $problems = [];
-        foreach ($this->problems as $problem) {
-            $problems[$problem->id]['name'] = $problem->name;
-            $problems[$problem->id]['link'] = route('frontend::contests::problem', ['contest_id' => $this->id, 'problem_id' => $problem->id]);
-            $solution = $problem->getContestDisplaySolution($this);
-            $problems[$problem->id]['difficulty'] = $problem->difficulty;
-            if ($solution) {
-                if (Auth::user()->hasRole(User::ROLE_TEACHER) || Auth::user()->id == $solution->user_id) {
-                    $problems[$problem->id]['solution_link'] = route('frontend::contests::solution', ['id' => $solution->id]);
+        if($this->type == static::TYPE_EXAM) {
+            if(Auth::user()->hasRole(User::ROLE_TEACHER)) {
+                $all_problems = $this->problemUsers()->groupBy('problem_id')->get();
+            } else {
+                $all_problems = $this->problemUsers()->where('user_id', Auth::user()->id)->get();
+            }
+            foreach ($all_problems as $cpu) {
+                $problems[$cpu->problem->id]['name'] = $cpu->problem->name;
+                $problems[$cpu->problem->id]['link'] = route('frontend::contests::problem', ['contest_id' => $this->id, 'problem_id' => $cpu->problem->id]);
+                $problems[$cpu->problem->id]['difficulty'] = $cpu->problem->difficulty;
+                $solution = null; //@todo
+            }
+        } else {
+            foreach ($this->problems as $problem) {
+                $problems[$problem->id]['name'] = $problem->name;
+                $problems[$problem->id]['link'] = route('frontend::contests::problem', ['contest_id' => $this->id, 'problem_id' => $problem->id]);
+                $solution = $problem->getContestDisplaySolution($this);
+                $problems[$problem->id]['difficulty'] = $problem->difficulty;
+                if ($solution) {
+                    if (Auth::user()->hasRole(User::ROLE_TEACHER) || Auth::user()->id == $solution->user_id) {
+                        $problems[$problem->id]['solution_link'] = route('frontend::contests::solution', ['id' => $solution->id]);
+                    }
+                    $problems[$problem->id]['points'] = $solution->success_percentage / 100 * $this->getProblemMaxPoints($problem->id);
                 }
-                $problems[$problem->id]['points'] = $solution->success_percentage / 100 * $this->getProblemMaxPoints($problem->id);
             }
         }
         return $problems;

@@ -19,7 +19,8 @@
                                     <a class="nav-link" href="#participants" role="tab"
                                        data-toggle="tab">Participants</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item {{ $contest->type != \App\Contest::TYPE_EXAM ?: 'invisible' }}"
+                                    data-contest-problems-tab>
                                     <a class="nav-link" href="#problems" role="tab" data-toggle="tab">Problems</a>
                                 </li>
                                 <li class="nav-item float-md-right">
@@ -151,17 +152,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row {{ $errors->has('is_standings_active') ? ' has-danger' : '' }}">
-                                        <label class="control-label col-md-4" for="is_standings_active">Active
-                                            standings</label>
+                                    <div class="form-group row">
+                                        <label class="control-label col-md-4" for="is_exam">Is Exam</label>
                                         <div class="col-md-8">
-                                            <input type="checkbox" id="is_standings_active" name="is_standings_active"
-                                                   class="form-control" {{ $errors->has() ? (!old('is_standings_active')?:'checked') : (!$contest->is_standings_active?:'checked') }}>
-                                            @if ($errors->has('is_standings_active'))
-                                                <span class="form-control-feedback">
-                                                    <strong>{{ $errors->first('is_standings_active') }}</strong>
-                                                </span>
-                                            @endif
+                                            <input type="checkbox" id="is_exam" name="is_exam" data-exam-input
+                                                   {{ !old('is_exam') && $contest->type != \App\Contest::TYPE_EXAM ?:'checked="checked"' }}
+                                                   class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -169,7 +165,18 @@
                                         <div class="col-md-8">
                                             <input type="checkbox" id="is_acm" name="is_acm" data-acm-input
                                                    {{ !old('is_acm') && !$contest->is_acm ?:'checked="checked"' }}
+                                                   {{ !old('is_exam') && $contest->type != \App\Contest::TYPE_EXAM ?: 'disabled="disabled"'}}
                                                    class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-md-4" for="is_standings_active">Active
+                                            standings</label>
+                                        <div class="col-md-8">
+                                            <input type="checkbox" id="is_standings_active" name="is_standings_active"
+                                                   data-standings-input
+                                                   {{ !old('is_exam') && $contest->type != \App\Contest::TYPE_EXAM ?: 'disabled="disabled"'}}
+                                                   class="form-control" {{ $errors->has() ? (!old('is_standings_active')?:'checked') : (!$contest->is_standings_active?:'checked') }}>
                                         </div>
                                     </div>
                                     <div class="form-group row {{ $errors->has('show_max') ? ' has-danger' : '' }}">
@@ -219,7 +226,7 @@
                                         <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Remove</th>
+                                            <th>Action</th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -246,12 +253,17 @@
                                     </div>
                                     <hr class="invisible">
                                     <table class="table table-striped table-bordered table-sm" data-problems
+                                           @if($contest->type == \App\Contest::TYPE_EXAM || old('is_exam'))
+
+                                           data-all-user-problems='{{ $included_problems }}'
+                                           @else
                                            @foreach($included_problems as $problem)
                                            data-{{ $problem->id }}="{{ $problem->name }}"
                                            data-{{ $problem->id }}-points="{{ isset($problem->pivot)?$problem->pivot->max_points:$problem->max_points }}"
                                            data-{{ $problem->id }}-review="{{ isset($problem->pivot)?$problem->pivot->review_required:$problem->review_required  }}"
                                            data-{{ $problem->id }}-time-penalty="{{ isset($problem->pivot)?$problem->pivot->time_penalty:$problem->time_penalty }}"
                                             @endforeach
+                                            @endif
                                     >
                                         <thead>
                                         <tr>
@@ -259,7 +271,7 @@
                                             <th>Points</th>
                                             <th>Review</th>
                                             <th>Time penalty</th>
-                                            <th>Remove</th>
+                                            <th>Action</th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -271,8 +283,54 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" data-contest-user-modal>{{-- @todo --}}
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <select data-problem-select
+                                    data-get-problems-url="{{ route('privileged::ajax::searchProblems') }}"
+                                    class="form-control col-md-7 col-xs-12">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <select data-volume-select
+                                    data-get-volumes-url="{{ route('privileged::ajax::searchVolumes') }}"
+                                    class="form-control col-md-7 col-xs-12">
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-sm">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Points</th>
+                            <th>Review</th>
+                            <th>Time penalty</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody data-user-problems></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-save-user-problems>Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <script data-element-block type="x-tmpl-mustache">
-    <tr data-@{{ element }}-block-id=@{{ id }}>
+    <tr data-@{{ element }}-block-id=@{{ id }} data-@{{ element }}-@{{ id }}-name="@{{ name }}" data-user-problems-id="@{{ id }}">
         <td>
             @{{ name }}
         </td>
@@ -291,11 +349,18 @@
             <input name="time_penalty[@{{ id }}]" type="number" class="form-control" value="@{{ time_penalty }}"/>
         </td>
         @{{ /type_problem}}
-        <td>
+        <td class="actions-menu">
             <a data-remove-@{{ element }}-id="@{{ id }}" data-remove-@{{ element }}-name="@{{ name }}"
                href="javascript:void(0);">
                 <span class="tag tag-danger"><i class="fa fa-remove"></i></span>
             </a>
+            @{{ ^type_problem }}
+            <a data-edit-@{{ element }}-id="@{{ id }}"
+               class="{{ old('is_exam') || $contest->type == \App\Contest::TYPE_EXAM ?: 'invisible' }}"
+               href="javascript:void(0);">
+                <span class=""><i class="fa fa-pencil"></i></span>
+            </a>
+            @{{ /type_problem }}
         </td>
         <input type="hidden" name="@{{ element }}s[]" value="@{{ id }}">
     </tr>
