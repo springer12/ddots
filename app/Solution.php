@@ -262,11 +262,11 @@ class Solution extends Model
 
     public function getCode()
     {
-        try {
-            return File::get($this->sourceCodeFilePath());
-        } catch (\Exception $e) {
+        if (!File::exists($this->sourceCodeFilePath())) {
             return "";
         }
+
+        return File::get($this->sourceCodeFilePath());
     }
 
     public function annul()
