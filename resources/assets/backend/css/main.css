@@ -1,0 +1,24 @@
+/*fixs start*/
+@media (min-width: 768px) {
+    footer {
+         margin-left: 0px;
+    }
+}
+/*fixs end*/
+
+.wrap-text {
+    word-break: break-all;
+}
+.custom-pager {
+    text-align: center;
+}
+.flash-message {
+    margin-top: 60px;
+}
+
+
+table td[class*=col-], table th[class*=col-] {
+    position: static;
+    display: table-cell;
+    float: none;
+}
