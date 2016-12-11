@@ -48,7 +48,7 @@ class SolutionController extends Controller
      * @return mixed
      */
     public function show_source_code(Request $request, $id) {
-        return File::get(Solution::where('id', $id)->firstOrFail()->sourceCodeFilePath());
+        return Solution::where('id', $id)->firstOrFail()->getCode();
     }
 
     /**
