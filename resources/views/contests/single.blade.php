@@ -4,33 +4,45 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h3>{{ $contest->name }}
-                    {{--<span class="tag tag-{{ $contest->is_active? 'success' : 'danger' }}">{{ $contest->is_active? 'Active' : 'Disabled' }}</span>--}}
-                    <a class="btn btn-secondary float-xs-right" title="Edit"
-                       href="{{ action('ContestController@edit',['id'=> $contest->id]) }}">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </a>
-                </h3>
+                <span style="vertical-align: sub;">
+                    {{ $contest->name }}
+                    <i class="tag tag-{{ $contest->is_active? 'success' : 'danger' }}">{{ $contest->is_active? 'Active' : 'Disabled' }}</i>
+                </span>
+                <a class="btn btn-secondary float-xs-right" title="Edit"
+                   href="{{ action('ContestController@edit',['id'=> $contest->id]) }}">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </a>
             </div>
             <div class="card-block">
-                <div class="row">
-                    <div class="col-md-3 container">
-                        <ul style="list-style: none">
-                            <li><h4>{{ $contest->end_date->diffInDays($contest->start_date) }} days</h4></li>
-                            <li><h4>{{ $contest->start_date }}</h4></li>
-                            <li><h4>{{ $contest->end_date }}</h4></li>
-                        </ul>
-                        <hr class="invisible">
-                        <ul style="list-style: none">
-                            @foreach($contest->programming_languages as $programming_language)
-                                <li><h5> ● {{ $programming_language->name }}</h5></li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <div class="col-md-9">
-                        <p>{{ $contest->description }}</p>
-                    </div>
-                </div>
+                <table class="table">
+                    <tr>
+                        <td class="col-sm-4">Started at</td>
+                        <td>{{ $contest->start_date }}</td>
+                    </tr>
+                    <tr>
+                        <td>Finished at</td>
+                        <td>{{ $contest->end_date }}</td>
+                    </tr>
+                    <tr>
+                        <td>Time left</td>
+                        <td>{{ $contest->end_date->diffForHumans() }}</td>
+                    </tr>
+                    <tr>
+                        <td>Programming Languages</td>
+                        <td>
+                            {{
+                            implode(', ', $contest->programming_languages->map(function ($el) {
+                                return $el->name;
+                            })->toArray())
+                            }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            {{ $contest->description }}
+                        </td>
+                    </tr>
+                </table>
             </div>
             <div class="card-block">
                 <div class="row pull-right">
