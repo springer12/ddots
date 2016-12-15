@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ App::getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,9 +20,7 @@
     <footer class="footer">
         <div class="container">
             <p class="text-justify text-muted text-xs-center">
-                Copyright © 2005-2016, Молодёжное научное общество "Q-BIT" <br>
-                тех. поддержка: Н.А. Арзубов <br>
-                При использовании материалов сайта ссылка на dots.org.ua обязательна.
+                @lang('layout.footer_app')
             </p>
         </div>
     </footer>

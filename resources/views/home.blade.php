@@ -10,7 +10,7 @@
             <div class="col-sm-10">
                 <h3>
                     <p>{{ $subdomain->description }}</p>
-                    <p>Практикум по програмированию</p>
+                    <p>@lang('layout.description_2')</p>
                 </h3>
             </div>
         </div>
@@ -22,12 +22,12 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card" id="login">
-                        <div class="card-header">Login</div>
+                        <div class="card-header">@lang('menu.login')</div>
                         <div class="card-block">
                             <form role="form" method="POST" action="{{ url('/login') }}">
                                 {{ csrf_field() }}
                                 <div class="form-group row {{ $errors->has('nickname') ? ' has-danger' : '' }}">
-                                    <label class="col-md-4 col-form-label">Email / nickname</label>
+                                    <label class="col-md-4 col-form-label">@lang('layout.email_nickname')</label>
 
                                     <div class="col-md-6">
                                         <input class="form-control" type="text" placeholder="Enter email"
@@ -40,9 +40,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row {{ $errors->has('password') ? ' has-danger' : '' }}">
-                                    <label class="col-md-4 col-form-label">Password</label>
+                                    <label class="col-md-4 col-form-label">@lang('layout.password')</label>
                                     <div class="col-md-6">
-                                        <input class="form-control" type="password" placeholder="Password"
+                                        <input class="form-control" type="password" placeholder="@lang('layout.password')"
                                                name="password">
                                         @if ($errors->has('password'))
                                             <span class="form-control-feedback">
@@ -56,7 +56,7 @@
                                     <div class="col-md-6 offset-md-4">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="remember"> Remember Me
+                                                <input type="checkbox" name="remember"> @lang('layout.remember_me')
                                             </label>
                                         </div>
                                     </div>
@@ -64,10 +64,10 @@
                                 <div class="form-group row ">
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
-                                            <i class="fa fa-btn fa-sign-in"></i> Login
+                                            <i class="fa fa-btn fa-sign-in"></i> @lang('menu.login')
                                         </button>
 
-                                        <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
+                                        <a class="btn btn-link" href="{{ url('/password/reset') }}">@lang('layout.password')</a>
                                     </div>
                                 </div>
                                 <div class="form-group row ">
@@ -89,10 +89,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">News</div>
+                    <div class="card-header">@lang('layout.news')</div>
                     @each('partial.news_item', $subdomain->news()->orderBy('created_at', 'desc')->take(3)->get(), 'news_item')
                     <div class="card-block">
-                        <a href="{{ url('news') }}" class="btn btn-success pull-right">Latest news</a>
+                        <a href="{{ url('news') }}" class="btn btn-success pull-right">@lang('layout.latest_news')</a>
                     </div>
                 </div>
 
@@ -105,7 +105,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">Project was supported by</div>
+                    <div class="card-header">@lang('layout.supported_by')</div>
 
                     @foreach($subdomain->sponsors as $sponsor)
                         <div class="card-block">
@@ -125,7 +125,7 @@
                     @endforeach
 
                     <div class="card-block">
-                        <a href="{{ url('sponsors') }}" class="btn btn-success pull-right">All sponsors</a>
+                        <a href="{{ url('sponsors') }}" class="btn btn-success pull-right">@lang('layout.all_sponsors')</a>
                     </div>
                 </div>
 
@@ -137,8 +137,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">Subdomains teachers and mentors</div>
-
+                    <div class="card-header">@lang('layout.sub_teachers_mentors')</div>
                     @foreach($subdomain->users()->teacher()->inRandomOrder()->take(3)->get() as $teacher)
                         <div class="card-block">
                             <div class="row">
@@ -156,7 +155,7 @@
                         <hr>
                     @endforeach
                     <div class="card-block">
-                        <a href="{{ url('teachers') }}" class="btn btn-success pull-right">All teachers and mentors</a>
+                        <a href="{{ url('teachers') }}" class="btn btn-success pull-right">@lang('layout.all_teachers_mentors')</a>
                     </div>
                 </div>
 

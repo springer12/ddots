@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ App::getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,11 +23,11 @@
                     DOTS
                 </a>
                 <ul class="nav navbar-nav ">
-                    <li class="nav-item {{ Request::is('teachers') ? 'active' : '' }}"><a class="nav-item nav-link" href="{{ url('teachers') }}">Teachers</a></li>
+                    <li class="nav-item {{ Request::is('teachers') ? 'active' : '' }}"><a class="nav-item nav-link" href="{{ url('teachers') }}">@lang('menu.teachers')</a></li>
                 </ul>
                 <ul class="nav navbar-nav  float-md-right">
-                    <li class="nav-item"><a class="nav-item nav-link" href="{{ url('/register') }}"><i class="fa fa-file-o" aria-hidden="true"></i> Instructions</a></li>{{-- @todo --}}
-                    <li class="nav-item"><a class="nav-item nav-link" href="{{ url('/register') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Register</a></li>
+                    <li class="nav-item"><a class="nav-item nav-link" href="{{ url('/register') }}"><i class="fa fa-file-o" aria-hidden="true"></i> @lang('menu.instructions')</a></li>{{-- @todo --}}
+                    <li class="nav-item"><a class="nav-item nav-link" href="{{ url('/register') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> @lang('menu.register')</a></li>
                 </ul>
             </div>
         </nav>
@@ -39,9 +39,7 @@
 <footer class="text-muted">
     <div class="container">
         <p class="text-justify text-xs-center">
-            Copyright © 2005-2016, Молодёжное научное общество "Q-BIT" <br>
-            тех. поддержка: Н.А. Арзубов <br>
-            При использовании материалов сайта ссылка на dots.org.ua обязательна.
+            @lang('layout.footer_main')
         </p>
     </div>
 </footer>

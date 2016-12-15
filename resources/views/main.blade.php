@@ -68,7 +68,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">Практикум по программированию</div>
+                    <div class="card-header">@lang('layout.description_2')</div>
 
                     @foreach(\App\Subdomain::get() as $subdomain)
                         <div class="card-block">
@@ -89,7 +89,7 @@
                     @endforeach
 
                     <div class="card-block">
-                        <a href="#" class="btn btn-success pull-right">All subdomains</a>
+                        <a href="#" class="btn btn-success pull-right">@lang('layout.all_subdomains')</a>
                     </div>
                 </div>
 
@@ -101,7 +101,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">Project was supported by</div>
+                    <div class="card-header">@lang('layout.supported_by')</div>
                     <div class="card-block">
                         @foreach(\App\Sponsor::main()->inRandomOrder()->take(3)->get() as $sponsor)
 
@@ -120,7 +120,8 @@
                             </div>
                             <hr>
                         @endforeach
-                        <a href="{{ url('sponsors') }}" class="btn btn-success pull-right">All sponsors</a>
+                        <a href="{{ url('sponsors') }}"
+                           class="btn btn-success pull-right">@lang('layout.all_sponsors')</a>
                     </div>
                 </div>
 
@@ -133,8 +134,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">Subdomains teachers and mentors</div>
-
+                    <div class="card-header">@lang('layout.sub_teachers_mentors')</div>
                     <div class="card-block">
                         @foreach(App\User::teacher()->inRandomOrder()->take(3)->get() as $teacher)
                             <div class="row">
@@ -152,13 +152,12 @@
                             </div>
                             <hr>
                         @endforeach
-
-                        <a href="{{ url('teachers') }}" class="btn btn-success pull-right">All teachers and mentors</a>
+                        <a href="{{ url('teachers') }}"
+                           class="btn btn-success pull-right">@lang('layout.all_teachers_mentors')</a>
                     </div>
                 </div>
 
             </div>
         </div>
-
     </div>
 @endsection
