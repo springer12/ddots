@@ -109,7 +109,7 @@ class Problem extends Model
         if (!File::exists($this->getImagePath() . 'image.png')) {
             return asset('frontend-bundle/media/no-problem-image.png');
         }
-        return asset($this->getImagePath() . 'image.png');
+        return asset('problemdata/' . $this->id . '/image.png');
     }
 
     public function setArchive($name)
