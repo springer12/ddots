@@ -11,22 +11,21 @@
                     <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                     <a href="{{ route('frontend::contests::contest_problem', ['contest_id' => $contest->id, 'problem_id' => $solution->problem->id ]) }}">{{ $solution->problem->name }}</a>
                     <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    solution
+                    @lang('contest.solution')
                 </div>
             @endif
             <div class="card-block">
-
                 <table class="table">
                     <tr>
-                        <td>Date</td>
+                        <td>@lang('layout.date')</td>
                         <td>{{ $solution->created_at }}</td>
                     </tr>
                     <tr>
-                        <td>Programming language</td>
+                        <td>@lang('layout.programming_language')</td>
                         <td>{{ $solution->programming_language->name }}</td>
                     </tr>
                     <tr>
-                        <td>Points</td>
+                        <td>@lang('contest.points')</td>
                         <td>
                             @if($solution->owner->hasRole(\App\User::ROLE_TEACHER))
                                 @if($solution->success_percentage)
@@ -37,30 +36,29 @@
                             @else
                                 {{ $solution->points }}
                             @endif
-
                             @if($solution->status !== App\Solution::STATUS_ZR && Auth::user()->isTeacherOf($solution->owner->id))
                                 <a data-btn-ok-href="{{ route('teacherOnly::solutions::annul', ['id' => $solution->id]) }}"
                                    href=""
                                    class="btn btn-danger btn-sm"
-                                   data-btn-ok-label="Annul"
+                                   data-btn-ok-label="@lang('contest.annul')"
                                    data-toggle="confirmation"
-                                   data-message="Are you sure you want to annul this solution?"
-                                >Annul</a>
+                                   data-message="@lang('contest.annul_confirm')"
+                                >@lang('contest.annul')</a>
                             @endif
                         </td>
                     </tr>
                     <tr>
-                        <td>Result</td>
+                        <td>@lang('contest.result')</td>
                         <td>
-                            {{ $solution->status?: 'in proccess' }}
+                            {{ $solution->status?: trans('contest.in_process') }}
                         </td>
                     </tr>
                     <tr>
-                        <td>Max memory usag</td>
+                        <td>@lang('contest.max_memory')</td>
                         <td>{{ $solution->max_memory }}</td>
                     </tr>
                     <tr>
-                        <td>Max time</td>
+                        <td>@lang('contest.max_time')</td>
                         <td>{{ $solution->max_time }}</td>
                     </tr>
                 </table>
@@ -70,17 +68,17 @@
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <a class="btn btn-success"
-                                   href="{{ route('teacherOnly::solutions::approve', ['id' => $solution->id]) }}">Approve</a>
+                                   href="{{ route('teacherOnly::solutions::approve', ['id' => $solution->id]) }}">@lang('contest.approve')</a>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <a class="btn btn-danger"
-                                   href="{{ route('teacherOnly::solutions::decline', ['id' => $solution->id]) }}">Decline</a>
+                                   href="{{ route('teacherOnly::solutions::decline', ['id' => $solution->id]) }}">@lang('contest.decline')</a>
                             </div>
                         </div>
                     @endif
                     <div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-6">
-                            Author:
+                            @lang('contest.author'):
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-6">
                             <a href="{{ route('frontend::user::profile', ['id' => $solution->owner->id]) }}">{{ $solution->owner->name }}</a>
@@ -92,15 +90,15 @@
             </div>
         </div>
         <div class="card">
-            <div class="card-header">Reports</div>
+            <div class="card-header">@lang('contest.reports')</div>
             <div class="card-block">
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Points out of total</th>
-                        <th>Execution time</th>
-                        <th>Result</th>
-                        <th>Peak memory usage</th>
+                        <th>@lang('contest.points_of_total')</th>
+                        <th>@lang('contest.exec_time')</th>
+                        <th>@lang('contest.result')</th>
+                        <th>@lang('contest.peak_mem')</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -120,7 +118,7 @@
         </div>
 
         <div class="card">
-            <div class="card-header">Messages</div>
+            <div class="card-header">@lang('contest.messages')</div>
             @foreach($solution->messages as $message)
                 <div class="card-block">
                     <b>{{ $message->user->name }}:</b>
@@ -129,7 +127,8 @@
             @endforeach
             @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
                 <div class="card-block">
-                    <form method="post" action="{{ action('SolutionMessageController@message', ['id' => $solution->id]) }}">
+                    <form method="post"
+                          action="{{ action('SolutionMessageController@message', ['id' => $solution->id]) }}">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <textarea rows="3" name="text" class="form-control"></textarea>
@@ -141,6 +140,5 @@
                 </div>
             @endif
         </div>
-
     </div>
 @endsection

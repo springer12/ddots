@@ -5,12 +5,14 @@
     <div class="container">
 
         @if($myTeachers && !$myTeachers->isEmpty())
-            <h2>My teachers</h2>
+            <h2>@lang('layout.my_teachers')</h2>
             <div class="row">
                 @foreach($myTeachers as $teacher)
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="card text-xs-center">
-                            <a href="{{ route('frontend::user::profile', ['id' => $teacher->id]) }}"><img class="card-img-top teacher-avatar" src="{{ $teacher->avatar }}" alt="Card image cap"></a>
+                            <a href="{{ route('frontend::user::profile', ['id' => $teacher->id]) }}"><img
+                                        class="card-img-top teacher-avatar" src="{{ $teacher->avatar }}"
+                                        alt="Card image cap"></a>
                             <div class="card-block">
                                 <h4>
                                     <a href="{{ route('frontend::user::profile', ['id' => $teacher->id]) }}">{{ $teacher->name }}</a>
@@ -22,13 +24,15 @@
             </div>
             <hr class="hidden-border">
         @endif
-        <h2>All teachers</h2>
+        <h2>@lang('layout.all_teachers')</h2>
         <div class="row" {{ $allowedRequests ?: 'data-requests-forbidden' }}>
             @foreach($allTeachers as $teacher)
-
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="card text-xs-center">
-                        <a class="teacher-avatar-container" href="{{ route('frontend::user::profile', ['id' => $teacher->id]) }}"><img class="card-img-top teacher-avatar" src="{{ $teacher->avatar }}" alt="Card image cap"></a>
+                        <a class="teacher-avatar-container"
+                           href="{{ route('frontend::user::profile', ['id' => $teacher->id]) }}"><img
+                                    class="card-img-top teacher-avatar" src="{{ $teacher->avatar }}"
+                                    alt="Card image cap"></a>
                         <div class="card-block">
                             <h4 class="teacher-name-container">
                                 <a href="{{ route('frontend::user::profile', ['id' => $teacher->id]) }}">{{ $teacher->name }}</a>
@@ -42,12 +46,12 @@
                                             class="btn btn-info btn-fill btn-wd"
                                             style="display: {{ $teacher->relation_exists ? 'none' : 'inline-block' }}"
                                             {{ $allowedRequests ? '' : 'disabled' }}>
-                                        My teacher
+                                        @lang('layout.my_teacher')
                                     </button>
                                     <button id="teacher_{{ $teacher->id }}" type="button"
                                             class="btn btn-success btn-fill btn-wd"
                                             style="display: {{ $teacher->relation_exists ? 'inline-block' : 'none' }}"
-                                            disabled>request is sent
+                                            disabled>@lang('layout.request_is_sent')
                                     </button>
                                 @endif
                             </div>

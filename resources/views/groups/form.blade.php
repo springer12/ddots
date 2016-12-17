@@ -11,7 +11,7 @@
                         <form method="post">
                             {!! csrf_field() !!}
                             <div class="form-group row{{ $errors->has('name') ? ' has-danger' : '' }}">
-                                <label class="form-control-label col-md-4" for="name">Name <span
+                                <label class="form-control-label col-md-4" for="name">@lang('layout.name') <span
                                             class="required">*</span></label>
                                 <div class="col-md-8">
                                     <input type="text" name="name" class="form-control border-input"
@@ -25,7 +25,7 @@
                             </div>
 
                             <div class="form-group row{{ $errors->has('students') ? ' has-danger' : '' }}">
-                                <label class="form-control-label col-md-4" for="students">Students</label>
+                                <label class="form-control-label col-md-4" for="students">@lang('menu.students')</label>
                                 <div class="col-md-8">
                                     <select name="students[]"
                                             data-select-students
@@ -49,7 +49,8 @@
                             </div>
 
                             <div class="form-group row{{ $errors->has('description') ? ' has-danger' : '' }}">
-                                <label class="form-control-label col-md-4" for="description">Description</label>
+                                <label class="form-control-label col-md-4"
+                                       for="description">@lang('layout.description')</label>
                                 <div class="col-md-8">
                                     <textarea name="description" class="form-control border-input"
                                               rows="5">{{ old('description') ?: $group->description }}</textarea>
@@ -69,9 +70,9 @@
                                        data-toggle="confirmation"
                                        data-message="Are you sure you want to leave the page? The changes won't be saved."
                                        data-btn-ok-href="{{ route('teacherOnly::groups::list') }}"
-                                       data-btn-ok-label="Leave the page">Cancel</a>
+                                       data-btn-ok-label="Leave the page">@lang('layout.cancel')</a>
 
-                                    <button type="submit" class="btn btn-success">Save</button>
+                                    <button type="submit" class="btn btn-success">@lang('layout.save')</button>
                                 </div>
                             </div>
                         </form>

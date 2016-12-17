@@ -12,8 +12,7 @@
                 </span>
             </div>
             <div class="card-block">
-
-                Volumes:<h4>
+                @lang('layout.volumes'):<h4>
                     @foreach($problem->volumes as $volume)
                         <span class="tag tag-default">{{ $volume->name }}</span>
                         <span class="tag tag-default">{{ $volume->name }}</span>
@@ -22,11 +21,9 @@
                 </h4>
             </div>
             <div class="card-block">
-
                 <div class="align-center form-group">
-                    <img src="{{ $problem->image }}" style="max-width: 100%">
+                    <img src="{{ $problem->image }}" style="max-width: 100%">{{-- @todo remove inline --}}
                 </div>
-
             </div>
         </div>
     </div>

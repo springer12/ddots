@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>DOTS</title>
+    <title>@lang('layout.dots_caps')</title>
 
     <link href="{{ asset('backend-bundle/css/bundle' . (config('app.assets.minified', false) ? '.min' : '') . '.css') }}"
           rel='stylesheet' type='text/css'>
@@ -18,7 +18,7 @@
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
                     <a href="{{ action('Backend\DashboardController@index') }}" class="site_title"><i
-                                class="fa fa-paw"></i> <span>DOTS ROOT</span></a>
+                                class="fa fa-paw"></i> <span>@lang('layout.dots_root')</span></a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -34,43 +34,39 @@
                     </div>
                 </div>
                 <!-- /menu profile quick info -->
-
                 <br>
-
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                     <div class="menu_section active">
                         <h3>General</h3>
                         <ul class="nav side-menu" style="">
-                            <li class="active"><a><i class="fa fa-home"></i> Home <span
+                            <li class="active"><a><i class="fa fa-home"></i> @lang('menu.home') <span
                                             class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu" style="display: block;">
                                     <li class="{{ !Request::is(action('Backend\DashboardController@index')) ?: 'current-page' }}">
-                                        <a href="{{ action('Backend\DashboardController@index') }}">Dashboard</a></li>
+                                        <a href="{{ action('Backend\DashboardController@index') }}">@lang('menu.dashboard')</a></li>
                                     <li class="{{ !Request::is(action('Backend\TestingServersController@index')) ?: 'current-page' }}">
-                                        <a href="{{ action('Backend\TestingServersController@index') }}">Testing
-                                            servers</a></li>
+                                        <a href="{{ action('Backend\TestingServersController@index') }}">@lang('menu.testing_servers')</a></li>
                                     <li class="{{ !Request::is(action('Backend\UserController@index')) ?: 'current-page' }}">
-                                        <a href="{{ action('Backend\UserController@index') }}">Users</a></li>
+                                        <a href="{{ action('Backend\UserController@index') }}">@lang('menu.users')</a></li>
                                     <li class="{{ !Request::is(action('Backend\NewsController@index')) ?: 'current-page' }}">
-                                        <a href="{{ action('Backend\NewsController@index') }}">News</a></li>
+                                        <a href="{{ action('Backend\NewsController@index') }}">@lang('menu.news')</a></li>
                                     <li class="{{ !Request::is(action('Backend\ProblemController@index')) ?: 'current-page' }}">
-                                        <a href="{{ action('Backend\ProblemController@index') }}">Problems</a></li>
+                                        <a href="{{ action('Backend\ProblemController@index') }}">@lang('menu.problems')</a></li>
                                     <li class="{{ !Request::is(action('Backend\VolumeController@index')) ?: 'current-page' }}">
-                                        <a href="{{ action('Backend\VolumeController@index') }}">Volumes</a></li>
+                                        <a href="{{ action('Backend\VolumeController@index') }}">@lang('menu.problems')</a></li>
                                     <li class="{{ !Request::is(action('Backend\SponsorController@index')) ?: 'current-page' }}">
-                                        <a href="{{ action('Backend\SponsorController@index') }}">Sponsors</a></li>
+                                        <a href="{{ action('Backend\SponsorController@index') }}">@lang('menu.sponsors')</a></li>
                                     <li class="{{ !Request::is(action('Backend\SubdomainController@index')) ?: 'current-page' }}">
-                                        <a href="{{ action('Backend\SubdomainController@index') }}">Subdomains</a></li>
+                                        <a href="{{ action('Backend\SubdomainController@index') }}">@lang('menu.subdomains')</a></li>
                                     <li class="{{ !Request::is(action('Backend\ContestController@index')) ?: 'current-page' }}">
-                                        <a href="{{ action('Backend\ContestController@index') }}">Contests</a></li>
+                                        <a href="{{ action('Backend\ContestController@index') }}">@lang('menu.contests')</a></li>
                                     <li class="{{ !Request::is(action('Backend\GroupController@index')) ?: 'current-page' }}">
-                                        <a href="{{ action('Backend\GroupController@index') }}">Groups</a></li>
+                                        <a href="{{ action('Backend\GroupController@index') }}">@lang('menu.groups')</a></li>
                                     <li class="{{ !Request::is(action('Backend\ProgrammingLanguageController@index')) ?: 'current-page' }}">
-                                        <a href="{{ action('Backend\ProgrammingLanguageController@index') }}">Programming
-                                            languages</a></li>
+                                        <a href="{{ action('Backend\ProgrammingLanguageController@index') }}">@lang('menu.programming_languages')</a></li>
                                     <li class="{{ !Request::is(action('Backend\MessageController@index')) ?: 'current-page' }}">
-                                        <a href="{{ action('Backend\MessageController@index') }}">Dialogs</a></li>
+                                        <a href="{{ action('Backend\MessageController@index') }}">@lang('menu.dialogs')</a></li>
                                     <li class="{{ !Request::is(action('Backend\TesterController@index')) ?: 'current-page' }}">
                                         <a href="{{ action('Backend\TesterController@index') }}">Fake tester</a></li>
                                 </ul>
@@ -79,7 +75,6 @@
                     </div>
                 </div>
                 <!-- /sidebar menu -->
-
             </div>
         </div>
 
@@ -99,7 +94,7 @@
                             </a>
                             <div class="dropdown-menu pull-right">
                                 <a class="dropdown-item" href="{{ url('/logout') }}"><i
-                                            class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                            class="fa fa-sign-out pull-right"></i> @lang('menu.logout')</a>
                                 </a>
                             </div>
                         </li>

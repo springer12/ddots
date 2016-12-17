@@ -6,18 +6,17 @@ $users_count_who_solved = [];
     <table class="table table-striped table-bordered table-sm">
         <thead>
         <tr>
-            <th>Position</th>
-            <th>User</th>
+            <th>@lang('contest.position')</th>
+            <th>@lang('contest.user')</th>
             @foreach($problems as $problem)
                 <th>
                     <a href="{{ $problem->getLink($contest) }}">{{ $problem->name }}</a>
                 </th>
             @endforeach
-            <th>Total</th>
+            <th>@lang('contest.total')</th>
         </tr>
         </thead>
         <tbody>
-
         <?php $i = 1 ?>
         @foreach($results as $result)
             <tr>
@@ -61,21 +60,21 @@ $users_count_who_solved = [];
         </tbody>
         <tfoot>
         <tr>
-            <th colspan="2">Average points</th>
+            <th colspan="2">@lang('contest.average_points')</th>
             @foreach($contest->problems as $problem)
                 <td>{{ number_format($totals['avg_by_problems'][$problem->id], 2, '.', '') }}</td>
             @endforeach
             <th>{{ number_format($totals['total_avg'], 2, '.', '')  }}</th>
         </tr>
         <tr>
-            <th colspan="2">Attempts</th>
+            <th colspan="2">@lang('contest.attempts')</th>
             @foreach($contest->problems as $problem)
                 <td>{{ $users_count_who_try_to_solve[$problem->id] = $problem->getUsersWhoTryToSolve($contest) }}</td>
             @endforeach
             <th>{{ $contest->getUsersWhoTryToSolve() }}</th>
         </tr>
         <tr>
-            <th colspan="2">Solved</th>
+            <th colspan="2">@lang('contest.solved')</th>
             @foreach($contest->problems as $problem)
                 <td>
                     @if($contest->show_max)

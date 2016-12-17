@@ -6,18 +6,18 @@
             <div class="card-header">
                 <a href="{{ route('frontend::contests::single', ['id' => $contest->id]) }}">{{ $contest->name }}</a>
                 <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                All Solutions</div>
+                @lang('contest.all_solutions')</div>
             <div class="card-block">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-sm">
                         <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Result</th>
-                            <th>Points</th>
-                            <th>Problem</th>
+                            <th>@lang('layout.date')</th>
+                            <th>@lang('contest.result')</th>
+                            <th>@lang('contest.points')</th>
+                            <th>@lang('contest.problem')</th>
                             @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))
-                                <th>Author</th>
+                                <th>@lang('contest.author')</th>
                             @endif
                         </tr>
                         </thead>
@@ -39,7 +39,6 @@
                                         @endif
                                     </td>
                                 @endif
-
                             </tr>
                         @endforeach
                         </tbody>
