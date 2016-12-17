@@ -2,22 +2,21 @@
     <table class="table table-striped table-bordered table-sm">
         <thead>
         <tr>
-            <th>Position</th>
-            <th>User</th>
+            <th>@lang('contest.position')</th>
+            <th>@lang('contest.user')</th>
             @foreach($problems as $problem)
                 <th>
                     <a href="{{ $problem->getLink($contest) }}">{{ $problem->name }}</a>
                 </th>
             @endforeach
-            <th>Total</th>
-            <th>Time</th>
-            <th>Incorrect solutions %</th>
+            <th>@lang('contest.total')</th>
+            <th>@lang('contest.time')</th>
+            <th>@lang('contest.incorrect_solutions_percentage')</th>
         </tr>
         </thead>
         <tbody>
         <?php $i = 1 ?>
         @foreach($results as $result)
-
             <tr>
                 <td>{{ $i++ }}</td>
                 <td>
@@ -61,30 +60,30 @@
         </tbody>
         <tfoot>
         <tr>
-            <th colspan="2">Results</th>
+            <th colspan="2">@lang('contest.results')</th>
             @foreach($problems as $problem)
                 <th>
                     <a href="{{ $problem->getLink($contest) }}">{{ $problem->name }}</a>
                 </th>
             @endforeach
-            <th colspan="3">Total</th>
+            <th colspan="3">@lang('contest.total')</th>
         </tr>
         <tr>
-            <th colspan="2">Users attempted</th>
+            <th colspan="2">@lang('contest.users_attempted')</th>
             @foreach($problems as $problem)
                 <td>{{ $totals[$problem->id]['users_attempted'] }}</td>
             @endforeach
             <td colspan="3">{{ $totals['users_attempted'] }}</td>
         </tr>
         <tr>
-            <th colspan="2">Users solved</th>
+            <th colspan="2">@lang('contest.users_solved')</th>
             @foreach($problems as $problem)
                 <td>{{ $totals[$problem->id]['correct_solutions'] }}</td>
             @endforeach
             <td colspan="3">{{ $totals['correct_solutions'] }}</td>
         </tr>
         <tr>
-            <th colspan="2">Solutions sent</th>
+            <th colspan="2">@lang('contest.solutions_sent')</th>
             @foreach($problems as $problem)
                 <td>{{ $totals[$problem->id]['attempts'] }}</td>
             @endforeach
@@ -110,7 +109,6 @@
                 </td>
             </tr>
         @endforeach
-
         </tfoot>
     </table>
 </div>

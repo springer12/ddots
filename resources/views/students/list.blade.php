@@ -5,7 +5,7 @@
 
         <div class="row">
             <div class="card">
-                <div class="card-header">Students</div>
+                <div class="card-header">@lang('menu.students')</div>
                 <div class="card-block">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-sm">
@@ -15,8 +15,8 @@
                                 <th>@include('helpers.grid-header', ['name' => 'Name',  'order' => 'name'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'E-mail',  'order' => 'email'])</th>
                                 <th>@include('helpers.grid-header', ['name' => 'Nickname',  'order' => 'nickname'])</th>
-                                <th>Groups</th>
-                                <th>Actions</th>
+                                <th>@lang('menu.groups')</th>
+                                <th>@lang('layout.actions')</th>
                             </tr>
                             </thead>
                             <tbody>

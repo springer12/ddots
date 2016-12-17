@@ -11,12 +11,28 @@ return [
             Copyright © 2005-:date, Молодёжное научное общество "Q-BIT" <br>
             тех. поддержка: Н.А. Арзубов <br>
             При использовании материалов сайта ссылка на dots.org.ua обязательна.',
+    'description_main_1' => 'С 16 февраля 2016 тестирующая система DOTS доступна для преподавателей информатики Харькова
+                        и Харьковской области. Теперь все, кто преподаёт программирование, сможет зарегистрировать в
+                        системе своих учеников, объединять их в группы и проводить практикумы по программированию с
+                        использованием тестирующей системы.',
+    'description_main_2' => '          <b>Dots</b> - это тестирующая система для dots.org.ua, написаная на Python, sh и C и
+                            интенсивно
+                            использующая все возможности Docker контейнеров и Cgroup подсистемы ядра, запуская
+                            компиляторы и
+                            тестируя пользовательские решения в отдельных Docker контейнерах. Такой подход делает DDots
+                            максимально гибкой и модульной системой. <br> <br>
+
+                            Один DDots обрабатывает одно решение в единицу времени и предзагружает два решения в очередь
+                            для
+                            уменьшения задержек, связанных с сетью. Таким образом, для нагрузки нескольких ядер
+                            рекомендуется запускать N контейнеров DDots (это делается автоматически, Makefile
+                            автоматически
+                            определяет количество доступных ядер и использует все возможности). <br><br>',
     'description_2' => 'Практикум по програмированию',
     'email_nickname' => 'Email / nickname',
     'password' => 'Password',
     'remember_me' => 'Remember Me',
     'forgot_password' => 'Forgot Your Password?',
-    'news' => 'News',
     'latest_news' => 'Latest news',
     'supported_by' => 'Project was supported by',
     'all_sponsors' => 'All sponsors',
@@ -43,5 +59,28 @@ return [
     'email_verification' => 'You will be sent a verification email.',
     'avatar' => 'Avatar',
     'description' => 'Description',
-
+    'my_teachers' => 'My teachers',
+    'my_teacher' => 'My teacher',
+    'all_teachers' => 'All teachers',
+    'request_is_sent' => 'request is sent',
+    'actions' => 'Actions',
+    'volumes' => 'Volumes',
+    'date' => 'Date',
+    'dots_root' => 'DOTS ROOT',
+    'dots_caps' => 'DOTS',
+    'reset' => 'Reset',
+    'name' => 'Name',
+    'cancel' => 'Cancel',
+    'save' => 'Save',
+    'id' => 'ID',
+    'created_date' => 'Created Date',
+    'updated_date' => 'Updated Date',
+    'deleted_date' => 'Deleted Date',
+    'add_group' => 'Add Group',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'restore' => 'Restore',
+    'error_page' => 'Be right back',
+    'cancel_warn' => 'Are you sure you want to leave the page? The changes won\'t be saved.',
+    'confirm_password' => 'Confirm Password'
 ];

@@ -11,4 +11,13 @@ return [
     'messaging' => 'Messaging',
     'logout' => 'Logout',
     'login' => 'Login',
+    'dashboard' => 'DashBoard',
+    'home' => 'Home',
+    'testing_servers' => 'Testing servers',
+    'users' => 'Users',
+    'sponsors' => 'Sponsors',
+    'news' => 'News',
+    'subdomains' => 'Subdomains',
+    'programming_languages' => 'Programming languages',
+    'dialogs' => 'Dialogs'
 ];

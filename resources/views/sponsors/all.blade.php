@@ -1,4 +1,4 @@
 @extends('layouts.main')
 @section('content')
-@include('sponsors.list')
+    @include('sponsors.list')
 @endsection

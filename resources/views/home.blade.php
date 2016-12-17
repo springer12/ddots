@@ -89,7 +89,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">@lang('layout.news')</div>
+                    <div class="card-header">@lang('menu.news')</div>
                     @each('partial.news_item', $subdomain->news()->orderBy('created_at', 'desc')->take(3)->get(), 'news_item')
                     <div class="card-block">
                         <a href="{{ url('news') }}" class="btn btn-success pull-right">@lang('layout.latest_news')</a>

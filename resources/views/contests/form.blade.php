@@ -13,28 +13,29 @@
                             <ul class="nav nav-pills" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" href="#contest-settings" role="tab"
-                                       data-toggle="tab">General</a>
+                                       data-toggle="tab">@lang('contest.general')</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#participants" role="tab"
-                                       data-toggle="tab">Participants</a>
+                                       data-toggle="tab">@lang('contest.participants')</a>
                                 </li>
                                 <li class="nav-item {{ $contest->type != \App\Contest::TYPE_EXAM ?: 'invisible' }}"
                                     data-contest-problems-tab>
-                                    <a class="nav-link" href="#problems" role="tab" data-toggle="tab">Problems</a>
+                                    <a class="nav-link" href="#problems" role="tab"
+                                       data-toggle="tab">@lang('menu.problems')</a>
                                 </li>
                                 <li class="nav-item float-md-right">
                                     <button type="submit" class="btn btn-success" data-contest-save-input
-                                            disabled="disabled">Save
+                                            disabled="disabled">@lang('layout.save')
                                     </button>
                                 </li>
                                 <li class="nav-item float-md-right">
                                     <a class="btn btn-warning"
                                        href=""
                                        data-toggle="confirmation"
-                                       data-message="Are you sure you want to leave the page? The changes won't be saved."
+                                       data-message="@lang('layout.cancel_warn')"
                                        data-btn-ok-href="{{ route('frontend::contests::list') }}"
-                                       data-btn-ok-label="Leave the page">Cancel</a>
+                                       data-btn-ok-label="Leave the page">@lang('layout.save')</a>
                                 </li>
                             </ul>
                             <hr class="invisible"/>
@@ -50,7 +51,7 @@
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="contest-settings">
                                     <div class="form-group row {{ $errors->has('name') ? ' has-danger' : '' }}">
-                                        <label class="control-label col-md-4" for="name">Name <span
+                                        <label class="control-label col-md-4" for="name">@lang('layout.name') <span
                                                     class="required">*</span></label>
                                         <div class="col-md-8">
                                             <input type="text" id="name" name="name"
@@ -65,7 +66,8 @@
                                     </div>
 
                                     <div class="form-group row {{ $errors->has('description') ? ' has-danger' : '' }}">
-                                        <label class="control-label col-md-4" for="description">Description<span
+                                        <label class="control-label col-md-4"
+                                               for="description">@lang('layout.description')<span
                                                     class="required">*</span></label>
                                         <div class="col-md-8">
                                     <textarea name="description" id="description" required="required"
@@ -79,7 +81,8 @@
                                     </div>
 
                                     <div class="form-group row {{ $errors->has('start_date') ? ' has-danger' : '' }}">
-                                        <label class="control-label col-md-4" for="start_date">Start date<span
+                                        <label class="control-label col-md-4"
+                                               for="start_date">@lang('contest.start_date')<span
                                                     class="required">*</span></label>
                                         <div class="col-md-8">
                                             <input type="datetime" id="start_date" name="start_date"
@@ -96,7 +99,8 @@
                                     </div>
 
                                     <div class="form-group row {{ $errors->has('end_date') ? ' has-danger' : '' }}">
-                                        <label class="control-label col-md-4" for="end_date">End date<span
+                                        <label class="control-label col-md-4" for="end_date">@lang('contest.end_date')
+                                            <span
                                                     class="required">*</span></label>
                                         <div class="col-md-8">
                                             <input type="datetime" id="end_date" name="end_date" data-end-datepicker
@@ -112,8 +116,8 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="control-label col-md-4" for="programming_language">Programming
-                                            languages</label>
+                                        <label class="control-label col-md-4"
+                                               for="programming_language">@lang('menu.programming_languages')</label>
                                         <div class="col-md-8">
                                             <select id="programming_language" name="programming_languages[]"
                                                     data-select-programming-languages class="form-control" multiple>
@@ -140,7 +144,8 @@
                                     </div>
 
                                     <div class="form-group row {{ $errors->has('is_active') ? ' has-danger' : '' }}">
-                                        <label class="control-label col-md-4" for="is_active">Active</label>
+                                        <label class="control-label col-md-4"
+                                               for="is_active">@lang('contest.active')</label>
                                         <div class="col-md-8">
                                             <input type="checkbox" id="is_active" name="is_active"
                                                    class="form-control" {{ $errors->has() ? (!old('is_active')?:'checked') : (!$contest->is_active?:'checked') }}>
@@ -153,7 +158,8 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="control-label col-md-4" for="is_exam">Is Exam</label>
+                                        <label class="control-label col-md-4"
+                                               for="is_exam">@lang('contest.is_exam')</label>
                                         <div class="col-md-8">
                                             <input type="checkbox" id="is_exam" name="is_exam" data-exam-input
                                                    {{ !old('is_exam') && $contest->type != \App\Contest::TYPE_EXAM ?:'checked="checked"' }}
@@ -161,7 +167,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="control-label col-md-4" for="is_acm">Is ACM</label>
+                                        <label class="control-label col-md-4"
+                                               for="is_acm">@lang('contest.is_acm')</label>
                                         <div class="col-md-8">
                                             <input type="checkbox" id="is_acm" name="is_acm" data-acm-input
                                                    {{ !old('is_acm') && !$contest->is_acm ?:'checked="checked"' }}
@@ -170,8 +177,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="control-label col-md-4" for="is_standings_active">Active
-                                            standings</label>
+                                        <label class="control-label col-md-4"
+                                               for="is_standings_active">@lang('contest.active_standings')</label>
                                         <div class="col-md-8">
                                             <input type="checkbox" id="is_standings_active" name="is_standings_active"
                                                    data-standings-input
@@ -180,12 +187,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group row {{ $errors->has('show_max') ? ' has-danger' : '' }}">
-                                        <label class="control-label col-md-4" for="show_max">Show maximum points in
-                                            results</label>
+                                        <label class="control-label col-md-4"
+                                               for="show_max">@lang('contest.show_max')</label>
                                         <div class="col-md-8">
                                             <input type="checkbox" id="show_max" name="show_max"
                                                    class="form-control"
-                                                   {{ $errors->has() ? (!old('show_max')?:'asdasd') : (!$contest->show_max ?:'checked') }} {{ !(old('is_acm') || $contest->is_acm) ?: 'disabled' }} data-show-max-input>
+                                                   {{ $errors->has() ? (old('show_max') ?: 'checked') : (!$contest->show_max ?:'checked') }} {{ !(old('is_acm') || $contest->is_acm) ?: 'disabled' }} data-show-max-input>
                                             @if ($errors->has('show_max'))
                                                 <span class="form-control-feedback">
                                                     <strong>{{ $errors->first('show_max') }}</strong>
@@ -225,8 +232,8 @@
                                     >
                                         <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Action</th>
+                                            <th>@lang('layout.name')</th>
+                                            <th>@lang('contest.action')</th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -267,11 +274,11 @@
                                     >
                                         <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Points</th>
-                                            <th>Review</th>
-                                            <th>Time penalty</th>
-                                            <th>Action</th>
+                                            <th>@lang('layout.name')</th>
+                                            <th>@lang('contest.points')</th>
+                                            <th>@lang('contest.review')</th>
+                                            <th>@lang('contest.time_penalty')</th>
+                                            <th>@lang('contest.action')</th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -290,7 +297,6 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title">Modal title</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -312,19 +318,19 @@
                     <table class="table table-striped table-bordered table-sm">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Points</th>
-                            <th>Review</th>
-                            <th>Time penalty</th>
-                            <th>Action</th>
+                            <th>@lang('layout.name')</th>
+                            <th>@lang('contest.points')</th>
+                            <th>@lang('contest.review')</th>
+                            <th>@lang('contest.time_penalty')</th>
+                            <th>@lang('contest.action')</th>
                         </tr>
                         </thead>
                         <tbody data-user-problems></tbody>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-save-user-problems>Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('layout.cancel')</button>
+                    <button type="button" class="btn btn-primary" data-save-user-problems>@lang('layout.save')</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

@@ -26,15 +26,13 @@
         </div>
         <div class="card">
             <div class="card-header">
-                New Solution
+                @lang('contest.new_solution')
             </div>
             <div class="card-block">
                 <form data-submit-solution method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
-
-
                     <div class="form-group row {{ $errors->has('programming_language') ? ' has-danger' : '' }}">
-                        <label class="col-md-4 col-form-label" for="programming_language">Programming language</label>
+                        <label class="col-md-4 col-form-label" for="programming_language">@lang('layout.programming_language')</label>
                         <div class="col-md-8">
                             <select data-programming-languages name="programming_language"
                                     class="form-control border-input">
@@ -56,7 +54,7 @@
                     </div>
 
                     <div class="form-group row{{ $errors->has('solution_code_file') ? ' has-danger' : '' }}">
-                        <label class="form-control-label col-md-4" for="solution_code_file">Or upload file</label>
+                        <label class="form-control-label col-md-4" for="solution_code_file">@lang('contest.or_upload')</label>
                         <div class="col-md-8">
                             <input type="file" name="solution_code_file"/>
                             @if ($errors->has('solution_code_file'))
@@ -66,29 +64,27 @@
                             @endif
                         </div>
                     </div>
-
-
                     <input type="hidden" name="solution_code"/>
                     <hr class="hidden-border">
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn btn-success">@lang('contest.submit')</button>
                     </div>
                 </form>
             </div>
         </div>
         <div class="card">
-            <div class="card-header">Solutions</div>
+            <div class="card-header">@lang('contest.solutions')</div>
             <div class="card-block">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-sm">
                         <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Points</th>
+                            <th>@lang('layout.date')</th>
+                            <th>@lang('contest.points')</th>
                             @if(Auth::check() && Auth::user()->hasRole(\App\User::ROLE_TEACHER))
-                                <th>author</th>
+                                <th>@lang('contest.author')</th>
                             @endif
-                            <th>Source code</th>
+                            <th>@lang('contest.source_code')</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -104,7 +100,7 @@
                                     </td>
                                 @endif
                                 <td>
-                                    <a href="{{ route('frontend::contests::solution',['id' => $solution->id]) }}">Solution</a>
+                                    <a href="{{ route('frontend::contests::solution',['id' => $solution->id]) }}">@lang('contest.solution')</a>
                                 </td>
                             </tr>
                         @endforeach
