@@ -16,19 +16,19 @@
             <div class="card-block">
                 <table class="table">
                     <tr>
-                        <td class="col-sm-4">Started at</td>
+                        <td class="col-sm-4">@lang('contest.started_at')</td>
                         <td>{{ $contest->start_date }}</td>
                     </tr>
                     <tr>
-                        <td>Finished at</td>
+                        <td>@lang('contest.finished_at')</td>
                         <td>{{ $contest->end_date }}</td>
                     </tr>
                     <tr>
-                        <td>Time left</td>
+                        <td>@lang('contest.time_left')</td>
                         <td>{{ $contest->end_date->diffForHumans() }}</td>
                     </tr>
                     <tr>
-                        <td>Programming Languages</td>
+                        <td>@lang('menu.programming_languages')</td>
                         <td>
                             {{
                             implode(', ', $contest->programming_languages->map(function ($el) {
@@ -48,24 +48,24 @@
                 <div class="row pull-right">
                     <div class="col-md-12 btn-group">
                         @if($contest->is_standings_active )
-                            <a class="btn btn-success" href="{{ route('frontend::contests::standings', ['id' => $contest->id]) }}"><i class="fa fa-trophy" aria-hidden="true"></i> standings</a>
+                            <a class="btn btn-success" href="{{ route('frontend::contests::standings', ['id' => $contest->id]) }}"><i class="fa fa-trophy" aria-hidden="true"></i> @lang('contest.standings')</a>
                         @endif
-                        <a class="btn btn-primary" href="{{ route('frontend::contests::solutions',['id' => $contest->id]) }}"><i class="fa fa-code" aria-hidden="true"></i> solutions</a>
+                        <a class="btn btn-primary" href="{{ route('frontend::contests::solutions',['id' => $contest->id]) }}"><i class="fa fa-code" aria-hidden="true"></i> @lang('contest.solutions')</a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div class="card-header">Problems</div>
+            <div class="card-header">@lang('menu.problems')</div>
             <div class="card-block">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-sm">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Difficulty</th>
-                            <th>{{ $contest->show_max?'Best':'Latest' }} points</th>
+                            <th>@lang('layout.id')</th>
+                            <th>@lang('layout.name')</th>
+                            <th>@lang('contest.difficulty')</th>
+                            <th>{{ $contest->show_max?'Best':'Latest' }} @lang('contest._points')</th>
                         </tr>
                         </thead>
                         <tbody>

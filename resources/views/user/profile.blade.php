@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
                 <div class="card text-xs-center">
-                    <div class="card-header text-xs-left">Profile</div>
+                    <div class="card-header text-xs-left">@lang('menu.profile')</div>
                     <div class="card-block">
                         <a href="{{ route('frontend::user::profile', ['id' => $user->id]) }}"><img
                                     class="teacher-avatar" src="{{ $user->avatar }}" alt="Card image cap"></a>
@@ -29,9 +29,9 @@
                             <div class="text-center">
                                 <a href="{{ route('frontend::user::edit') }}" class="btn btn-success">
                                     @if($user->hasRole(\App\User::ROLE_LOW_USER))
-                                        Upgrade
+                                        @lang('layout.upgrade')
                                     @else
-                                        Update
+                                        @lang('layout.update')
                                     @endif
                                 </a>
                             </div>
@@ -43,7 +43,7 @@
                             @if($user->hasRole(\App\User::ROLE_USER) && $user->date_of_birth)
                                 <div class="col-md-4">
                                     <h5>{{ $user->getAge() }}<br>
-                                        <small>Years old</small>
+                                        <small>@lang('layout.years_old')</small>
                                     </h5>
                                 </div>
                             @endif
@@ -51,7 +51,7 @@
                                 <div class="col-md-4">
                                     <h5>{{ $user->created_at->diffInDays(Carbon\Carbon::now()) }}<br>
                                         <small>{{ str_plural('Day', $user->created_at->diffInDays(Carbon\Carbon::now())) }}
-                                            with us
+                                            @lang('layout.with_us')
                                         </small>
                                     </h5>
                                 </div>
@@ -59,7 +59,7 @@
                             @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->profession)
                                 <div class="col-md-4">
                                     <h5>{{ $user->profession }}<br>
-                                        <small>Profession</small>
+                                        <small>@lang('layout.profession')</small>
                                     </h5>
                                 </div>
                             @endif
@@ -68,14 +68,14 @@
                             @if($user->hasRole(\App\User::ROLE_USER) && $user->place_of_study)
                                 <div class="col-md-4">
                                     <h5>{{ $user->place_of_study }}<br>
-                                        <small>Place of study</small>
+                                        <small>@lang('layout.place_of_study')</small>
                                     </h5>
                                 </div>
                             @endif
                             @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]) && $user->programmingLanguage)
                                 <div class="col-md-4">
                                     <h5>{{ $user->programmingLanguage->name }}<br>
-                                        <small>Primary language</small>
+                                        <small>@lang('layout.primary_language')</small>
                                     </h5>
                                 </div>
                             @endif
@@ -96,7 +96,7 @@
 
                 @if($user->hasRole(\App\User::ROLE_USER) && $user->teachers()->count())
                     <div class="card">
-                        <div class="card-header">Teachers</div>
+                        <div class="card-header">@lang('menu.teachers')</div>
                         <div class="card-block">
                             <div class="row">
                                 @foreach($user->teachers as $teacher)
