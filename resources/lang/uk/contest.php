@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'position' => 'Position',
-    'user' => 'User',
-    'total' => 'Total',
-    'time' => 'Time',
+    'position' => 'Позиція',
+    'user' => 'Користувач',
+    'total' => 'Усього',
+    'time' => 'Час',
     'incorrect_solutions_percentage' => 'Incorrect solutions %',
     'results' => 'Results',
     'users_attempted' => 'Users attempted',

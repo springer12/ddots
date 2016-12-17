@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'back_to_dialogs' => 'Назад к диалогам',
-    'dialog_with' => 'Диалог с',
-    'send' => 'Отправить',
-    'username' => 'Имя',
-    'last_message' => 'Последние сообщение',
-    'new_dialog' => 'Новый диалог',
-    'to' => 'к',
-    'message' => 'Сообщение',
+    'back_to_dialogs' => 'Wrocić do dialogów',
+    'dialog_with' => 'Dialog z',
+    'send' => 'Wysłać',
+    'username' => 'Użytkownik',
+    'last_message' => 'Ostatnia wiadomość',
+    'new_dialog' => 'Nowy Dialog',
+    'to' => 'Do',
+    'message' => 'Wiadomość',
 ];

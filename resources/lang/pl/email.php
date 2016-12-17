@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'password_reset' => 'Для восстановления пароля нажмите сюда'
+    'password_reset' => 'Kliknij tutaj, aby zmienić hasło'
 ];
