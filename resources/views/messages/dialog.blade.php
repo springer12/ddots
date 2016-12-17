@@ -37,7 +37,7 @@
                         {{ csrf_field() }}
                         <div class="form-group {{ $errors->has('text') ? ' has-danger' : '' }}">
                             <textarea class="form-control" rows="5" name="text"
-                                      placeholder="Enter your message">{{ old('text') }}</textarea>
+                                      placeholder="@lang('messaging.enter_message')">{{ old('text') }}</textarea>
                             @if ($errors->has('text'))
                                 <span class="form-control-feedback">
                                     <strong>{{ $errors->first('text') }}</strong>

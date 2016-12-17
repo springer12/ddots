@@ -2,7 +2,7 @@
     <div class="col-md-10 col-sm-10 col-xs-10">
         <form class="form-inline" role="form" action="{{ $action }}" method="GET">
             <div class="input-group">
-                <input type="text" class="search-query form-control" placeholder="Search" name="query"
+                <input type="text" class="search-query form-control" placeholder="@lang('layout.search')" name="query"
                        value="{{ $query }}">
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-primary" id="search">

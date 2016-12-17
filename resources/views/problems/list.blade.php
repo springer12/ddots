@@ -14,10 +14,9 @@
                     <table class="table table-striped table-bordered table-sm">
                         <thead>
                         <tr>
-                            <th>@include('helpers.grid-header', ['name' => 'Name',  'order' => 'name'])</th>
-                            <th>Volumes
-                            </th>
-                            <th>@include('helpers.grid-header', ['name' => 'Difficulty', 'order' => 'difficulty'])</th>
+                            <th>@include('helpers.grid-header', ['name' => trans('layout.name'),  'order' => 'name'])</th>
+                            <th>@lang('layout.volume')</th>
+                            <th>@include('helpers.grid-header', ['name' => trans('contest.difficulty'), 'order' => 'difficulty'])</th>
                         </tr>
                         </thead>
                         <tbody>

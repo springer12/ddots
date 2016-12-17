@@ -42,6 +42,7 @@
                                    class="btn btn-danger btn-sm"
                                    data-btn-ok-label="@lang('contest.annul')"
                                    data-toggle="confirmation"
+                                   data-btn-cancel-label="@lang('layout.cancel')"
                                    data-message="@lang('contest.annul_confirm')"
                                 >@lang('contest.annul')</a>
                             @endif

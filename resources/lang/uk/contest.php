@@ -55,5 +55,12 @@ return [
     'messages' => 'Messages',
     'all_solutions' => 'All Solutions',
     'problem' => 'Problem',
-
+    'edit' => 'Редактировать Турнир',
+    'create' => 'Создать Турнир',
+    'select' => [
+        'participants' => 'Выберите участников',
+        'groups' => 'Выберите группы',
+        'problems' => 'Выберите задачи',
+        'volumes' => 'Выберите томы',
+    ],
 ];

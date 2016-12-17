@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class GroupController extends Controller
 {
@@ -52,15 +53,15 @@ class GroupController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param int|null $id
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function showForm(Request $request, $id = null)
     {
         $group = ($id ? $this->findOrFail($id) : new Group());
         if ($id) {
-            $title = 'Edit Group';
+            $title = trans('layout.group.edit');
         } else {
-            $title = 'Create Group';
+            $title = trans('layout.group.create');
         }
 
         $students = $group->getStudents();
