@@ -93,4 +93,5 @@ return [
     'volume' => 'Том',
     'search' => 'Поиск',
     'teacher_requests_expended' => 'Вы использовали дозволенное количество запросов',
+    'register_action' => 'Зарегистрироваться',
 ];
