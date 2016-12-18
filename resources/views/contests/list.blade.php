@@ -3,7 +3,6 @@
 @section('content')
     <div class="container">
         @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
-
             <div class="row">
                 <div class="col-xs-12">
                     <a class="btn btn-primary" href="{{ route('teacherOnly::contests::add') }}"
@@ -25,8 +24,8 @@
                                 <th>@include('helpers.grid-header', ['name' => trans('contest.author'),  'order' => 'owner'])</th>
                             @endif
                             <th>@include('helpers.grid-header', ['name' => trans('contest.start_date'), 'order' => 'start_date'])</th>
-                            <th>@include('helpers.grid-header', ['name' => trans('contest.contest.end_date'), 'order' => 'end_date'])</th>
-                            <th>Description</th>
+                            <th>@include('helpers.grid-header', ['name' => trans('contest.end_date'), 'order' => 'end_date'])</th>
+                            <th>@lang('layout.description')</th>
                             @if(Auth::user()->hasRole(\App\User::ROLE_TEACHER))
                                 <th>@lang('layout.actions')</th>
                             @endif
@@ -75,7 +74,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 

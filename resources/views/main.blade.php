@@ -111,8 +111,6 @@
 
             </div>
         </div>
-
-
         <hr class="hidden-border">
         <!-- news -->
         <div class="row">
@@ -140,7 +138,6 @@
                            class="btn btn-success pull-right">@lang('layout.all_teachers_mentors')</a>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

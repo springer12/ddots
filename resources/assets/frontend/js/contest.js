@@ -86,8 +86,8 @@
             var user_id = $(this).data('edit-participant-id');
             $('[data-user-problems]').empty();
             var val = $('[data-user-problems-input-id=' + user_id + ']').val();
-            if(val) {
-                $.each($.parseJSON(val), function(k, v) {
+            if (val) {
+                $.each($.parseJSON(val), function (k, v) {
                     appendProblem(k, v.name, v.max_points, v.review_required, v.time_penalty);
                 });
             }
@@ -128,15 +128,15 @@
             $.ajax({
                 method: 'GET',
                 url: $('[data-get-problems-url]').data('get-problems-url'),
-                data: {volume_id: $($(this).select2('data')[0].element).val()}
-            }).success(function (response) {
-                $.each(response, function (k, v) {
-                    appendProblem(v.id, v.name, 0, 0, 20);
-                });
+                data: {volume_id: $($(this).select2('data')[0].element).val()},
+                success: function (response) {
+                    $.each(response, function (k, v) {
+                        appendProblem(v.id, v.name, 0, 0, 20);
+                    });
+                }
             });
             $(this).val(null);
         });
-
 
         $acm.on('change', function () {
             if (this.checked) {
@@ -179,6 +179,4 @@
             });
         $('[data-contest-save-input]').attr('disabled', false);
     });
-
-
 })(jQuery, window, document);

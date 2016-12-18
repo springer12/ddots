@@ -75,7 +75,7 @@ class ContestController extends Controller
         $participants = collect();
         $students = Auth::user()->students()->where('confirmed', 1)->get();
         if ($id) {
-            $title = 'Edit Contest';
+            $title = trans('contest.edit');
             if (Session::get('errors')) {
                 foreach ($students as $student) {
                     if (in_array($student->id, (array)old('participants'))) {
@@ -118,7 +118,7 @@ class ContestController extends Controller
             }
             $students = $students->diff($participants);
         } else {
-            $title = 'Create Contest';
+            $title = trans('contest.create');
             $included_problems = collect();
         }
 

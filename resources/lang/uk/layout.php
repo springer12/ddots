@@ -76,11 +76,21 @@ return [
     'created_date' => 'Created Date',
     'updated_date' => 'Updated Date',
     'deleted_date' => 'Deleted Date',
-    'add_group' => 'Add Group',
     'edit' => 'Edit',
     'delete' => 'Delete',
     'restore' => 'Restore',
     'error_page' => 'Be right back',
     'cancel_warn' => 'Are you sure you want to leave the page? The changes won\'t be saved.',
-    'confirm_password' => 'Confirm Password'
+    'confirm_password' => 'Confirm Password',
+    'leave_page' => 'Покинуть страницу',
+    'group' => [
+        'create' => 'Создать группу',
+        'edit' => 'Редактировать группу',
+        'add' => 'Добавить группу',
+        'delete_warn' => 'Вы уверены, что хотите удалить группу из системы?',
+        'restore_warn' => 'Вы уверены, что хотите восстановить группу?',
+    ],
+    'volume' => 'Том',
+    'search' => 'Поиск',
+    'teacher_requests_expended' => 'Вы использовали дозволенное количество запросов',
 ];

@@ -4,12 +4,12 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn btn-primary" href="{{ route('frontend::messages::new') }}" role="button">New dialog</a>
+                <a class="btn btn-primary" href="{{ route('frontend::messages::new') }}" role="button">@lang('messaging.new_dialog')</a>
             </div>
         </div>
         <hr class="hidden-border">
         <div class="card">
-            <div class="card-header">Dialogs</div>
+            <div class="card-header">@lang('menu.dialogs')</div>
             <div class="card-block">
                 <div class="table-responsive">
                     @if(!$dialog_users->isEmpty())

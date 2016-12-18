@@ -68,9 +68,10 @@
                                     <a class="btn btn-primary"
                                        href=""
                                        data-toggle="confirmation"
-                                       data-message="Are you sure you want to leave the page? The changes won't be saved."
+                                       data-message="@lang('layout.cancel_warn')"
                                        data-btn-ok-href="{{ route('teacherOnly::groups::list') }}"
-                                       data-btn-ok-label="Leave the page">@lang('layout.cancel')</a>
+                                       data-btn-cancel-label="@lang('layout.cancel')"
+                                       data-btn-ok-label="@lang('layout.leave_page')">@lang('layout.cancel')</a>
 
                                     <button type="submit" class="btn btn-success">@lang('layout.save')</button>
                                 </div>
