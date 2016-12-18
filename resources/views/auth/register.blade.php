@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">@lang('menu.register')</div>
+                    <div class="card-header">@lang('layout.register_action')</div>
                     <div class="card-block">
                         <form class="form" role="form" method="POST" action="{{ url('/register') }}">
                             {{ csrf_field() }}
