@@ -35,7 +35,8 @@
                                        data-toggle="confirmation"
                                        data-message="@lang('layout.cancel_warn')"
                                        data-btn-ok-href="{{ route('frontend::contests::list') }}"
-                                       data-btn-ok-label="Leave the page">@lang('layout.save')</a>
+                                       data-btn-cancel-label="@lang('layout.cancel')"
+                                       data-btn-ok-label="@lang('layout.leave_page')">@lang('layout.cancel')</a>
                                 </li>
                             </ul>
                             <hr class="invisible"/>
@@ -206,7 +207,7 @@
                                     <div class="card-block">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <select class="form-control" data-participant-select>
+                                                <select class="form-control" data-participant-select data-placeholder="@lang('contest.select.participants')">
                                                     <option></option>
                                                     @foreach($students as $student)
                                                         <option value="{{ $student->id }}">{{ $student->name }}</option>
@@ -214,7 +215,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
-                                                <select class="form-control" data-group-select>
+                                                <select class="form-control" data-group-select data-placeholder="@lang('contest.select.groups')">
                                                     <option></option>
                                                     @foreach(Auth::user()->groups as $group)
                                                         <option data-user-ids="{{ $group->users->pluck('id')->toJson() }}"
@@ -244,6 +245,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <select data-problem-select
+                                                        data-placeholder="@lang('contest.select.problems')"
                                                         data-get-problems-url="{{ route('privileged::ajax::searchProblems') }}"
                                                         class="form-control col-md-7 col-xs-12">
                                                     <option></option>
@@ -251,6 +253,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <select data-volume-select
+                                                        data-placeholder="@lang('contest.select.volumes')"
                                                         data-get-volumes-url="{{ route('privileged::ajax::searchVolumes') }}"
                                                         class="form-control col-md-7 col-xs-12">
                                                     <option></option>

@@ -11,16 +11,15 @@
                         <table class="table table-striped table-bordered table-sm">
                             <thead>
                             <tr>
-                                <th>@include('helpers.grid-header', ['name' => 'ID', 'order' => 'id'])</th>
-                                <th>@include('helpers.grid-header', ['name' => 'Name',  'order' => 'name'])</th>
-                                <th>@include('helpers.grid-header', ['name' => 'E-mail',  'order' => 'email'])</th>
-                                <th>@include('helpers.grid-header', ['name' => 'Nickname',  'order' => 'nickname'])</th>
+                                <th>@include('helpers.grid-header', ['name' => trans('layout.id'), 'order' => 'id'])</th>
+                                <th>@include('helpers.grid-header', ['name' => trans('layout.name'),  'order' => 'name'])</th>
+                                <th>@include('helpers.grid-header', ['name' => trans('layout.email'),  'order' => 'email'])</th>
+                                <th>@include('helpers.grid-header', ['name' => trans('layout.nickname'),  'order' => 'nickname'])</th>
                                 <th>@lang('menu.groups')</th>
                                 <th>@lang('layout.actions')</th>
                             </tr>
                             </thead>
                             <tbody>
-
                             @foreach($students as $student)
                                 <tr data-student-row-id="{{ $student->id }}">
                                     <td>{{ $student->id }}</td>

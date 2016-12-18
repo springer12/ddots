@@ -61,7 +61,7 @@ return [
     'description' => 'Opis',
     'my_teachers' => 'Moi nauczyciele',
     'my_teacher' => 'Mój nauczyciel',
-    'all_teachers' => Wszyscy nauczyciele',
+    'all_teachers' => 'Wszyscy nauczyciele',
     'request_is_sent' => 'Prośba została wysłana',
     'actions' => 'Działania',
     'volumes' => 'Tomy',

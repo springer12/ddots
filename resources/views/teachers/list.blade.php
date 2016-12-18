@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
     <div class="container">
-
         @if($myTeachers && !$myTeachers->isEmpty())
             <h2>@lang('layout.my_teachers')</h2>
             <div class="row">
@@ -43,6 +41,7 @@
                                             data-teacher-id="{{ $teacher->id }}"
                                             data-add-teacher-button
                                             data-add-teacher-url="{{ route('frontend::ajax::addTeacher', ['id' =>$teacher->id]) }}"
+                                            data-error-text="@lang('layout.teacher_requests_expended')"
                                             class="btn btn-info btn-fill btn-wd"
                                             style="display: {{ $teacher->relation_exists ? 'none' : 'inline-block' }}"
                                             {{ $allowedRequests ? '' : 'disabled' }}>

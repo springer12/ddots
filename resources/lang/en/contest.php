@@ -55,5 +55,12 @@ return [
     'messages' => 'Messages',
     'all_solutions' => 'All Solutions',
     'problem' => 'Problem',
-
+    'edit' => 'Edit Contest',
+    'create' => 'Create Contest',
+    'select' => [
+        'participants' => 'Select participants',
+        'groups' => 'Select groups',
+        'problems' => 'Select problems',
+        'volumes' => 'Select volumes',
+    ],
 ];

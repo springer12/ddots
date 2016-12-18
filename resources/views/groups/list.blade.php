@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <a class="btn btn-primary" href="{{ route('teacherOnly::groups::add') }}"
-                   role="button">@lang('layout.add_group')</a>
+                   role="button">@lang('layout.group.add')</a>
             </div>
         </div>
         <hr class="hidden-border">
@@ -40,7 +40,8 @@
                                     @if (!$group->deleted_at)
                                         <a class="btn btn-danger" title="@lang('layout.delete')" href=""
                                            data-toggle="confirmation"
-                                           data-message="Are you sure you want to delete this group from the system?"
+                                           data-message="@lang('layout.group.delete_warn')"
+                                           data-btn-cancel-label="@lang('layout.cancel')"
                                            data-btn-ok-href="{{ action('GroupController@delete', ['id'=> $group->id]) }}"
                                            data-btn-ok-label="@lang('layout.delete')">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
@@ -48,7 +49,8 @@
                                     @else
                                         <a class="btn btn-secondary" title="@lang('layout.restore')" href=""
                                            data-toggle="confirmation"
-                                           data-message="Are you sure you want to restore this group?"
+                                           data-message="@lang('layout.group.restore_warn')"
+                                           data-btn-cancel-label="@lang('layout.cancel')"
                                            data-btn-ok-href="{{ action('GroupController@restore', ['id'=> $group->id]) }}"
                                            data-btn-ok-label="@lang('layout.restore')">
                                             <i class="fa fa-repeat" aria-hidden="true"></i>

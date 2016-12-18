@@ -9,4 +9,5 @@ return [
     'new_dialog' => 'New Dialog',
     'to' => 'To',
     'message' => 'Message',
+    'enter_message' => 'Enter your message',
 ];

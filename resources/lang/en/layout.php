@@ -76,11 +76,21 @@ return [
     'created_date' => 'Created Date',
     'updated_date' => 'Updated Date',
     'deleted_date' => 'Deleted Date',
-    'add_group' => 'Add Group',
     'edit' => 'Edit',
     'delete' => 'Delete',
     'restore' => 'Restore',
     'error_page' => 'Be right back',
     'cancel_warn' => 'Are you sure you want to leave the page? The changes won\'t be saved.',
-    'confirm_password' => 'Confirm Password'
+    'confirm_password' => 'Confirm Password',
+    'leave_page' => 'Leave the page',
+    'group' => [
+        'create' => 'Create Group',
+        'edit' => 'Edit Group',
+        'add' => 'Add Group',
+        'delete_warn' => 'Are you sure you want to delete this group from the system?',
+        'restore_warn' => 'Are you sure you want to restore this group?',
+    ],
+    'volume' => 'Volume',
+    'search' => 'Search',
+    'teacher_requests_expended' => 'You have expended your allowed requests'
 ];
