@@ -19,5 +19,6 @@ return [
     'news' => 'News',
     'subdomains' => 'Subdomains',
     'programming_languages' => 'Programming languages',
-    'dialogs' => 'Dialogs'
+    'dialogs' => 'Dialogs',
+    'disciplines' => 'Disciplines',
 ];

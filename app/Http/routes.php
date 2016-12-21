@@ -206,6 +206,14 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('/{id}', 'ProblemController@single')->where('id', '[0-9]+');
             });
 
+            Route::group(['prefix' => 'disciplines', 'as' => 'disciplines::'], function () {
+                Route::get('add', ['uses' => 'ContestController@showForm', 'as' => 'add']);
+                Route::post('add', 'ContestController@showForm');
+                Route::get('edit/{id}', ['uses' => 'GroupController@showForm', 'as' => 'edit']);
+                Route::post('edit/{id}', 'GroupController@edit')->where('id', '[0-9]+');
+                Route::get('delete/{id}', 'GroupController@delete')->where('id', '[0-9]+');
+            });
+
             Route::post('solution-message/{id}', ['uses' => 'SolutionMessageController@message', 'as' => 'message']);
             Route::group(['prefix' => 'solutions', 'as' => 'solutions::'], function () {
                 Route::get('{id}/annul', ['uses' => 'SolutionController@annul', 'as' => 'annul']);
