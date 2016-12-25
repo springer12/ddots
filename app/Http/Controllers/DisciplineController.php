@@ -76,7 +76,7 @@ class DisciplineController extends Controller
 
     public function showForm(Request $request, $id = null)
     {
-        $discipline = ($id ? Discipline::findOrFail($id) : new Discipline());
+        $discipline = ($id ? Discipline::find($id) : new Discipline());
         if ($id) {
             $title = trans('discipline.edit');
         } else {
