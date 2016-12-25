@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Discipline;
+use App\Problem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class DisciplineController extends Controller
 {
@@ -55,11 +57,10 @@ class DisciplineController extends Controller
         } else {
             $discipline = new Discipline($request->all());
         }
-
         $discipline->user()->associate(Auth::user());
-
         $discipline->save();
-
+        $discipline->problems()->sync((array)$request->get('problems'));
+        $discipline->students()->sync((array)$request->get('participants'));
         \Session::flash('alert-success', 'The discipline was successfully saved');//todo
         return redirect()->route('teacherOnly::disciplines::list');
     }
@@ -80,12 +81,26 @@ class DisciplineController extends Controller
             $title = trans('discipline.create');
         }
 
+        $participants = collect();
+        $students = Auth::user()->students()->where('confirmed', 1)->get();
+        if (Session::get('errors')) {
+            foreach ($students as $student) {
+                if (in_array($student->id, (array)old('participants'))) {
+                    $participants->push($student);
+                }
+            }
+            $included_problems = Problem::orderBy('name', 'desc')->whereIn('id', (array)old('problems'))->get();
+        } else {
+            $included_problems = $discipline->problems;
+            $participants = $discipline->students;
+        }
+
         return view('disciplines.form')->with([
             'discipline' => $discipline,
             'title' => $title,
-            'participants' => $discipline->students,
-            'students' => Auth::user()->students,
-            'included_problems' => $discipline->problems
+            'participants' => $participants,
+            'students' => Auth::user()->students->diff($participants),
+            'included_problems' => $included_problems
         ]);
     }
 }
