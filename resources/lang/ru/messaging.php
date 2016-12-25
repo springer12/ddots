@@ -7,7 +7,7 @@ return [
     'username' => 'Имя',
     'last_message' => 'Последние сообщение',
     'new_dialog' => 'Новый диалог',
-    'to' => 'к',
+    'to' => 'Кому',
     'message' => 'Сообщение',
     'enter_message' => 'Введите сообщение',
 ];
