@@ -208,7 +208,7 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::group(['prefix' => 'disciplines', 'as' => 'disciplines::'], function () {
                 Route::get('/', ['uses' => 'DisciplineController@index', 'as' => 'list']);
-                Route::get('/{id}', ['uses' => 'DisciplineController@single', 'as' => 'single']);
+                Route::get('/{id}', ['uses' => 'DisciplineController@single', 'as' => 'single'])->where('id', '[0-9]+');
                 Route::get('add', ['uses' => 'DisciplineController@showForm', 'as' => 'add']);
                 Route::post('add', 'DisciplineController@edit');
                 Route::get('edit/{id}', ['uses' => 'DisciplineController@showForm', 'as' => 'edit']);

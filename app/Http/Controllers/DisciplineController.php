@@ -76,7 +76,7 @@ class DisciplineController extends Controller
 
     public function showForm(Request $request, $id = null)
     {
-        $discipline = ($id ? Discipline::find($id) : new Discipline());
+        $discipline = ($id ? Discipline::findOrFail($id) : new Discipline());
         if ($id) {
             $title = trans('discipline.edit');
         } else {
@@ -108,7 +108,6 @@ class DisciplineController extends Controller
 
     public function single(Request $request, $id)
     {
-
         $discipline = Discipline::findOrFail($id);
         $orderBySession = \Session::get('orderByStudents', 'updated_at');
         $orderByStudents = $request->input('order_students', $orderBySession);
