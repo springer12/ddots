@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contest;
 use App\ContestProblemUser;
+use App\Discipline;
 use App\Problem;
 use App\Solution;
 use Carbon\Carbon;
@@ -73,7 +74,18 @@ class ContestController extends Controller
     {
         $contest = ($id ? Contest::findOrFail($id) : new Contest());
         $participants = collect();
-        $students = Auth::user()->students()->where('confirmed', 1)->get();
+        if ($request->get('discipline_id')) {
+            $discipline = Discipline::findOrFail($request->get('discipline_id'));
+        } elseif ($contest && $contest->discipline) {
+            $discipline = $contest->discipline;
+        }
+        if ($discipline) {
+            $students = $discipline->students;
+        } else {
+            $students = Auth::user()->students()->where('confirmed', 1)->get();
+        }
+
+
         if ($id) {
             $title = trans('contest.edit');
             if (Session::get('errors')) {
@@ -125,6 +137,7 @@ class ContestController extends Controller
         return view('contests.form')->with([
             'contest' => $contest,
             'title' => $title,
+            'discipline' => $discipline,
             'students' => $students,
             'participants' => $participants,
             'programming_languages' => ProgrammingLanguage::orderBy('name', 'desc')->get(),
@@ -150,6 +163,9 @@ class ContestController extends Controller
             $contest->fill($request->except('labs'));
         } else {
             $contest = Contest::create($request->except('labs') + ['user_id' => Auth::user()->id]);
+            if ($request->get('discipline_id')) {
+                $contest->discipline()->associate($request->get('discipline_id'));
+            }
         }
 
         if ($request->has('is_exam')) {
@@ -231,7 +247,7 @@ class ContestController extends Controller
     public function single(Request $request, $id)
     {
         $contest = Contest::findOrFail($id);
-        return View('contests.single')->with(['contest' => $contest]);
+        return view('contests.single')->with(['contest' => $contest]);
     }
 
     //@todo:1 min results array cache could be temporary solution

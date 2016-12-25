@@ -100,4 +100,5 @@ return [
     'teacher_requests_expended' => 'Вы использовали дозволенное количество запросов',
     'register_action' => 'Зарегистрироваться',
     'ended' => 'окончен'
+    'enter_email' => 'Введите email',
 ];

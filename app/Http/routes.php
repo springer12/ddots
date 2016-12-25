@@ -206,6 +206,16 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('/{id}', 'ProblemController@single')->where('id', '[0-9]+');
             });
 
+            Route::group(['prefix' => 'disciplines', 'as' => 'disciplines::'], function () {
+                Route::get('/', ['uses' => 'DisciplineController@index', 'as' => 'list']);
+                Route::get('/{id}', ['uses' => 'DisciplineController@single', 'as' => 'single']);
+                Route::get('add', ['uses' => 'DisciplineController@showForm', 'as' => 'add']);
+                Route::post('add', 'DisciplineController@edit');
+                Route::get('edit/{id}', ['uses' => 'DisciplineController@showForm', 'as' => 'edit']);
+                Route::post('edit/{id}', 'DisciplineController@edit')->where('id', '[0-9]+');
+                Route::get('delete/{id}', 'DisciplineController@delete')->where('id', '[0-9]+');
+            });
+
             Route::post('solution-message/{id}', ['uses' => 'SolutionMessageController@message', 'as' => 'message']);
             Route::group(['prefix' => 'solutions', 'as' => 'solutions::'], function () {
                 Route::get('{id}/annul', ['uses' => 'SolutionController@annul', 'as' => 'annul']);

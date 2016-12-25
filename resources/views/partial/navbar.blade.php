@@ -29,6 +29,9 @@
                         <li class="nav-item {{ Request::is('problems') ? 'active' : '' }}">
                             <a class="nav-item nav-link" href="{{ url('/problems') }}">@lang('menu.problems')</a>
                         </li>
+                        <li class="nav-item {{ Request::is('disciplines') ? 'active' : '' }}">
+                            <a class="nav-item nav-link" href="{{ url('/disciplines') }}">@lang('menu.disciplines')</a>
+                        </li>
                     @endif
                     @if(Auth::check())
                         <li class="nav-item {{ Request::is('contests') ? 'active' : '' }}">

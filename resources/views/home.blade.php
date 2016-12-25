@@ -30,7 +30,7 @@
                                     <label class="col-md-4 col-form-label">@lang('layout.email_nickname')</label>
 
                                     <div class="col-md-6">
-                                        <input class="form-control" type="text" placeholder="Enter email"
+                                        <input class="form-control" type="text" placeholder="@lang('layout.enter_email')"
                                                name="nickname">
                                         @if ($errors->has('nickname'))
                                             <span class="form-control-feedback">
@@ -61,22 +61,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group row ">
-                                    <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fa fa-btn fa-sign-in"></i> @lang('menu.login')
-                                        </button>
-
-                                        <a class="btn btn-link" href="{{ url('/password/reset') }}">@lang('layout.password')</a>
-                                    </div>
-                                </div>
-                                <div class="form-group row ">
+                                <div class="form-group row">
                                     <div class="col-md-6 offset-md-4">
                                         <a class="btn btn-social-icon btn-vk"       href="{{ route('social::redirect', ['provider' => 'vkontakte']) }}"><span class="fa fa-vk"></span></a>
                                         <a class="btn btn-social-icon btn-google"   href="{{ route('social::redirect', ['provider' => 'google']) }}"><span class="fa fa-google"></span></a>
                                         <a class="btn btn-social-icon btn-facebook" href="{{ route('social::redirect', ['provider' => 'facebook']) }}"><span class="fa fa-facebook"></span></a>
                                     </div>
                                 </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-6 offset-md-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-btn fa-sign-in"></i> @lang('menu.login')
+                                        </button>
+
+                                        <a class="btn btn-link" href="{{ url('/password/reset') }}">@lang('layout.forgot_password')</a>
+                                    </div>
+                                </div>
+
                             </form>
                         </div>
                     </div>

@@ -99,5 +99,6 @@ return [
     'search' => 'Search',
     'teacher_requests_expended' => 'You have expended your allowed requests',
     'register_action' => 'Register',
+    'enter_email' => 'Enter email',
     'ended' => 'ended'
 ];

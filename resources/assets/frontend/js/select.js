@@ -1,5 +1,7 @@
 (function ($, window, document) {
     $(document).ready(function () {
+        var discipline_id = $('[data-discipline-id]').data('discipline-id');
+
         $('[data-select-students], [data-select-programming-languages]').select2({
             width: '100%'
         });
@@ -20,6 +22,7 @@
                 quietMillis: 100,
                 data: function (params) {
                     return {
+                        discipline_id: discipline_id,
                         term: params.term,
                         page: params.page || 1
                     }
