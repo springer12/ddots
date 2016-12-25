@@ -231,7 +231,7 @@ class ContestController extends Controller
     public function single(Request $request, $id)
     {
         $contest = Contest::findOrFail($id);
-        return View('contests.single')->with(['contest' => $contest]);
+        return view('contests.single')->with(['contest' => $contest]);
     }
 
     //@todo:1 min results array cache could be temporary solution

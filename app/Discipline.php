@@ -36,4 +36,22 @@ class Discipline extends Model
             'description' => 'max:255',
         ];
     }
+
+    public function getStudentsString()
+    {
+        $str = '';
+        foreach ($this->students as $student) {
+            $str .= $student->name . ($student === $this->students->last() ? '' : ', ');
+        }
+        return $str;
+    }
+
+    public function getContestsString()
+    {
+        $str = '';
+        /*foreach ($this->contests as $contests) {
+            $str .= $contests->name . ', ';
+        }*///todo
+        return $str;
+    }
 }

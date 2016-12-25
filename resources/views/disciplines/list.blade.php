@@ -29,10 +29,13 @@
                             <tr>
                                 <td>{{ $discipline->id }}</td>
                                 <td class="wrap-text"><a
-                                            href="{{ action('DisciplineController@showForm', ['id' => $discipline->id]) }}">{{ $discipline->name }}</a>
+                                            href="{{ action('DisciplineController@single', ['id' => $discipline->id]) }}">{{ $discipline->name }}</a>
                                 </td>
-                                <td>//todo</td>
-                                <td>//todo</td>
+                                <?php $str = $discipline->getStudentsString() ?>
+                                <td title="{{ $str }}">{{ str_limit($str, 50) }}</td>
+
+                                <?php $str = $discipline->getContestsString() ?>
+                                <td title="{{ $str }}">{{ str_limit($str, 50) }}</td>
                                 <td class="no-wrap">{{ $discipline->created_at }}</td>
                                 <td class="actions-menu btn-group">
                                     <a class="btn btn-secondary" title="@lang('layout.edit')"

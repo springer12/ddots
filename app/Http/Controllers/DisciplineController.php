@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Discipline;
 use App\Problem;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -101,6 +102,62 @@ class DisciplineController extends Controller
             'participants' => $participants,
             'students' => Auth::user()->students->diff($participants),
             'included_problems' => $included_problems
+        ]);
+    }
+
+    public function single(Request $request, $id)
+    {
+
+        $discipline = Discipline::findOrFail($id);
+        $orderBySession = \Session::get('orderByStudents', 'updated_at');
+        $orderByStudents = $request->input('order_students', $orderBySession);
+
+        $orderDirSession = \Session::get('orderDirStudents', 'desc');
+        $orderDirStudents = $request->input('dir_students', $orderDirSession);
+
+        if (!in_array($orderByStudents, User::sortable())) {
+            $orderByStudents = 'id';
+        }
+
+        if (!in_array($orderDirStudents, ['asc', 'ASC', 'desc', 'DESC'])) {
+            $orderDirStudents = 'desc';
+        }
+
+        \Session::put('orderByStudents', $orderByStudents);
+        \Session::put('orderDirStudents', $orderDirStudents);
+
+        $students = $discipline->students()->orderBy($orderByStudents, $orderDirStudents)
+            ->paginate(2, ['*'], 'page_students');
+
+        $orderBySession = \Session::get('orderByProblems', 'updated_at');
+        $orderByProblems = $request->input('order_problems', $orderBySession);
+
+        $orderDirSession = \Session::get('orderDirProblems', 'desc');
+        $orderDirProblems = $request->input('dir_problems', $orderDirSession);
+
+        if (!in_array($orderByProblems, Problem::sortable())) {
+            $orderByProblems = 'id';
+        }
+
+        if (!in_array($orderDirProblems, ['asc', 'ASC', 'desc', 'DESC'])) {
+            $orderDirProblems = 'desc';
+        }
+
+        \Session::put('orderByProblems', $orderByProblems);
+        \Session::put('orderDirProblems', $orderDirProblems);
+
+        $problems = $discipline->problems()->orderBy($orderByProblems, $orderDirProblems)
+            ->paginate(1, ['*'], 'page_problems');
+
+        return view('disciplines.single')->with([
+            'discipline' => $discipline,
+            'students' => $students,
+            'order_field_students' => $orderByStudents,
+            'dir_students' => $orderDirStudents,
+            'contests' => [],
+            'problems' => $problems,
+            'order_field_problems' => $orderByProblems,
+            'dir_problems' => $orderDirProblems,
         ]);
     }
 }
