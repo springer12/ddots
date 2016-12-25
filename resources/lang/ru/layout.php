@@ -43,6 +43,11 @@ return [
     'update' => 'Обновить',
     'years_old' => 'Лет',
     'with_us' => 'с нами',
+    'day' => [
+        'first_form' => 'День',
+        'second_form' => 'Дня',
+        'third_form' => 'Дней',
+    ],
     'profession' => 'Профессия',
     'place_of_study' => 'Место учёбы',
     'primary_language' => 'Основной язык',
