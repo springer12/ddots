@@ -238,9 +238,9 @@ class Problem extends Model
         return $points_string;
     }
 
-    public static function search($term, $page)
+    public static function search($term, $page, $query)
     {
-        $problems = static::select(['id', 'name'])
+        $problems = $query->select(['id', 'name'])
             ->where('name', 'LIKE', '%' . $term . '%');
 
         $count = $problems->count();

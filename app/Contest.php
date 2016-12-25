@@ -114,6 +114,11 @@ class Contest extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function discipline()
+    {
+        return $this->belongsTo(Discipline::class);
+    }
+
     public function hide()
     {
         $this->attributes['is_active'] = false;
@@ -159,8 +164,8 @@ class Contest extends Model
     public function getProblemData()
     {
         $problems = [];
-        if($this->type == static::TYPE_EXAM) {
-            if(Auth::user()->hasRole(User::ROLE_TEACHER)) {
+        if ($this->type == static::TYPE_EXAM) {
+            if (Auth::user()->hasRole(User::ROLE_TEACHER)) {
                 $all_problems = $this->problemUsers()->groupBy('problem_id')->get();
             } else {
                 $all_problems = $this->problemUsers()->where('user_id', Auth::user()->id)->get();

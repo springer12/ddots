@@ -19,6 +19,11 @@ class Discipline extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function contests()
+    {
+        return $this->hasMany(Contest::class);
+    }
+
     public function problems()
     {
         return $this->belongsToMany(Problem::class);
@@ -49,9 +54,9 @@ class Discipline extends Model
     public function getContestsString()
     {
         $str = '';
-        /*foreach ($this->contests as $contests) {
-            $str .= $contests->name . ', ';
-        }*///todo
+        foreach ($this->contests as $contest) {
+            $str .= $contest->name . ($contest === $this->contests->last() ? '' : ', ');
+        }
         return $str;
     }
 }

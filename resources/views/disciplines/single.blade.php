@@ -7,7 +7,7 @@
                 {{ $discipline->name }}
                 <div class="btn-group float-xs-right">
                     <a class="btn btn-secondary "
-                       href="{{ route('teacherOnly::disciplines::add') }}">@lang('contest.create')</a>
+                       href="{{ route('teacherOnly::contests::add', ['discipline_id' => $discipline->id]) }}">@lang('contest.create')</a>
                     <a class="btn btn-secondary " title="@lang('layout.edit')"
                        href="{{ action('DisciplineController@showForm', ['id'=> $discipline->id]) }}">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -19,7 +19,8 @@
                     <div class="card-header">
                         @lang('menu.contests')
                     </div>
-                    <div class="card-body">todo</div>
+                    <?php $helper_postfix = 'contests'; ?>
+                    <div class="card-body">@include('partial.contests_list')</div>
                 </div>
             </div>
 

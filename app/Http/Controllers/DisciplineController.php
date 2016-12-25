@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contest;
 use App\Discipline;
 use App\Problem;
 use App\User;
@@ -127,7 +128,7 @@ class DisciplineController extends Controller
         \Session::put('orderDirStudents', $orderDirStudents);
 
         $students = $discipline->students()->orderBy($orderByStudents, $orderDirStudents)
-            ->paginate(2, ['*'], 'page_students');
+            ->paginate(3, ['*'], 'page_students');
 
         $orderBySession = \Session::get('orderByProblems', 'updated_at');
         $orderByProblems = $request->input('order_problems', $orderBySession);
@@ -147,14 +148,36 @@ class DisciplineController extends Controller
         \Session::put('orderDirProblems', $orderDirProblems);
 
         $problems = $discipline->problems()->orderBy($orderByProblems, $orderDirProblems)
-            ->paginate(1, ['*'], 'page_problems');
+            ->paginate(3, ['*'], 'page_problems');
+
+        $orderBySession = \Session::get('orderByContests', 'updated_at');
+        $orderByContests = $request->input('order_contests', $orderBySession);
+
+        $orderDirSession = \Session::get('orderDirContests', 'desc');
+        $orderDirContests = $request->input('dir_contests', $orderDirSession);
+
+        if (!in_array($orderByContests, Contest::sortable())) {
+            $orderByContests = 'id';
+        }
+
+        if (!in_array($orderDirContests, ['asc', 'ASC', 'desc', 'DESC'])) {
+            $orderDirContests = 'desc';
+        }
+
+        \Session::put('orderByContests', $orderByContests);
+        \Session::put('orderDirContests', $orderDirContests);
+
+        $contests = $discipline->contests()->orderBy($orderByContests, $orderDirContests)
+            ->paginate(3, ['*'], 'page_contests');
 
         return view('disciplines.single')->with([
             'discipline' => $discipline,
             'students' => $students,
             'order_field_students' => $orderByStudents,
             'dir_students' => $orderDirStudents,
-            'contests' => [],
+            'contests' => $contests,
+            'order_field_contests' => $orderByContests,
+            'dir_contests' => $orderDirContests,
             'problems' => $problems,
             'order_field_problems' => $orderByProblems,
             'dir_problems' => $orderDirProblems,

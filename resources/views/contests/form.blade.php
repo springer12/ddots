@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container"  {{ $discipline ? 'data-discipline-id=' . $discipline->id : '' }}>
         <div class="row">
             <div class="col-xs-12">
                 <div class="card">
