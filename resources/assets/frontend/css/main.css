@@ -74,7 +74,7 @@ div.ace-editor {
 
 .teacher-name-container {
     height: 20px;
-    width: 200px;
+    width: 100%;
     font-size: 20px;
     white-space: nowrap;
     overflow: hidden;
