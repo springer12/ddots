@@ -63,4 +63,6 @@ return [
         'problems' => 'Select problems',
         'volumes' => 'Select volumes',
     ],
+    'best' => 'Best',
+    'latest' => 'Latest'
 ];

@@ -67,7 +67,7 @@
                             <th>@lang('layout.id')</th>
                             <th>@lang('layout.name')</th>
                             <th>@lang('contest.difficulty')</th>
-                            <th>{{ $contest->show_max?'Best':'Latest' }} @lang('contest._points')</th>
+                            <th>{{ $contest->show_max ? trans('contest.best') : trans('contest.latest') }} @lang('contest._points')</th>
                         </tr>
                         </thead>
                         <tbody>
