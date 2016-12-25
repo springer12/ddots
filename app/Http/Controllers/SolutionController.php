@@ -39,18 +39,28 @@ class SolutionController extends Controller
     public function submit(Request $request, $contest_id, $problem_id)//@todo:refactor that shit!
     {
         $this->validate($request, Solution::getValidationRules($contest_id));
+
+        $contest  = Contest::findOrFail($contest_id);
+
+        if($contest->isEnded() || !$contest->is_active) {
+            abort(404);
+        }
+
         $solution = new Solution(['state' => Solution::STATE_NEW]);
-        $contest = Contest::findOrFail($contest_id);
+
         if (!$contest->getProblemReviewRequired($problem_id)) {
             $solution->reviewed = true;
         }
+
         $solution->owner()->associate(Auth::user()->id);
         $solution->problem()->associate($problem_id);
         $solution->programming_language()->associate($request->get('programming_language'));
         $solution->save();
+
         if (!Auth::user()->hasRole(User::ROLE_TEACHER)) {
             $contest->solutions()->save($solution);
         }
+
         if ($request->hasFile('solution_code_file')) {
             $solution->saveCodeFile('solution_code_file');
         } else {

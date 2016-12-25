@@ -24,54 +24,56 @@
 
             </div>
         </div>
-        <div class="card">
-            <div class="card-header">
-                @lang('contest.new_solution')
-            </div>
-            <div class="card-block">
-                <form data-submit-solution method="post" enctype="multipart/form-data">
-                    {{ csrf_field() }}
-                    <div class="form-group row {{ $errors->has('programming_language') ? ' has-danger' : '' }}">
-                        <label class="col-md-4 col-form-label" for="programming_language">@lang('layout.programming_language')</label>
-                        <div class="col-md-8">
-                            <select data-programming-languages name="programming_language"
-                                    class="form-control border-input">
-                                @foreach($contest->programming_languages as $language)
-                                    <option data-ace-mode="{{ $language->ace_mode }}"
-                                            value="{{ $language->id }}">{{ $language->name }}</option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has('programming_language'))
-                                <span class="form-control-feedback">
-                                    <strong>{{ $errors->first('programming_language') }}</strong>
-                                </span>
-                            @endif
+        @if($contest->isEnded())
+            <div class="card">
+                <div class="card-header">
+                    @lang('contest.new_solution')
+                </div>
+                <div class="card-block">
+                    <form data-submit-solution method="post" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="form-group row {{ $errors->has('programming_language') ? ' has-danger' : '' }}">
+                            <label class="col-md-4 col-form-label" for="programming_language">@lang('layout.programming_language')</label>
+                            <div class="col-md-8">
+                                <select data-programming-languages name="programming_language"
+                                        class="form-control border-input">
+                                    @foreach($contest->programming_languages as $language)
+                                        <option data-ace-mode="{{ $language->ace_mode }}"
+                                                value="{{ $language->id }}">{{ $language->name }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('programming_language'))
+                                    <span class="form-control-feedback">
+                                        <strong>{{ $errors->first('programming_language') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <div class="ace-editor" id="editor"></div>
-                    </div>
-
-                    <div class="form-group row{{ $errors->has('solution_code_file') ? ' has-danger' : '' }}">
-                        <label class="form-control-label col-md-4" for="solution_code_file">@lang('contest.or_upload')</label>
-                        <div class="col-md-8">
-                            <input type="file" name="solution_code_file"/>
-                            @if ($errors->has('solution_code_file'))
-                                <span class="form-control-feedback">
-                                    <strong>{{ $errors->first('solution_code_file') }}</strong>
-                                </span>
-                            @endif
+                        <div class="form-group">
+                            <div class="ace-editor" id="editor"></div>
                         </div>
-                    </div>
-                    <input type="hidden" name="solution_code"/>
-                    <hr class="hidden-border">
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success">@lang('contest.submit')</button>
-                    </div>
-                </form>
+
+                        <div class="form-group row{{ $errors->has('solution_code_file') ? ' has-danger' : '' }}">
+                            <label class="form-control-label col-md-4" for="solution_code_file">@lang('contest.or_upload')</label>
+                            <div class="col-md-8">
+                                <input type="file" name="solution_code_file"/>
+                                @if ($errors->has('solution_code_file'))
+                                    <span class="form-control-feedback">
+                                        <strong>{{ $errors->first('solution_code_file') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <input type="hidden" name="solution_code"/>
+                        <hr class="hidden-border">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">@lang('contest.submit')</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+        @endif
         <div class="card">
             <div class="card-header">@lang('contest.solutions')</div>
             <div class="card-block">

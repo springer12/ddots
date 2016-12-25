@@ -5,21 +5,27 @@ namespace App\Http\Middleware;
 use App\Contest;
 use Closure;
 
-class ContestStandingsAccess
+class ContestAccess
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
         $contest = Contest::findOrFail($request->id);
-        if ($contest->is_standings_active || \Auth::id() == $contest->user_id) {
+
+        if($contest->labs || \Auth::id() == $contest->user_id) {
             return $next($request);
         }
+
+        if($contest->users()->findOrFail(\Auth::id()) && $contest->is_active) {
+            return $next($request);
+        }
+
         abort(404);
     }
 }

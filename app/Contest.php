@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
@@ -132,6 +133,14 @@ class Contest extends Model
     public function currentUserAllowedEdit()
     {
         return Auth::user()->id == $this->owner->id;
+    }
+
+    public function isEnded() {
+
+        if(Carbon::now()->gt($this->end_date)) {
+            return false;
+        }
+        return true;
     }
 
     public function getProblemMaxPoints($problem_id)

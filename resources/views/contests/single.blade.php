@@ -8,10 +8,12 @@
                     {{ $contest->name }}
                     <i class="tag tag-{{ $contest->is_active? 'success' : 'danger' }}">{{ $contest->is_active? 'Active' : 'Disabled' }}</i>
                 </span>
-                <a class="btn btn-secondary float-xs-right" title="Edit"
-                   href="{{ action('ContestController@edit',['id'=> $contest->id]) }}">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                </a>
+                @if($contest->user_id == Auth::id())
+                    <a class="btn btn-secondary float-xs-right" title="Edit"
+                       href="{{ action('ContestController@edit',['id'=> $contest->id]) }}">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                @endif
             </div>
             <div class="card-block">
                 <table class="table">
@@ -25,7 +27,7 @@
                     </tr>
                     <tr>
                         <td>@lang('contest.time_left')</td>
-                        <td>{{ $contest->end_date->diffForHumans() }}</td>
+                        <td>{{ $contest->isEnded() ? $contest->end_date->diffForHumans() : trans('layout.ended') }}</td>
                     </tr>
                     <tr>
                         <td>@lang('menu.programming_languages')</td>
@@ -47,7 +49,7 @@
             <div class="card-block">
                 <div class="row pull-right">
                     <div class="col-md-12 btn-group">
-                        @if($contest->is_standings_active )
+                        @if($contest->user_id == Auth::id() || $contest->is_standings_active)
                             <a class="btn btn-success" href="{{ route('frontend::contests::standings', ['id' => $contest->id]) }}"><i class="fa fa-trophy" aria-hidden="true"></i> @lang('contest.standings')</a>
                         @endif
                         <a class="btn btn-primary" href="{{ route('frontend::contests::solutions',['id' => $contest->id]) }}"><i class="fa fa-code" aria-hidden="true"></i> @lang('contest.solutions')</a>
@@ -65,7 +67,7 @@
                             <th>@lang('layout.id')</th>
                             <th>@lang('layout.name')</th>
                             <th>@lang('contest.difficulty')</th>
-                            <th>{{ $contest->show_max?'Best':'Latest' }} @lang('contest._points')</th>
+                            <th>{{ $contest->show_max ? trans('contest.best') : trans('contest.latest') }} @lang('contest._points')</th>
                         </tr>
                         </thead>
                         <tbody>

@@ -49,13 +49,13 @@ class MessageController extends Controller
 
     public function newDialog(Request $request)
     {
+
+        $users = Auth::user()->getNoDialogUsers();
         if (Auth::user()->hasRole(User::ROLE_TEACHER)) {
-            $users = Auth::user()->getNoDialogStudents();
             $users->push(User::admin()->first()); //@todo add logic for selecting an admin
             $users->last()->name = 'admin';
-        } else {
-            $users = Auth::user()->getNoDialogTeachers();
         }
+
         return view('messages.new')->with(['users' => $users]);
     }
 }

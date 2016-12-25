@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
                 <div class="card">
-                    <div class="card-header">{{ $user->hasRole(\App\User::ROLE_LOW_USER) ? 'Upgrade' : 'Update' }}
+                    <div class="card-header">{{ $user->hasRole(\App\User::ROLE_LOW_USER) ? trans('layout.upgrade') : trans('layout.update') }}
                         @lang('menu.profile')
                     </div>
 

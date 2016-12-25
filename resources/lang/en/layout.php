@@ -43,6 +43,11 @@ return [
     'update' => 'Update',
     'years_old' => 'Years old',
     'with_us' => 'with us',
+    'day' => [
+        'first_form' => 'day',
+        'second_form' => 'days',
+        'third_form' => 'days',
+    ],
     'profession' => 'Profession',
     'place_of_study' => 'Place of study',
     'primary_language' => 'Primary language',
@@ -95,4 +100,5 @@ return [
     'teacher_requests_expended' => 'You have expended your allowed requests',
     'register_action' => 'Register',
     'enter_email' => 'Enter email',
+    'ended' => 'ended'
 ];

@@ -49,8 +49,8 @@
                             @endif
                             @if($user->hasRole([\App\User::ROLE_USER, \App\User::ROLE_TEACHER]))
                                 <div class="col-md-4">
-                                    <h5>{{ $user->created_at->diffInDays(Carbon\Carbon::now()) }}<br>
-                                        <small>{{ str_plural('Day', $user->created_at->diffInDays(Carbon\Carbon::now())) }}
+                                    <h5>{{ $days_with_us = $user->created_at->diffInDays(Carbon\Carbon::now()) }}<br>
+                                        <small>{{ plural_form($days_with_us, [trans('layout.day.first_form'), trans('layout.day.second_form'), trans('layout.day.third_form')]) }}
                                             @lang('layout.with_us')
                                         </small>
                                     </h5>

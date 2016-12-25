@@ -34,8 +34,8 @@ return [
     'solutions' => 'Решения',
     'source_code' => 'Исходный код',
     'solution' => 'Решение',
-    'started_at' => 'Начало в',
-    'finished_at' => 'Конец в',
+    'started_at' => 'Начало',
+    'finished_at' => 'Конец',
     'time_left' => 'Осталось времени',
     'standings' => 'Результаты',
     'difficulty' => 'Сложность',
@@ -63,4 +63,6 @@ return [
         'problems' => 'Выберите задачи',
         'volumes' => 'Выберите томы',
     ],
+    'best' => 'Лучшие',
+    'latest' => 'Последние'
 ];
