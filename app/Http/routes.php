@@ -270,8 +270,9 @@ Route::group(['middleware' => 'web'], function () {
                 Route::post('/{id}', 'MessageController@send')->where('id', '[0-9]+');
             });
 
-            Route::group(['prefix' => 'contests', 'as' => 'contests::'], function () {
-                Route::get('/', ['uses' => 'ContestController@index', 'as' => 'list']);
+            Route::get('contests', ['uses' => 'ContestController@index', 'as' => 'list']);
+            Route::group(['prefix' => 'contests', 'as' => 'contests::', 'middleware' => 'contest_access'], function () {
+
                 Route::get('/{id}', ['uses' => 'ContestController@single', 'as' => 'single'])->where('id', '[0-9]+');
                 Route::get('/{contest_id}/{problem_id}/', [
                     'uses' => 'ProblemController@contestProblem',
