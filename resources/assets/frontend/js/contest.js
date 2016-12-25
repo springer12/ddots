@@ -30,16 +30,24 @@
         }
 
         function appendProblem(id, name, points, review, time_penalty) {
-            if (!$('[data-problem-block-id=' + id + ']').length || $exam_input[0].checked) {
-                ($exam_input[0].checked ? $user_problems : $problems_elem).append(Mustache.render($element_template, {
-                    name: name,
-                    id: id,
-                    element: 'problem',
-                    type_problem: 1,
-                    points: points,
-                    review: review,
-                    time_penalty: time_penalty
-                }));
+            if (!$('[data-problem-block-id=' + id + ']').length || !$exam_input.length || $exam_input[0].checked) {
+                if ($exam_input.length) {
+                    ($exam_input[0].checked ? $user_problems : $problems_elem).append(Mustache.render($element_template, {
+                        name: name,
+                        id: id,
+                        element: 'problem',
+                        type_problem: 1,
+                        points: points,
+                        review: review,
+                        time_penalty: time_penalty
+                    }));
+                } else {
+                    $problems_elem.append(Mustache.render($element_template, {
+                        name: name,
+                        id: id,
+                        element: 'problem',
+                    }));
+                }
             }
         }
 

@@ -108,7 +108,7 @@ class GroupController extends Controller
 
         $group->save();
 
-        \Session::flash('alert-success', 'The group was successfully saved');
+        \Session::flash('alert-success', 'The group was successfully saved');//todo
         return redirect()->route('teacherOnly::groups::list');
     }
 
@@ -123,7 +123,7 @@ class GroupController extends Controller
     {
         $group = $this->findOrFail($id);
         $group->delete();
-        return redirect()->route('teacherOnly::groups::list')->with('alert-success', 'The group was successfully deleted');
+        return redirect()->route('teacherOnly::groups::list')->with('alert-success', 'The group was successfully deleted');//todo
     }
 
     /**
@@ -137,7 +137,7 @@ class GroupController extends Controller
     {
         $group = $this->findOrFail($id);
         $group->restore();
-        return redirect()->route('teacherOnly::groups::list')->with('alert-success', 'The group was successfully restored');
+        return redirect()->route('teacherOnly::groups::list')->with('alert-success', 'The group was successfully restored');//todo
     }
 
     /**

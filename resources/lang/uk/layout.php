@@ -94,4 +94,5 @@ return [
     'search' => 'Поиск',
     'teacher_requests_expended' => 'Вы использовали дозволенное количество запросов',
     'register_action' => 'Register',
+    'enter_email' => 'Enter email',
 ];
