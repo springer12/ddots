@@ -74,6 +74,7 @@ class ContestController extends Controller
     {
         $contest = ($id ? Contest::findOrFail($id) : new Contest());
         $participants = collect();
+        $discipline = null;
         if ($request->get('discipline_id')) {
             $discipline = Discipline::findOrFail($request->get('discipline_id'));
         } elseif ($contest && $contest->discipline) {
