@@ -16,7 +16,11 @@ class ContestAccess
      */
     public function handle($request, Closure $next)
     {
-        $contest = Contest::findOrFail($request->id);
+        $contest_id = $request->id;
+        if(!isset($contest_id)) {
+            $contest_id = $request->contest_id;
+        }
+        $contest = Contest::findOrFail($contest_id);
 
         if($contest->labs || \Auth::id() == $contest->user_id) {
             return $next($request);
