@@ -56,7 +56,7 @@
                                                 </button>
                                                 <button id="teacher_{{ $teacher->id }}" type="button"
                                                         class="btn btn-success btn-fill btn-wd"
-                                                        style="display: {{ $teacher->relation_exists ? 'inline-block' : 'none' }}"
+                                                        style="display: {{ $teacher->relation_exists && !$teacher->confirmed ? 'inline-block' : 'none' }}"
                                                         disabled>@lang('layout.request_is_sent')
                                                 </button>
                                             @endif

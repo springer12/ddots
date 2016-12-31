@@ -19,7 +19,7 @@ class TeacherController extends Controller
         $allTeachers = Subdomain::currentSubdomain()->users()->teacher()->orderBy('name', 'asc')->paginate(9);
         if (Auth::check() && Auth::user()->hasRole(User::ROLE_USER)) {
             $myTeachers = Auth::user()->getConfirmedTeachersQuery()->orderBy('name', 'asc')->get();
-            Auth::user()->markRelated($allTeachers);
+            $allTeachers = Auth::user()->markRelated($allTeachers);
             $allowedRequests = Auth::user()->allowedToRequestTeacher();
         }
 

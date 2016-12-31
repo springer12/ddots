@@ -326,7 +326,14 @@ class User extends Authenticatable
     {
         foreach ($teachers as $teacher) {
             $teacher['relation_exists'] = $teacher->students()->get()->contains('id', $this->id);
+            if($teacher['relation_exists']) {
+                $teacher['confirmed'] = $teacher->students()->withPivot('confirmed')->get()->first(function ($key, $student) {
+                    return $student->id ==$this->id;
+                })->pivot->confirmed;
+            }
         }
+
+        return $teachers;
     }
 
     public function setProgrammingLanguageAttribute($value)
