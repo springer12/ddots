@@ -16,13 +16,11 @@ class TeacherController extends Controller
     {
         $myTeachers = null;
         $allowedRequests = false;
+        $allTeachers = Subdomain::currentSubdomain()->users()->teacher()->orderBy('name', 'asc')->paginate(9);
         if (Auth::check() && Auth::user()->hasRole(User::ROLE_USER)) {
-            $allTeachers = Auth::user()->getUnrelatedOrUnconfirmedTeachersQuery()->orderBy('name', 'asc')->paginate(9);
             $myTeachers = Auth::user()->getConfirmedTeachersQuery()->orderBy('name', 'asc')->get();
             Auth::user()->markRelated($allTeachers);
             $allowedRequests = Auth::user()->allowedToRequestTeacher();
-        } else {
-            $allTeachers = Subdomain::currentSubdomain()->users()->teacher()->orderBy('name', 'asc')->paginate(9);
         }
 
         return view('teachers.list')->with([
