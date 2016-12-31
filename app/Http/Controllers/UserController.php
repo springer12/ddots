@@ -24,7 +24,7 @@ class UserController extends Controller
     {
         $rules = array_merge(Auth::user()->getValidationRules([
             'email' => 'required|email|unique:users,email,' . Auth::user()->id,
-            'nickname' => 'required|max:255|english_alpha_dash|unique:users,nickname,' . Auth::user()->id
+            'nickname' => 'required|min:3|max:255|english_alpha_dash|unique:users,nickname,' . Auth::user()->id
         ]));
         $this->validate($request, $rules);
         Auth::user()->fill($request->except(['email']));
