@@ -65,7 +65,7 @@ return [
     'avatar' => 'Аватар',
     'description' => 'Описание',
     'my_teachers' => 'Мои преподаватели',
-    'my_teacher' => 'МоЙ преподаватель',
+    'my_teacher' => 'Мой преподаватель',
     'all_teachers' => 'Все преподаватели',
     'request_is_sent' => 'запрос отправлен',
     'actions' => 'Действия',
