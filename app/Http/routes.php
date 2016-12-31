@@ -288,9 +288,11 @@ Route::group(['middleware' => 'web'], function () {
                     'uses' => 'ProblemController@contestProblem',
                     'as' => 'problem',
                 ])->where('contest_id', '[0-9]+')->where('problem_id', '[0-9]+');
+
                 Route::post('/{contest_id}/{problem_id}/', ['uses' => 'SolutionController@submit', 'as' => 'contest_problem'])
                     ->where('contest_id', '[0-9]+')
                     ->where('problem_id', '[0-9]+');
+
                 Route::get('/{id}/standings/', [
                     'middleware' => 'contest_standings_access',
                     'uses' => 'ContestController@standings',

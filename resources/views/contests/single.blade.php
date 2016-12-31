@@ -27,7 +27,7 @@
                     </tr>
                     <tr>
                         <td>@lang('contest.time_left')</td>
-                        <td>{{ $contest->isEnded() ? $contest->end_date->diffForHumans() : trans('layout.ended') }}</td>
+                        <td>{{ !$contest->isEnded() ? $contest->end_date->diffForHumans() : trans('layout.ended') }}</td>
                     </tr>
                     <tr>
                         <td>@lang('menu.programming_languages')</td>

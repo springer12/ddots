@@ -138,9 +138,9 @@ class Contest extends Model
     public function isEnded() {
 
         if(Carbon::now()->gt($this->end_date)) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public function getProblemMaxPoints($problem_id)

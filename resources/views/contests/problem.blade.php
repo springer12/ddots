@@ -24,7 +24,7 @@
 
             </div>
         </div>
-        @if($contest->isEnded())
+        @if(!$contest->isEnded())
             <div class="card">
                 <div class="card-header">
                     @lang('contest.new_solution')
