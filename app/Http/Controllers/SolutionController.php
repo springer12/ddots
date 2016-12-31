@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\File;
 
 class SolutionController extends Controller
 {
-    public function contestSolution(Request $request, $id)
+    public function contestSolution(Request $request, $solution_id)
     {
-        $solution = Solution::findOrFail($id);
+        $solution = Solution::findOrFail($solution_id);
         $solution->fillData();
         return View('contests.solution')->with([
             'solution' => $solution,

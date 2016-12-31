@@ -296,7 +296,7 @@ Route::group(['middleware' => 'web'], function () {
                     'uses' => 'ContestController@standings',
                     'as' => 'standings',
                 ])->where('id', '[0-9]+');
-                Route::get('/solutions/{id}/', ['uses' => 'SolutionController@contestSolution', 'as' => 'solution'])
+                Route::get('/solutions/{solution_id}/', ['uses' => 'SolutionController@contestSolution', 'as' => 'solution'])
                     ->where('id', '[0-9]+');
                 Route::get('/{id}/solutions/', ['uses' => 'SolutionController@contestSolutions', 'as' => 'solutions'])
                     ->where('id', '[0-9]+');
