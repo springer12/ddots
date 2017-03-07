@@ -21,6 +21,9 @@
                 </h4>
             </div>
             <div class="card-block">
+                <p>
+                    {{ $problem->description }}
+                </p>
                 <div class="align-center form-group">
                     <img src="{{ $problem->image }}" style="max-width: 100%">{{-- @todo remove inline --}}
                 </div>
