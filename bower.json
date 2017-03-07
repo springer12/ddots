@@ -2,7 +2,7 @@
   "name": "dots",
   "private": true,
   "devDependencies": {
-    "bootstrap": "4.0.0-alpha.5"
+    "bootstrap": "4.0.0-alpha.4"
   },
   "dependencies": {
     "gentelella": "^1.3.0",
